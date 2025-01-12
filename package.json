@@ -1,15 +1,16 @@
 {
-  "name": "agentmail-node",
-  "version": "0.1.0",
-  "description": "AgentMail API Node client",
-  "main": "dist/index.js",
-  "scripts": {
-    "build": "tsc"
-  },
-  "author": "AgentMail",
-  "license": "ISC",
-  "devDependencies": {
-    "ts-node": "^10.9.2",
-    "typescript": "^5.7.3"
-  }
+    "name": "agentmail-node",
+    "version": "0.1.0",
+    "description": "AgentMail API Node client",
+    "main": "dist/index.js",
+    "scripts": {
+        "build": "tsc"
+    },
+    "author": "AgentMail",
+    "license": "ISC",
+    "devDependencies": {
+        "prettier": "3.4.2",
+        "ts-node": "^10.9.2",
+        "typescript": "^5.7.3"
+    }
 }
