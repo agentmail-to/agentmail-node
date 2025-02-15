@@ -20,10 +20,10 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { AgentMailApiEnvironment, AgentMailApiClient } from "agentmail";
+import { AgentMailApiClient } from "agentmail";
 
-const client = new AgentMailApiClient({ environment: AgentMailApiEnvironment.Production, apiKey: "YOUR_API_KEY" });
-await client.inboxes.createInbox({
+const client = new AgentMailApiClient({ apiKey: "YOUR_API_KEY" });
+await client.inboxes.create({
     domain: "yourdomain.com",
 });
 ```
@@ -50,7 +50,7 @@ will be thrown.
 import { AgentMailApiError } from "agentmail";
 
 try {
-    await client.inboxes.createInbox(...);
+    await client.inboxes.create(...);
 } catch (err) {
     if (err instanceof AgentMailApiError) {
         console.log(err.statusCode);
@@ -67,7 +67,7 @@ try {
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
-const response = await client.inboxes.createInbox(..., {
+const response = await client.inboxes.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'
     }
@@ -89,7 +89,7 @@ A request is deemed retriable when any of the following HTTP status codes is ret
 Use the `maxRetries` request option to configure this behavior.
 
 ```typescript
-const response = await client.inboxes.createInbox(..., {
+const response = await client.inboxes.create(..., {
     maxRetries: 0 // override maxRetries at the request level
 });
 ```
@@ -99,7 +99,7 @@ const response = await client.inboxes.createInbox(..., {
 The SDK defaults to a 60 second timeout. Use the `timeoutInSeconds` option to configure this behavior.
 
 ```typescript
-const response = await client.inboxes.createInbox(..., {
+const response = await client.inboxes.create(..., {
     timeoutInSeconds: 30 // override timeout to 30s
 });
 ```
@@ -110,7 +110,7 @@ The SDK allows users to abort requests at any point by passing in an abort signa
 
 ```typescript
 const controller = new AbortController();
-const response = await client.inboxes.createInbox(..., {
+const response = await client.inboxes.create(..., {
     abortSignal: controller.signal
 });
 controller.abort(); // aborts the request

@@ -2,7 +2,7 @@
 
 ## Inboxes
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">listInboxes</a>({ ...params }) -> AgentMailApi.ListInboxesResponse</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> AgentMailApi.ListInboxesResponse</code></summary>
 <dl>
 <dd>
 
@@ -15,7 +15,7 @@
 <dd>
 
 ```typescript
-await client.inboxes.listInboxes();
+await client.inboxes.list();
 ```
 
 </dd>
@@ -50,7 +50,7 @@ await client.inboxes.listInboxes();
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">getInbox</a>(inboxId) -> AgentMailApi.Inbox</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">get</a>(inboxId) -> AgentMailApi.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -63,7 +63,7 @@ await client.inboxes.listInboxes();
 <dd>
 
 ```typescript
-await client.inboxes.getInbox("inbox_id");
+await client.inboxes.get("inbox_id");
 ```
 
 </dd>
@@ -98,7 +98,7 @@ await client.inboxes.getInbox("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">createInbox</a>({ ...params }) -> AgentMailApi.Inbox</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">create</a>({ ...params }) -> AgentMailApi.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -111,7 +111,7 @@ await client.inboxes.getInbox("inbox_id");
 <dd>
 
 ```typescript
-await client.inboxes.createInbox({
+await client.inboxes.create({
     username: "yourinbox",
     displayName: "Your Inbox",
 });
@@ -149,72 +149,9 @@ await client.inboxes.createInbox({
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">deleteInbox</a>(inboxId) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete inbox and all of its threads, messages, and attachments.
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inboxes.deleteInbox("yourinbox@agentmail.to");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inboxId:** `AgentMailApi.InboxId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Inboxes.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
 ## Messages
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">listMessages</a>(inboxId, { ...params }) -> AgentMailApi.ListMessagesResponse</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMailApi.ListMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -227,7 +164,7 @@ await client.inboxes.deleteInbox("yourinbox@agentmail.to");
 <dd>
 
 ```typescript
-await client.messages.listMessages("inbox_id");
+await client.messages.list("inbox_id");
 ```
 
 </dd>
@@ -270,7 +207,7 @@ await client.messages.listMessages("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">getMessage</a>(inboxId, messageId) -> AgentMailApi.Message</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">get</a>(inboxId, messageId) -> AgentMailApi.Message</code></summary>
 <dl>
 <dd>
 
@@ -283,7 +220,7 @@ await client.messages.listMessages("inbox_id");
 <dd>
 
 ```typescript
-await client.messages.getMessage("inbox_id", "message_id");
+await client.messages.get("inbox_id", "message_id");
 ```
 
 </dd>
@@ -326,78 +263,7 @@ await client.messages.getMessage("inbox_id", "message_id");
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">deleteMessage</a>(inboxId, messageId) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete message and its attachments.
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.messages.deleteMessage("inbox_id", "message_id");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inboxId:** `AgentMailApi.InboxId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**messageId:** `AgentMailApi.MessageId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Messages.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">sendMessage</a>(inboxId, { ...params }) -> AgentMailApi.SendMessageResponse</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">send</a>(inboxId, { ...params }) -> AgentMailApi.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -410,7 +276,7 @@ await client.messages.deleteMessage("inbox_id", "message_id");
 <dd>
 
 ```typescript
-await client.messages.sendMessage("inbox_id", {
+await client.messages.send("inbox_id", {
     to: "to",
     cc: undefined,
     bcc: undefined,
@@ -460,7 +326,7 @@ await client.messages.sendMessage("inbox_id", {
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">replyToMessage</a>(inboxId, messageId, { ...params }) -> AgentMailApi.SendMessageResponse</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">reply</a>(inboxId, messageId, { ...params }) -> AgentMailApi.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -473,7 +339,7 @@ await client.messages.sendMessage("inbox_id", {
 <dd>
 
 ```typescript
-await client.messages.replyToMessage("inbox_id", "message_id", {
+await client.messages.reply("inbox_id", "message_id", {
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -532,7 +398,7 @@ await client.messages.replyToMessage("inbox_id", "message_id", {
 
 ## Threads
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">listThreads</a>(inboxId, { ...params }) -> AgentMailApi.ListThreadsResponse</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMailApi.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -545,7 +411,7 @@ await client.messages.replyToMessage("inbox_id", "message_id", {
 <dd>
 
 ```typescript
-await client.threads.listThreads("inbox_id");
+await client.threads.list("inbox_id");
 ```
 
 </dd>
@@ -588,7 +454,7 @@ await client.threads.listThreads("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getThread</a>(inboxId, threadId) -> AgentMailApi.Thread</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(inboxId, threadId) -> AgentMailApi.Thread</code></summary>
 <dl>
 <dd>
 
@@ -601,78 +467,7 @@ await client.threads.listThreads("inbox_id");
 <dd>
 
 ```typescript
-await client.threads.getThread("inbox_id", "thread_id");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inboxId:** `AgentMailApi.InboxId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**threadId:** `AgentMailApi.ThreadId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Threads.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">deleteThread</a>(inboxId, threadId) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Delete thread and all of its messages and attachments.
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.threads.deleteThread("inbox_id", "thread_id");
+await client.threads.get("inbox_id", "thread_id");
 ```
 
 </dd>

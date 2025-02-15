@@ -12,7 +12,7 @@ import * as stream from "stream";
 
 export declare namespace Messages {
     export interface Options {
-        environment: core.Supplier<environments.AgentMailApiEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailApiEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -31,7 +31,7 @@ export declare namespace Messages {
 }
 
 export class Messages {
-    constructor(protected readonly _options: Messages.Options) {}
+    constructor(protected readonly _options: Messages.Options = {}) {}
 
     /**
      * @param {AgentMailApi.InboxId} inboxId
@@ -41,9 +41,9 @@ export class Messages {
      * @throws {@link AgentMailApi.NotFoundError}
      *
      * @example
-     *     await client.messages.listMessages("inbox_id")
+     *     await client.messages.list("inbox_id")
      */
-    public async listMessages(
+    public async list(
         inboxId: AgentMailApi.InboxId,
         request: AgentMailApi.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
@@ -61,7 +61,8 @@ export class Messages {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/`,
             ),
             method: "GET",
@@ -135,9 +136,9 @@ export class Messages {
      * @throws {@link AgentMailApi.NotFoundError}
      *
      * @example
-     *     await client.messages.getMessage("inbox_id", "message_id")
+     *     await client.messages.get("inbox_id", "message_id")
      */
-    public async getMessage(
+    public async get(
         inboxId: AgentMailApi.InboxId,
         messageId: AgentMailApi.MessageId,
         requestOptions?: Messages.RequestOptions,
@@ -145,7 +146,8 @@ export class Messages {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
             ),
             method: "GET",
@@ -222,7 +224,8 @@ export class Messages {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}/attachments/${encodeURIComponent(serializers.AttachmentId.jsonOrThrow(attachmentId))}`,
             ),
             method: "GET",
@@ -284,86 +287,6 @@ export class Messages {
     }
 
     /**
-     * Delete message and its attachments.
-     *
-     * @param {AgentMailApi.InboxId} inboxId
-     * @param {AgentMailApi.MessageId} messageId
-     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMailApi.NotFoundError}
-     *
-     * @example
-     *     await client.messages.deleteMessage("inbox_id", "message_id")
-     */
-    public async deleteMessage(
-        inboxId: AgentMailApi.InboxId,
-        messageId: AgentMailApi.MessageId,
-        requestOptions?: Messages.RequestOptions,
-    ): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
-            ),
-            method: "DELETE",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMailApi.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                default:
-                    throw new errors.AgentMailApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
-                    "Timeout exceeded when calling DELETE /v0/inboxes/{inbox_id}/messages/{message_id}.",
-                );
-            case "unknown":
-                throw new errors.AgentMailApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
      * @param {AgentMailApi.InboxId} inboxId
      * @param {AgentMailApi.SendMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
@@ -372,7 +295,7 @@ export class Messages {
      * @throws {@link AgentMailApi.ValidationError}
      *
      * @example
-     *     await client.messages.sendMessage("inbox_id", {
+     *     await client.messages.send("inbox_id", {
      *         to: "to",
      *         cc: undefined,
      *         bcc: undefined,
@@ -381,7 +304,7 @@ export class Messages {
      *         html: undefined
      *     })
      */
-    public async sendMessage(
+    public async send(
         inboxId: AgentMailApi.InboxId,
         request: AgentMailApi.SendMessageRequest,
         requestOptions?: Messages.RequestOptions,
@@ -389,7 +312,8 @@ export class Messages {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/`,
             ),
             method: "POST",
@@ -474,7 +398,7 @@ export class Messages {
      * @throws {@link AgentMailApi.ValidationError}
      *
      * @example
-     *     await client.messages.replyToMessage("inbox_id", "message_id", {
+     *     await client.messages.reply("inbox_id", "message_id", {
      *         to: undefined,
      *         cc: undefined,
      *         bcc: undefined,
@@ -482,7 +406,7 @@ export class Messages {
      *         html: undefined
      *     })
      */
-    public async replyToMessage(
+    public async reply(
         inboxId: AgentMailApi.InboxId,
         messageId: AgentMailApi.MessageId,
         request: AgentMailApi.ReplyToMessageRequest,
@@ -491,7 +415,8 @@ export class Messages {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
             ),
             method: "POST",

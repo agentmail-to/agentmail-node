@@ -10,7 +10,7 @@ import { Messages } from "./api/resources/messages/client/Client";
 
 export declare namespace AgentMailApiClient {
     export interface Options {
-        environment: core.Supplier<environments.AgentMailApiEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailApiEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -33,7 +33,7 @@ export class AgentMailApiClient {
     protected _threads: Threads | undefined;
     protected _messages: Messages | undefined;
 
-    constructor(protected readonly _options: AgentMailApiClient.Options) {}
+    constructor(protected readonly _options: AgentMailApiClient.Options = {}) {}
 
     public get inboxes(): Inboxes {
         return (this._inboxes ??= new Inboxes(this._options));

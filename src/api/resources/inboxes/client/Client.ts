@@ -11,7 +11,7 @@ import * as errors from "../../../../errors/index";
 
 export declare namespace Inboxes {
     export interface Options {
-        environment: core.Supplier<environments.AgentMailApiEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailApiEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -30,16 +30,16 @@ export declare namespace Inboxes {
 }
 
 export class Inboxes {
-    constructor(protected readonly _options: Inboxes.Options) {}
+    constructor(protected readonly _options: Inboxes.Options = {}) {}
 
     /**
      * @param {AgentMailApi.ListInboxesRequest} request
      * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.inboxes.listInboxes()
+     *     await client.inboxes.list()
      */
-    public async listInboxes(
+    public async list(
         request: AgentMailApi.ListInboxesRequest = {},
         requestOptions?: Inboxes.RequestOptions,
     ): Promise<AgentMailApi.ListInboxesResponse> {
@@ -56,7 +56,8 @@ export class Inboxes {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 "/v0/inboxes/",
             ),
             method: "GET",
@@ -115,16 +116,17 @@ export class Inboxes {
      * @throws {@link AgentMailApi.NotFoundError}
      *
      * @example
-     *     await client.inboxes.getInbox("inbox_id")
+     *     await client.inboxes.get("inbox_id")
      */
-    public async getInbox(
+    public async get(
         inboxId: AgentMailApi.InboxId,
         requestOptions?: Inboxes.RequestOptions,
     ): Promise<AgentMailApi.Inbox> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}`,
             ),
             method: "GET",
@@ -194,24 +196,25 @@ export class Inboxes {
      * @throws {@link AgentMailApi.ValidationError}
      *
      * @example
-     *     await client.inboxes.createInbox({
+     *     await client.inboxes.create({
      *         username: "yourinbox",
      *         displayName: "Your Inbox"
      *     })
      *
      * @example
-     *     await client.inboxes.createInbox({
+     *     await client.inboxes.create({
      *         domain: "yourdomain.com"
      *     })
      */
-    public async createInbox(
+    public async create(
         request: AgentMailApi.CreateInboxRequest,
         requestOptions?: Inboxes.RequestOptions,
     ): Promise<AgentMailApi.Inbox> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 "/v0/inboxes/",
             ),
             method: "POST",
@@ -268,81 +271,6 @@ export class Inboxes {
                 });
             case "timeout":
                 throw new errors.AgentMailApiTimeoutError("Timeout exceeded when calling POST /v0/inboxes/.");
-            case "unknown":
-                throw new errors.AgentMailApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Delete inbox and all of its threads, messages, and attachments.
-     *
-     * @param {AgentMailApi.InboxId} inboxId
-     * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMailApi.NotFoundError}
-     *
-     * @example
-     *     await client.inboxes.deleteInbox("yourinbox@agentmail.to")
-     */
-    public async deleteInbox(inboxId: AgentMailApi.InboxId, requestOptions?: Inboxes.RequestOptions): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}`,
-            ),
-            method: "DELETE",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMailApi.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                default:
-                    throw new errors.AgentMailApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
-                    "Timeout exceeded when calling DELETE /v0/inboxes/{inbox_id}.",
-                );
             case "unknown":
                 throw new errors.AgentMailApiError({
                     message: _response.error.errorMessage,

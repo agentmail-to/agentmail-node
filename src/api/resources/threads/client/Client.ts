@@ -11,7 +11,7 @@ import * as errors from "../../../../errors/index";
 
 export declare namespace Threads {
     export interface Options {
-        environment: core.Supplier<environments.AgentMailApiEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailApiEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -30,7 +30,7 @@ export declare namespace Threads {
 }
 
 export class Threads {
-    constructor(protected readonly _options: Threads.Options) {}
+    constructor(protected readonly _options: Threads.Options = {}) {}
 
     /**
      * @param {AgentMailApi.InboxId} inboxId
@@ -40,9 +40,9 @@ export class Threads {
      * @throws {@link AgentMailApi.NotFoundError}
      *
      * @example
-     *     await client.threads.listThreads("inbox_id")
+     *     await client.threads.list("inbox_id")
      */
-    public async listThreads(
+    public async list(
         inboxId: AgentMailApi.InboxId,
         request: AgentMailApi.ListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
@@ -60,7 +60,8 @@ export class Threads {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/threads/`,
             ),
             method: "GET",
@@ -134,9 +135,9 @@ export class Threads {
      * @throws {@link AgentMailApi.NotFoundError}
      *
      * @example
-     *     await client.threads.getThread("inbox_id", "thread_id")
+     *     await client.threads.get("inbox_id", "thread_id")
      */
-    public async getThread(
+    public async get(
         inboxId: AgentMailApi.InboxId,
         threadId: AgentMailApi.ThreadId,
         requestOptions?: Threads.RequestOptions,
@@ -144,7 +145,8 @@ export class Threads {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/threads/${encodeURIComponent(serializers.ThreadId.jsonOrThrow(threadId))}`,
             ),
             method: "GET",
@@ -201,86 +203,6 @@ export class Threads {
             case "timeout":
                 throw new errors.AgentMailApiTimeoutError(
                     "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/threads/{thread_id}.",
-                );
-            case "unknown":
-                throw new errors.AgentMailApiError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * Delete thread and all of its messages and attachments.
-     *
-     * @param {AgentMailApi.InboxId} inboxId
-     * @param {AgentMailApi.ThreadId} threadId
-     * @param {Threads.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMailApi.NotFoundError}
-     *
-     * @example
-     *     await client.threads.deleteThread("inbox_id", "thread_id")
-     */
-    public async deleteThread(
-        inboxId: AgentMailApi.InboxId,
-        threadId: AgentMailApi.ThreadId,
-        requestOptions?: Threads.RequestOptions,
-    ): Promise<void> {
-        const _response = await core.fetcher({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)),
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/threads/${encodeURIComponent(serializers.ThreadId.jsonOrThrow(threadId))}`,
-            ),
-            method: "DELETE",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return;
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMailApi.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                default:
-                    throw new errors.AgentMailApiError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailApiError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
-                    "Timeout exceeded when calling DELETE /v0/inboxes/{inbox_id}/threads/{thread_id}.",
                 );
             case "unknown":
                 throw new errors.AgentMailApiError({
