@@ -3,10 +3,10 @@
  */
 
 import * as errors from "../../errors/index";
-import * as AgentMailApi from "../index";
+import * as AgentmailApi from "../index";
 
-export class NotFoundError extends errors.AgentMailApiError {
-    constructor(body: AgentMailApi.ErrorResponse) {
+export class NotFoundError extends errors.AgentmailApiError {
+    constructor(body: AgentmailApi.ErrorResponse) {
         super({
             message: "NotFoundError",
             statusCode: 404,

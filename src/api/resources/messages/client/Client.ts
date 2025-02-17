@@ -4,7 +4,7 @@
 
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
-import * as AgentMailApi from "../../../index";
+import * as AgentmailApi from "../../../index";
 import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
@@ -12,7 +12,7 @@ import * as stream from "stream";
 
 export declare namespace Messages {
     export interface Options {
-        environment?: core.Supplier<environments.AgentMailApiEnvironment | string>;
+        environment?: core.Supplier<environments.AgentmailApiEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -34,22 +34,32 @@ export class Messages {
     constructor(protected readonly _options: Messages.Options = {}) {}
 
     /**
-     * @param {AgentMailApi.InboxId} inboxId
-     * @param {AgentMailApi.ListMessagesRequest} request
+     * List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
+     *
+     * @param {AgentmailApi.InboxId} inboxId
+     * @param {AgentmailApi.ListMessagesRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMailApi.NotFoundError}
+     * @throws {@link AgentmailApi.NotFoundError}
      *
      * @example
      *     await client.messages.list("inbox_id")
      */
     public async list(
-        inboxId: AgentMailApi.InboxId,
-        request: AgentMailApi.ListMessagesRequest = {},
+        inboxId: AgentmailApi.InboxId,
+        request: AgentmailApi.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMailApi.ListMessagesResponse> {
-        const { limit, lastKey } = request;
+    ): Promise<AgentmailApi.ListMessagesResponse> {
+        const { received, sent, limit, lastKey } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (received != null) {
+            _queryParams["received"] = received.toString();
+        }
+
+        if (sent != null) {
+            _queryParams["sent"] = sent.toString();
+        }
+
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -62,7 +72,7 @@ export class Messages {
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailApiEnvironment.Production,
+                    environments.AgentmailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/`,
             ),
             method: "GET",
@@ -70,8 +80,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
+                "X-Fern-SDK-Version": "0.0.11",
+                "User-Agent": "agentmail/0.0.11",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -95,7 +105,7 @@ export class Messages {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new AgentMailApi.NotFoundError(
+                    throw new AgentmailApi.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -104,7 +114,7 @@ export class Messages {
                         }),
                     );
                 default:
-                    throw new errors.AgentMailApiError({
+                    throw new errors.AgentmailApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -113,41 +123,41 @@ export class Messages {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
+                throw new errors.AgentmailApiTimeoutError(
                     "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/.",
                 );
             case "unknown":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     message: _response.error.errorMessage,
                 });
         }
     }
 
     /**
-     * @param {AgentMailApi.InboxId} inboxId
-     * @param {AgentMailApi.MessageId} messageId
+     * @param {AgentmailApi.InboxId} inboxId
+     * @param {AgentmailApi.MessageId} messageId
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMailApi.NotFoundError}
+     * @throws {@link AgentmailApi.NotFoundError}
      *
      * @example
      *     await client.messages.get("inbox_id", "message_id")
      */
     public async get(
-        inboxId: AgentMailApi.InboxId,
-        messageId: AgentMailApi.MessageId,
+        inboxId: AgentmailApi.InboxId,
+        messageId: AgentmailApi.MessageId,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMailApi.Message> {
+    ): Promise<AgentmailApi.Message> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailApiEnvironment.Production,
+                    environments.AgentmailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
             ),
             method: "GET",
@@ -155,8 +165,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
+                "X-Fern-SDK-Version": "0.0.11",
+                "User-Agent": "agentmail/0.0.11",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -179,7 +189,7 @@ export class Messages {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new AgentMailApi.NotFoundError(
+                    throw new AgentmailApi.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -188,7 +198,7 @@ export class Messages {
                         }),
                     );
                 default:
-                    throw new errors.AgentMailApiError({
+                    throw new errors.AgentmailApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -197,35 +207,35 @@ export class Messages {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
+                throw new errors.AgentmailApiTimeoutError(
                     "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}.",
                 );
             case "unknown":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     message: _response.error.errorMessage,
                 });
         }
     }
 
     /**
-     * @throws {@link AgentMailApi.NotFoundError}
+     * @throws {@link AgentmailApi.NotFoundError}
      */
     public async getAttachment(
-        inboxId: AgentMailApi.InboxId,
-        messageId: AgentMailApi.MessageId,
-        attachmentId: AgentMailApi.AttachmentId,
+        inboxId: AgentmailApi.InboxId,
+        messageId: AgentmailApi.MessageId,
+        attachmentId: AgentmailApi.AttachmentId,
         requestOptions?: Messages.RequestOptions,
     ): Promise<stream.Readable> {
         const _response = await core.fetcher<stream.Readable>({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailApiEnvironment.Production,
+                    environments.AgentmailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}/attachments/${encodeURIComponent(serializers.AttachmentId.jsonOrThrow(attachmentId))}`,
             ),
             method: "GET",
@@ -233,8 +243,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
+                "X-Fern-SDK-Version": "0.0.11",
+                "User-Agent": "agentmail/0.0.11",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -253,7 +263,7 @@ export class Messages {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new AgentMailApi.NotFoundError(
+                    throw new AgentmailApi.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -262,7 +272,7 @@ export class Messages {
                         }),
                     );
                 default:
-                    throw new errors.AgentMailApiError({
+                    throw new errors.AgentmailApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -271,28 +281,28 @@ export class Messages {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
+                throw new errors.AgentmailApiTimeoutError(
                     "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}/attachments/{attachment_id}.",
                 );
             case "unknown":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     message: _response.error.errorMessage,
                 });
         }
     }
 
     /**
-     * @param {AgentMailApi.InboxId} inboxId
-     * @param {AgentMailApi.SendMessageRequest} request
+     * @param {AgentmailApi.InboxId} inboxId
+     * @param {AgentmailApi.SendMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMailApi.NotFoundError}
-     * @throws {@link AgentMailApi.ValidationError}
+     * @throws {@link AgentmailApi.NotFoundError}
+     * @throws {@link AgentmailApi.ValidationError}
      *
      * @example
      *     await client.messages.send("inbox_id", {
@@ -305,15 +315,15 @@ export class Messages {
      *     })
      */
     public async send(
-        inboxId: AgentMailApi.InboxId,
-        request: AgentMailApi.SendMessageRequest,
+        inboxId: AgentmailApi.InboxId,
+        request: AgentmailApi.SendMessageRequest,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMailApi.SendMessageResponse> {
+    ): Promise<AgentmailApi.SendMessageResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailApiEnvironment.Production,
+                    environments.AgentmailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/`,
             ),
             method: "POST",
@@ -321,8 +331,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
+                "X-Fern-SDK-Version": "0.0.11",
+                "User-Agent": "agentmail/0.0.11",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -346,7 +356,7 @@ export class Messages {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new AgentMailApi.NotFoundError(
+                    throw new AgentmailApi.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -355,7 +365,7 @@ export class Messages {
                         }),
                     );
                 case 400:
-                    throw new AgentMailApi.ValidationError(
+                    throw new AgentmailApi.ValidationError(
                         serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -364,7 +374,7 @@ export class Messages {
                         }),
                     );
                 default:
-                    throw new errors.AgentMailApiError({
+                    throw new errors.AgentmailApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -373,29 +383,29 @@ export class Messages {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
+                throw new errors.AgentmailApiTimeoutError(
                     "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/.",
                 );
             case "unknown":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     message: _response.error.errorMessage,
                 });
         }
     }
 
     /**
-     * @param {AgentMailApi.InboxId} inboxId
-     * @param {AgentMailApi.MessageId} messageId
-     * @param {AgentMailApi.ReplyToMessageRequest} request
+     * @param {AgentmailApi.InboxId} inboxId
+     * @param {AgentmailApi.MessageId} messageId
+     * @param {AgentmailApi.ReplyToMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMailApi.NotFoundError}
-     * @throws {@link AgentMailApi.ValidationError}
+     * @throws {@link AgentmailApi.NotFoundError}
+     * @throws {@link AgentmailApi.ValidationError}
      *
      * @example
      *     await client.messages.reply("inbox_id", "message_id", {
@@ -407,16 +417,16 @@ export class Messages {
      *     })
      */
     public async reply(
-        inboxId: AgentMailApi.InboxId,
-        messageId: AgentMailApi.MessageId,
-        request: AgentMailApi.ReplyToMessageRequest,
+        inboxId: AgentmailApi.InboxId,
+        messageId: AgentmailApi.MessageId,
+        request: AgentmailApi.ReplyToMessageRequest,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMailApi.SendMessageResponse> {
+    ): Promise<AgentmailApi.SendMessageResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailApiEnvironment.Production,
+                    environments.AgentmailApiEnvironment.Production,
                 `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
             ),
             method: "POST",
@@ -424,8 +434,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.10",
-                "User-Agent": "agentmail/0.0.10",
+                "X-Fern-SDK-Version": "0.0.11",
+                "User-Agent": "agentmail/0.0.11",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -449,7 +459,7 @@ export class Messages {
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
-                    throw new AgentMailApi.NotFoundError(
+                    throw new AgentmailApi.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -458,7 +468,7 @@ export class Messages {
                         }),
                     );
                 case 400:
-                    throw new AgentMailApi.ValidationError(
+                    throw new AgentmailApi.ValidationError(
                         serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -467,7 +477,7 @@ export class Messages {
                         }),
                     );
                 default:
-                    throw new errors.AgentMailApiError({
+                    throw new errors.AgentmailApiError({
                         statusCode: _response.error.statusCode,
                         body: _response.error.body,
                     });
@@ -476,16 +486,16 @@ export class Messages {
 
         switch (_response.error.reason) {
             case "non-json":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     statusCode: _response.error.statusCode,
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailApiTimeoutError(
+                throw new errors.AgentmailApiTimeoutError(
                     "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/{message_id}.",
                 );
             case "unknown":
-                throw new errors.AgentMailApiError({
+                throw new errors.AgentmailApiError({
                     message: _response.error.errorMessage,
                 });
         }
@@ -494,7 +504,7 @@ export class Messages {
     protected async _getAuthorizationHeader(): Promise<string> {
         const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["AGENTMAIL_API_KEY"];
         if (bearer == null) {
-            throw new errors.AgentMailApiError({
+            throw new errors.AgentmailApiError({
                 message:
                     "Please specify a bearer by either passing it in to the constructor or initializing a AGENTMAIL_API_KEY environment variable",
             });

@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../index";
-import * as AgentMailApi from "../../api/index";
+import * as AgentmailApi from "../../api/index";
 import * as core from "../../core";
 
-export const ErrorName: core.serialization.Schema<serializers.ErrorName.Raw, AgentMailApi.ErrorName> =
+export const ErrorName: core.serialization.Schema<serializers.ErrorName.Raw, AgentmailApi.ErrorName> =
     core.serialization.string();
 
 export declare namespace ErrorName {

@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MessageText: core.serialization.Schema<serializers.MessageText.Raw, AgentMailApi.MessageText> =
+export const MessageText: core.serialization.Schema<serializers.MessageText.Raw, AgentmailApi.MessageText> =
     core.serialization.string().optional();
 
 export declare namespace MessageText {

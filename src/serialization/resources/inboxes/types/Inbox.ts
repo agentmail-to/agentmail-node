@@ -3,12 +3,12 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { InboxId } from "./InboxId";
 import { DisplayName } from "./DisplayName";
 
-export const Inbox: core.serialization.ObjectSchema<serializers.Inbox.Raw, AgentMailApi.Inbox> =
+export const Inbox: core.serialization.ObjectSchema<serializers.Inbox.Raw, AgentmailApi.Inbox> =
     core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
         organizationId: core.serialization.property("organization_id", core.serialization.string()),

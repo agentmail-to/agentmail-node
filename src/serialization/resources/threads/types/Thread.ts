@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { ThreadId } from "./ThreadId";
 import { InboxId } from "../../inboxes/types/InboxId";
@@ -12,7 +12,7 @@ import { ThreadSubject } from "./ThreadSubject";
 import { ThreadParticipants } from "./ThreadParticipants";
 import { Message } from "../../messages/types/Message";
 
-export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, AgentMailApi.Thread> =
+export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, AgentmailApi.Thread> =
     core.serialization.object({
         threadId: core.serialization.property("thread_id", ThreadId),
         inboxId: core.serialization.property("inbox_id", InboxId),

@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { SendMessageTo } from "./SendMessageTo";
 import { SendMessageCc } from "./SendMessageCc";
@@ -14,7 +14,7 @@ import { Addresses } from "./Addresses";
 
 export const ReplyToMessageRequest: core.serialization.ObjectSchema<
     serializers.ReplyToMessageRequest.Raw,
-    AgentMailApi.ReplyToMessageRequest
+    AgentmailApi.ReplyToMessageRequest
 > = core.serialization.object({
     to: SendMessageTo.optional(),
     cc: SendMessageCc,

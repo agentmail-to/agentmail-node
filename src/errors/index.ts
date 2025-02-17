@@ -1,2 +1,2 @@
-export { AgentMailApiError } from "./AgentMailApiError";
-export { AgentMailApiTimeoutError } from "./AgentMailApiTimeoutError";
+export { AgentmailApiError } from "./AgentmailApiError";
+export { AgentmailApiTimeoutError } from "./AgentmailApiTimeoutError";

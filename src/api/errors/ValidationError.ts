@@ -3,10 +3,10 @@
  */
 
 import * as errors from "../../errors/index";
-import * as AgentMailApi from "../index";
+import * as AgentmailApi from "../index";
 
-export class ValidationError extends errors.AgentMailApiError {
-    constructor(body: AgentMailApi.ValidationErrorResponse) {
+export class ValidationError extends errors.AgentmailApiError {
+    constructor(body: AgentmailApi.ValidationErrorResponse) {
         super({
             message: "ValidationError",
             statusCode: 400,

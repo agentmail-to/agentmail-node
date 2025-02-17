@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { ThreadItem } from "./ThreadItem";
 import { Limit } from "../../../types/Limit";
@@ -12,7 +12,7 @@ import { LastKey } from "../../../types/LastKey";
 
 export const ListThreadsResponse: core.serialization.ObjectSchema<
     serializers.ListThreadsResponse.Raw,
-    AgentMailApi.ListThreadsResponse
+    AgentmailApi.ListThreadsResponse
 > = core.serialization.object({
     threads: core.serialization.list(ThreadItem),
     limit: Limit,

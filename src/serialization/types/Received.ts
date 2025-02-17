@@ -6,10 +6,10 @@ import * as serializers from "../index";
 import * as AgentmailApi from "../../api/index";
 import * as core from "../../core";
 
-export const LastKey: core.serialization.Schema<serializers.LastKey.Raw, AgentmailApi.LastKey> = core.serialization
-    .string()
+export const Received: core.serialization.Schema<serializers.Received.Raw, AgentmailApi.Received> = core.serialization
+    .boolean()
     .optional();
 
-export declare namespace LastKey {
-    export type Raw = string | null | undefined;
+export declare namespace Received {
+    export type Raw = boolean | null | undefined;
 }

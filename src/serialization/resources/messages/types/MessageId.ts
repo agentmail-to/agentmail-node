@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MessageId: core.serialization.Schema<serializers.MessageId.Raw, AgentMailApi.MessageId> =
+export const MessageId: core.serialization.Schema<serializers.MessageId.Raw, AgentmailApi.MessageId> =
     core.serialization.string();
 
 export declare namespace MessageId {

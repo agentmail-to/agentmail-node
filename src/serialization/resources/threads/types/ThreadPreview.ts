@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ThreadPreview: core.serialization.Schema<serializers.ThreadPreview.Raw, AgentMailApi.ThreadPreview> =
+export const ThreadPreview: core.serialization.Schema<serializers.ThreadPreview.Raw, AgentmailApi.ThreadPreview> =
     core.serialization.string().optional();
 
 export declare namespace ThreadPreview {

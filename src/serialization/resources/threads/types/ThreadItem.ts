@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { ThreadId } from "./ThreadId";
 import { ThreadUpdatedAt } from "./ThreadUpdatedAt";
@@ -11,7 +11,7 @@ import { ThreadParticipants } from "./ThreadParticipants";
 import { ThreadSubject } from "./ThreadSubject";
 import { ThreadPreview } from "./ThreadPreview";
 
-export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.Raw, AgentMailApi.ThreadItem> =
+export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.Raw, AgentmailApi.ThreadItem> =
     core.serialization.object({
         threadId: core.serialization.property("thread_id", ThreadId),
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),

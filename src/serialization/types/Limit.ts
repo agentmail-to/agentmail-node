@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../index";
-import * as AgentMailApi from "../../api/index";
+import * as AgentmailApi from "../../api/index";
 import * as core from "../../core";
 
-export const Limit: core.serialization.Schema<serializers.Limit.Raw, AgentMailApi.Limit> = core.serialization.number();
+export const Limit: core.serialization.Schema<serializers.Limit.Raw, AgentmailApi.Limit> = core.serialization.number();
 
 export declare namespace Limit {
     export type Raw = number;

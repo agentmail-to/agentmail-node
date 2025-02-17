@@ -3,7 +3,7 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { Inbox } from "./Inbox";
 import { Limit } from "../../../types/Limit";
@@ -12,7 +12,7 @@ import { LastKey } from "../../../types/LastKey";
 
 export const ListInboxesResponse: core.serialization.ObjectSchema<
     serializers.ListInboxesResponse.Raw,
-    AgentMailApi.ListInboxesResponse
+    AgentmailApi.ListInboxesResponse
 > = core.serialization.object({
     inboxes: core.serialization.list(Inbox),
     limit: Limit,

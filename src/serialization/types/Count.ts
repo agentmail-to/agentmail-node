@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../index";
-import * as AgentMailApi from "../../api/index";
+import * as AgentmailApi from "../../api/index";
 import * as core from "../../core";
 
-export const Count: core.serialization.Schema<serializers.Count.Raw, AgentMailApi.Count> = core.serialization.number();
+export const Count: core.serialization.Schema<serializers.Count.Raw, AgentmailApi.Count> = core.serialization.number();
 
 export declare namespace Count {
     export type Raw = number;

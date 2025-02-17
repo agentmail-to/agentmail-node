@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentMailApi from "../../../../api/index";
+import * as AgentmailApi from "../../../../api/index";
 import * as core from "../../../../core";
 import { DisplayName } from "./DisplayName";
 
 export const CreateInboxRequest: core.serialization.ObjectSchema<
     serializers.CreateInboxRequest.Raw,
-    AgentMailApi.CreateInboxRequest
+    AgentmailApi.CreateInboxRequest
 > = core.serialization.object({
     username: core.serialization.string().optional(),
     domain: core.serialization.string().optional(),
