@@ -3,14 +3,14 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { MessageThreadId } from "./MessageThreadId";
 import { MessageId } from "./MessageId";
 
 export const SendMessageResponse: core.serialization.ObjectSchema<
     serializers.SendMessageResponse.Raw,
-    AgentmailApi.SendMessageResponse
+    AgentMail.SendMessageResponse
 > = core.serialization.object({
     threadId: core.serialization.property("thread_id", MessageThreadId),
     messageId: core.serialization.property("message_id", MessageId),

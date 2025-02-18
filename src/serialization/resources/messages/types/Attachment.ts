@@ -3,11 +3,11 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { AttachmentId } from "./AttachmentId";
 
-export const Attachment: core.serialization.ObjectSchema<serializers.Attachment.Raw, AgentmailApi.Attachment> =
+export const Attachment: core.serialization.ObjectSchema<serializers.Attachment.Raw, AgentMail.Attachment> =
     core.serialization.object({
         attachmentId: core.serialization.property("attachment_id", AttachmentId),
         filename: core.serialization.string(),

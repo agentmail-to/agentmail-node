@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const DisplayName: core.serialization.Schema<serializers.DisplayName.Raw, AgentmailApi.DisplayName> =
+export const DisplayName: core.serialization.Schema<serializers.DisplayName.Raw, AgentMail.DisplayName> =
     core.serialization.string();
 
 export declare namespace DisplayName {

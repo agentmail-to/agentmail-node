@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../index";
-import * as AgentmailApi from "../../api/index";
+import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 import { ErrorName } from "./ErrorName";
 
 export const ValidationErrorResponse: core.serialization.ObjectSchema<
     serializers.ValidationErrorResponse.Raw,
-    AgentmailApi.ValidationErrorResponse
+    AgentMail.ValidationErrorResponse
 > = core.serialization.object({
     name: ErrorName,
     errors: core.serialization.unknown(),

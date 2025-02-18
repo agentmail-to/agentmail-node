@@ -1,5 +1,5 @@
-export * as AgentmailApi from "./api";
-export { AgentmailApiClient } from "./Client";
-export { AgentmailApiEnvironment } from "./environments";
-export { AgentmailApiError, AgentmailApiTimeoutError } from "./errors";
+export * as AgentMail from "./api";
+export { AgentMailClient } from "./Client";
+export { AgentMailEnvironment } from "./environments";
+export { AgentMailError, AgentMailTimeoutError } from "./errors";
 export * as serialization from "./serialization";

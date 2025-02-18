@@ -20,9 +20,9 @@ A full reference for this library is available [here](./reference.md).
 Instantiate and use the client with the following:
 
 ```typescript
-import { AgentmailApiClient } from "agentmail";
+import { AgentMailClient } from "agentmail";
 
-const client = new AgentmailApiClient({ apiKey: "YOUR_API_KEY" });
+const client = new AgentMailClient({ apiKey: "YOUR_API_KEY" });
 await client.inboxes.create({
     domain: "yourdomain.com",
 });
@@ -34,9 +34,9 @@ The SDK exports all request and response types as TypeScript interfaces. Simply 
 following namespace:
 
 ```typescript
-import { AgentmailApi } from "agentmail";
+import { AgentMail } from "agentmail";
 
-const request: AgentmailApi.ListInboxesRequest = {
+const request: AgentMail.ListInboxesRequest = {
     ...
 };
 ```
@@ -47,12 +47,12 @@ When the API returns a non-success status code (4xx or 5xx response), a subclass
 will be thrown.
 
 ```typescript
-import { AgentmailApiError } from "agentmail";
+import { AgentMailError } from "agentmail";
 
 try {
     await client.inboxes.create(...);
 } catch (err) {
-    if (err instanceof AgentmailApiError) {
+    if (err instanceof AgentMailError) {
         console.log(err.statusCode);
         console.log(err.message);
         console.log(err.body);
@@ -134,9 +134,9 @@ The SDK provides a way for your to customize the underlying HTTP client / Fetch 
 unsupported environment, this provides a way for you to break glass and ensure the SDK works.
 
 ```typescript
-import { AgentmailApiClient } from "agentmail";
+import { AgentMailClient } from "agentmail";
 
-const client = new AgentmailApiClient({
+const client = new AgentMailClient({
     ...
     fetcher: // provide your implementation here
 });

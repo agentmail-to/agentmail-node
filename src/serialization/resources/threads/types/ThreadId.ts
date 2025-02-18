@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ThreadId: core.serialization.Schema<serializers.ThreadId.Raw, AgentmailApi.ThreadId> =
+export const ThreadId: core.serialization.Schema<serializers.ThreadId.Raw, AgentMail.ThreadId> =
     core.serialization.string();
 
 export declare namespace ThreadId {

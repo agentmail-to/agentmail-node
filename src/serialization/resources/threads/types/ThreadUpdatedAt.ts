@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const ThreadUpdatedAt: core.serialization.Schema<serializers.ThreadUpdatedAt.Raw, AgentmailApi.ThreadUpdatedAt> =
+export const ThreadUpdatedAt: core.serialization.Schema<serializers.ThreadUpdatedAt.Raw, AgentMail.ThreadUpdatedAt> =
     core.serialization.date();
 
 export declare namespace ThreadUpdatedAt {

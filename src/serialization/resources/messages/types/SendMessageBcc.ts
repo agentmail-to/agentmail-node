@@ -3,11 +3,11 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { Addresses } from "./Addresses";
 
-export const SendMessageBcc: core.serialization.Schema<serializers.SendMessageBcc.Raw, AgentmailApi.SendMessageBcc> =
+export const SendMessageBcc: core.serialization.Schema<serializers.SendMessageBcc.Raw, AgentMail.SendMessageBcc> =
     Addresses.optional();
 
 export declare namespace SendMessageBcc {

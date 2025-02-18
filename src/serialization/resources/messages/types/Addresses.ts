@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Addresses: core.serialization.Schema<serializers.Addresses.Raw, AgentmailApi.Addresses> =
+export const Addresses: core.serialization.Schema<serializers.Addresses.Raw, AgentMail.Addresses> =
     core.serialization.undiscriminatedUnion([
         core.serialization.string(),
         core.serialization.list(core.serialization.string()),

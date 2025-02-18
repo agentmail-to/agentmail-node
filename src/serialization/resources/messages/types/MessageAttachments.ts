@@ -3,13 +3,13 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { Attachment } from "./Attachment";
 
 export const MessageAttachments: core.serialization.Schema<
     serializers.MessageAttachments.Raw,
-    AgentmailApi.MessageAttachments
+    AgentMail.MessageAttachments
 > = core.serialization.list(Attachment).optional();
 
 export declare namespace MessageAttachments {

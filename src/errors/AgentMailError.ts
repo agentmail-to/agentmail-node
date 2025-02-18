@@ -4,13 +4,13 @@
 
 import { toJson } from "../core/json";
 
-export class AgentmailApiError extends Error {
+export class AgentMailError extends Error {
     readonly statusCode?: number;
     readonly body?: unknown;
 
     constructor({ message, statusCode, body }: { message?: string; statusCode?: number; body?: unknown }) {
         super(buildMessage({ message, statusCode, body }));
-        Object.setPrototypeOf(this, AgentmailApiError.prototype);
+        Object.setPrototypeOf(this, AgentMailError.prototype);
         if (statusCode != null) {
             this.statusCode = statusCode;
         }

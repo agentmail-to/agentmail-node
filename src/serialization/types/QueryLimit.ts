@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../index";
-import * as AgentmailApi from "../../api/index";
+import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 
-export const QueryLimit: core.serialization.Schema<serializers.QueryLimit.Raw, AgentmailApi.QueryLimit> =
+export const QueryLimit: core.serialization.Schema<serializers.QueryLimit.Raw, AgentMail.QueryLimit> =
     core.serialization.number().optional();
 
 export declare namespace QueryLimit {

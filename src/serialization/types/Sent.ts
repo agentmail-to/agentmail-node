@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../index";
-import * as AgentmailApi from "../../api/index";
+import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 
-export const Sent: core.serialization.Schema<serializers.Sent.Raw, AgentmailApi.Sent> = core.serialization
+export const Sent: core.serialization.Schema<serializers.Sent.Raw, AgentMail.Sent> = core.serialization
     .boolean()
     .optional();
 

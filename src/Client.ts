@@ -8,9 +8,9 @@ import { Inboxes } from "./api/resources/inboxes/client/Client";
 import { Threads } from "./api/resources/threads/client/Client";
 import { Messages } from "./api/resources/messages/client/Client";
 
-export declare namespace AgentmailApiClient {
+export declare namespace AgentMailClient {
     export interface Options {
-        environment?: core.Supplier<environments.AgentmailApiEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -28,12 +28,12 @@ export declare namespace AgentmailApiClient {
     }
 }
 
-export class AgentmailApiClient {
+export class AgentMailClient {
     protected _inboxes: Inboxes | undefined;
     protected _threads: Threads | undefined;
     protected _messages: Messages | undefined;
 
-    constructor(protected readonly _options: AgentmailApiClient.Options = {}) {}
+    constructor(protected readonly _options: AgentMailClient.Options = {}) {}
 
     public get inboxes(): Inboxes {
         return (this._inboxes ??= new Inboxes(this._options));

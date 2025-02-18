@@ -2,7 +2,7 @@
 
 ## Inboxes
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> AgentmailApi.ListInboxesResponse</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListInboxesResponse</code></summary>
 <dl>
 <dd>
 
@@ -31,7 +31,7 @@ await client.inboxes.list();
 <dl>
 <dd>
 
-**request:** `AgentmailApi.ListInboxesRequest`
+**request:** `AgentMail.ListInboxesRequest`
 
 </dd>
 </dl>
@@ -50,7 +50,7 @@ await client.inboxes.list();
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">get</a>(inboxId) -> AgentmailApi.Inbox</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">get</a>(inboxId) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -79,7 +79,7 @@ await client.inboxes.get("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentmailApi.InboxId`
+**inboxId:** `AgentMail.InboxId`
 
 </dd>
 </dl>
@@ -98,7 +98,7 @@ await client.inboxes.get("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">create</a>({ ...params }) -> AgentmailApi.Inbox</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">create</a>({ ...params }) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -130,7 +130,7 @@ await client.inboxes.create({
 <dl>
 <dd>
 
-**request:** `AgentmailApi.CreateInboxRequest`
+**request:** `AgentMail.CreateInboxRequest`
 
 </dd>
 </dl>
@@ -151,7 +151,7 @@ await client.inboxes.create({
 
 ## Messages
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentmailApi.ListMessagesResponse</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -195,7 +195,7 @@ await client.messages.list("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentmailApi.InboxId`
+**inboxId:** `AgentMail.InboxId`
 
 </dd>
 </dl>
@@ -203,7 +203,7 @@ await client.messages.list("inbox_id");
 <dl>
 <dd>
 
-**request:** `AgentmailApi.ListMessagesRequest`
+**request:** `AgentMail.ListMessagesRequest`
 
 </dd>
 </dl>
@@ -222,7 +222,7 @@ await client.messages.list("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">get</a>(inboxId, messageId) -> AgentmailApi.Message</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">get</a>(inboxId, messageId) -> AgentMail.Message</code></summary>
 <dl>
 <dd>
 
@@ -251,7 +251,7 @@ await client.messages.get("inbox_id", "message_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentmailApi.InboxId`
+**inboxId:** `AgentMail.InboxId`
 
 </dd>
 </dl>
@@ -259,7 +259,7 @@ await client.messages.get("inbox_id", "message_id");
 <dl>
 <dd>
 
-**messageId:** `AgentmailApi.MessageId`
+**messageId:** `AgentMail.MessageId`
 
 </dd>
 </dl>
@@ -278,7 +278,7 @@ await client.messages.get("inbox_id", "message_id");
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">send</a>(inboxId, { ...params }) -> AgentmailApi.SendMessageResponse</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">send</a>(inboxId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -314,7 +314,7 @@ await client.messages.send("inbox_id", {
 <dl>
 <dd>
 
-**inboxId:** `AgentmailApi.InboxId`
+**inboxId:** `AgentMail.InboxId`
 
 </dd>
 </dl>
@@ -322,7 +322,7 @@ await client.messages.send("inbox_id", {
 <dl>
 <dd>
 
-**request:** `AgentmailApi.SendMessageRequest`
+**request:** `AgentMail.SendMessageRequest`
 
 </dd>
 </dl>
@@ -341,7 +341,7 @@ await client.messages.send("inbox_id", {
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">reply</a>(inboxId, messageId, { ...params }) -> AgentmailApi.SendMessageResponse</code></summary>
+<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">reply</a>(inboxId, messageId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -376,7 +376,7 @@ await client.messages.reply("inbox_id", "message_id", {
 <dl>
 <dd>
 
-**inboxId:** `AgentmailApi.InboxId`
+**inboxId:** `AgentMail.InboxId`
 
 </dd>
 </dl>
@@ -384,7 +384,7 @@ await client.messages.reply("inbox_id", "message_id", {
 <dl>
 <dd>
 
-**messageId:** `AgentmailApi.MessageId`
+**messageId:** `AgentMail.MessageId`
 
 </dd>
 </dl>
@@ -392,7 +392,7 @@ await client.messages.reply("inbox_id", "message_id", {
 <dl>
 <dd>
 
-**request:** `AgentmailApi.ReplyToMessageRequest`
+**request:** `AgentMail.ReplyToMessageRequest`
 
 </dd>
 </dl>
@@ -413,7 +413,7 @@ await client.messages.reply("inbox_id", "message_id", {
 
 ## Threads
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentmailApi.ListThreadsResponse</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -457,7 +457,7 @@ await client.threads.list("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentmailApi.InboxId`
+**inboxId:** `AgentMail.InboxId`
 
 </dd>
 </dl>
@@ -465,7 +465,7 @@ await client.threads.list("inbox_id");
 <dl>
 <dd>
 
-**request:** `AgentmailApi.ListThreadsRequest`
+**request:** `AgentMail.ListThreadsRequest`
 
 </dd>
 </dl>
@@ -484,7 +484,7 @@ await client.threads.list("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(inboxId, threadId) -> AgentmailApi.Thread</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(inboxId, threadId) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -513,7 +513,7 @@ await client.threads.get("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentmailApi.InboxId`
+**inboxId:** `AgentMail.InboxId`
 
 </dd>
 </dl>
@@ -521,7 +521,7 @@ await client.threads.get("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**threadId:** `AgentmailApi.ThreadId`
+**threadId:** `AgentMail.ThreadId`
 
 </dd>
 </dl>

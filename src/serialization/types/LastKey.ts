@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../index";
-import * as AgentmailApi from "../../api/index";
+import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 
-export const LastKey: core.serialization.Schema<serializers.LastKey.Raw, AgentmailApi.LastKey> = core.serialization
+export const LastKey: core.serialization.Schema<serializers.LastKey.Raw, AgentMail.LastKey> = core.serialization
     .string()
     .optional();
 

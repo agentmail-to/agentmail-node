@@ -3,11 +3,11 @@
  */
 
 import * as serializers from "../index";
-import * as AgentmailApi from "../../api/index";
+import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 import { ErrorName } from "./ErrorName";
 
-export const ErrorResponse: core.serialization.ObjectSchema<serializers.ErrorResponse.Raw, AgentmailApi.ErrorResponse> =
+export const ErrorResponse: core.serialization.ObjectSchema<serializers.ErrorResponse.Raw, AgentMail.ErrorResponse> =
     core.serialization.object({
         name: ErrorName,
         message: core.serialization.string(),

@@ -3,10 +3,10 @@
  */
 
 import * as errors from "../../errors/index";
-import * as AgentmailApi from "../index";
+import * as AgentMail from "../index";
 
-export class IsTakenError extends errors.AgentmailApiError {
-    constructor(body: AgentmailApi.ErrorResponse) {
+export class IsTakenError extends errors.AgentMailError {
+    constructor(body: AgentMail.ErrorResponse) {
         super({
             message: "IsTakenError",
             statusCode: 403,

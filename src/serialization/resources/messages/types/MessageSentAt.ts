@@ -3,10 +3,10 @@
  */
 
 import * as serializers from "../../../index";
-import * as AgentmailApi from "../../../../api/index";
+import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MessageSentAt: core.serialization.Schema<serializers.MessageSentAt.Raw, AgentmailApi.MessageSentAt> =
+export const MessageSentAt: core.serialization.Schema<serializers.MessageSentAt.Raw, AgentMail.MessageSentAt> =
     core.serialization.date();
 
 export declare namespace MessageSentAt {
