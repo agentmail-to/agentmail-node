@@ -18,7 +18,7 @@ export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, Age
         inboxId: core.serialization.property("inbox_id", InboxId),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
-        subject: ThreadSubject,
+        subject: ThreadSubject.optional(),
         participants: ThreadParticipants,
         messages: core.serialization.list(Message),
     });
@@ -29,7 +29,7 @@ export declare namespace Thread {
         inbox_id: InboxId.Raw;
         created_at: string;
         updated_at: ThreadUpdatedAt.Raw;
-        subject?: ThreadSubject.Raw;
+        subject?: ThreadSubject.Raw | null;
         participants: ThreadParticipants.Raw;
         messages: Message.Raw[];
     }

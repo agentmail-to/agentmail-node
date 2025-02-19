@@ -5,4 +5,4 @@
 /**
  * Plain text body of message.
  */
-export type MessageText = string | undefined;
+export type MessageText = string;

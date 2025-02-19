@@ -9,7 +9,7 @@ export interface Message {
     threadId: AgentMail.MessageThreadId;
     sentAt: AgentMail.MessageSentAt;
     /** Time at which message was received. */
-    receivedAt: Date;
+    receivedAt?: Date;
     from: AgentMail.MessageFrom;
     /** Address to reply to. In format `username@domain.com` or `Display Name <username@domain.com>`. */
     replyTo?: string;

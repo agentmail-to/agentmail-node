@@ -7,8 +7,8 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const MessagePreview: core.serialization.Schema<serializers.MessagePreview.Raw, AgentMail.MessagePreview> =
-    core.serialization.string().optional();
+    core.serialization.string();
 
 export declare namespace MessagePreview {
-    export type Raw = string | null | undefined;
+    export type Raw = string;
 }

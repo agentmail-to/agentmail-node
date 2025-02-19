@@ -6,10 +6,9 @@ import * as serializers from "../index";
 import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 
-export const Received: core.serialization.Schema<serializers.Received.Raw, AgentMail.Received> = core.serialization
-    .boolean()
-    .optional();
+export const Received: core.serialization.Schema<serializers.Received.Raw, AgentMail.Received> =
+    core.serialization.boolean();
 
 export declare namespace Received {
-    export type Raw = boolean | null | undefined;
+    export type Raw = boolean;
 }

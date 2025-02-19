@@ -5,4 +5,4 @@
 /**
  * Addresses of BCC recipients. In format `username@domain.com` or `Display Name <username@domain.com>`.
  */
-export type MessageBcc = string[] | undefined;
+export type MessageBcc = string[];

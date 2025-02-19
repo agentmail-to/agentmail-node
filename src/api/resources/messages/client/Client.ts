@@ -73,15 +73,15 @@ export class Messages {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/`,
+                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "agentmail/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "agentmail/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -129,7 +129,7 @@ export class Messages {
                 });
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/.",
+                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({
@@ -165,8 +165,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "agentmail/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "agentmail/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -243,8 +243,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "agentmail/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "agentmail/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -324,15 +324,15 @@ export class Messages {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/`,
+                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "agentmail/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "agentmail/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -389,7 +389,7 @@ export class Messages {
                 });
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/.",
+                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({
@@ -434,8 +434,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "agentmail/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "agentmail/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

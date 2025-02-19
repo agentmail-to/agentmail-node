@@ -5,4 +5,4 @@
 /**
  * HTML body of message.
  */
-export type MessageHtml = string | undefined;
+export type MessageHtml = string;

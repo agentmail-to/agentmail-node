@@ -7,8 +7,8 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const ThreadSubject: core.serialization.Schema<serializers.ThreadSubject.Raw, AgentMail.ThreadSubject> =
-    core.serialization.string().optional();
+    core.serialization.string();
 
 export declare namespace ThreadSubject {
-    export type Raw = string | null | undefined;
+    export type Raw = string;
 }

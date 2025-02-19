@@ -5,4 +5,4 @@
 /**
  * Subject of thread.
  */
-export type ThreadSubject = string | undefined;
+export type ThreadSubject = string;

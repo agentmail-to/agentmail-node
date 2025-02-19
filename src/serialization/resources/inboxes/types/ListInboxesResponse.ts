@@ -6,8 +6,8 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { Inbox } from "./Inbox";
-import { Limit } from "../../../types/Limit";
 import { Count } from "../../../types/Count";
+import { Limit } from "../../../types/Limit";
 import { LastKey } from "../../../types/LastKey";
 
 export const ListInboxesResponse: core.serialization.ObjectSchema<
@@ -15,16 +15,16 @@ export const ListInboxesResponse: core.serialization.ObjectSchema<
     AgentMail.ListInboxesResponse
 > = core.serialization.object({
     inboxes: core.serialization.list(Inbox),
-    limit: Limit,
     count: Count,
-    lastKey: core.serialization.property("last_key", LastKey),
+    limit: Limit.optional(),
+    lastKey: core.serialization.property("last_key", LastKey.optional()),
 });
 
 export declare namespace ListInboxesResponse {
     export interface Raw {
         inboxes: Inbox.Raw[];
-        limit: Limit.Raw;
         count: Count.Raw;
-        last_key?: LastKey.Raw;
+        limit?: Limit.Raw | null;
+        last_key?: LastKey.Raw | null;
     }
 }

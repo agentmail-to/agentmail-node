@@ -5,4 +5,4 @@
 /**
  * Text preview of message.
  */
-export type MessagePreview = string | undefined;
+export type MessagePreview = string;

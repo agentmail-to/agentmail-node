@@ -72,15 +72,15 @@ export class Threads {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/threads/`,
+                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/threads`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "agentmail/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "agentmail/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -128,7 +128,7 @@ export class Threads {
                 });
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/threads/.",
+                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/threads.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({
@@ -164,8 +164,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.12",
-                "User-Agent": "agentmail/0.0.12",
+                "X-Fern-SDK-Version": "0.0.13",
+                "User-Agent": "agentmail/0.0.13",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

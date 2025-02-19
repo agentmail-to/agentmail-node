@@ -7,8 +7,8 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const MessageBcc: core.serialization.Schema<serializers.MessageBcc.Raw, AgentMail.MessageBcc> =
-    core.serialization.list(core.serialization.string()).optional();
+    core.serialization.list(core.serialization.string());
 
 export declare namespace MessageBcc {
-    export type Raw = string[] | null | undefined;
+    export type Raw = string[];
 }

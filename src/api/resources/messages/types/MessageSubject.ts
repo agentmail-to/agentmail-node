@@ -5,4 +5,4 @@
 /**
  * Subject of message.
  */
-export type MessageSubject = string | undefined;
+export type MessageSubject = string;

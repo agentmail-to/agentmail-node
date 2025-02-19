@@ -7,8 +7,8 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
 export const MessageSubject: core.serialization.Schema<serializers.MessageSubject.Raw, AgentMail.MessageSubject> =
-    core.serialization.string().optional();
+    core.serialization.string();
 
 export declare namespace MessageSubject {
-    export type Raw = string | null | undefined;
+    export type Raw = string;
 }

@@ -20,9 +20,9 @@ export const SendMessageRequest: core.serialization.ObjectSchema<
     to: SendMessageTo,
     cc: SendMessageCc,
     bcc: SendMessageBcc,
-    subject: MessageSubject,
-    text: MessageText,
-    html: MessageHtml,
+    subject: MessageSubject.optional(),
+    text: MessageText.optional(),
+    html: MessageHtml.optional(),
 });
 
 export declare namespace SendMessageRequest {
@@ -30,8 +30,8 @@ export declare namespace SendMessageRequest {
         to: SendMessageTo.Raw;
         cc?: SendMessageCc.Raw;
         bcc?: SendMessageBcc.Raw;
-        subject?: MessageSubject.Raw;
-        text?: MessageText.Raw;
-        html?: MessageHtml.Raw;
+        subject?: MessageSubject.Raw | null;
+        text?: MessageText.Raw | null;
+        html?: MessageHtml.Raw | null;
     }
 }

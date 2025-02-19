@@ -7,4 +7,4 @@ import * as AgentMail from "../../../index";
 /**
  * Attachments in message.
  */
-export type MessageAttachments = AgentMail.Attachment[] | undefined;
+export type MessageAttachments = AgentMail.Attachment[];

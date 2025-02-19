@@ -24,17 +24,17 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         messageId: core.serialization.property("message_id", MessageId),
         threadId: core.serialization.property("thread_id", MessageThreadId),
         sentAt: core.serialization.property("sent_at", MessageSentAt),
-        receivedAt: core.serialization.property("received_at", core.serialization.date()),
+        receivedAt: core.serialization.property("received_at", core.serialization.date().optional()),
         from: MessageFrom,
         replyTo: core.serialization.property("reply_to", core.serialization.string().optional()),
-        subject: MessageSubject,
-        preview: MessagePreview,
+        subject: MessageSubject.optional(),
+        preview: MessagePreview.optional(),
         to: MessageTo,
-        cc: MessageCc,
-        bcc: MessageBcc,
-        text: MessageText,
-        html: MessageHtml,
-        attachments: MessageAttachments,
+        cc: MessageCc.optional(),
+        bcc: MessageBcc.optional(),
+        text: MessageText.optional(),
+        html: MessageHtml.optional(),
+        attachments: MessageAttachments.optional(),
         inReplyTo: core.serialization.property("in_reply_to", core.serialization.string().optional()),
         references: core.serialization.list(core.serialization.string()).optional(),
     });
@@ -44,17 +44,17 @@ export declare namespace Message {
         message_id: MessageId.Raw;
         thread_id: MessageThreadId.Raw;
         sent_at: MessageSentAt.Raw;
-        received_at: string;
+        received_at?: string | null;
         from: MessageFrom.Raw;
         reply_to?: string | null;
-        subject?: MessageSubject.Raw;
-        preview?: MessagePreview.Raw;
+        subject?: MessageSubject.Raw | null;
+        preview?: MessagePreview.Raw | null;
         to: MessageTo.Raw;
-        cc?: MessageCc.Raw;
-        bcc?: MessageBcc.Raw;
-        text?: MessageText.Raw;
-        html?: MessageHtml.Raw;
-        attachments?: MessageAttachments.Raw;
+        cc?: MessageCc.Raw | null;
+        bcc?: MessageBcc.Raw | null;
+        text?: MessageText.Raw | null;
+        html?: MessageHtml.Raw | null;
+        attachments?: MessageAttachments.Raw | null;
         in_reply_to?: string | null;
         references?: string[] | null;
     }

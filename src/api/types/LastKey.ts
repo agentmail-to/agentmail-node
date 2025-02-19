@@ -5,4 +5,4 @@
 /**
  * Key of last item.
  */
-export type LastKey = string | undefined;
+export type LastKey = string;

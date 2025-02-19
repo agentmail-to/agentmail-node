@@ -5,4 +5,4 @@
 /**
  * Whether to include received messages.
  */
-export type Received = boolean | undefined;
+export type Received = boolean;

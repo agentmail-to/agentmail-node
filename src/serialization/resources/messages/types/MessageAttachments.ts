@@ -10,8 +10,8 @@ import { Attachment } from "./Attachment";
 export const MessageAttachments: core.serialization.Schema<
     serializers.MessageAttachments.Raw,
     AgentMail.MessageAttachments
-> = core.serialization.list(Attachment).optional();
+> = core.serialization.list(Attachment);
 
 export declare namespace MessageAttachments {
-    export type Raw = Attachment.Raw[] | null | undefined;
+    export type Raw = Attachment.Raw[];
 }

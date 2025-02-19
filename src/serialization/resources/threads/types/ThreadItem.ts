@@ -16,8 +16,8 @@ export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.
         threadId: core.serialization.property("thread_id", ThreadId),
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
         participants: ThreadParticipants,
-        subject: ThreadSubject,
-        preview: ThreadPreview,
+        subject: ThreadSubject.optional(),
+        preview: ThreadPreview.optional(),
     });
 
 export declare namespace ThreadItem {
@@ -25,7 +25,7 @@ export declare namespace ThreadItem {
         thread_id: ThreadId.Raw;
         updated_at: ThreadUpdatedAt.Raw;
         participants: ThreadParticipants.Raw;
-        subject?: ThreadSubject.Raw;
-        preview?: ThreadPreview.Raw;
+        subject?: ThreadSubject.Raw | null;
+        preview?: ThreadPreview.Raw | null;
     }
 }

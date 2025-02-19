@@ -5,4 +5,4 @@
 /**
  * Text preview of last message in thread.
  */
-export type ThreadPreview = string | undefined;
+export type ThreadPreview = string;

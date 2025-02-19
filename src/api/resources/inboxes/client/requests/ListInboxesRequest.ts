@@ -9,6 +9,6 @@ import * as AgentMail from "../../../../index";
  *     {}
  */
 export interface ListInboxesRequest {
-    limit?: AgentMail.QueryLimit;
+    limit?: AgentMail.Limit;
     lastKey?: AgentMail.LastKey;
 }

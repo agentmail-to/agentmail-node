@@ -19,8 +19,8 @@ export const ReplyToMessageRequest: core.serialization.ObjectSchema<
     to: SendMessageTo.optional(),
     cc: SendMessageCc,
     bcc: SendMessageBcc,
-    text: MessageText,
-    html: MessageHtml,
+    text: MessageText.optional(),
+    html: MessageHtml.optional(),
 });
 
 export declare namespace ReplyToMessageRequest {
@@ -28,7 +28,7 @@ export declare namespace ReplyToMessageRequest {
         to?: SendMessageTo.Raw | null;
         cc?: SendMessageCc.Raw;
         bcc?: SendMessageBcc.Raw;
-        text?: MessageText.Raw;
-        html?: MessageHtml.Raw;
+        text?: MessageText.Raw | null;
+        html?: MessageHtml.Raw | null;
     }
 }

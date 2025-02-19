@@ -6,10 +6,8 @@ import * as serializers from "../index";
 import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 
-export const Sent: core.serialization.Schema<serializers.Sent.Raw, AgentMail.Sent> = core.serialization
-    .boolean()
-    .optional();
+export const Sent: core.serialization.Schema<serializers.Sent.Raw, AgentMail.Sent> = core.serialization.boolean();
 
 export declare namespace Sent {
-    export type Raw = boolean | null | undefined;
+    export type Raw = boolean;
 }

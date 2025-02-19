@@ -11,6 +11,6 @@ import * as AgentMail from "../../../../index";
 export interface ListThreadsRequest {
     received?: AgentMail.Received;
     sent?: AgentMail.Sent;
-    limit?: AgentMail.QueryLimit;
+    limit?: AgentMail.Limit;
     lastKey?: AgentMail.LastKey;
 }

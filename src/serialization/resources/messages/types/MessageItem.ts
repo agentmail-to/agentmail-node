@@ -23,12 +23,12 @@ export const MessageItem: core.serialization.ObjectSchema<serializers.MessageIte
         threadId: core.serialization.property("thread_id", ThreadId),
         sentAt: core.serialization.property("sent_at", MessageSentAt),
         from: MessageFrom,
-        subject: MessageSubject,
-        preview: MessagePreview,
+        subject: MessageSubject.optional(),
+        preview: MessagePreview.optional(),
         to: MessageTo,
-        cc: MessageCc,
-        bcc: MessageBcc,
-        attachments: MessageAttachments,
+        cc: MessageCc.optional(),
+        bcc: MessageBcc.optional(),
+        attachments: MessageAttachments.optional(),
     });
 
 export declare namespace MessageItem {
@@ -37,11 +37,11 @@ export declare namespace MessageItem {
         thread_id: ThreadId.Raw;
         sent_at: MessageSentAt.Raw;
         from: MessageFrom.Raw;
-        subject?: MessageSubject.Raw;
-        preview?: MessagePreview.Raw;
+        subject?: MessageSubject.Raw | null;
+        preview?: MessagePreview.Raw | null;
         to: MessageTo.Raw;
-        cc?: MessageCc.Raw;
-        bcc?: MessageBcc.Raw;
-        attachments?: MessageAttachments.Raw;
+        cc?: MessageCc.Raw | null;
+        bcc?: MessageBcc.Raw | null;
+        attachments?: MessageAttachments.Raw | null;
     }
 }
