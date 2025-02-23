@@ -15,7 +15,10 @@
 <dd>
 
 ```typescript
-await client.inboxes.list();
+await client.inboxes.list({
+    limit: 10,
+    lastKey: "123e4567-e89b-12d3-a456-426614174000",
+});
 ```
 
 </dd>
@@ -63,7 +66,7 @@ await client.inboxes.list();
 <dd>
 
 ```typescript
-await client.inboxes.get("inbox_id");
+await client.inboxes.get("yourinbox@agentmail.to");
 ```
 
 </dd>
@@ -179,7 +182,9 @@ List messages in inbox. If neither or both `received` and `sent` query parameter
 <dd>
 
 ```typescript
-await client.messages.list("inbox_id");
+await client.messages.list("yourinbox@agentmail.to", {
+    limit: 10,
+});
 ```
 
 </dd>
@@ -235,7 +240,7 @@ await client.messages.list("inbox_id");
 <dd>
 
 ```typescript
-await client.messages.get("inbox_id", "message_id");
+await client.messages.get("yourinbox@agentmail.to", "msg_123");
 ```
 
 </dd>
@@ -291,13 +296,13 @@ await client.messages.get("inbox_id", "message_id");
 <dd>
 
 ```typescript
-await client.messages.send("inbox_id", {
-    to: "to",
-    cc: undefined,
-    bcc: undefined,
-    subject: undefined,
-    text: undefined,
-    html: undefined,
+await client.messages.send("yourinbox@agentmail.to", {
+    to: ["bob@example.com"],
+    cc: ["charlie@example.com"],
+    bcc: ["david@example.com"],
+    subject: "Project Discussion",
+    text: "Let's review the timeline for the project.",
+    html: "<p>Let's review the timeline for the project.</p>",
 });
 ```
 
@@ -354,12 +359,11 @@ await client.messages.send("inbox_id", {
 <dd>
 
 ```typescript
-await client.messages.reply("inbox_id", "message_id", {
-    to: undefined,
-    cc: undefined,
-    bcc: undefined,
-    text: undefined,
-    html: undefined,
+await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
+    text: "Thanks for the update. Let's meet tomorrow at 2 PM.",
+    html: "<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
+    cc: ["charlie@example.com"],
+    bcc: ["david@example.com"],
 });
 ```
 
@@ -441,7 +445,9 @@ List threads in inbox. If neither or both `received` and `sent` query parameters
 <dd>
 
 ```typescript
-await client.threads.list("inbox_id");
+await client.threads.list("yourinbox@agentmail.to", {
+    limit: 10,
+});
 ```
 
 </dd>
@@ -497,7 +503,7 @@ await client.threads.list("inbox_id");
 <dd>
 
 ```typescript
-await client.threads.get("inbox_id", "thread_id");
+await client.threads.get("yourinbox@agentmail.to", "thread_123");
 ```
 
 </dd>

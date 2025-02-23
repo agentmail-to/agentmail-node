@@ -4,7 +4,9 @@
 
 import * as AgentMail from "../../../index";
 
-export interface Attachment {
+export interface ThreadAttachment {
+    /** Message ID of attachment. */
+    messageId: string;
     attachmentId: AgentMail.AttachmentId;
     filename: AgentMail.AttachmentFilename;
     contentType: AgentMail.AttachmentContentType;

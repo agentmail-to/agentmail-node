@@ -8,16 +8,21 @@ import * as core from "../../../../core";
 import { ThreadId } from "./ThreadId";
 import { ThreadUpdatedAt } from "./ThreadUpdatedAt";
 import { ThreadParticipants } from "./ThreadParticipants";
+import { ThreadMessageCount } from "./ThreadMessageCount";
 import { ThreadSubject } from "./ThreadSubject";
 import { ThreadPreview } from "./ThreadPreview";
+import { ThreadAttachments } from "./ThreadAttachments";
+import { ThreadAttachment } from "./ThreadAttachment";
 
 export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.Raw, AgentMail.ThreadItem> =
     core.serialization.object({
         threadId: core.serialization.property("thread_id", ThreadId),
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
         participants: ThreadParticipants,
+        messageCount: core.serialization.property("message_count", ThreadMessageCount),
         subject: ThreadSubject.optional(),
         preview: ThreadPreview.optional(),
+        attachments: ThreadAttachments.optional(),
     });
 
 export declare namespace ThreadItem {
@@ -25,7 +30,9 @@ export declare namespace ThreadItem {
         thread_id: ThreadId.Raw;
         updated_at: ThreadUpdatedAt.Raw;
         participants: ThreadParticipants.Raw;
+        message_count: ThreadMessageCount.Raw;
         subject?: ThreadSubject.Raw | null;
         preview?: ThreadPreview.Raw | null;
+        attachments?: ThreadAttachments.Raw | null;
     }
 }

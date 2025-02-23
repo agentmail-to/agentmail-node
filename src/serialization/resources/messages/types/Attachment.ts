@@ -6,22 +6,26 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { AttachmentId } from "./AttachmentId";
+import { AttachmentFilename } from "./AttachmentFilename";
+import { AttachmentContentType } from "./AttachmentContentType";
+import { AttachmentSize } from "./AttachmentSize";
+import { AttachmentInline } from "./AttachmentInline";
 
 export const Attachment: core.serialization.ObjectSchema<serializers.Attachment.Raw, AgentMail.Attachment> =
     core.serialization.object({
         attachmentId: core.serialization.property("attachment_id", AttachmentId),
-        filename: core.serialization.string(),
-        mimeType: core.serialization.property("mime_type", core.serialization.string()),
-        size: core.serialization.number(),
-        inline: core.serialization.boolean(),
+        filename: AttachmentFilename,
+        contentType: core.serialization.property("content_type", AttachmentContentType),
+        size: AttachmentSize,
+        inline: AttachmentInline,
     });
 
 export declare namespace Attachment {
     export interface Raw {
         attachment_id: AttachmentId.Raw;
-        filename: string;
-        mime_type: string;
-        size: number;
-        inline: boolean;
+        filename: AttachmentFilename.Raw;
+        content_type: AttachmentContentType.Raw;
+        size: AttachmentSize.Raw;
+        inline: AttachmentInline.Raw;
     }
 }

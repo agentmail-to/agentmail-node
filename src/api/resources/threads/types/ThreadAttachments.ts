@@ -4,6 +4,7 @@
 
 import * as AgentMail from "../../../index";
 
-export interface SendMessageResponse {
-    messageId: AgentMail.MessageId;
-}
+/**
+ * Attachments in thread.
+ */
+export type ThreadAttachments = AgentMail.ThreadAttachment[];

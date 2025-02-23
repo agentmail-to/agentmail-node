@@ -8,9 +8,13 @@ import * as core from "../../../../core";
 import { ThreadId } from "./ThreadId";
 import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadUpdatedAt } from "./ThreadUpdatedAt";
-import { ThreadSubject } from "./ThreadSubject";
 import { ThreadParticipants } from "./ThreadParticipants";
+import { ThreadMessageCount } from "./ThreadMessageCount";
 import { Message } from "../../messages/types/Message";
+import { ThreadSubject } from "./ThreadSubject";
+import { ThreadPreview } from "./ThreadPreview";
+import { ThreadAttachments } from "./ThreadAttachments";
+import { ThreadAttachment } from "./ThreadAttachment";
 
 export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, AgentMail.Thread> =
     core.serialization.object({
@@ -18,9 +22,12 @@ export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, Age
         inboxId: core.serialization.property("inbox_id", InboxId),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
-        subject: ThreadSubject.optional(),
         participants: ThreadParticipants,
+        messageCount: core.serialization.property("message_count", ThreadMessageCount),
         messages: core.serialization.list(Message),
+        subject: ThreadSubject.optional(),
+        preview: ThreadPreview.optional(),
+        attachments: ThreadAttachments.optional(),
     });
 
 export declare namespace Thread {
@@ -29,8 +36,11 @@ export declare namespace Thread {
         inbox_id: InboxId.Raw;
         created_at: string;
         updated_at: ThreadUpdatedAt.Raw;
-        subject?: ThreadSubject.Raw | null;
         participants: ThreadParticipants.Raw;
+        message_count: ThreadMessageCount.Raw;
         messages: Message.Raw[];
+        subject?: ThreadSubject.Raw | null;
+        preview?: ThreadPreview.Raw | null;
+        attachments?: ThreadAttachments.Raw | null;
     }
 }

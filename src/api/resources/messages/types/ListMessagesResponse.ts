@@ -4,6 +4,40 @@
 
 import * as AgentMail from "../../../index";
 
+/**
+ * @example
+ *     {
+ *         messages: [{
+ *                 messageId: "msg_123",
+ *                 threadId: "thread_123",
+ *                 sentAt: "2024-01-15T09:30:00Z",
+ *                 from: "alice@example.com",
+ *                 to: ["bob@example.com"],
+ *                 subject: "Project Discussion",
+ *                 preview: "Let's review the timeline for the project.",
+ *                 cc: ["charlie@example.com"],
+ *                 bcc: ["david@example.com"],
+ *                 attachments: [{
+ *                         attachmentId: "att_123",
+ *                         filename: "proposal.pdf",
+ *                         contentType: "application/pdf",
+ *                         size: 1024,
+ *                         inline: false
+ *                     }]
+ *             }, {
+ *                 messageId: "msg_456",
+ *                 threadId: "thread_123",
+ *                 sentAt: "2024-01-15T10:15:00Z",
+ *                 from: "bob@example.com",
+ *                 to: ["alice@example.com"],
+ *                 subject: "Re: Project Discussion",
+ *                 preview: "Sounds good, let's meet tomorrow."
+ *             }],
+ *         limit: 10,
+ *         count: 2,
+ *         lastKey: "msg_456#2024-01-15T10:15:00Z"
+ *     }
+ */
 export interface ListMessagesResponse {
     /** Messages items. Ordered by `sent_at` descending. */
     messages: AgentMail.MessageItem[];

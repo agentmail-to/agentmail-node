@@ -42,7 +42,9 @@ export class Threads {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.threads.list("inbox_id")
+     *     await client.threads.list("yourinbox@agentmail.to", {
+     *         limit: 10
+     *     })
      */
     public async list(
         inboxId: AgentMail.InboxId,
@@ -79,8 +81,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -145,7 +147,7 @@ export class Threads {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.threads.get("inbox_id", "thread_id")
+     *     await client.threads.get("yourinbox@agentmail.to", "thread_123")
      */
     public async get(
         inboxId: AgentMail.InboxId,
@@ -164,8 +166,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

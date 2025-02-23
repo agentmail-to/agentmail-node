@@ -6,7 +6,9 @@ import * as AgentMail from "../../../../index";
 
 /**
  * @example
- *     {}
+ *     {
+ *         limit: 10
+ *     }
  */
 export interface ListThreadsRequest {
     received?: AgentMail.Received;

@@ -37,7 +37,10 @@ export class Inboxes {
      * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.inboxes.list()
+     *     await client.inboxes.list({
+     *         limit: 10,
+     *         lastKey: "123e4567-e89b-12d3-a456-426614174000"
+     *     })
      */
     public async list(
         request: AgentMail.ListInboxesRequest = {},
@@ -65,8 +68,8 @@ export class Inboxes {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -116,7 +119,7 @@ export class Inboxes {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.inboxes.get("inbox_id")
+     *     await client.inboxes.get("yourinbox@agentmail.to")
      */
     public async get(inboxId: AgentMail.InboxId, requestOptions?: Inboxes.RequestOptions): Promise<AgentMail.Inbox> {
         const _response = await core.fetcher({
@@ -131,8 +134,8 @@ export class Inboxes {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -219,8 +222,8 @@ export class Inboxes {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

@@ -43,7 +43,9 @@ export class Messages {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.messages.list("inbox_id")
+     *     await client.messages.list("yourinbox@agentmail.to", {
+     *         limit: 10
+     *     })
      */
     public async list(
         inboxId: AgentMail.InboxId,
@@ -80,8 +82,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -146,7 +148,7 @@ export class Messages {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.messages.get("inbox_id", "message_id")
+     *     await client.messages.get("yourinbox@agentmail.to", "msg_123")
      */
     public async get(
         inboxId: AgentMail.InboxId,
@@ -165,8 +167,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -243,8 +245,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -305,13 +307,13 @@ export class Messages {
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.messages.send("inbox_id", {
-     *         to: "to",
-     *         cc: undefined,
-     *         bcc: undefined,
-     *         subject: undefined,
-     *         text: undefined,
-     *         html: undefined
+     *     await client.messages.send("yourinbox@agentmail.to", {
+     *         to: ["bob@example.com"],
+     *         cc: ["charlie@example.com"],
+     *         bcc: ["david@example.com"],
+     *         subject: "Project Discussion",
+     *         text: "Let's review the timeline for the project.",
+     *         html: "<p>Let's review the timeline for the project.</p>"
      *     })
      */
     public async send(
@@ -331,8 +333,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -408,12 +410,11 @@ export class Messages {
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.messages.reply("inbox_id", "message_id", {
-     *         to: undefined,
-     *         cc: undefined,
-     *         bcc: undefined,
-     *         text: undefined,
-     *         html: undefined
+     *     await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
+     *         text: "Thanks for the update. Let's meet tomorrow at 2 PM.",
+     *         html: "<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
+     *         cc: ["charlie@example.com"],
+     *         bcc: ["david@example.com"]
      *     })
      */
     public async reply(
@@ -434,8 +435,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.13",
-                "User-Agent": "agentmail/0.0.13",
+                "X-Fern-SDK-Version": "0.0.14",
+                "User-Agent": "agentmail/0.0.14",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

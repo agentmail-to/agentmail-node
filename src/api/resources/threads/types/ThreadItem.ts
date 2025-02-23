@@ -8,6 +8,8 @@ export interface ThreadItem {
     threadId: AgentMail.ThreadId;
     updatedAt: AgentMail.ThreadUpdatedAt;
     participants: AgentMail.ThreadParticipants;
+    messageCount: AgentMail.ThreadMessageCount;
     subject?: AgentMail.ThreadSubject;
     preview?: AgentMail.ThreadPreview;
+    attachments?: AgentMail.ThreadAttachments;
 }
