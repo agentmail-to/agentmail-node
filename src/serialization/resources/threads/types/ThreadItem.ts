@@ -8,9 +8,10 @@ import * as core from "../../../../core";
 import { ThreadId } from "./ThreadId";
 import { ThreadUpdatedAt } from "./ThreadUpdatedAt";
 import { ThreadParticipants } from "./ThreadParticipants";
-import { ThreadMessageCount } from "./ThreadMessageCount";
+import { ThreadRecipients } from "./ThreadRecipients";
 import { ThreadSubject } from "./ThreadSubject";
 import { ThreadPreview } from "./ThreadPreview";
+import { ThreadMessageCount } from "./ThreadMessageCount";
 import { ThreadAttachments } from "./ThreadAttachments";
 import { ThreadAttachment } from "./ThreadAttachment";
 
@@ -19,9 +20,10 @@ export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.
         threadId: core.serialization.property("thread_id", ThreadId),
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
         participants: ThreadParticipants,
-        messageCount: core.serialization.property("message_count", ThreadMessageCount),
+        recipients: ThreadRecipients,
         subject: ThreadSubject.optional(),
         preview: ThreadPreview.optional(),
+        messageCount: core.serialization.property("message_count", ThreadMessageCount),
         attachments: ThreadAttachments.optional(),
     });
 
@@ -30,9 +32,10 @@ export declare namespace ThreadItem {
         thread_id: ThreadId.Raw;
         updated_at: ThreadUpdatedAt.Raw;
         participants: ThreadParticipants.Raw;
-        message_count: ThreadMessageCount.Raw;
+        recipients: ThreadRecipients.Raw;
         subject?: ThreadSubject.Raw | null;
         preview?: ThreadPreview.Raw | null;
+        message_count: ThreadMessageCount.Raw;
         attachments?: ThreadAttachments.Raw | null;
     }
 }

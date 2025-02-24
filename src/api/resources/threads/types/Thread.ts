@@ -12,7 +12,8 @@ import * as AgentMail from "../../../index";
  *         createdAt: "2024-01-15T09:30:00Z",
  *         updatedAt: "2024-01-15T10:15:00Z",
  *         subject: "Project Discussion",
- *         participants: ["alice@example.com", "bob@example.com"],
+ *         participants: ["alice@example.com"],
+ *         recipients: ["bob@example.com"],
  *         messageCount: 1,
  *         messages: [{
  *                 messageId: "msg_123",
@@ -32,10 +33,11 @@ export interface Thread {
     createdAt: Date;
     updatedAt: AgentMail.ThreadUpdatedAt;
     participants: AgentMail.ThreadParticipants;
+    recipients: AgentMail.ThreadRecipients;
+    subject?: AgentMail.ThreadSubject;
+    preview?: AgentMail.ThreadPreview;
     messageCount: AgentMail.ThreadMessageCount;
     /** Messages in thread. Ordered by `sent_at` ascending. */
     messages: AgentMail.Message[];
-    subject?: AgentMail.ThreadSubject;
-    preview?: AgentMail.ThreadPreview;
     attachments?: AgentMail.ThreadAttachments;
 }

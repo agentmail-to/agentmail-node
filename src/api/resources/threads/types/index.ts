@@ -2,6 +2,7 @@ export * from "./ThreadAttachment";
 export * from "./ThreadId";
 export * from "./ThreadUpdatedAt";
 export * from "./ThreadParticipants";
+export * from "./ThreadRecipients";
 export * from "./ThreadMessageCount";
 export * from "./ThreadSubject";
 export * from "./ThreadPreview";

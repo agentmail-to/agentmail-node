@@ -9,10 +9,11 @@ import { ThreadId } from "./ThreadId";
 import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadUpdatedAt } from "./ThreadUpdatedAt";
 import { ThreadParticipants } from "./ThreadParticipants";
-import { ThreadMessageCount } from "./ThreadMessageCount";
-import { Message } from "../../messages/types/Message";
+import { ThreadRecipients } from "./ThreadRecipients";
 import { ThreadSubject } from "./ThreadSubject";
 import { ThreadPreview } from "./ThreadPreview";
+import { ThreadMessageCount } from "./ThreadMessageCount";
+import { Message } from "../../messages/types/Message";
 import { ThreadAttachments } from "./ThreadAttachments";
 import { ThreadAttachment } from "./ThreadAttachment";
 
@@ -23,10 +24,11 @@ export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, Age
         createdAt: core.serialization.property("created_at", core.serialization.date()),
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
         participants: ThreadParticipants,
-        messageCount: core.serialization.property("message_count", ThreadMessageCount),
-        messages: core.serialization.list(Message),
+        recipients: ThreadRecipients,
         subject: ThreadSubject.optional(),
         preview: ThreadPreview.optional(),
+        messageCount: core.serialization.property("message_count", ThreadMessageCount),
+        messages: core.serialization.list(Message),
         attachments: ThreadAttachments.optional(),
     });
 
@@ -37,10 +39,11 @@ export declare namespace Thread {
         created_at: string;
         updated_at: ThreadUpdatedAt.Raw;
         participants: ThreadParticipants.Raw;
-        message_count: ThreadMessageCount.Raw;
-        messages: Message.Raw[];
+        recipients: ThreadRecipients.Raw;
         subject?: ThreadSubject.Raw | null;
         preview?: ThreadPreview.Raw | null;
+        message_count: ThreadMessageCount.Raw;
+        messages: Message.Raw[];
         attachments?: ThreadAttachments.Raw | null;
     }
 }

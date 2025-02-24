@@ -11,13 +11,15 @@ import * as AgentMail from "../../../index";
  *                 threadId: "thread_123",
  *                 updatedAt: "2024-01-15T09:30:00Z",
  *                 participants: ["alice@example.com", "bob@example.com"],
+ *                 recipients: ["alice@example.com", "bob@example.com"],
  *                 messageCount: 3,
  *                 subject: "Project Discussion",
  *                 preview: "Let's review the timeline for..."
  *             }, {
  *                 threadId: "thread_456",
  *                 updatedAt: "2024-01-15T10:15:00Z",
- *                 participants: ["charlie@example.com", "david@example.com"],
+ *                 participants: ["charlie@example.com"],
+ *                 recipients: ["david@example.com"],
  *                 messageCount: 1,
  *                 subject: "Weekly Update",
  *                 preview: "Here's what we accomplished..."
