@@ -5,14 +5,16 @@
 import * as AgentMail from "../../../index";
 
 export interface MessageItem {
-    messageId: AgentMail.MessageId;
     threadId: AgentMail.ThreadId;
-    sentAt: AgentMail.MessageSentAt;
+    messageId: AgentMail.MessageId;
+    eventId: AgentMail.MessageEventId;
+    labels: AgentMail.MessageLabels;
+    timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;
-    subject?: AgentMail.MessageSubject;
-    preview?: AgentMail.MessagePreview;
     to: AgentMail.MessageTo;
     cc?: AgentMail.MessageCc;
     bcc?: AgentMail.MessageBcc;
+    subject?: AgentMail.MessageSubject;
+    preview?: AgentMail.MessagePreview;
     attachments?: AgentMail.MessageAttachments;
 }

@@ -5,10 +5,13 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
+import { ThreadId } from "../../threads/types/ThreadId";
 import { MessageId } from "./MessageId";
-import { MessageThreadId } from "./MessageThreadId";
-import { MessageSentAt } from "./MessageSentAt";
+import { MessageEventId } from "./MessageEventId";
+import { MessageLabels } from "./MessageLabels";
+import { MessageTimestamp } from "./MessageTimestamp";
 import { MessageFrom } from "./MessageFrom";
+import { MessageReplyTo } from "./MessageReplyTo";
 import { MessageSubject } from "./MessageSubject";
 import { MessagePreview } from "./MessagePreview";
 import { MessageTo } from "./MessageTo";
@@ -17,16 +20,20 @@ import { MessageBcc } from "./MessageBcc";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
 import { MessageAttachments } from "./MessageAttachments";
+import { MessageInReplyTo } from "./MessageInReplyTo";
+import { MessageReferences } from "./MessageReferences";
+import { InboxId } from "../../inboxes/types/InboxId";
 import { Attachment } from "./Attachment";
 
 export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, AgentMail.Message> =
     core.serialization.object({
+        threadId: core.serialization.property("thread_id", ThreadId),
         messageId: core.serialization.property("message_id", MessageId),
-        threadId: core.serialization.property("thread_id", MessageThreadId),
-        sentAt: core.serialization.property("sent_at", MessageSentAt),
-        receivedAt: core.serialization.property("received_at", core.serialization.date().optional()),
+        eventId: core.serialization.property("event_id", MessageEventId),
+        labels: MessageLabels,
+        timestamp: MessageTimestamp,
         from: MessageFrom,
-        replyTo: core.serialization.property("reply_to", core.serialization.string().optional()),
+        replyTo: core.serialization.property("reply_to", MessageReplyTo),
         subject: MessageSubject.optional(),
         preview: MessagePreview.optional(),
         to: MessageTo,
@@ -35,18 +42,20 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         text: MessageText.optional(),
         html: MessageHtml.optional(),
         attachments: MessageAttachments.optional(),
-        inReplyTo: core.serialization.property("in_reply_to", core.serialization.string().optional()),
-        references: core.serialization.list(core.serialization.string()).optional(),
+        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo),
+        references: MessageReferences,
+        inboxId: core.serialization.property("inbox_id", InboxId),
     });
 
 export declare namespace Message {
     export interface Raw {
+        thread_id: ThreadId.Raw;
         message_id: MessageId.Raw;
-        thread_id: MessageThreadId.Raw;
-        sent_at: MessageSentAt.Raw;
-        received_at?: string | null;
+        event_id: MessageEventId.Raw;
+        labels: MessageLabels.Raw;
+        timestamp: MessageTimestamp.Raw;
         from: MessageFrom.Raw;
-        reply_to?: string | null;
+        reply_to?: MessageReplyTo.Raw;
         subject?: MessageSubject.Raw | null;
         preview?: MessagePreview.Raw | null;
         to: MessageTo.Raw;
@@ -55,7 +64,8 @@ export declare namespace Message {
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
         attachments?: MessageAttachments.Raw | null;
-        in_reply_to?: string | null;
-        references?: string[] | null;
+        in_reply_to?: MessageInReplyTo.Raw;
+        references?: MessageReferences.Raw;
+        inbox_id: InboxId.Raw;
     }
 }

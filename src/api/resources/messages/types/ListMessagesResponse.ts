@@ -10,7 +10,9 @@ import * as AgentMail from "../../../index";
  *         messages: [{
  *                 messageId: "msg_123",
  *                 threadId: "thread_123",
- *                 sentAt: "2024-01-15T09:30:00Z",
+ *                 eventId: "event_123",
+ *                 labels: ["RECEIVED", "UNREAD"],
+ *                 timestamp: "2024-01-15T09:30:00Z",
  *                 from: "alice@example.com",
  *                 to: ["bob@example.com"],
  *                 subject: "Project Discussion",
@@ -27,7 +29,9 @@ import * as AgentMail from "../../../index";
  *             }, {
  *                 messageId: "msg_456",
  *                 threadId: "thread_123",
- *                 sentAt: "2024-01-15T10:15:00Z",
+ *                 eventId: "event_456",
+ *                 labels: ["SENT"],
+ *                 timestamp: "2024-01-15T10:15:00Z",
  *                 from: "bob@example.com",
  *                 to: ["alice@example.com"],
  *                 subject: "Re: Project Discussion",

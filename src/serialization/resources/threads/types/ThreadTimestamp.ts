@@ -6,9 +6,9 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MessageSentAt: core.serialization.Schema<serializers.MessageSentAt.Raw, AgentMail.MessageSentAt> =
+export const ThreadTimestamp: core.serialization.Schema<serializers.ThreadTimestamp.Raw, AgentMail.ThreadTimestamp> =
     core.serialization.date();
 
-export declare namespace MessageSentAt {
+export declare namespace ThreadTimestamp {
     export type Raw = string;
 }

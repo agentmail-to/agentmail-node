@@ -3,6 +3,6 @@
  */
 
 /**
- * Time at which message was sent.
+ * Labels of thread.
  */
-export type MessageSentAt = Date;
+export type ThreadLabels = string[];

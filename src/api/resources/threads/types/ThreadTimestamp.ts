@@ -3,6 +3,6 @@
  */
 
 /**
- * Thread ID of message.
+ * Time at which last message was sent.
  */
-export type MessageThreadId = string;
+export type ThreadTimestamp = Date;

@@ -9,8 +9,9 @@ import * as AgentMail from "../../../index";
  *     {
  *         messageId: "msg_123",
  *         threadId: "thread_123",
- *         sentAt: "2024-01-15T09:30:00Z",
- *         receivedAt: "2024-01-15T09:30:00Z",
+ *         eventId: "event_123",
+ *         labels: ["RECEIVED", "UNREAD"],
+ *         timestamp: "2024-01-15T09:30:00Z",
  *         from: "alice@example.com",
  *         replyTo: "alice.work@example.com",
  *         to: ["bob@example.com"],
@@ -28,18 +29,18 @@ import * as AgentMail from "../../../index";
  *                 inline: false
  *             }],
  *         inReplyTo: "msg_122",
- *         references: ["msg_121", "msg_122"]
+ *         references: ["msg_121", "msg_122"],
+ *         inboxId: "yourinbox@agentmail.to"
  *     }
  */
 export interface Message {
+    threadId: AgentMail.ThreadId;
     messageId: AgentMail.MessageId;
-    threadId: AgentMail.MessageThreadId;
-    sentAt: AgentMail.MessageSentAt;
-    /** Time at which message was received. */
-    receivedAt?: Date;
+    eventId: AgentMail.MessageEventId;
+    labels: AgentMail.MessageLabels;
+    timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;
-    /** Address to reply to. In format `username@domain.com` or `Display Name <username@domain.com>`. */
-    replyTo?: string;
+    replyTo?: AgentMail.MessageReplyTo;
     subject?: AgentMail.MessageSubject;
     preview?: AgentMail.MessagePreview;
     to: AgentMail.MessageTo;
@@ -48,8 +49,7 @@ export interface Message {
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.MessageAttachments;
-    /** ID of message being replied to. */
-    inReplyTo?: string;
-    /** IDs of previous messages in thread. */
-    references?: string[];
+    inReplyTo?: AgentMail.MessageInReplyTo;
+    references?: AgentMail.MessageReferences;
+    inboxId: AgentMail.InboxId;
 }

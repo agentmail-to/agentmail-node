@@ -6,9 +6,9 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MessageThreadId: core.serialization.Schema<serializers.MessageThreadId.Raw, AgentMail.MessageThreadId> =
-    core.serialization.string();
+export const MessageTimestamp: core.serialization.Schema<serializers.MessageTimestamp.Raw, AgentMail.MessageTimestamp> =
+    core.serialization.date();
 
-export declare namespace MessageThreadId {
+export declare namespace MessageTimestamp {
     export type Raw = string;
 }

@@ -3,6 +3,6 @@
  */
 
 /**
- * Time at which thread was last updated.
+ * Event ID of thread.
  */
-export type ThreadUpdatedAt = Date;
+export type ThreadEventId = string;
