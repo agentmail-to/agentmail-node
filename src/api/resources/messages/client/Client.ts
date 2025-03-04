@@ -34,8 +34,6 @@ export class Messages {
     constructor(protected readonly _options: Messages.Options = {}) {}
 
     /**
-     * List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
-     *
      * @param {AgentMail.InboxId} inboxId
      * @param {AgentMail.ListMessagesRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
@@ -82,8 +80,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.18",
-                "User-Agent": "agentmail/0.0.18",
+                "X-Fern-SDK-Version": "0.0.19",
+                "User-Agent": "agentmail/0.0.19",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -167,8 +165,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.18",
-                "User-Agent": "agentmail/0.0.18",
+                "X-Fern-SDK-Version": "0.0.19",
+                "User-Agent": "agentmail/0.0.19",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -245,8 +243,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.18",
-                "User-Agent": "agentmail/0.0.18",
+                "X-Fern-SDK-Version": "0.0.19",
+                "User-Agent": "agentmail/0.0.19",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -333,8 +331,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.18",
-                "User-Agent": "agentmail/0.0.18",
+                "X-Fern-SDK-Version": "0.0.19",
+                "User-Agent": "agentmail/0.0.19",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -435,8 +433,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.18",
-                "User-Agent": "agentmail/0.0.18",
+                "X-Fern-SDK-Version": "0.0.19",
+                "User-Agent": "agentmail/0.0.19",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

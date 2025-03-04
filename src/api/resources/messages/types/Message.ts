@@ -30,7 +30,8 @@ import * as AgentMail from "../../../index";
  *             }],
  *         inReplyTo: "msg_122",
  *         references: ["msg_121", "msg_122"],
- *         inboxId: "yourinbox@agentmail.to"
+ *         inboxId: "yourinbox@agentmail.to",
+ *         organizationId: "org_123"
  *     }
  */
 export interface Message {
@@ -52,4 +53,5 @@ export interface Message {
     inReplyTo?: AgentMail.MessageInReplyTo;
     references?: AgentMail.MessageReferences;
     inboxId: AgentMail.InboxId;
+    organizationId: AgentMail.OrganizationId;
 }

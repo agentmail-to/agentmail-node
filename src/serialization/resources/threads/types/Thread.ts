@@ -17,6 +17,7 @@ import { ThreadPreview } from "./ThreadPreview";
 import { ThreadAttachments } from "./ThreadAttachments";
 import { Message } from "../../messages/types/Message";
 import { InboxId } from "../../inboxes/types/InboxId";
+import { OrganizationId } from "../../../types/OrganizationId";
 import { ThreadAttachment } from "./ThreadAttachment";
 
 export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, AgentMail.Thread> =
@@ -33,6 +34,7 @@ export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, Age
         attachments: ThreadAttachments.optional(),
         messages: core.serialization.list(Message),
         inboxId: core.serialization.property("inbox_id", InboxId),
+        organizationId: core.serialization.property("organization_id", OrganizationId),
     });
 
 export declare namespace Thread {
@@ -49,5 +51,6 @@ export declare namespace Thread {
         attachments?: ThreadAttachments.Raw | null;
         messages: Message.Raw[];
         inbox_id: InboxId.Raw;
+        organization_id: OrganizationId.Raw;
     }
 }

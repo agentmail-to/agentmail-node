@@ -33,8 +33,6 @@ export class Threads {
     constructor(protected readonly _options: Threads.Options = {}) {}
 
     /**
-     * List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
-     *
      * @param {AgentMail.InboxId} inboxId
      * @param {AgentMail.ListThreadsRequest} request
      * @param {Threads.RequestOptions} requestOptions - Request-specific configuration.
@@ -81,8 +79,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.18",
-                "User-Agent": "agentmail/0.0.18",
+                "X-Fern-SDK-Version": "0.0.19",
+                "User-Agent": "agentmail/0.0.19",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -166,8 +164,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.18",
-                "User-Agent": "agentmail/0.0.18",
+                "X-Fern-SDK-Version": "0.0.19",
+                "User-Agent": "agentmail/0.0.19",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

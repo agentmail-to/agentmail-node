@@ -158,21 +158,6 @@ await client.inboxes.create({
 <dl>
 <dd>
 
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List messages in inbox. If neither or both `received` and `sent` query parameters are set, all messages are returned.
-
-</dd>
-</dl>
-</dd>
-</dl>
-
 #### 🔌 Usage
 
 <dl>
@@ -420,21 +405,6 @@ await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
 <details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List threads in inbox. If neither or both `received` and `sent` query parameters are set, all threads are returned.
-
-</dd>
-</dl>
-</dd>
-</dl>
 
 #### 🔌 Usage
 

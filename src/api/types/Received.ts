@@ -3,6 +3,6 @@
  */
 
 /**
- * Whether to include received messages.
+ * Whether to filter by received threads/messages.
  */
 export type Received = boolean;

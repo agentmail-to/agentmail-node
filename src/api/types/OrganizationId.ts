@@ -3,6 +3,6 @@
  */
 
 /**
- * Whether to filter by sent threads/messages.
+ * ID of organization.
  */
-export type Sent = boolean;
+export type OrganizationId = string;

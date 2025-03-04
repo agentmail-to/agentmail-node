@@ -23,6 +23,7 @@ import { MessageAttachments } from "./MessageAttachments";
 import { MessageInReplyTo } from "./MessageInReplyTo";
 import { MessageReferences } from "./MessageReferences";
 import { InboxId } from "../../inboxes/types/InboxId";
+import { OrganizationId } from "../../../types/OrganizationId";
 import { Attachment } from "./Attachment";
 
 export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, AgentMail.Message> =
@@ -45,6 +46,7 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo),
         references: MessageReferences,
         inboxId: core.serialization.property("inbox_id", InboxId),
+        organizationId: core.serialization.property("organization_id", OrganizationId),
     });
 
 export declare namespace Message {
@@ -67,5 +69,6 @@ export declare namespace Message {
         in_reply_to?: MessageInReplyTo.Raw;
         references?: MessageReferences.Raw;
         inbox_id: InboxId.Raw;
+        organization_id: OrganizationId.Raw;
     }
 }

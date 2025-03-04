@@ -7,6 +7,7 @@ import * as AgentMail from "../../../index";
 /**
  * @example
  *     {
+ *         organizationId: "org_123",
  *         inboxId: "yourinbox@agentmail.to",
  *         threadId: "thread_123",
  *         eventId: "event_123",
@@ -26,7 +27,8 @@ import * as AgentMail from "../../../index";
  *                 from: "alice@example.com",
  *                 to: ["bob@example.com"],
  *                 text: "Let's review the timeline for the project.",
- *                 inboxId: "yourinbox@agentmail.to"
+ *                 inboxId: "yourinbox@agentmail.to",
+ *                 organizationId: "org_123"
  *             }]
  *     }
  */
@@ -44,4 +46,5 @@ export interface Thread {
     /** Messages in thread. Ordered by `sent_at` ascending. */
     messages: AgentMail.Message[];
     inboxId: AgentMail.InboxId;
+    organizationId: AgentMail.OrganizationId;
 }
