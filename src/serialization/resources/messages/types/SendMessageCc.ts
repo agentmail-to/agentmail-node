@@ -8,8 +8,8 @@ import * as core from "../../../../core";
 import { Addresses } from "./Addresses";
 
 export const SendMessageCc: core.serialization.Schema<serializers.SendMessageCc.Raw, AgentMail.SendMessageCc> =
-    Addresses.optional();
+    Addresses;
 
 export declare namespace SendMessageCc {
-    export type Raw = Addresses.Raw | null | undefined;
+    export type Raw = Addresses.Raw;
 }

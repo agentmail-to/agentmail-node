@@ -8,8 +8,8 @@ import * as core from "../../../../core";
 import { Addresses } from "./Addresses";
 
 export const SendMessageBcc: core.serialization.Schema<serializers.SendMessageBcc.Raw, AgentMail.SendMessageBcc> =
-    Addresses.optional();
+    Addresses;
 
 export declare namespace SendMessageBcc {
-    export type Raw = Addresses.Raw | null | undefined;
+    export type Raw = Addresses.Raw;
 }

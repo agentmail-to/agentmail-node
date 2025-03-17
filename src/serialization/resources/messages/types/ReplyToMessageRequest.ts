@@ -10,15 +10,14 @@ import { SendMessageCc } from "./SendMessageCc";
 import { SendMessageBcc } from "./SendMessageBcc";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
-import { Addresses } from "./Addresses";
 
 export const ReplyToMessageRequest: core.serialization.ObjectSchema<
     serializers.ReplyToMessageRequest.Raw,
     AgentMail.ReplyToMessageRequest
 > = core.serialization.object({
     to: SendMessageTo.optional(),
-    cc: SendMessageCc,
-    bcc: SendMessageBcc,
+    cc: SendMessageCc.optional(),
+    bcc: SendMessageBcc.optional(),
     text: MessageText.optional(),
     html: MessageHtml.optional(),
 });
@@ -26,8 +25,8 @@ export const ReplyToMessageRequest: core.serialization.ObjectSchema<
 export declare namespace ReplyToMessageRequest {
     export interface Raw {
         to?: SendMessageTo.Raw | null;
-        cc?: SendMessageCc.Raw;
-        bcc?: SendMessageBcc.Raw;
+        cc?: SendMessageCc.Raw | null;
+        bcc?: SendMessageBcc.Raw | null;
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
     }

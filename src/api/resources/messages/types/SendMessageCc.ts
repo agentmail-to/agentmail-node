@@ -7,4 +7,4 @@ import * as AgentMail from "../../../index";
 /**
  * CC recipient address or addresses.
  */
-export type SendMessageCc = AgentMail.Addresses | undefined;
+export type SendMessageCc = AgentMail.Addresses;

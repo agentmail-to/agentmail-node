@@ -7,4 +7,4 @@ import * as AgentMail from "../../../index";
 /**
  * BCC recipient address or addresses.
  */
-export type SendMessageBcc = AgentMail.Addresses | undefined;
+export type SendMessageBcc = AgentMail.Addresses;
