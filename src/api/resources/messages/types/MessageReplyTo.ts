@@ -5,4 +5,4 @@
 /**
  * Address to reply to. In format `username@domain.com` or `Display Name <username@domain.com>`.
  */
-export type MessageReplyTo = string | undefined;
+export type MessageReplyTo = string;

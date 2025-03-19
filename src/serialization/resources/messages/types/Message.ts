@@ -34,7 +34,7 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         labels: MessageLabels,
         timestamp: MessageTimestamp,
         from: MessageFrom,
-        replyTo: core.serialization.property("reply_to", MessageReplyTo),
+        replyTo: core.serialization.property("reply_to", MessageReplyTo.optional()),
         subject: MessageSubject.optional(),
         preview: MessagePreview.optional(),
         to: MessageTo,
@@ -43,8 +43,8 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         text: MessageText.optional(),
         html: MessageHtml.optional(),
         attachments: MessageAttachments.optional(),
-        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo),
-        references: MessageReferences,
+        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
+        references: MessageReferences.optional(),
         inboxId: core.serialization.property("inbox_id", InboxId),
         organizationId: core.serialization.property("organization_id", OrganizationId),
     });
@@ -57,7 +57,7 @@ export declare namespace Message {
         labels: MessageLabels.Raw;
         timestamp: MessageTimestamp.Raw;
         from: MessageFrom.Raw;
-        reply_to?: MessageReplyTo.Raw;
+        reply_to?: MessageReplyTo.Raw | null;
         subject?: MessageSubject.Raw | null;
         preview?: MessagePreview.Raw | null;
         to: MessageTo.Raw;
@@ -66,8 +66,8 @@ export declare namespace Message {
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
         attachments?: MessageAttachments.Raw | null;
-        in_reply_to?: MessageInReplyTo.Raw;
-        references?: MessageReferences.Raw;
+        in_reply_to?: MessageInReplyTo.Raw | null;
+        references?: MessageReferences.Raw | null;
         inbox_id: InboxId.Raw;
         organization_id: OrganizationId.Raw;
     }

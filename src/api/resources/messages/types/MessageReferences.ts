@@ -5,4 +5,4 @@
 /**
  * IDs of previous messages in thread.
  */
-export type MessageReferences = string[] | undefined;
+export type MessageReferences = string[];

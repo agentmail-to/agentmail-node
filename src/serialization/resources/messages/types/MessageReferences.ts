@@ -9,8 +9,8 @@ import * as core from "../../../../core";
 export const MessageReferences: core.serialization.Schema<
     serializers.MessageReferences.Raw,
     AgentMail.MessageReferences
-> = core.serialization.list(core.serialization.string()).optional();
+> = core.serialization.list(core.serialization.string());
 
 export declare namespace MessageReferences {
-    export type Raw = string[] | null | undefined;
+    export type Raw = string[];
 }

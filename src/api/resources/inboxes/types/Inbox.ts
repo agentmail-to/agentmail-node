@@ -25,7 +25,7 @@ export interface Inbox {
     inboxId: AgentMail.InboxId;
     /** ID of organization that owns inbox. */
     organizationId: string;
-    displayName: AgentMail.DisplayName;
+    displayName?: AgentMail.DisplayName;
     /** Time at which inbox was created. */
     createdAt: Date;
 }

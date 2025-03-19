@@ -12,7 +12,7 @@ export const Inbox: core.serialization.ObjectSchema<serializers.Inbox.Raw, Agent
     {
         inboxId: core.serialization.property("inbox_id", InboxId),
         organizationId: core.serialization.property("organization_id", core.serialization.string()),
-        displayName: core.serialization.property("display_name", DisplayName),
+        displayName: core.serialization.property("display_name", DisplayName.optional()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
     },
 );
@@ -21,7 +21,7 @@ export declare namespace Inbox {
     export interface Raw {
         inbox_id: InboxId.Raw;
         organization_id: string;
-        display_name: DisplayName.Raw;
+        display_name?: DisplayName.Raw | null;
         created_at: string;
     }
 }

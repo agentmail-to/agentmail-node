@@ -5,4 +5,4 @@
 /**
  * ID of message being replied to.
  */
-export type MessageInReplyTo = string | undefined;
+export type MessageInReplyTo = string;
