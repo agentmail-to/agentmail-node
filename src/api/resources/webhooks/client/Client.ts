@@ -5,12 +5,11 @@
 import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as AgentMail from "../../../index";
-import * as serializers from "../../../../serialization/index";
 import urlJoin from "url-join";
+import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
-import * as stream from "stream";
 
-export declare namespace Messages {
+export declare namespace Webhooks {
     export interface Options {
         environment?: core.Supplier<environments.AgentMailEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
@@ -30,36 +29,22 @@ export declare namespace Messages {
     }
 }
 
-export class Messages {
-    constructor(protected readonly _options: Messages.Options = {}) {}
+export class Webhooks {
+    constructor(protected readonly _options: Webhooks.Options = {}) {}
 
     /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.ListMessagesRequest} request
-     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
+     * @param {AgentMail.ListWebhooksRequest} request
+     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.messages.list("yourinbox@agentmail.to", {
-     *         limit: 10
-     *     })
+     *     await client.webhooks.list()
      */
     public async list(
-        inboxId: AgentMail.InboxId,
-        request: AgentMail.ListMessagesRequest = {},
-        requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.ListMessagesResponse> {
-        const { received, sent, limit, lastKey } = request;
+        request: AgentMail.ListWebhooksRequest = {},
+        requestOptions?: Webhooks.RequestOptions,
+    ): Promise<AgentMail.ListWebhooksResponse> {
+        const { limit, lastKey } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (received != null) {
-            _queryParams["received"] = received.toString();
-        }
-
-        if (sent != null) {
-            _queryParams["sent"] = sent.toString();
-        }
-
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
@@ -73,7 +58,7 @@ export class Messages {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages`,
+                "/v0/webhooks",
             ),
             method: "GET",
             headers: {
@@ -94,7 +79,7 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListMessagesResponse.parseOrThrow(_response.body, {
+            return serializers.ListWebhooksResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -103,22 +88,10 @@ export class Messages {
         }
 
         if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
+            throw new errors.AgentMailError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+            });
         }
 
         switch (_response.error.reason) {
@@ -128,9 +101,7 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/webhooks.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -139,26 +110,24 @@ export class Messages {
     }
 
     /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.MessageId} messageId
-     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.WebhookId} webhookId
+     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.messages.get("yourinbox@agentmail.to", "msg_123")
+     *     await client.webhooks.get("webhook_id")
      */
     public async get(
-        inboxId: AgentMail.InboxId,
-        messageId: AgentMail.MessageId,
-        requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.Message> {
+        webhookId: AgentMail.WebhookId,
+        requestOptions?: Webhooks.RequestOptions,
+    ): Promise<AgentMail.Webhook> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
+                `/v0/webhooks/${encodeURIComponent(serializers.WebhookId.jsonOrThrow(webhookId))}`,
             ),
             method: "GET",
             headers: {
@@ -178,7 +147,7 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Message.parseOrThrow(_response.body, {
+            return serializers.Webhook.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -212,9 +181,7 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/webhooks/{webhook_id}.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -223,108 +190,28 @@ export class Messages {
     }
 
     /**
-     * @throws {@link AgentMail.NotFoundError}
-     */
-    public async getAttachment(
-        inboxId: AgentMail.InboxId,
-        messageId: AgentMail.MessageId,
-        attachmentId: AgentMail.AttachmentId,
-        requestOptions?: Messages.RequestOptions,
-    ): Promise<stream.Readable> {
-        const _response = await core.fetcher<stream.Readable>({
-            url: urlJoin(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}/attachments/${encodeURIComponent(serializers.AttachmentId.jsonOrThrow(attachmentId))}`,
-            ),
-            method: "GET",
-            headers: {
-                Authorization: await this._getAuthorizationHeader(),
-                "X-Fern-Language": "JavaScript",
-                "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
-                "X-Fern-Runtime": core.RUNTIME.type,
-                "X-Fern-Runtime-Version": core.RUNTIME.version,
-                ...requestOptions?.headers,
-            },
-            contentType: "application/json",
-            requestType: "json",
-            responseType: "streaming",
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return _response.body;
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}/attachments/{attachment_id}.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                });
-        }
-    }
-
-    /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.SendMessageRequest} request
-     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.CreateWebhookRequest} request
+     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.messages.send("yourinbox@agentmail.to", {
-     *         to: ["bob@example.com"],
-     *         cc: ["charlie@example.com"],
-     *         bcc: ["david@example.com"],
-     *         subject: "Project Discussion",
-     *         text: "Let's review the timeline for the project.",
-     *         html: "<p>Let's review the timeline for the project.</p>"
+     *     await client.webhooks.create({
+     *         url: "url",
+     *         events: undefined,
+     *         inboxes: undefined
      *     })
      */
-    public async send(
-        inboxId: AgentMail.InboxId,
-        request: AgentMail.SendMessageRequest,
-        requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.SendMessageResponse> {
+    public async create(
+        request: AgentMail.CreateWebhookRequest,
+        requestOptions?: Webhooks.RequestOptions,
+    ): Promise<AgentMail.Webhook> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/send`,
+                "/v0/webhooks",
             ),
             method: "POST",
             headers: {
@@ -339,13 +226,13 @@ export class Messages {
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.SendMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.CreateWebhookRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendMessageResponse.parseOrThrow(_response.body, {
+            return serializers.Webhook.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -355,15 +242,6 @@ export class Messages {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
                 case 400:
                     throw new AgentMail.ValidationError(
                         serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
@@ -388,9 +266,7 @@ export class Messages {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/send.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling POST /v0/webhooks.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -399,36 +275,23 @@ export class Messages {
     }
 
     /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.MessageId} messageId
-     * @param {AgentMail.ReplyToMessageRequest} request
-     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.WebhookId} webhookId
+     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
-     * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
-     *         text: "Thanks for the update. Let's meet tomorrow at 2 PM.",
-     *         html: "<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
-     *         cc: ["charlie@example.com"],
-     *         bcc: ["david@example.com"]
-     *     })
+     *     await client.webhooks.delete("webhook_id")
      */
-    public async reply(
-        inboxId: AgentMail.InboxId,
-        messageId: AgentMail.MessageId,
-        request: AgentMail.ReplyToMessageRequest,
-        requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.SendMessageResponse> {
+    public async delete(webhookId: AgentMail.WebhookId, requestOptions?: Webhooks.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}/reply`,
+                `/v0/webhooks/${encodeURIComponent(serializers.WebhookId.jsonOrThrow(webhookId))}`,
             ),
-            method: "POST",
+            method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
@@ -441,18 +304,12 @@ export class Messages {
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.ReplyToMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.SendMessageResponse.parseOrThrow(_response.body, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                breadcrumbsPrefix: ["response"],
-            });
+            return;
         }
 
         if (_response.error.reason === "status-code") {
@@ -460,15 +317,6 @@ export class Messages {
                 case 404:
                     throw new AgentMail.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                    );
-                case 400:
-                    throw new AgentMail.ValidationError(
-                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -491,7 +339,7 @@ export class Messages {
                 });
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/{message_id}/reply.",
+                    "Timeout exceeded when calling DELETE /v0/webhooks/{webhook_id}.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({
