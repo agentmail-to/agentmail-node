@@ -7,7 +7,6 @@ export * from "./Webhook";
 export * from "./ListWebhooksResponse";
 export * from "./CreateWebhookRequest";
 export * from "./EventId";
-export * from "./Payload";
 export * from "./MessageReceivedPayload";
 export * from "./SvixId";
 export * from "./SvixTimestamp";

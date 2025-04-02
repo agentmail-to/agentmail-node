@@ -6,6 +6,7 @@ export * as threads from "./threads";
 export * from "./threads/types";
 export * as webhooks from "./webhooks";
 export * from "./webhooks/types";
+export * from "./messages/errors";
 export * from "./inboxes/client/requests";
 export * from "./messages/client/requests";
 export * from "./threads/client/requests";

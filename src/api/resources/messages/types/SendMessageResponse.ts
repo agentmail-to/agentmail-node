@@ -6,4 +6,5 @@ import * as AgentMail from "../../../index";
 
 export interface SendMessageResponse {
     messageId: AgentMail.MessageId;
+    threadId: AgentMail.ThreadId;
 }

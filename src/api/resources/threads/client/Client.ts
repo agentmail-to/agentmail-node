@@ -6,6 +6,7 @@ import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as AgentMail from "../../../index";
 import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 
@@ -49,22 +50,20 @@ export class Threads {
         request: AgentMail.ListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
     ): Promise<AgentMail.ListThreadsResponse> {
-        const { received, sent, limit, lastKey } = request;
+        const { limit, lastKey, labels } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (received != null) {
-            _queryParams["received"] = received.toString();
-        }
-
-        if (sent != null) {
-            _queryParams["sent"] = sent.toString();
-        }
-
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
 
         if (lastKey != null) {
             _queryParams["last_key"] = lastKey;
+        }
+
+        if (labels != null) {
+            _queryParams["labels"] = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip" }),
+            );
         }
 
         const _response = await core.fetcher({
@@ -79,8 +78,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
+                "X-Fern-SDK-Version": "0.0.23",
+                "User-Agent": "agentmail/0.0.23",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -164,8 +163,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
+                "X-Fern-SDK-Version": "0.0.23",
+                "User-Agent": "agentmail/0.0.23",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

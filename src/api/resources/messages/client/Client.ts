@@ -6,6 +6,7 @@ import * as environments from "../../../../environments";
 import * as core from "../../../../core";
 import * as AgentMail from "../../../index";
 import * as serializers from "../../../../serialization/index";
+import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
 import * as stream from "stream";
@@ -50,22 +51,20 @@ export class Messages {
         request: AgentMail.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
     ): Promise<AgentMail.ListMessagesResponse> {
-        const { received, sent, limit, lastKey } = request;
+        const { limit, lastKey, labels } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (received != null) {
-            _queryParams["received"] = received.toString();
-        }
-
-        if (sent != null) {
-            _queryParams["sent"] = sent.toString();
-        }
-
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
 
         if (lastKey != null) {
             _queryParams["last_key"] = lastKey;
+        }
+
+        if (labels != null) {
+            _queryParams["labels"] = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip" }),
+            );
         }
 
         const _response = await core.fetcher({
@@ -80,8 +79,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
+                "X-Fern-SDK-Version": "0.0.23",
+                "User-Agent": "agentmail/0.0.23",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -165,8 +164,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
+                "X-Fern-SDK-Version": "0.0.23",
+                "User-Agent": "agentmail/0.0.23",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -243,8 +242,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
+                "X-Fern-SDK-Version": "0.0.23",
+                "User-Agent": "agentmail/0.0.23",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -303,6 +302,7 @@ export class Messages {
      *
      * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.MessageRejectedError}
      *
      * @example
      *     await client.messages.send("yourinbox@agentmail.to", {
@@ -331,8 +331,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
+                "X-Fern-SDK-Version": "0.0.23",
+                "User-Agent": "agentmail/0.0.23",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -373,6 +373,15 @@ export class Messages {
                             breadcrumbsPrefix: ["response"],
                         }),
                     );
+                case 403:
+                    throw new AgentMail.MessageRejectedError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
                 default:
                     throw new errors.AgentMailError({
                         statusCode: _response.error.statusCode,
@@ -406,6 +415,7 @@ export class Messages {
      *
      * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.MessageRejectedError}
      *
      * @example
      *     await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
@@ -433,8 +443,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.22",
-                "User-Agent": "agentmail/0.0.22",
+                "X-Fern-SDK-Version": "0.0.23",
+                "User-Agent": "agentmail/0.0.23",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -469,6 +479,15 @@ export class Messages {
                 case 400:
                     throw new AgentMail.ValidationError(
                         serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 403:
+                    throw new AgentMail.MessageRejectedError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

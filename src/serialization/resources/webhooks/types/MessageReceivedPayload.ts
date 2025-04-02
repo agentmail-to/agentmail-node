@@ -5,20 +5,23 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
+import { EventType } from "./EventType";
+import { EventId } from "./EventId";
 import { Message } from "../../messages/types/Message";
-import { Payload } from "./Payload";
 
 export const MessageReceivedPayload: core.serialization.ObjectSchema<
     serializers.MessageReceivedPayload.Raw,
     AgentMail.MessageReceivedPayload
-> = core.serialization
-    .object({
-        message: Message,
-    })
-    .extend(Payload);
+> = core.serialization.object({
+    eventType: core.serialization.property("event_type", EventType),
+    eventId: core.serialization.property("event_id", EventId),
+    message: Message,
+});
 
 export declare namespace MessageReceivedPayload {
-    export interface Raw extends Payload.Raw {
+    export interface Raw {
+        event_type: EventType.Raw;
+        event_id: EventId.Raw;
         message: Message.Raw;
     }
 }

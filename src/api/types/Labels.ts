@@ -3,6 +3,6 @@
  */
 
 /**
- * Whether to filter by sent threads/messages.
+ * Labels to filter by.
  */
-export type Sent = boolean;
+export type Labels = string[];

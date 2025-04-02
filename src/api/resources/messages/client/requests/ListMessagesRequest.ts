@@ -11,8 +11,7 @@ import * as AgentMail from "../../../../index";
  *     }
  */
 export interface ListMessagesRequest {
-    received?: AgentMail.Received;
-    sent?: AgentMail.Sent;
     limit?: AgentMail.Limit;
     lastKey?: AgentMail.LastKey;
+    labels?: AgentMail.Labels;
 }
