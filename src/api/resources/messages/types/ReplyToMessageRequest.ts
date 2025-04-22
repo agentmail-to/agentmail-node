@@ -10,4 +10,5 @@ export interface ReplyToMessageRequest {
     bcc?: AgentMail.SendMessageBcc;
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
+    attachments?: AgentMail.SendMessageAttachments;
 }

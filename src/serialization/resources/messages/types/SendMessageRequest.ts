@@ -11,6 +11,8 @@ import { SendMessageBcc } from "./SendMessageBcc";
 import { MessageSubject } from "./MessageSubject";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
+import { SendMessageAttachments } from "./SendMessageAttachments";
+import { SendAttachment } from "./SendAttachment";
 
 export const SendMessageRequest: core.serialization.ObjectSchema<
     serializers.SendMessageRequest.Raw,
@@ -22,6 +24,7 @@ export const SendMessageRequest: core.serialization.ObjectSchema<
     subject: MessageSubject.optional(),
     text: MessageText.optional(),
     html: MessageHtml.optional(),
+    attachments: SendMessageAttachments.optional(),
 });
 
 export declare namespace SendMessageRequest {
@@ -32,5 +35,6 @@ export declare namespace SendMessageRequest {
         subject?: MessageSubject.Raw | null;
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
+        attachments?: SendMessageAttachments.Raw | null;
     }
 }

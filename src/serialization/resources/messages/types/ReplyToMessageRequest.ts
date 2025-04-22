@@ -10,6 +10,8 @@ import { SendMessageCc } from "./SendMessageCc";
 import { SendMessageBcc } from "./SendMessageBcc";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
+import { SendMessageAttachments } from "./SendMessageAttachments";
+import { SendAttachment } from "./SendAttachment";
 
 export const ReplyToMessageRequest: core.serialization.ObjectSchema<
     serializers.ReplyToMessageRequest.Raw,
@@ -20,6 +22,7 @@ export const ReplyToMessageRequest: core.serialization.ObjectSchema<
     bcc: SendMessageBcc.optional(),
     text: MessageText.optional(),
     html: MessageHtml.optional(),
+    attachments: SendMessageAttachments.optional(),
 });
 
 export declare namespace ReplyToMessageRequest {
@@ -29,5 +32,6 @@ export declare namespace ReplyToMessageRequest {
         bcc?: SendMessageBcc.Raw | null;
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
+        attachments?: SendMessageAttachments.Raw | null;
     }
 }
