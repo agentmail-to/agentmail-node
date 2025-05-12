@@ -8,7 +8,6 @@ import * as AgentMail from "../../../index";
  * @example
  *     {
  *         inboxId: "yourinbox@agentmail.to",
- *         organizationId: "123e4567-e89b-12d3-a456-426614174000",
  *         displayName: "Your Inbox",
  *         createdAt: "2024-01-15T09:30:00Z"
  *     }
@@ -16,15 +15,12 @@ import * as AgentMail from "../../../index";
  * @example
  *     {
  *         inboxId: "helpfulagent123@yourdomain.com",
- *         organizationId: "123e4567-e89b-12d3-a456-426614174000",
  *         displayName: "Helpful Agent",
  *         createdAt: "2024-01-15T09:30:00Z"
  *     }
  */
 export interface Inbox {
     inboxId: AgentMail.InboxId;
-    /** ID of organization that owns inbox. */
-    organizationId: string;
     displayName?: AgentMail.DisplayName;
     /** Time at which inbox was created. */
     createdAt: Date;

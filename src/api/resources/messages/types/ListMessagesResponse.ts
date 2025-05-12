@@ -8,8 +8,9 @@ import * as AgentMail from "../../../index";
  * @example
  *     {
  *         messages: [{
- *                 messageId: "msg_123",
+ *                 inboxId: "yourinbox@agentmail.to",
  *                 threadId: "thread_123",
+ *                 messageId: "msg_123",
  *                 eventId: "event_123",
  *                 labels: ["RECEIVED", "UNREAD"],
  *                 timestamp: "2024-01-15T09:30:00Z",
@@ -27,8 +28,9 @@ import * as AgentMail from "../../../index";
  *                         inline: false
  *                     }]
  *             }, {
- *                 messageId: "msg_456",
+ *                 inboxId: "yourinbox@agentmail.to",
  *                 threadId: "thread_123",
+ *                 messageId: "msg_456",
  *                 eventId: "event_456",
  *                 labels: ["SENT"],
  *                 timestamp: "2024-01-15T10:15:00Z",

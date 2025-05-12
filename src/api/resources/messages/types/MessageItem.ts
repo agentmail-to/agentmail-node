@@ -5,6 +5,7 @@
 import * as AgentMail from "../../../index";
 
 export interface MessageItem {
+    inboxId: AgentMail.InboxId;
     threadId: AgentMail.ThreadId;
     messageId: AgentMail.MessageId;
     eventId: AgentMail.MessageEventId;

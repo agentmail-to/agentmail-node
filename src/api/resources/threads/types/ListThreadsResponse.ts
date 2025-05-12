@@ -8,6 +8,7 @@ import * as AgentMail from "../../../index";
  * @example
  *     {
  *         threads: [{
+ *                 inboxId: "yourinbox@agentmail.to",
  *                 threadId: "thread_123",
  *                 eventId: "event_123",
  *                 labels: ["RECEIVED", "UNREAD"],
@@ -18,6 +19,7 @@ import * as AgentMail from "../../../index";
  *                 subject: "Project Discussion",
  *                 preview: "Let's review the timeline for..."
  *             }, {
+ *                 inboxId: "yourinbox@agentmail.to",
  *                 threadId: "thread_456",
  *                 eventId: "event_456",
  *                 labels: ["SENT"],

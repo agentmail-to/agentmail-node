@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
+import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadId } from "./ThreadId";
 import { ThreadEventId } from "./ThreadEventId";
 import { ThreadLabels } from "./ThreadLabels";
@@ -16,12 +17,11 @@ import { ThreadSubject } from "./ThreadSubject";
 import { ThreadPreview } from "./ThreadPreview";
 import { ThreadAttachments } from "./ThreadAttachments";
 import { Message } from "../../messages/types/Message";
-import { InboxId } from "../../inboxes/types/InboxId";
-import { OrganizationId } from "../../../types/OrganizationId";
 import { ThreadAttachment } from "./ThreadAttachment";
 
 export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, AgentMail.Thread> =
     core.serialization.object({
+        inboxId: core.serialization.property("inbox_id", InboxId),
         threadId: core.serialization.property("thread_id", ThreadId),
         eventId: core.serialization.property("event_id", ThreadEventId),
         labels: ThreadLabels,
@@ -33,12 +33,11 @@ export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, Age
         preview: ThreadPreview.optional(),
         attachments: ThreadAttachments.optional(),
         messages: core.serialization.list(Message),
-        inboxId: core.serialization.property("inbox_id", InboxId),
-        organizationId: core.serialization.property("organization_id", OrganizationId),
     });
 
 export declare namespace Thread {
     export interface Raw {
+        inbox_id: InboxId.Raw;
         thread_id: ThreadId.Raw;
         event_id: ThreadEventId.Raw;
         labels: ThreadLabels.Raw;
@@ -50,7 +49,5 @@ export declare namespace Thread {
         preview?: ThreadPreview.Raw | null;
         attachments?: ThreadAttachments.Raw | null;
         messages: Message.Raw[];
-        inbox_id: InboxId.Raw;
-        organization_id: OrganizationId.Raw;
     }
 }

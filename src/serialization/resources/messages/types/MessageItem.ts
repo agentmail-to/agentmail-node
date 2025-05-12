@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
+import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadId } from "../../threads/types/ThreadId";
 import { MessageId } from "./MessageId";
 import { MessageEventId } from "./MessageEventId";
@@ -21,6 +22,7 @@ import { Attachment } from "./Attachment";
 
 export const MessageItem: core.serialization.ObjectSchema<serializers.MessageItem.Raw, AgentMail.MessageItem> =
     core.serialization.object({
+        inboxId: core.serialization.property("inbox_id", InboxId),
         threadId: core.serialization.property("thread_id", ThreadId),
         messageId: core.serialization.property("message_id", MessageId),
         eventId: core.serialization.property("event_id", MessageEventId),
@@ -37,6 +39,7 @@ export const MessageItem: core.serialization.ObjectSchema<serializers.MessageIte
 
 export declare namespace MessageItem {
     export interface Raw {
+        inbox_id: InboxId.Raw;
         thread_id: ThreadId.Raw;
         message_id: MessageId.Raw;
         event_id: MessageEventId.Raw;

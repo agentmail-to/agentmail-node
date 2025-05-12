@@ -30,11 +30,11 @@ import * as AgentMail from "../../../index";
  *             }],
  *         inReplyTo: "msg_122",
  *         references: ["msg_121", "msg_122"],
- *         inboxId: "yourinbox@agentmail.to",
- *         organizationId: "org_123"
+ *         inboxId: "yourinbox@agentmail.to"
  *     }
  */
 export interface Message {
+    inboxId: AgentMail.InboxId;
     threadId: AgentMail.ThreadId;
     messageId: AgentMail.MessageId;
     eventId: AgentMail.MessageEventId;
@@ -52,6 +52,4 @@ export interface Message {
     attachments?: AgentMail.MessageAttachments;
     inReplyTo?: AgentMail.MessageInReplyTo;
     references?: AgentMail.MessageReferences;
-    inboxId: AgentMail.InboxId;
-    organizationId: AgentMail.OrganizationId;
 }
