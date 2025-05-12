@@ -36,9 +36,9 @@ import * as AgentMail from "../../../index";
  *     }
  */
 export interface ListThreadsResponse {
-    /** Thread items. Ordered by `updated_at` descending. */
-    threads: AgentMail.ThreadItem[];
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     lastKey?: AgentMail.LastKey;
+    /** Thread items. Ordered by `timestamp` descending. */
+    threads: AgentMail.ThreadItem[];
 }

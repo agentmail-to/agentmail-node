@@ -5,9 +5,9 @@
 import * as AgentMail from "../../../index";
 
 export interface ListWebhooksResponse {
-    /** Webhook items. Ordered by `created_at` ascending. */
-    webhooks: AgentMail.Webhook[];
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     lastKey?: AgentMail.LastKey;
+    /** Webhook items. Ordered by `created_at` ascending. */
+    webhooks: AgentMail.Webhook[];
 }

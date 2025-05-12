@@ -6,9 +6,9 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const MessageReplyTo: core.serialization.Schema<serializers.MessageReplyTo.Raw, AgentMail.MessageReplyTo> =
+export const DraftEventId: core.serialization.Schema<serializers.DraftEventId.Raw, AgentMail.DraftEventId> =
     core.serialization.string();
 
-export declare namespace MessageReplyTo {
+export declare namespace DraftEventId {
     export type Raw = string;
 }

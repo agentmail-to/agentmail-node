@@ -5,26 +5,26 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
-import { Webhook } from "./Webhook";
 import { Count } from "../../../types/Count";
 import { Limit } from "../../../types/Limit";
 import { LastKey } from "../../../types/LastKey";
+import { Webhook } from "./Webhook";
 
 export const ListWebhooksResponse: core.serialization.ObjectSchema<
     serializers.ListWebhooksResponse.Raw,
     AgentMail.ListWebhooksResponse
 > = core.serialization.object({
-    webhooks: core.serialization.list(Webhook),
     count: Count,
     limit: Limit.optional(),
     lastKey: core.serialization.property("last_key", LastKey.optional()),
+    webhooks: core.serialization.list(Webhook),
 });
 
 export declare namespace ListWebhooksResponse {
     export interface Raw {
-        webhooks: Webhook.Raw[];
         count: Count.Raw;
         limit?: Limit.Raw | null;
         last_key?: LastKey.Raw | null;
+        webhooks: Webhook.Raw[];
     }
 }

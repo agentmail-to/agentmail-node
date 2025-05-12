@@ -12,12 +12,11 @@ import { MessageEventId } from "./MessageEventId";
 import { MessageLabels } from "./MessageLabels";
 import { MessageTimestamp } from "./MessageTimestamp";
 import { MessageFrom } from "./MessageFrom";
-import { MessageReplyTo } from "./MessageReplyTo";
-import { MessageSubject } from "./MessageSubject";
-import { MessagePreview } from "./MessagePreview";
 import { MessageTo } from "./MessageTo";
 import { MessageCc } from "./MessageCc";
 import { MessageBcc } from "./MessageBcc";
+import { MessageSubject } from "./MessageSubject";
+import { MessagePreview } from "./MessagePreview";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
 import { MessageAttachments } from "./MessageAttachments";
@@ -34,12 +33,11 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         labels: MessageLabels,
         timestamp: MessageTimestamp,
         from: MessageFrom,
-        replyTo: core.serialization.property("reply_to", MessageReplyTo.optional()),
-        subject: MessageSubject.optional(),
-        preview: MessagePreview.optional(),
         to: MessageTo,
         cc: MessageCc.optional(),
         bcc: MessageBcc.optional(),
+        subject: MessageSubject.optional(),
+        preview: MessagePreview.optional(),
         text: MessageText.optional(),
         html: MessageHtml.optional(),
         attachments: MessageAttachments.optional(),
@@ -56,12 +54,11 @@ export declare namespace Message {
         labels: MessageLabels.Raw;
         timestamp: MessageTimestamp.Raw;
         from: MessageFrom.Raw;
-        reply_to?: MessageReplyTo.Raw | null;
-        subject?: MessageSubject.Raw | null;
-        preview?: MessagePreview.Raw | null;
         to: MessageTo.Raw;
         cc?: MessageCc.Raw | null;
         bcc?: MessageBcc.Raw | null;
+        subject?: MessageSubject.Raw | null;
+        preview?: MessagePreview.Raw | null;
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
         attachments?: MessageAttachments.Raw | null;

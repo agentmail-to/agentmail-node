@@ -36,7 +36,7 @@ following namespace:
 ```typescript
 import { AgentMail } from "agentmail";
 
-const request: AgentMail.ListInboxesRequest = {
+const request: AgentMail.ListDraftsRequest = {
     ...
 };
 ```

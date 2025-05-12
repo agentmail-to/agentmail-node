@@ -18,4 +18,6 @@ export interface MessageItem {
     subject?: AgentMail.MessageSubject;
     preview?: AgentMail.MessagePreview;
     attachments?: AgentMail.MessageAttachments;
+    inReplyTo?: AgentMail.MessageInReplyTo;
+    references?: AgentMail.MessageReferences;
 }

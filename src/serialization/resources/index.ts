@@ -1,3 +1,5 @@
+export * as drafts from "./drafts";
+export * from "./drafts/types";
 export * as inboxes from "./inboxes";
 export * from "./inboxes/types";
 export * as messages from "./messages";

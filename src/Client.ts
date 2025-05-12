@@ -7,6 +7,7 @@ import * as core from "./core";
 import { Inboxes } from "./api/resources/inboxes/client/Client";
 import { Threads } from "./api/resources/threads/client/Client";
 import { Messages } from "./api/resources/messages/client/Client";
+import { Drafts } from "./api/resources/drafts/client/Client";
 import { Webhooks } from "./api/resources/webhooks/client/Client";
 
 export declare namespace AgentMailClient {
@@ -33,6 +34,7 @@ export class AgentMailClient {
     protected _inboxes: Inboxes | undefined;
     protected _threads: Threads | undefined;
     protected _messages: Messages | undefined;
+    protected _drafts: Drafts | undefined;
     protected _webhooks: Webhooks | undefined;
 
     constructor(protected readonly _options: AgentMailClient.Options = {}) {}
@@ -47,6 +49,10 @@ export class AgentMailClient {
 
     public get messages(): Messages {
         return (this._messages ??= new Messages(this._options));
+    }
+
+    public get drafts(): Drafts {
+        return (this._drafts ??= new Drafts(this._options));
     }
 
     public get webhooks(): Webhooks {

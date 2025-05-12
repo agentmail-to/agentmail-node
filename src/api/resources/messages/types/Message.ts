@@ -13,7 +13,6 @@ import * as AgentMail from "../../../index";
  *         labels: ["RECEIVED", "UNREAD"],
  *         timestamp: "2024-01-15T09:30:00Z",
  *         from: "alice@example.com",
- *         replyTo: "alice.work@example.com",
  *         to: ["bob@example.com"],
  *         cc: ["charlie@example.com"],
  *         bcc: ["david@example.com"],
@@ -41,12 +40,11 @@ export interface Message {
     labels: AgentMail.MessageLabels;
     timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;
-    replyTo?: AgentMail.MessageReplyTo;
-    subject?: AgentMail.MessageSubject;
-    preview?: AgentMail.MessagePreview;
     to: AgentMail.MessageTo;
     cc?: AgentMail.MessageCc;
     bcc?: AgentMail.MessageBcc;
+    subject?: AgentMail.MessageSubject;
+    preview?: AgentMail.MessagePreview;
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.MessageAttachments;

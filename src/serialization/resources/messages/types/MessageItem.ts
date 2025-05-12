@@ -18,6 +18,8 @@ import { MessageBcc } from "./MessageBcc";
 import { MessageSubject } from "./MessageSubject";
 import { MessagePreview } from "./MessagePreview";
 import { MessageAttachments } from "./MessageAttachments";
+import { MessageInReplyTo } from "./MessageInReplyTo";
+import { MessageReferences } from "./MessageReferences";
 import { Attachment } from "./Attachment";
 
 export const MessageItem: core.serialization.ObjectSchema<serializers.MessageItem.Raw, AgentMail.MessageItem> =
@@ -35,6 +37,8 @@ export const MessageItem: core.serialization.ObjectSchema<serializers.MessageIte
         subject: MessageSubject.optional(),
         preview: MessagePreview.optional(),
         attachments: MessageAttachments.optional(),
+        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
+        references: MessageReferences.optional(),
     });
 
 export declare namespace MessageItem {
@@ -52,5 +56,7 @@ export declare namespace MessageItem {
         subject?: MessageSubject.Raw | null;
         preview?: MessagePreview.Raw | null;
         attachments?: MessageAttachments.Raw | null;
+        in_reply_to?: MessageInReplyTo.Raw | null;
+        references?: MessageReferences.Raw | null;
     }
 }

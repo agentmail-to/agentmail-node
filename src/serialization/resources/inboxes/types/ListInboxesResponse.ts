@@ -5,26 +5,26 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
-import { Inbox } from "./Inbox";
 import { Count } from "../../../types/Count";
 import { Limit } from "../../../types/Limit";
 import { LastKey } from "../../../types/LastKey";
+import { Inbox } from "./Inbox";
 
 export const ListInboxesResponse: core.serialization.ObjectSchema<
     serializers.ListInboxesResponse.Raw,
     AgentMail.ListInboxesResponse
 > = core.serialization.object({
-    inboxes: core.serialization.list(Inbox),
     count: Count,
     limit: Limit.optional(),
     lastKey: core.serialization.property("last_key", LastKey.optional()),
+    inboxes: core.serialization.list(Inbox),
 });
 
 export declare namespace ListInboxesResponse {
     export interface Raw {
-        inboxes: Inbox.Raw[];
         count: Count.Raw;
         limit?: Limit.Raw | null;
         last_key?: LastKey.Raw | null;
+        inboxes: Inbox.Raw[];
     }
 }
