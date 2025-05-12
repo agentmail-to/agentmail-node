@@ -1,16 +1,8 @@
-export * as drafts from "./drafts";
-export * from "./drafts/types";
 export * as inboxes from "./inboxes";
-export * from "./inboxes/types";
-export * as messages from "./messages";
-export * from "./messages/types";
-export * as threads from "./threads";
-export * from "./threads/types";
 export * as webhooks from "./webhooks";
 export * from "./webhooks/types";
-export * from "./messages/errors";
+export * as drafts from "./drafts";
+export * as threads from "./threads";
 export * from "./drafts/client/requests";
-export * from "./inboxes/client/requests";
-export * from "./messages/client/requests";
 export * from "./threads/client/requests";
 export * from "./webhooks/client/requests";

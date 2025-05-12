@@ -4,24 +4,10 @@
 
 import * as AgentMail from "../../../index";
 
-/**
- * @example
- *     {
- *         inboxId: "yourinbox@agentmail.to",
- *         displayName: "Your Inbox",
- *         createdAt: "2024-01-15T09:30:00Z"
- *     }
- *
- * @example
- *     {
- *         inboxId: "helpfulagent123@yourdomain.com",
- *         displayName: "Helpful Agent",
- *         createdAt: "2024-01-15T09:30:00Z"
- *     }
- */
 export interface Inbox {
-    inboxId: AgentMail.InboxId;
-    displayName?: AgentMail.DisplayName;
+    inboxId: AgentMail.inboxes.InboxId;
+    /** Display name: `Display Name <username@domain.com>`. */
+    displayName: string;
     /** Time at which inbox was created. */
     createdAt: Date;
 }

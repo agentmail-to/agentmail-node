@@ -6,10 +6,7 @@ import * as AgentMail from "../../../../index";
 
 /**
  * @example
- *     {
- *         limit: 10,
- *         lastKey: "123e4567-e89b-12d3-a456-426614174000"
- *     }
+ *     {}
  */
 export interface ListInboxesRequest {
     limit?: AgentMail.Limit;

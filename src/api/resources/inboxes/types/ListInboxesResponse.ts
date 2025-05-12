@@ -4,23 +4,10 @@
 
 import * as AgentMail from "../../../index";
 
-/**
- * @example
- *     {
- *         inboxes: [{
- *                 inboxId: "yourinbox@agentmail.to",
- *                 displayName: "Your Inbox",
- *                 createdAt: "2024-01-15T09:30:00Z"
- *             }],
- *         limit: 10,
- *         count: 1,
- *         lastKey: "123e4567-e89b-12d3-a456-426614174000"
- *     }
- */
 export interface ListInboxesResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     lastKey?: AgentMail.LastKey;
-    /** Inbox items. Ordered by `created_at` ascending. */
-    inboxes: AgentMail.Inbox[];
+    /** Ordered by `created_at` ascending. */
+    inboxes: AgentMail.inboxes.Inbox[];
 }

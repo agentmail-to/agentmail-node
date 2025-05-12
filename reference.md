@@ -1,121 +1,5 @@
 # Reference
 
-## Drafts
-
-<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.drafts.list("yourinbox@agentmail.to", {
-    limit: 10,
-});
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inboxId:** `AgentMail.InboxId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ListDraftsRequest`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Drafts.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">get</a>(inboxId, draftId) -> AgentMail.Draft</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.drafts.get("yourinbox@agentmail.to", "draft_123");
-```
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inboxId:** `AgentMail.InboxId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**draftId:** `AgentMail.DraftId`
-
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `Drafts.RequestOptions`
-
-</dd>
-</dl>
-</dd>
-</dl>
-
-</dd>
-</dl>
-</details>
-
 ## Inboxes
 
 <details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListInboxesResponse</code></summary>
@@ -131,10 +15,7 @@ await client.drafts.get("yourinbox@agentmail.to", "draft_123");
 <dd>
 
 ```typescript
-await client.inboxes.list({
-    limit: 10,
-    lastKey: "123e4567-e89b-12d3-a456-426614174000",
-});
+await client.inboxes.list();
 ```
 
 </dd>
@@ -150,7 +31,7 @@ await client.inboxes.list({
 <dl>
 <dd>
 
-**request:** `AgentMail.ListInboxesRequest`
+**request:** `AgentMail.inboxes.ListInboxesRequest`
 
 </dd>
 </dl>
@@ -182,7 +63,7 @@ await client.inboxes.list({
 <dd>
 
 ```typescript
-await client.inboxes.get("yourinbox@agentmail.to");
+await client.inboxes.get("inbox_id");
 ```
 
 </dd>
@@ -231,8 +112,9 @@ await client.inboxes.get("yourinbox@agentmail.to");
 
 ```typescript
 await client.inboxes.create({
-    username: "yourinbox",
-    displayName: "Your Inbox",
+    username: undefined,
+    domain: undefined,
+    displayName: undefined,
 });
 ```
 
@@ -268,9 +150,9 @@ await client.inboxes.create({
 </dl>
 </details>
 
-## Messages
+## Drafts
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
+<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -283,8 +165,224 @@ await client.inboxes.create({
 <dd>
 
 ```typescript
-await client.messages.list("yourinbox@agentmail.to", {
-    limit: 10,
+await client.drafts.list();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.DraftsListDraftsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Drafts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">get</a>(draftId) -> AgentMail.Draft</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.drafts.get("draft_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**draftId:** `AgentMail.DraftId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Drafts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Inboxes Drafts
+
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.drafts.list("inbox_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inboxId:** `AgentMail.InboxId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.ListDraftsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Drafts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">get</a>(inboxId, draftId) -> AgentMail.Draft</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.drafts.get("inbox_id", "draft_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inboxId:** `AgentMail.InboxId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draftId:** `AgentMail.DraftId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Drafts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">create</a>(inboxId, { ...params }) -> AgentMail.Draft</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.drafts.create("inbox_id", {
+    labels: undefined,
+    to: undefined,
+    cc: undefined,
+    bcc: undefined,
+    subject: undefined,
+    text: undefined,
+    html: undefined,
 });
 ```
 
@@ -309,7 +407,65 @@ await client.messages.list("yourinbox@agentmail.to", {
 <dl>
 <dd>
 
-**request:** `AgentMail.ListMessagesRequest`
+**request:** `AgentMail.CreateDraftRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Drafts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Inboxes Messages
+
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.list("inbox_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inboxId:** `AgentMail.InboxId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.ListMessagesRequest`
 
 </dd>
 </dl>
@@ -328,7 +484,7 @@ await client.messages.list("yourinbox@agentmail.to", {
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">get</a>(inboxId, messageId) -> AgentMail.Message</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">get</a>(inboxId, messageId) -> AgentMail.Message</code></summary>
 <dl>
 <dd>
 
@@ -341,7 +497,7 @@ await client.messages.list("yourinbox@agentmail.to", {
 <dd>
 
 ```typescript
-await client.messages.get("yourinbox@agentmail.to", "msg_123");
+await client.inboxes.messages.get("inbox_id", "message_id");
 ```
 
 </dd>
@@ -384,7 +540,7 @@ await client.messages.get("yourinbox@agentmail.to", "msg_123");
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">send</a>(inboxId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">send</a>(inboxId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -397,13 +553,14 @@ await client.messages.get("yourinbox@agentmail.to", "msg_123");
 <dd>
 
 ```typescript
-await client.messages.send("yourinbox@agentmail.to", {
-    to: ["bob@example.com"],
-    cc: ["charlie@example.com"],
-    bcc: ["david@example.com"],
-    subject: "Project Discussion",
-    text: "Let's review the timeline for the project.",
-    html: "<p>Let's review the timeline for the project.</p>",
+await client.inboxes.messages.send("inbox_id", {
+    to: "to",
+    cc: undefined,
+    bcc: undefined,
+    subject: undefined,
+    text: undefined,
+    html: undefined,
+    attachments: undefined,
 });
 ```
 
@@ -447,7 +604,7 @@ await client.messages.send("yourinbox@agentmail.to", {
 </dl>
 </details>
 
-<details><summary><code>client.messages.<a href="/src/api/resources/messages/client/Client.ts">reply</a>(inboxId, messageId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">reply</a>(inboxId, messageId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -460,11 +617,13 @@ await client.messages.send("yourinbox@agentmail.to", {
 <dd>
 
 ```typescript
-await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
-    text: "Thanks for the update. Let's meet tomorrow at 2 PM.",
-    html: "<p>Thanks for the update. Let's meet tomorrow at 2 PM.</p>",
-    cc: ["charlie@example.com"],
-    bcc: ["david@example.com"],
+await client.inboxes.messages.reply("inbox_id", "message_id", {
+    to: undefined,
+    cc: undefined,
+    bcc: undefined,
+    text: undefined,
+    html: undefined,
+    attachments: undefined,
 });
 ```
 
@@ -516,9 +675,9 @@ await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
 </dl>
 </details>
 
-## Threads
+## Inboxes Threads
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -531,9 +690,7 @@ await client.messages.reply("yourinbox@agentmail.to", "msg_123", {
 <dd>
 
 ```typescript
-await client.threads.list("yourinbox@agentmail.to", {
-    limit: 10,
-});
+await client.inboxes.threads.list("inbox_id");
 ```
 
 </dd>
@@ -557,7 +714,7 @@ await client.threads.list("yourinbox@agentmail.to", {
 <dl>
 <dd>
 
-**request:** `AgentMail.ListThreadsRequest`
+**request:** `AgentMail.inboxes.ListThreadsRequest`
 
 </dd>
 </dl>
@@ -576,7 +733,7 @@ await client.threads.list("yourinbox@agentmail.to", {
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(inboxId, threadId) -> AgentMail.Thread</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">get</a>(inboxId, threadId) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -589,7 +746,7 @@ await client.threads.list("yourinbox@agentmail.to", {
 <dd>
 
 ```typescript
-await client.threads.get("yourinbox@agentmail.to", "thread_123");
+await client.inboxes.threads.get("inbox_id", "thread_id");
 ```
 
 </dd>
@@ -609,6 +766,104 @@ await client.threads.get("yourinbox@agentmail.to", "thread_123");
 
 </dd>
 </dl>
+
+<dl>
+<dd>
+
+**threadId:** `AgentMail.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Threads
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListThreadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.list();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ThreadsListThreadsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(threadId) -> AgentMail.Thread</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.get("thread_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
 
 <dl>
 <dd>

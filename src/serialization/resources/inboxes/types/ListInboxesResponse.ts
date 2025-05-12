@@ -11,8 +11,8 @@ import { LastKey } from "../../../types/LastKey";
 import { Inbox } from "./Inbox";
 
 export const ListInboxesResponse: core.serialization.ObjectSchema<
-    serializers.ListInboxesResponse.Raw,
-    AgentMail.ListInboxesResponse
+    serializers.inboxes.ListInboxesResponse.Raw,
+    AgentMail.inboxes.ListInboxesResponse
 > = core.serialization.object({
     count: Count,
     limit: Limit.optional(),

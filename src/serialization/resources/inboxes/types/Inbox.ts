@@ -6,20 +6,18 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { InboxId } from "./InboxId";
-import { DisplayName } from "./DisplayName";
 
-export const Inbox: core.serialization.ObjectSchema<serializers.Inbox.Raw, AgentMail.Inbox> = core.serialization.object(
-    {
+export const Inbox: core.serialization.ObjectSchema<serializers.inboxes.Inbox.Raw, AgentMail.inboxes.Inbox> =
+    core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
-        displayName: core.serialization.property("display_name", DisplayName.optional()),
+        displayName: core.serialization.property("display_name", core.serialization.string()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
-    },
-);
+    });
 
 export declare namespace Inbox {
     export interface Raw {
         inbox_id: InboxId.Raw;
-        display_name?: DisplayName.Raw | null;
+        display_name: string;
         created_at: string;
     }
 }

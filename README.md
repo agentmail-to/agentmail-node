@@ -24,7 +24,9 @@ import { AgentMailClient } from "agentmail";
 
 const client = new AgentMailClient({ apiKey: "YOUR_API_KEY" });
 await client.inboxes.create({
-    domain: "yourdomain.com",
+    username: undefined,
+    domain: undefined,
+    displayName: undefined,
 });
 ```
 
@@ -36,7 +38,7 @@ following namespace:
 ```typescript
 import { AgentMail } from "agentmail";
 
-const request: AgentMail.ListDraftsRequest = {
+const request: AgentMail.ListInboxesRequest = {
     ...
 };
 ```

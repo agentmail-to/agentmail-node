@@ -3,6 +3,6 @@
  */
 
 /**
- * ID (address) of inbox.
+ * ID of inbox.
  */
 export type InboxId = string;

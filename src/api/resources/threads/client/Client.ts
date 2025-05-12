@@ -34,22 +34,18 @@ export class Threads {
     constructor(protected readonly _options: Threads.Options = {}) {}
 
     /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.ListThreadsRequest} request
+     * @param {AgentMail.ThreadsListThreadsRequest} request
      * @param {Threads.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.threads.list("yourinbox@agentmail.to", {
-     *         limit: 10
-     *     })
+     *     await client.threads.list()
      */
     public async list(
-        inboxId: AgentMail.InboxId,
-        request: AgentMail.ListThreadsRequest = {},
+        request: AgentMail.ThreadsListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
-    ): Promise<AgentMail.ListThreadsResponse> {
+    ): Promise<AgentMail.inboxes.ListThreadsResponse> {
         const { limit, lastKey, labels } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -71,15 +67,15 @@ export class Threads {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/threads`,
+                "/v0/threads",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.26",
-                "User-Agent": "agentmail/0.0.26",
+                "X-Fern-SDK-Version": "0.0.27",
+                "User-Agent": "agentmail/0.0.27",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -92,7 +88,7 @@ export class Threads {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListThreadsResponse.parseOrThrow(_response.body, {
+            return serializers.inboxes.ListThreadsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -128,9 +124,7 @@ export class Threads {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/threads.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/threads.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -139,34 +133,32 @@ export class Threads {
     }
 
     /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.ThreadId} threadId
+     * @param {AgentMail.inboxes.ThreadId} threadId
      * @param {Threads.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.threads.get("yourinbox@agentmail.to", "thread_123")
+     *     await client.threads.get("thread_id")
      */
     public async get(
-        inboxId: AgentMail.InboxId,
-        threadId: AgentMail.ThreadId,
+        threadId: AgentMail.inboxes.ThreadId,
         requestOptions?: Threads.RequestOptions,
-    ): Promise<AgentMail.Thread> {
+    ): Promise<AgentMail.inboxes.Thread> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/threads/${encodeURIComponent(serializers.ThreadId.jsonOrThrow(threadId))}`,
+                `/v0/threads/${encodeURIComponent(serializers.inboxes.ThreadId.jsonOrThrow(threadId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.26",
-                "User-Agent": "agentmail/0.0.26",
+                "X-Fern-SDK-Version": "0.0.27",
+                "User-Agent": "agentmail/0.0.27",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -178,7 +170,7 @@ export class Threads {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Thread.parseOrThrow(_response.body, {
+            return serializers.inboxes.Thread.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -214,9 +206,7 @@ export class Threads {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/threads/{thread_id}.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/threads/{thread_id}.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,

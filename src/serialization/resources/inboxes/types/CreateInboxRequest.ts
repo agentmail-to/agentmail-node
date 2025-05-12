@@ -5,21 +5,20 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
-import { DisplayName } from "./DisplayName";
 
 export const CreateInboxRequest: core.serialization.ObjectSchema<
-    serializers.CreateInboxRequest.Raw,
-    AgentMail.CreateInboxRequest
+    serializers.inboxes.CreateInboxRequest.Raw,
+    AgentMail.inboxes.CreateInboxRequest
 > = core.serialization.object({
     username: core.serialization.string().optional(),
     domain: core.serialization.string().optional(),
-    displayName: core.serialization.property("display_name", DisplayName.optional()),
+    displayName: core.serialization.property("display_name", core.serialization.string().optional()),
 });
 
 export declare namespace CreateInboxRequest {
     export interface Raw {
         username?: string | null;
         domain?: string | null;
-        display_name?: DisplayName.Raw | null;
+        display_name?: string | null;
     }
 }

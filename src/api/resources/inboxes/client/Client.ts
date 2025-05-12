@@ -8,6 +8,9 @@ import * as AgentMail from "../../../index";
 import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
+import { Threads } from "../resources/threads/client/Client";
+import { Messages } from "../resources/messages/client/Client";
+import { Drafts } from "../resources/drafts/client/Client";
 
 export declare namespace Inboxes {
     export interface Options {
@@ -30,22 +33,35 @@ export declare namespace Inboxes {
 }
 
 export class Inboxes {
+    protected _threads: Threads | undefined;
+    protected _messages: Messages | undefined;
+    protected _drafts: Drafts | undefined;
+
     constructor(protected readonly _options: Inboxes.Options = {}) {}
 
+    public get threads(): Threads {
+        return (this._threads ??= new Threads(this._options));
+    }
+
+    public get messages(): Messages {
+        return (this._messages ??= new Messages(this._options));
+    }
+
+    public get drafts(): Drafts {
+        return (this._drafts ??= new Drafts(this._options));
+    }
+
     /**
-     * @param {AgentMail.ListInboxesRequest} request
+     * @param {AgentMail.inboxes.ListInboxesRequest} request
      * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.inboxes.list({
-     *         limit: 10,
-     *         lastKey: "123e4567-e89b-12d3-a456-426614174000"
-     *     })
+     *     await client.inboxes.list()
      */
     public async list(
-        request: AgentMail.ListInboxesRequest = {},
+        request: AgentMail.inboxes.ListInboxesRequest = {},
         requestOptions?: Inboxes.RequestOptions,
-    ): Promise<AgentMail.ListInboxesResponse> {
+    ): Promise<AgentMail.inboxes.ListInboxesResponse> {
         const { limit, lastKey } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -68,8 +84,8 @@ export class Inboxes {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.26",
-                "User-Agent": "agentmail/0.0.26",
+                "X-Fern-SDK-Version": "0.0.27",
+                "User-Agent": "agentmail/0.0.27",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -82,7 +98,7 @@ export class Inboxes {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListInboxesResponse.parseOrThrow(_response.body, {
+            return serializers.inboxes.ListInboxesResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -114,29 +130,32 @@ export class Inboxes {
     }
 
     /**
-     * @param {AgentMail.InboxId} inboxId
+     * @param {AgentMail.inboxes.InboxId} inboxId
      * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.inboxes.get("yourinbox@agentmail.to")
+     *     await client.inboxes.get("inbox_id")
      */
-    public async get(inboxId: AgentMail.InboxId, requestOptions?: Inboxes.RequestOptions): Promise<AgentMail.Inbox> {
+    public async get(
+        inboxId: AgentMail.inboxes.InboxId,
+        requestOptions?: Inboxes.RequestOptions,
+    ): Promise<AgentMail.inboxes.Inbox> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.26",
-                "User-Agent": "agentmail/0.0.26",
+                "X-Fern-SDK-Version": "0.0.27",
+                "User-Agent": "agentmail/0.0.27",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -148,7 +167,7 @@ export class Inboxes {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Inbox.parseOrThrow(_response.body, {
+            return serializers.inboxes.Inbox.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -193,26 +212,22 @@ export class Inboxes {
     }
 
     /**
-     * @param {AgentMail.CreateInboxRequest} request
+     * @param {AgentMail.inboxes.CreateInboxRequest} request
      * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
      *     await client.inboxes.create({
-     *         username: "yourinbox",
-     *         displayName: "Your Inbox"
-     *     })
-     *
-     * @example
-     *     await client.inboxes.create({
-     *         domain: "yourdomain.com"
+     *         username: undefined,
+     *         domain: undefined,
+     *         displayName: undefined
      *     })
      */
     public async create(
-        request: AgentMail.CreateInboxRequest,
+        request: AgentMail.inboxes.CreateInboxRequest,
         requestOptions?: Inboxes.RequestOptions,
-    ): Promise<AgentMail.Inbox> {
+    ): Promise<AgentMail.inboxes.Inbox> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -225,21 +240,21 @@ export class Inboxes {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.26",
-                "User-Agent": "agentmail/0.0.26",
+                "X-Fern-SDK-Version": "0.0.27",
+                "User-Agent": "agentmail/0.0.27",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.CreateInboxRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.inboxes.CreateInboxRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Inbox.parseOrThrow(_response.body, {
+            return serializers.inboxes.Inbox.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

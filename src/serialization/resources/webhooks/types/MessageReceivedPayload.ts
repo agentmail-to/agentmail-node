@@ -7,7 +7,7 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { EventType } from "./EventType";
 import { EventId } from "./EventId";
-import { Message } from "../../messages/types/Message";
+import { Message } from "../../inboxes/resources/messages/types/Message";
 
 export const MessageReceivedPayload: core.serialization.ObjectSchema<
     serializers.MessageReceivedPayload.Raw,

@@ -34,22 +34,18 @@ export class Drafts {
     constructor(protected readonly _options: Drafts.Options = {}) {}
 
     /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.ListDraftsRequest} request
+     * @param {AgentMail.DraftsListDraftsRequest} request
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.drafts.list("yourinbox@agentmail.to", {
-     *         limit: 10
-     *     })
+     *     await client.drafts.list()
      */
     public async list(
-        inboxId: AgentMail.InboxId,
-        request: AgentMail.ListDraftsRequest = {},
+        request: AgentMail.DraftsListDraftsRequest = {},
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.ListDraftsResponse> {
+    ): Promise<AgentMail.inboxes.ListDraftsResponse> {
         const { limit, lastKey, labels } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -71,15 +67,15 @@ export class Drafts {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/drafts`,
+                "/v0/drafts",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.26",
-                "User-Agent": "agentmail/0.0.26",
+                "X-Fern-SDK-Version": "0.0.27",
+                "User-Agent": "agentmail/0.0.27",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -92,7 +88,7 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListDraftsResponse.parseOrThrow(_response.body, {
+            return serializers.inboxes.ListDraftsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -128,9 +124,7 @@ export class Drafts {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/drafts.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/drafts.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -139,34 +133,32 @@ export class Drafts {
     }
 
     /**
-     * @param {AgentMail.InboxId} inboxId
-     * @param {AgentMail.DraftId} draftId
+     * @param {AgentMail.inboxes.DraftId} draftId
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.drafts.get("yourinbox@agentmail.to", "draft_123")
+     *     await client.drafts.get("draft_id")
      */
     public async get(
-        inboxId: AgentMail.InboxId,
-        draftId: AgentMail.DraftId,
+        draftId: AgentMail.inboxes.DraftId,
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.Draft> {
+    ): Promise<AgentMail.inboxes.Draft> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.InboxId.jsonOrThrow(inboxId))}/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId))}`,
+                `/v0/drafts/${encodeURIComponent(serializers.inboxes.DraftId.jsonOrThrow(draftId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.26",
-                "User-Agent": "agentmail/0.0.26",
+                "X-Fern-SDK-Version": "0.0.27",
+                "User-Agent": "agentmail/0.0.27",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -178,7 +170,7 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Draft.parseOrThrow(_response.body, {
+            return serializers.inboxes.Draft.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -214,9 +206,7 @@ export class Drafts {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/drafts/{draft_id}.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/drafts/{draft_id}.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
