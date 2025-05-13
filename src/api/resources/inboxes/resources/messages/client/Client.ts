@@ -77,8 +77,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.27",
-                "User-Agent": "agentmail/0.0.27",
+                "X-Fern-SDK-Version": "0.0.28",
+                "User-Agent": "agentmail/0.0.28",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -164,8 +164,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.27",
-                "User-Agent": "agentmail/0.0.27",
+                "X-Fern-SDK-Version": "0.0.28",
+                "User-Agent": "agentmail/0.0.28",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -244,8 +244,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.27",
-                "User-Agent": "agentmail/0.0.27",
+                "X-Fern-SDK-Version": "0.0.28",
+                "User-Agent": "agentmail/0.0.28",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -303,8 +303,8 @@ export class Messages {
      * @param {AgentMail.inboxes.SendMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.inboxes.MessageRejectedError}
      *
      * @example
@@ -335,8 +335,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.27",
-                "User-Agent": "agentmail/0.0.27",
+                "X-Fern-SDK-Version": "0.0.28",
+                "User-Agent": "agentmail/0.0.28",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -360,9 +360,9 @@ export class Messages {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -370,9 +370,9 @@ export class Messages {
                             breadcrumbsPrefix: ["response"],
                         }),
                     );
-                case 400:
-                    throw new AgentMail.ValidationError(
-                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -421,8 +421,8 @@ export class Messages {
      * @param {AgentMail.inboxes.ReplyToMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.inboxes.MessageRejectedError}
      *
      * @example
@@ -453,8 +453,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.27",
-                "User-Agent": "agentmail/0.0.27",
+                "X-Fern-SDK-Version": "0.0.28",
+                "User-Agent": "agentmail/0.0.28",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -478,9 +478,9 @@ export class Messages {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -488,9 +488,9 @@ export class Messages {
                             breadcrumbsPrefix: ["response"],
                         }),
                     );
-                case 400:
-                    throw new AgentMail.ValidationError(
-                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
@@ -525,6 +525,109 @@ export class Messages {
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
                     "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/{message_id}/reply.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {AgentMail.inboxes.InboxId} inboxId
+     * @param {AgentMail.inboxes.MessageId} messageId
+     * @param {AgentMail.inboxes.UpdateMessageRequest} request
+     * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.messages.update("inbox_id", "message_id", {
+     *         addLabels: undefined,
+     *         removeLabels: undefined
+     *     })
+     */
+    public async update(
+        inboxId: AgentMail.inboxes.InboxId,
+        messageId: AgentMail.inboxes.MessageId,
+        request: AgentMail.inboxes.UpdateMessageRequest,
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<AgentMail.inboxes.Message> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailEnvironment.Production,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.inboxes.MessageId.jsonOrThrow(messageId))}`,
+            ),
+            method: "PATCH",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "agentmail",
+                "X-Fern-SDK-Version": "0.0.28",
+                "User-Agent": "agentmail/0.0.28",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.inboxes.UpdateMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.inboxes.Message.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling PATCH /v0/inboxes/{inbox_id}/messages/{message_id}.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({

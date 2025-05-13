@@ -32,3 +32,4 @@ export * from "./SendMessageAttachments";
 export * from "./SendMessageRequest";
 export * from "./SendMessageResponse";
 export * from "./ReplyToMessageRequest";
+export * from "./UpdateMessageRequest";
