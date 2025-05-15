@@ -17,4 +17,3 @@ export * from "./DraftItem";
 export * from "./Draft";
 export * from "./ListDraftsResponse";
 export * from "./CreateDraftRequest";
-export * from "./SendDraftRequest";

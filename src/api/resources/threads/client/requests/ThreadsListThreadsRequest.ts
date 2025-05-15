@@ -12,4 +12,5 @@ export interface ThreadsListThreadsRequest {
     limit?: AgentMail.Limit;
     lastKey?: AgentMail.LastKey;
     labels?: AgentMail.Labels;
+    ascending?: AgentMail.Ascending;
 }

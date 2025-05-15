@@ -440,7 +440,8 @@ await client.inboxes.drafts.create("inbox_id", {
 
 ```typescript
 await client.inboxes.drafts.send("inbox_id", "draft_id", {
-    labels: undefined,
+    addLabels: undefined,
+    removeLabels: undefined,
 });
 ```
 
@@ -473,7 +474,7 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {
 <dl>
 <dd>
 
-**request:** `AgentMail.SendDraftRequest`
+**request:** `AgentMail.UpdateMessageRequest`
 
 </dd>
 </dl>

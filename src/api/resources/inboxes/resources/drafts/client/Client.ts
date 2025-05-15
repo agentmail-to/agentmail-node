@@ -48,7 +48,7 @@ export class Drafts {
         request: AgentMail.inboxes.ListDraftsRequest = {},
         requestOptions?: Drafts.RequestOptions,
     ): Promise<AgentMail.inboxes.ListDraftsResponse> {
-        const { limit, lastKey, labels } = request;
+        const { limit, lastKey, labels, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -64,6 +64,10 @@ export class Drafts {
             );
         }
 
+        if (ascending != null) {
+            _queryParams["ascending"] = ascending.toString();
+        }
+
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -76,8 +80,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.29",
-                "User-Agent": "agentmail/0.0.29",
+                "X-Fern-SDK-Version": "0.0.30",
+                "User-Agent": "agentmail/0.0.30",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -163,8 +167,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.29",
-                "User-Agent": "agentmail/0.0.29",
+                "X-Fern-SDK-Version": "0.0.30",
+                "User-Agent": "agentmail/0.0.30",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -257,8 +261,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.29",
-                "User-Agent": "agentmail/0.0.29",
+                "X-Fern-SDK-Version": "0.0.30",
+                "User-Agent": "agentmail/0.0.30",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -320,7 +324,7 @@ export class Drafts {
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
      * @param {AgentMail.inboxes.DraftId} draftId
-     * @param {AgentMail.inboxes.SendDraftRequest} request
+     * @param {AgentMail.inboxes.UpdateMessageRequest} request
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -329,13 +333,14 @@ export class Drafts {
      *
      * @example
      *     await client.inboxes.drafts.send("inbox_id", "draft_id", {
-     *         labels: undefined
+     *         addLabels: undefined,
+     *         removeLabels: undefined
      *     })
      */
     public async send(
         inboxId: AgentMail.inboxes.InboxId,
         draftId: AgentMail.inboxes.DraftId,
-        request: AgentMail.inboxes.SendDraftRequest,
+        request: AgentMail.inboxes.UpdateMessageRequest,
         requestOptions?: Drafts.RequestOptions,
     ): Promise<AgentMail.inboxes.SendMessageResponse> {
         const _response = await core.fetcher({
@@ -350,15 +355,15 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.29",
-                "User-Agent": "agentmail/0.0.29",
+                "X-Fern-SDK-Version": "0.0.30",
+                "User-Agent": "agentmail/0.0.30",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.inboxes.SendDraftRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.inboxes.UpdateMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
