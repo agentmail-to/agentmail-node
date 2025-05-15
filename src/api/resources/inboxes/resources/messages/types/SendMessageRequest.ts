@@ -5,7 +5,8 @@
 import * as AgentMail from "../../../../../index";
 
 export interface SendMessageRequest {
-    to: AgentMail.inboxes.SendMessageTo;
+    labels?: AgentMail.inboxes.MessageLabels;
+    to?: AgentMail.inboxes.SendMessageTo;
     cc?: AgentMail.inboxes.SendMessageCc;
     bcc?: AgentMail.inboxes.SendMessageBcc;
     subject?: AgentMail.inboxes.MessageSubject;

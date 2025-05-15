@@ -76,8 +76,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.28",
-                "User-Agent": "agentmail/0.0.28",
+                "X-Fern-SDK-Version": "0.0.29",
+                "User-Agent": "agentmail/0.0.29",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -163,8 +163,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.28",
-                "User-Agent": "agentmail/0.0.28",
+                "X-Fern-SDK-Version": "0.0.29",
+                "User-Agent": "agentmail/0.0.29",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -257,8 +257,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.28",
-                "User-Agent": "agentmail/0.0.28",
+                "X-Fern-SDK-Version": "0.0.29",
+                "User-Agent": "agentmail/0.0.29",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -309,6 +309,119 @@ export class Drafts {
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
                     "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/drafts.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @param {AgentMail.inboxes.InboxId} inboxId
+     * @param {AgentMail.inboxes.DraftId} draftId
+     * @param {AgentMail.inboxes.SendDraftRequest} request
+     * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.inboxes.MessageRejectedError}
+     *
+     * @example
+     *     await client.inboxes.drafts.send("inbox_id", "draft_id", {
+     *         labels: undefined
+     *     })
+     */
+    public async send(
+        inboxId: AgentMail.inboxes.InboxId,
+        draftId: AgentMail.inboxes.DraftId,
+        request: AgentMail.inboxes.SendDraftRequest,
+        requestOptions?: Drafts.RequestOptions,
+    ): Promise<AgentMail.inboxes.SendMessageResponse> {
+        const _response = await core.fetcher({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailEnvironment.Production,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/drafts/${encodeURIComponent(serializers.inboxes.DraftId.jsonOrThrow(draftId))}/send`,
+            ),
+            method: "POST",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "agentmail",
+                "X-Fern-SDK-Version": "0.0.29",
+                "User-Agent": "agentmail/0.0.29",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            body: serializers.inboxes.SendDraftRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return serializers.inboxes.SendMessageResponse.parseOrThrow(_response.body, {
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
+                skipValidation: true,
+                breadcrumbsPrefix: ["response"],
+            });
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                case 403:
+                    throw new AgentMail.inboxes.MessageRejectedError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/drafts/{draft_id}/send.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({

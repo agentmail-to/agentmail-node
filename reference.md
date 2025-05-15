@@ -426,6 +426,72 @@ await client.inboxes.drafts.create("inbox_id", {
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">send</a>(inboxId, draftId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.drafts.send("inbox_id", "draft_id", {
+    labels: undefined,
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inboxId:** `AgentMail.InboxId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draftId:** `AgentMail.DraftId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.SendDraftRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Drafts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Messages
 
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
@@ -554,7 +620,8 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 
 ```typescript
 await client.inboxes.messages.send("inbox_id", {
-    to: "to",
+    labels: undefined,
+    to: undefined,
     cc: undefined,
     bcc: undefined,
     subject: undefined,
