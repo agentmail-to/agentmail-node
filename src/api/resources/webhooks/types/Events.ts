@@ -5,6 +5,6 @@
 import * as AgentMail from "../../../index";
 
 /**
- * Event types to send. Omit to send all event types.
+ * Event types to send. Must explicitly include all event types to receive.
  */
 export type Events = AgentMail.EventType[];

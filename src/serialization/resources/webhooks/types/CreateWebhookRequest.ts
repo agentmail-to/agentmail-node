@@ -15,14 +15,14 @@ export const CreateWebhookRequest: core.serialization.ObjectSchema<
     AgentMail.CreateWebhookRequest
 > = core.serialization.object({
     url: Url,
-    events: Events.optional(),
+    events: Events,
     inboxes: Inboxes.optional(),
 });
 
 export declare namespace CreateWebhookRequest {
     export interface Raw {
         url: Url.Raw;
-        events?: Events.Raw | null;
+        events: Events.Raw;
         inboxes?: Inboxes.Raw | null;
     }
 }

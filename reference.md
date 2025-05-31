@@ -686,6 +686,7 @@ await client.inboxes.messages.send("inbox_id", {
 
 ```typescript
 await client.inboxes.messages.reply("inbox_id", "message_id", {
+    labels: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -1135,7 +1136,7 @@ await client.webhooks.get("webhook_id");
 ```typescript
 await client.webhooks.create({
     url: "url",
-    events: undefined,
+    events: ["message.received", "message.received"],
     inboxes: undefined,
 });
 ```
