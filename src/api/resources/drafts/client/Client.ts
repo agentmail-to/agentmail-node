@@ -34,7 +34,7 @@ export class Drafts {
     constructor(protected readonly _options: Drafts.Options = {}) {}
 
     /**
-     * @param {AgentMail.DraftsListDraftsRequest} request
+     * @param {AgentMail.ListDraftsRequest} request
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -43,9 +43,9 @@ export class Drafts {
      *     await client.drafts.list()
      */
     public async list(
-        request: AgentMail.DraftsListDraftsRequest = {},
+        request: AgentMail.ListDraftsRequest = {},
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.inboxes.ListDraftsResponse> {
+    ): Promise<AgentMail.ListDraftsResponse> {
         const { limit, lastKey, labels, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -78,8 +78,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -92,7 +92,7 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.ListDraftsResponse.parseOrThrow(_response.body, {
+            return serializers.ListDraftsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -137,7 +137,7 @@ export class Drafts {
     }
 
     /**
-     * @param {AgentMail.inboxes.DraftId} draftId
+     * @param {AgentMail.DraftId} draftId
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -145,24 +145,21 @@ export class Drafts {
      * @example
      *     await client.drafts.get("draft_id")
      */
-    public async get(
-        draftId: AgentMail.inboxes.DraftId,
-        requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.inboxes.Draft> {
+    public async get(draftId: AgentMail.DraftId, requestOptions?: Drafts.RequestOptions): Promise<AgentMail.Draft> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/drafts/${encodeURIComponent(serializers.inboxes.DraftId.jsonOrThrow(draftId))}`,
+                `/v0/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -174,7 +171,7 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.Draft.parseOrThrow(_response.body, {
+            return serializers.Draft.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

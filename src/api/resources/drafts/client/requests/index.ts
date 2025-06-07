@@ -1,1 +1,1 @@
-export { type DraftsListDraftsRequest } from "./DraftsListDraftsRequest";
+export { type ListDraftsRequest } from "./ListDraftsRequest";

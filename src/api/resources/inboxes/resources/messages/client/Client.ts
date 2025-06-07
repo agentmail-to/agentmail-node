@@ -48,7 +48,7 @@ export class Messages {
         inboxId: AgentMail.inboxes.InboxId,
         request: AgentMail.inboxes.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.inboxes.ListMessagesResponse> {
+    ): Promise<AgentMail.ListMessagesResponse> {
         const { limit, lastKey, labels, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -81,8 +81,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -95,7 +95,7 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.ListMessagesResponse.parseOrThrow(_response.body, {
+            return serializers.ListMessagesResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -143,7 +143,7 @@ export class Messages {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
-     * @param {AgentMail.inboxes.MessageId} messageId
+     * @param {AgentMail.MessageId} messageId
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -153,23 +153,23 @@ export class Messages {
      */
     public async get(
         inboxId: AgentMail.inboxes.InboxId,
-        messageId: AgentMail.inboxes.MessageId,
+        messageId: AgentMail.MessageId,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.inboxes.Message> {
+    ): Promise<AgentMail.Message> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.inboxes.MessageId.jsonOrThrow(messageId))}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -181,7 +181,7 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.Message.parseOrThrow(_response.body, {
+            return serializers.Message.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -232,8 +232,8 @@ export class Messages {
      */
     public async getAttachment(
         inboxId: AgentMail.inboxes.InboxId,
-        messageId: AgentMail.inboxes.MessageId,
-        attachmentId: AgentMail.inboxes.AttachmentId,
+        messageId: AgentMail.MessageId,
+        attachmentId: AgentMail.AttachmentId,
         requestOptions?: Messages.RequestOptions,
     ): Promise<stream.Readable> {
         const _response = await core.fetcher<stream.Readable>({
@@ -241,15 +241,15 @@ export class Messages {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.inboxes.MessageId.jsonOrThrow(messageId))}/attachments/${encodeURIComponent(serializers.inboxes.AttachmentId.jsonOrThrow(attachmentId))}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}/attachments/${encodeURIComponent(serializers.AttachmentId.jsonOrThrow(attachmentId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -304,12 +304,12 @@ export class Messages {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
-     * @param {AgentMail.inboxes.SendMessageRequest} request
+     * @param {AgentMail.SendMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      * @throws {@link AgentMail.NotFoundError}
-     * @throws {@link AgentMail.inboxes.MessageRejectedError}
+     * @throws {@link AgentMail.MessageRejectedError}
      *
      * @example
      *     await client.inboxes.messages.send("inbox_id", {
@@ -325,9 +325,9 @@ export class Messages {
      */
     public async send(
         inboxId: AgentMail.inboxes.InboxId,
-        request: AgentMail.inboxes.SendMessageRequest,
+        request: AgentMail.SendMessageRequest,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.inboxes.SendMessageResponse> {
+    ): Promise<AgentMail.SendMessageResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -340,21 +340,21 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.inboxes.SendMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.SendMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.SendMessageResponse.parseOrThrow(_response.body, {
+            return serializers.SendMessageResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -386,7 +386,7 @@ export class Messages {
                         }),
                     );
                 case 403:
-                    throw new AgentMail.inboxes.MessageRejectedError(
+                    throw new AgentMail.MessageRejectedError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -422,13 +422,13 @@ export class Messages {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
-     * @param {AgentMail.inboxes.MessageId} messageId
-     * @param {AgentMail.inboxes.ReplyToMessageRequest} request
+     * @param {AgentMail.MessageId} messageId
+     * @param {AgentMail.ReplyToMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      * @throws {@link AgentMail.NotFoundError}
-     * @throws {@link AgentMail.inboxes.MessageRejectedError}
+     * @throws {@link AgentMail.MessageRejectedError}
      *
      * @example
      *     await client.inboxes.messages.reply("inbox_id", "message_id", {
@@ -443,37 +443,37 @@ export class Messages {
      */
     public async reply(
         inboxId: AgentMail.inboxes.InboxId,
-        messageId: AgentMail.inboxes.MessageId,
-        request: AgentMail.inboxes.ReplyToMessageRequest,
+        messageId: AgentMail.MessageId,
+        request: AgentMail.ReplyToMessageRequest,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.inboxes.SendMessageResponse> {
+    ): Promise<AgentMail.SendMessageResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.inboxes.MessageId.jsonOrThrow(messageId))}/reply`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}/reply`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.inboxes.ReplyToMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.ReplyToMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.SendMessageResponse.parseOrThrow(_response.body, {
+            return serializers.SendMessageResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -505,7 +505,7 @@ export class Messages {
                         }),
                     );
                 case 403:
-                    throw new AgentMail.inboxes.MessageRejectedError(
+                    throw new AgentMail.MessageRejectedError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
@@ -541,8 +541,8 @@ export class Messages {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
-     * @param {AgentMail.inboxes.MessageId} messageId
-     * @param {AgentMail.inboxes.UpdateMessageRequest} request
+     * @param {AgentMail.MessageId} messageId
+     * @param {AgentMail.UpdateMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
@@ -556,37 +556,37 @@ export class Messages {
      */
     public async update(
         inboxId: AgentMail.inboxes.InboxId,
-        messageId: AgentMail.inboxes.MessageId,
-        request: AgentMail.inboxes.UpdateMessageRequest,
+        messageId: AgentMail.MessageId,
+        request: AgentMail.UpdateMessageRequest,
         requestOptions?: Messages.RequestOptions,
-    ): Promise<AgentMail.inboxes.Message> {
+    ): Promise<AgentMail.Message> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.inboxes.MessageId.jsonOrThrow(messageId))}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId))}`,
             ),
             method: "PATCH",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.inboxes.UpdateMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.UpdateMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.Message.parseOrThrow(_response.body, {
+            return serializers.Message.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

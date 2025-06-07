@@ -1,1 +1,1 @@
-export { type ThreadsListThreadsRequest } from "./ThreadsListThreadsRequest";
+export { type ListThreadsRequest } from "./ListThreadsRequest";

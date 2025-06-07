@@ -7,5 +7,5 @@ import * as AgentMail from "../../../index";
 export interface MessageReceivedPayload {
     eventType: AgentMail.EventType;
     eventId: AgentMail.EventId;
-    message: AgentMail.inboxes.Message;
+    message: AgentMail.Message;
 }

@@ -34,7 +34,7 @@ export class Threads {
     constructor(protected readonly _options: Threads.Options = {}) {}
 
     /**
-     * @param {AgentMail.ThreadsListThreadsRequest} request
+     * @param {AgentMail.ListThreadsRequest} request
      * @param {Threads.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -43,9 +43,9 @@ export class Threads {
      *     await client.threads.list()
      */
     public async list(
-        request: AgentMail.ThreadsListThreadsRequest = {},
+        request: AgentMail.ListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
-    ): Promise<AgentMail.inboxes.ListThreadsResponse> {
+    ): Promise<AgentMail.ListThreadsResponse> {
         const { limit, lastKey, labels, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -78,8 +78,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -92,7 +92,7 @@ export class Threads {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.ListThreadsResponse.parseOrThrow(_response.body, {
+            return serializers.ListThreadsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -137,7 +137,7 @@ export class Threads {
     }
 
     /**
-     * @param {AgentMail.inboxes.ThreadId} threadId
+     * @param {AgentMail.ThreadId} threadId
      * @param {Threads.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -145,24 +145,21 @@ export class Threads {
      * @example
      *     await client.threads.get("thread_id")
      */
-    public async get(
-        threadId: AgentMail.inboxes.ThreadId,
-        requestOptions?: Threads.RequestOptions,
-    ): Promise<AgentMail.inboxes.Thread> {
+    public async get(threadId: AgentMail.ThreadId, requestOptions?: Threads.RequestOptions): Promise<AgentMail.Thread> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/threads/${encodeURIComponent(serializers.inboxes.ThreadId.jsonOrThrow(threadId))}`,
+                `/v0/threads/${encodeURIComponent(serializers.ThreadId.jsonOrThrow(threadId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -174,7 +171,7 @@ export class Threads {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.Thread.parseOrThrow(_response.body, {
+            return serializers.Thread.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,

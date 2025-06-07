@@ -47,7 +47,7 @@ export class Drafts {
         inboxId: AgentMail.inboxes.InboxId,
         request: AgentMail.inboxes.ListDraftsRequest = {},
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.inboxes.ListDraftsResponse> {
+    ): Promise<AgentMail.ListDraftsResponse> {
         const { limit, lastKey, labels, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -80,8 +80,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -94,7 +94,7 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.ListDraftsResponse.parseOrThrow(_response.body, {
+            return serializers.ListDraftsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -142,7 +142,7 @@ export class Drafts {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
-     * @param {AgentMail.inboxes.DraftId} draftId
+     * @param {AgentMail.DraftId} draftId
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -152,23 +152,23 @@ export class Drafts {
      */
     public async get(
         inboxId: AgentMail.inboxes.InboxId,
-        draftId: AgentMail.inboxes.DraftId,
+        draftId: AgentMail.DraftId,
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.inboxes.Draft> {
+    ): Promise<AgentMail.Draft> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/drafts/${encodeURIComponent(serializers.inboxes.DraftId.jsonOrThrow(draftId))}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -180,7 +180,7 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.Draft.parseOrThrow(_response.body, {
+            return serializers.Draft.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -228,7 +228,7 @@ export class Drafts {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
-     * @param {AgentMail.inboxes.CreateDraftRequest} request
+     * @param {AgentMail.CreateDraftRequest} request
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -246,9 +246,9 @@ export class Drafts {
      */
     public async create(
         inboxId: AgentMail.inboxes.InboxId,
-        request: AgentMail.inboxes.CreateDraftRequest,
+        request: AgentMail.CreateDraftRequest,
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.inboxes.Draft> {
+    ): Promise<AgentMail.Draft> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -261,21 +261,21 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.inboxes.CreateDraftRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.CreateDraftRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.Draft.parseOrThrow(_response.body, {
+            return serializers.Draft.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -323,13 +323,13 @@ export class Drafts {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
-     * @param {AgentMail.inboxes.DraftId} draftId
-     * @param {AgentMail.inboxes.UpdateMessageRequest} request
+     * @param {AgentMail.DraftId} draftId
+     * @param {AgentMail.UpdateMessageRequest} request
      * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.ValidationError}
-     * @throws {@link AgentMail.inboxes.MessageRejectedError}
+     * @throws {@link AgentMail.MessageRejectedError}
      *
      * @example
      *     await client.inboxes.drafts.send("inbox_id", "draft_id", {
@@ -339,37 +339,37 @@ export class Drafts {
      */
     public async send(
         inboxId: AgentMail.inboxes.InboxId,
-        draftId: AgentMail.inboxes.DraftId,
-        request: AgentMail.inboxes.UpdateMessageRequest,
+        draftId: AgentMail.DraftId,
+        request: AgentMail.UpdateMessageRequest,
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<AgentMail.inboxes.SendMessageResponse> {
+    ): Promise<AgentMail.SendMessageResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/drafts/${encodeURIComponent(serializers.inboxes.DraftId.jsonOrThrow(draftId))}/send`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId))}/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId))}/send`,
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.31",
-                "User-Agent": "agentmail/0.0.31",
+                "X-Fern-SDK-Version": "0.0.32",
+                "User-Agent": "agentmail/0.0.32",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.inboxes.UpdateMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.UpdateMessageRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.inboxes.SendMessageResponse.parseOrThrow(_response.body, {
+            return serializers.SendMessageResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -401,7 +401,7 @@ export class Drafts {
                         }),
                     );
                 case 403:
-                    throw new AgentMail.inboxes.MessageRejectedError(
+                    throw new AgentMail.MessageRejectedError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,

@@ -181,7 +181,7 @@ await client.drafts.list();
 <dl>
 <dd>
 
-**request:** `AgentMail.DraftsListDraftsRequest`
+**request:** `AgentMail.ListDraftsRequest`
 
 </dd>
 </dl>
@@ -956,7 +956,7 @@ await client.threads.list();
 <dl>
 <dd>
 
-**request:** `AgentMail.ThreadsListThreadsRequest`
+**request:** `AgentMail.ListThreadsRequest`
 
 </dd>
 </dl>
