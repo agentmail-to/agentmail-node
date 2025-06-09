@@ -7,7 +7,7 @@ import * as AgentMail from "../../../index";
 export interface ListThreadsResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
-    lastKey?: AgentMail.LastKey;
+    nextPageToken?: AgentMail.PageToken;
     /** Thread items. Ordered by `timestamp` descending. */
     threads: AgentMail.ThreadItem[];
 }

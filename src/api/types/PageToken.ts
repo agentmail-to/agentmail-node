@@ -3,6 +3,6 @@
  */
 
 /**
- * Key of last item.
+ * Page token.
  */
-export type LastKey = string;
+export type PageToken = string;

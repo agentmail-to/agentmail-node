@@ -10,5 +10,5 @@ import * as AgentMail from "../../../../index";
  */
 export interface ListWebhooksRequest {
     limit?: AgentMail.Limit;
-    lastKey?: AgentMail.LastKey;
+    pageToken?: AgentMail.PageToken;
 }

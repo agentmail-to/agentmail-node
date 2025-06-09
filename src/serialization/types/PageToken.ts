@@ -6,9 +6,9 @@ import * as serializers from "../index";
 import * as AgentMail from "../../api/index";
 import * as core from "../../core";
 
-export const LastKey: core.serialization.Schema<serializers.LastKey.Raw, AgentMail.LastKey> =
+export const PageToken: core.serialization.Schema<serializers.PageToken.Raw, AgentMail.PageToken> =
     core.serialization.string();
 
-export declare namespace LastKey {
+export declare namespace PageToken {
     export type Raw = string;
 }

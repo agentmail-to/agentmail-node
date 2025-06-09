@@ -49,14 +49,14 @@ export class Messages {
         request: AgentMail.inboxes.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
     ): Promise<AgentMail.ListMessagesResponse> {
-        const { limit, lastKey, labels, ascending } = request;
+        const { limit, pageToken, labels, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
         }
 
-        if (lastKey != null) {
-            _queryParams["last_key"] = lastKey;
+        if (pageToken != null) {
+            _queryParams["page_token"] = pageToken;
         }
 
         if (labels != null) {
@@ -81,8 +81,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.32",
-                "User-Agent": "agentmail/0.0.32",
+                "X-Fern-SDK-Version": "0.0.33",
+                "User-Agent": "agentmail/0.0.33",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -168,8 +168,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.32",
-                "User-Agent": "agentmail/0.0.32",
+                "X-Fern-SDK-Version": "0.0.33",
+                "User-Agent": "agentmail/0.0.33",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -248,8 +248,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.32",
-                "User-Agent": "agentmail/0.0.32",
+                "X-Fern-SDK-Version": "0.0.33",
+                "User-Agent": "agentmail/0.0.33",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -340,8 +340,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.32",
-                "User-Agent": "agentmail/0.0.32",
+                "X-Fern-SDK-Version": "0.0.33",
+                "User-Agent": "agentmail/0.0.33",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -459,8 +459,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.32",
-                "User-Agent": "agentmail/0.0.32",
+                "X-Fern-SDK-Version": "0.0.33",
+                "User-Agent": "agentmail/0.0.33",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -572,8 +572,8 @@ export class Messages {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.32",
-                "User-Agent": "agentmail/0.0.32",
+                "X-Fern-SDK-Version": "0.0.33",
+                "User-Agent": "agentmail/0.0.33",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

@@ -7,7 +7,7 @@ import * as AgentMail from "../../../index";
 export interface ListMessagesResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
-    lastKey?: AgentMail.LastKey;
+    nextPageToken?: AgentMail.PageToken;
     /** Message items. Ordered by `timestamp` descending. */
     messages: AgentMail.MessageItem[];
 }

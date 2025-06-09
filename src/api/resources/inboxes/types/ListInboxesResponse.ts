@@ -7,7 +7,7 @@ import * as AgentMail from "../../../index";
 export interface ListInboxesResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
-    lastKey?: AgentMail.LastKey;
+    nextPageToken?: AgentMail.PageToken;
     /** Ordered by `created_at` ascending. */
     inboxes: AgentMail.inboxes.Inbox[];
 }

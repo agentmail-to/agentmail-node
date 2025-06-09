@@ -7,7 +7,7 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { Count } from "../../../types/Count";
 import { Limit } from "../../../types/Limit";
-import { LastKey } from "../../../types/LastKey";
+import { PageToken } from "../../../types/PageToken";
 import { MessageItem } from "./MessageItem";
 
 export const ListMessagesResponse: core.serialization.ObjectSchema<
@@ -16,7 +16,7 @@ export const ListMessagesResponse: core.serialization.ObjectSchema<
 > = core.serialization.object({
     count: Count,
     limit: Limit.optional(),
-    lastKey: core.serialization.property("last_key", LastKey.optional()),
+    nextPageToken: core.serialization.property("next_page_token", PageToken.optional()),
     messages: core.serialization.list(MessageItem),
 });
 
@@ -24,7 +24,7 @@ export declare namespace ListMessagesResponse {
     export interface Raw {
         count: Count.Raw;
         limit?: Limit.Raw | null;
-        last_key?: LastKey.Raw | null;
+        next_page_token?: PageToken.Raw | null;
         messages: MessageItem.Raw[];
     }
 }

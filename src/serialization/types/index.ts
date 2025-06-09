@@ -1,6 +1,6 @@
 export * from "./Limit";
 export * from "./Count";
-export * from "./LastKey";
+export * from "./PageToken";
 export * from "./Labels";
 export * from "./Ascending";
 export * from "./OrganizationId";

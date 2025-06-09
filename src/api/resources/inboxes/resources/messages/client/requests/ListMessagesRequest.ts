@@ -10,7 +10,7 @@ import * as AgentMail from "../../../../../../index";
  */
 export interface ListMessagesRequest {
     limit?: AgentMail.Limit;
-    lastKey?: AgentMail.LastKey;
+    pageToken?: AgentMail.PageToken;
     labels?: AgentMail.Labels;
     ascending?: AgentMail.Ascending;
 }
