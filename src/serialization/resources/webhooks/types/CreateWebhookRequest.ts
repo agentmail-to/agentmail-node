@@ -6,8 +6,8 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { Url } from "./Url";
-import { Events } from "./Events";
-import { Inboxes } from "./Inboxes";
+import { EventTypes } from "./EventTypes";
+import { InboxIds } from "./InboxIds";
 import { EventType } from "./EventType";
 
 export const CreateWebhookRequest: core.serialization.ObjectSchema<
@@ -15,14 +15,14 @@ export const CreateWebhookRequest: core.serialization.ObjectSchema<
     AgentMail.CreateWebhookRequest
 > = core.serialization.object({
     url: Url,
-    events: Events,
-    inboxes: Inboxes.optional(),
+    eventTypes: core.serialization.property("event_types", EventTypes),
+    inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
 });
 
 export declare namespace CreateWebhookRequest {
     export interface Raw {
         url: Url.Raw;
-        events: Events.Raw;
-        inboxes?: Inboxes.Raw | null;
+        event_types: EventTypes.Raw;
+        inbox_ids?: InboxIds.Raw | null;
     }
 }

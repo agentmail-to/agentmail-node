@@ -65,8 +65,8 @@ export class Webhooks {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.33",
-                "User-Agent": "agentmail/0.0.33",
+                "X-Fern-SDK-Version": "0.0.34",
+                "User-Agent": "agentmail/0.0.34",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -135,8 +135,8 @@ export class Webhooks {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.33",
-                "User-Agent": "agentmail/0.0.33",
+                "X-Fern-SDK-Version": "0.0.34",
+                "User-Agent": "agentmail/0.0.34",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -201,8 +201,8 @@ export class Webhooks {
      * @example
      *     await client.webhooks.create({
      *         url: "url",
-     *         events: ["message.received", "message.received"],
-     *         inboxes: undefined
+     *         eventTypes: ["message.received", "message.received"],
+     *         inboxIds: undefined
      *     })
      */
     public async create(
@@ -221,8 +221,8 @@ export class Webhooks {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.33",
-                "User-Agent": "agentmail/0.0.33",
+                "X-Fern-SDK-Version": "0.0.34",
+                "User-Agent": "agentmail/0.0.34",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -301,8 +301,8 @@ export class Webhooks {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.33",
-                "User-Agent": "agentmail/0.0.33",
+                "X-Fern-SDK-Version": "0.0.34",
+                "User-Agent": "agentmail/0.0.34",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

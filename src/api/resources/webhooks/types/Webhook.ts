@@ -7,10 +7,14 @@ import * as AgentMail from "../../../index";
 export interface Webhook {
     webhookId: AgentMail.WebhookId;
     url: AgentMail.Url;
-    events?: AgentMail.Events;
-    inboxes?: AgentMail.Inboxes;
+    eventTypes?: AgentMail.EventTypes;
+    inboxIds?: AgentMail.InboxIds;
     /** Secret for webhook signature verification. */
     secret: string;
+    /** Whether the webhook is enabled. */
+    enabled: boolean;
+    /** Time at which webhook was last updated. */
+    updatedAt: Date;
     /** Time at which webhook was created. */
     createdAt: Date;
 }

@@ -6,6 +6,6 @@ import * as AgentMail from "../../../index";
 
 export interface CreateWebhookRequest {
     url: AgentMail.Url;
-    events: AgentMail.Events;
-    inboxes?: AgentMail.Inboxes;
+    eventTypes: AgentMail.EventTypes;
+    inboxIds?: AgentMail.InboxIds;
 }

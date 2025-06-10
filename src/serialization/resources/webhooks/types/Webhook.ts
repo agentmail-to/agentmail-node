@@ -7,17 +7,19 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { WebhookId } from "./WebhookId";
 import { Url } from "./Url";
-import { Events } from "./Events";
-import { Inboxes } from "./Inboxes";
+import { EventTypes } from "./EventTypes";
+import { InboxIds } from "./InboxIds";
 import { EventType } from "./EventType";
 
 export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, AgentMail.Webhook> =
     core.serialization.object({
         webhookId: core.serialization.property("webhook_id", WebhookId),
         url: Url,
-        events: Events.optional(),
-        inboxes: Inboxes.optional(),
+        eventTypes: core.serialization.property("event_types", EventTypes.optional()),
+        inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
         secret: core.serialization.string(),
+        enabled: core.serialization.boolean(),
+        updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
     });
 
@@ -25,9 +27,11 @@ export declare namespace Webhook {
     export interface Raw {
         webhook_id: WebhookId.Raw;
         url: Url.Raw;
-        events?: Events.Raw | null;
-        inboxes?: Inboxes.Raw | null;
+        event_types?: EventTypes.Raw | null;
+        inbox_ids?: InboxIds.Raw | null;
         secret: string;
+        enabled: boolean;
+        updated_at: string;
         created_at: string;
     }
 }

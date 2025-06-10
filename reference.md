@@ -1136,8 +1136,8 @@ await client.webhooks.get("webhook_id");
 ```typescript
 await client.webhooks.create({
     url: "url",
-    events: ["message.received", "message.received"],
-    inboxes: undefined,
+    eventTypes: ["message.received", "message.received"],
+    inboxIds: undefined,
 });
 ```
 
