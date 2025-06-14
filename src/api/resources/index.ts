@@ -1,4 +1,6 @@
 export * as inboxes from "./inboxes";
+export * as contexts from "./contexts";
+export * from "./contexts/types";
 export * as drafts from "./drafts";
 export * from "./drafts/types";
 export * as messages from "./messages";
@@ -8,6 +10,7 @@ export * from "./threads/types";
 export * as webhooks from "./webhooks";
 export * from "./webhooks/types";
 export * from "./messages/errors";
+export * from "./contexts/client/requests";
 export * from "./drafts/client/requests";
 export * from "./threads/client/requests";
 export * from "./webhooks/client/requests";

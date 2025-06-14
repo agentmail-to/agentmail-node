@@ -11,6 +11,7 @@ export const Inbox: core.serialization.ObjectSchema<serializers.inboxes.Inbox.Ra
     core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
         displayName: core.serialization.property("display_name", core.serialization.string()),
+        updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
     });
 
@@ -18,6 +19,7 @@ export declare namespace Inbox {
     export interface Raw {
         inbox_id: InboxId.Raw;
         display_name: string;
+        updated_at: string;
         created_at: string;
     }
 }

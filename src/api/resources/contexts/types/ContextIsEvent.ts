@@ -3,6 +3,6 @@
  */
 
 /**
- * Page token for pagination.
+ * Whether the context is an event.
  */
-export type PageToken = string;
+export type ContextIsEvent = boolean;

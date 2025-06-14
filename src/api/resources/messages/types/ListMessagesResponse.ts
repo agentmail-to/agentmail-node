@@ -8,6 +8,6 @@ export interface ListMessagesResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
-    /** Message items. Ordered by `timestamp` descending. */
+    /** Ordered by `timestamp` descending. */
     messages: AgentMail.MessageItem[];
 }

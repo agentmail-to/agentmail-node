@@ -150,6 +150,209 @@ await client.inboxes.create({
 </dl>
 </details>
 
+## Contexts
+
+<details><summary><code>client.contexts.<a href="/src/api/resources/contexts/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListContextsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contexts.list();
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ListContextsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Contexts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/src/api/resources/contexts/client/Client.ts">get</a>(contextId) -> AgentMail.Context</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contexts.get("context_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**contextId:** `AgentMail.ContextId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Contexts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/src/api/resources/contexts/client/Client.ts">create</a>({ ...params }) -> AgentMail.Context</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contexts.create({
+    type: "type",
+    data: {
+        data: {
+            key: "value",
+        },
+    },
+    metadata: undefined,
+    isEvent: true,
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateContextRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Contexts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.contexts.<a href="/src/api/resources/contexts/client/Client.ts">delete</a>(contextId) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.contexts.delete("context_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**contextId:** `AgentMail.ContextId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Contexts.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Drafts
 
 <details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListDraftsResponse</code></summary>

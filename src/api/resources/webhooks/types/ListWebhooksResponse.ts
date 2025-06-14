@@ -8,6 +8,6 @@ export interface ListWebhooksResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
-    /** Webhook items. Ordered by `created_at` ascending. */
+    /** Ordered by `created_at` descending. */
     webhooks: AgentMail.Webhook[];
 }

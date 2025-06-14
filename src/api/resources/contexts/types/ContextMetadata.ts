@@ -3,6 +3,6 @@
  */
 
 /**
- * Page token for pagination.
+ * Metadata of context.
  */
-export type PageToken = string;
+export type ContextMetadata = Record<string, unknown>;

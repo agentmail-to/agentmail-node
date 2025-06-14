@@ -4,10 +4,10 @@
 
 import * as AgentMail from "../../../index";
 
-export interface ListThreadsResponse {
+export interface ListContextsResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
-    /** Ordered by `timestamp` descending. */
-    threads: AgentMail.ThreadItem[];
+    /** Ordered by `created_at` descending. */
+    contexts: AgentMail.Context[];
 }

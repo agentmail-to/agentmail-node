@@ -8,6 +8,6 @@ export interface ListInboxesResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
-    /** Ordered by `created_at` ascending. */
+    /** Ordered by `created_at` descending. */
     inboxes: AgentMail.inboxes.Inbox[];
 }

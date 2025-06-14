@@ -16,6 +16,6 @@ export interface Thread {
     subject?: AgentMail.ThreadSubject;
     preview?: AgentMail.ThreadPreview;
     attachments?: AgentMail.ThreadAttachments;
-    /** Messages in thread. Ordered by `sent_at` ascending. */
+    /** Messages in thread. Ordered by `timestamp` ascending. */
     messages: AgentMail.Message[];
 }

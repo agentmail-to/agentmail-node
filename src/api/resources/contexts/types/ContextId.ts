@@ -3,6 +3,6 @@
  */
 
 /**
- * Page token for pagination.
+ * ID of context.
  */
-export type PageToken = string;
+export type ContextId = string;

@@ -8,6 +8,6 @@ export interface ListDraftsResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
-    /** Draft items. Ordered by `updated_at` descending. */
+    /** Ordered by `updated_at` descending. */
     drafts: AgentMail.DraftItem[];
 }
