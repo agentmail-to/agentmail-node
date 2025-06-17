@@ -12,7 +12,7 @@ import { SendMessageBcc } from "./SendMessageBcc";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
 import { SendMessageAttachments } from "./SendMessageAttachments";
-import { SendAttachment } from "./SendAttachment";
+import { SendAttachment } from "../../attachments/types/SendAttachment";
 
 export const ReplyToMessageRequest: core.serialization.ObjectSchema<
     serializers.ReplyToMessageRequest.Raw,

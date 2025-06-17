@@ -7,4 +7,4 @@ import * as AgentMail from "../../../index";
 /**
  * Attachments in thread.
  */
-export type ThreadAttachments = AgentMail.ThreadAttachment[];
+export type ThreadAttachments = AgentMail.Attachment[];

@@ -17,7 +17,7 @@ import { ThreadSubject } from "./ThreadSubject";
 import { ThreadPreview } from "./ThreadPreview";
 import { ThreadAttachments } from "./ThreadAttachments";
 import { Message } from "../../messages/types/Message";
-import { ThreadAttachment } from "./ThreadAttachment";
+import { Attachment } from "../../attachments/types/Attachment";
 
 export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, AgentMail.Thread> =
     core.serialization.object({

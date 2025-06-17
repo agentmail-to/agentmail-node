@@ -20,7 +20,7 @@ import { MessagePreview } from "./MessagePreview";
 import { MessageAttachments } from "./MessageAttachments";
 import { MessageInReplyTo } from "./MessageInReplyTo";
 import { MessageReferences } from "./MessageReferences";
-import { Attachment } from "./Attachment";
+import { Attachment } from "../../attachments/types/Attachment";
 
 export const MessageItem: core.serialization.ObjectSchema<serializers.MessageItem.Raw, AgentMail.MessageItem> =
     core.serialization.object({

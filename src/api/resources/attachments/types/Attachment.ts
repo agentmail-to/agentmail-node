@@ -6,8 +6,8 @@ import * as AgentMail from "../../../index";
 
 export interface Attachment {
     attachmentId: AgentMail.AttachmentId;
-    filename: AgentMail.AttachmentFilename;
-    contentType: AgentMail.AttachmentContentType;
+    filename?: AgentMail.AttachmentFilename;
+    contentType?: AgentMail.AttachmentContentType;
     size: AgentMail.AttachmentSize;
     inline: AgentMail.AttachmentInline;
 }

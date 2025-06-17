@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
-import { Attachment } from "../../messages/types/Attachment";
+import { Attachment } from "../../attachments/types/Attachment";
 
 export const DraftAttachments: core.serialization.Schema<serializers.DraftAttachments.Raw, AgentMail.DraftAttachments> =
     core.serialization.list(Attachment);

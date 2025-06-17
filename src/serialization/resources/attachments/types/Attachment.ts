@@ -14,8 +14,8 @@ import { AttachmentInline } from "./AttachmentInline";
 export const Attachment: core.serialization.ObjectSchema<serializers.Attachment.Raw, AgentMail.Attachment> =
     core.serialization.object({
         attachmentId: core.serialization.property("attachment_id", AttachmentId),
-        filename: AttachmentFilename,
-        contentType: core.serialization.property("content_type", AttachmentContentType),
+        filename: AttachmentFilename.optional(),
+        contentType: core.serialization.property("content_type", AttachmentContentType.optional()),
         size: AttachmentSize,
         inline: AttachmentInline,
     });
@@ -23,8 +23,8 @@ export const Attachment: core.serialization.ObjectSchema<serializers.Attachment.
 export declare namespace Attachment {
     export interface Raw {
         attachment_id: AttachmentId.Raw;
-        filename: AttachmentFilename.Raw;
-        content_type: AttachmentContentType.Raw;
+        filename?: AttachmentFilename.Raw | null;
+        content_type?: AttachmentContentType.Raw | null;
         size: AttachmentSize.Raw;
         inline: AttachmentInline.Raw;
     }

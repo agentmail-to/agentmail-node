@@ -22,7 +22,7 @@ import { DraftHtml } from "./DraftHtml";
 import { DraftAttachments } from "./DraftAttachments";
 import { DraftInReplyTo } from "./DraftInReplyTo";
 import { DraftReferences } from "./DraftReferences";
-import { Attachment } from "../../messages/types/Attachment";
+import { Attachment } from "../../attachments/types/Attachment";
 
 export const Draft: core.serialization.ObjectSchema<serializers.Draft.Raw, AgentMail.Draft> = core.serialization.object(
     {

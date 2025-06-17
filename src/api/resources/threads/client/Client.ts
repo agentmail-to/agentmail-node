@@ -9,6 +9,7 @@ import * as serializers from "../../../../serialization/index";
 import { toJson } from "../../../../core/json";
 import urlJoin from "url-join";
 import * as errors from "../../../../errors/index";
+import * as stream from "stream";
 
 export declare namespace Threads {
     export interface Options {
@@ -78,8 +79,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.35",
-                "User-Agent": "agentmail/0.0.35",
+                "X-Fern-SDK-Version": "0.0.36",
+                "User-Agent": "agentmail/0.0.36",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -158,8 +159,8 @@ export class Threads {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.35",
-                "User-Agent": "agentmail/0.0.35",
+                "X-Fern-SDK-Version": "0.0.36",
+                "User-Agent": "agentmail/0.0.36",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -208,6 +209,80 @@ export class Threads {
                 });
             case "timeout":
                 throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/threads/{thread_id}.");
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                });
+        }
+    }
+
+    /**
+     * @throws {@link AgentMail.NotFoundError}
+     */
+    public async getAttachment(
+        threadId: AgentMail.ThreadId,
+        attachmentId: AgentMail.AttachmentId,
+        requestOptions?: Threads.RequestOptions,
+    ): Promise<stream.Readable> {
+        const _response = await core.fetcher<stream.Readable>({
+            url: urlJoin(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (await core.Supplier.get(this._options.environment)) ??
+                    environments.AgentMailEnvironment.Production,
+                `/v0/threads/${encodeURIComponent(serializers.ThreadId.jsonOrThrow(threadId))}/attachments/${encodeURIComponent(serializers.AttachmentId.jsonOrThrow(attachmentId))}`,
+            ),
+            method: "GET",
+            headers: {
+                Authorization: await this._getAuthorizationHeader(),
+                "X-Fern-Language": "JavaScript",
+                "X-Fern-SDK-Name": "agentmail",
+                "X-Fern-SDK-Version": "0.0.36",
+                "User-Agent": "agentmail/0.0.36",
+                "X-Fern-Runtime": core.RUNTIME.type,
+                "X-Fern-Runtime-Version": core.RUNTIME.version,
+                ...requestOptions?.headers,
+            },
+            contentType: "application/json",
+            requestType: "json",
+            responseType: "streaming",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return _response.body;
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling GET /v0/threads/{thread_id}/attachments/{attachment_id}.",
+                );
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,

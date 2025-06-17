@@ -5,13 +5,13 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
-import { ThreadAttachment } from "./ThreadAttachment";
+import { Attachment } from "../../attachments/types/Attachment";
 
 export const ThreadAttachments: core.serialization.Schema<
     serializers.ThreadAttachments.Raw,
     AgentMail.ThreadAttachments
-> = core.serialization.list(ThreadAttachment);
+> = core.serialization.list(Attachment);
 
 export declare namespace ThreadAttachments {
-    export type Raw = ThreadAttachment.Raw[];
+    export type Raw = Attachment.Raw[];
 }

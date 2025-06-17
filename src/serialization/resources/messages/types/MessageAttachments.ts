@@ -5,7 +5,7 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
-import { Attachment } from "./Attachment";
+import { Attachment } from "../../attachments/types/Attachment";
 
 export const MessageAttachments: core.serialization.Schema<
     serializers.MessageAttachments.Raw,

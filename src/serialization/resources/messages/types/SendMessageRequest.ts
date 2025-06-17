@@ -13,7 +13,7 @@ import { MessageSubject } from "./MessageSubject";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
 import { SendMessageAttachments } from "./SendMessageAttachments";
-import { SendAttachment } from "./SendAttachment";
+import { SendAttachment } from "../../attachments/types/SendAttachment";
 
 export const SendMessageRequest: core.serialization.ObjectSchema<
     serializers.SendMessageRequest.Raw,
