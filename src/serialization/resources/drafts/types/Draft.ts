@@ -8,10 +8,7 @@ import * as core from "../../../../core";
 import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadId } from "../../threads/types/ThreadId";
 import { DraftId } from "./DraftId";
-import { DraftEventId } from "./DraftEventId";
 import { DraftLabels } from "./DraftLabels";
-import { DraftUpdatedAt } from "./DraftUpdatedAt";
-import { DraftCreatedAt } from "./DraftCreatedAt";
 import { DraftTo } from "./DraftTo";
 import { DraftCc } from "./DraftCc";
 import { DraftBcc } from "./DraftBcc";
@@ -20,8 +17,7 @@ import { DraftPreview } from "./DraftPreview";
 import { DraftText } from "./DraftText";
 import { DraftHtml } from "./DraftHtml";
 import { DraftAttachments } from "./DraftAttachments";
-import { DraftInReplyTo } from "./DraftInReplyTo";
-import { DraftReferences } from "./DraftReferences";
+import { DraftUpdatedAt } from "./DraftUpdatedAt";
 import { Attachment } from "../../attachments/types/Attachment";
 
 export const Draft: core.serialization.ObjectSchema<serializers.Draft.Raw, AgentMail.Draft> = core.serialization.object(
@@ -29,10 +25,7 @@ export const Draft: core.serialization.ObjectSchema<serializers.Draft.Raw, Agent
         inboxId: core.serialization.property("inbox_id", InboxId),
         threadId: core.serialization.property("thread_id", ThreadId),
         draftId: core.serialization.property("draft_id", DraftId),
-        eventId: core.serialization.property("event_id", DraftEventId),
         labels: DraftLabels,
-        updatedAt: core.serialization.property("updated_at", DraftUpdatedAt),
-        createdAt: core.serialization.property("created_at", DraftCreatedAt),
         to: DraftTo.optional(),
         cc: DraftCc.optional(),
         bcc: DraftBcc.optional(),
@@ -41,8 +34,10 @@ export const Draft: core.serialization.ObjectSchema<serializers.Draft.Raw, Agent
         text: DraftText.optional(),
         html: DraftHtml.optional(),
         attachments: DraftAttachments.optional(),
-        inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
-        references: DraftReferences.optional(),
+        inReplyTo: core.serialization.property("in_reply_to", core.serialization.string().optional()),
+        references: core.serialization.list(core.serialization.string()).optional(),
+        updatedAt: core.serialization.property("updated_at", DraftUpdatedAt),
+        createdAt: core.serialization.property("created_at", core.serialization.date()),
     },
 );
 
@@ -51,10 +46,7 @@ export declare namespace Draft {
         inbox_id: InboxId.Raw;
         thread_id: ThreadId.Raw;
         draft_id: DraftId.Raw;
-        event_id: DraftEventId.Raw;
         labels: DraftLabels.Raw;
-        updated_at: DraftUpdatedAt.Raw;
-        created_at: DraftCreatedAt.Raw;
         to?: DraftTo.Raw | null;
         cc?: DraftCc.Raw | null;
         bcc?: DraftBcc.Raw | null;
@@ -63,7 +55,9 @@ export declare namespace Draft {
         text?: DraftText.Raw | null;
         html?: DraftHtml.Raw | null;
         attachments?: DraftAttachments.Raw | null;
-        in_reply_to?: DraftInReplyTo.Raw | null;
-        references?: DraftReferences.Raw | null;
+        in_reply_to?: string | null;
+        references?: string[] | null;
+        updated_at: DraftUpdatedAt.Raw;
+        created_at: string;
     }
 }

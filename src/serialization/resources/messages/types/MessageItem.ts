@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadId } from "../../threads/types/ThreadId";
 import { MessageId } from "./MessageId";
-import { MessageEventId } from "./MessageEventId";
 import { MessageLabels } from "./MessageLabels";
 import { MessageTimestamp } from "./MessageTimestamp";
 import { MessageFrom } from "./MessageFrom";
@@ -18,8 +17,6 @@ import { MessageBcc } from "./MessageBcc";
 import { MessageSubject } from "./MessageSubject";
 import { MessagePreview } from "./MessagePreview";
 import { MessageAttachments } from "./MessageAttachments";
-import { MessageInReplyTo } from "./MessageInReplyTo";
-import { MessageReferences } from "./MessageReferences";
 import { Attachment } from "../../attachments/types/Attachment";
 
 export const MessageItem: core.serialization.ObjectSchema<serializers.MessageItem.Raw, AgentMail.MessageItem> =
@@ -27,7 +24,6 @@ export const MessageItem: core.serialization.ObjectSchema<serializers.MessageIte
         inboxId: core.serialization.property("inbox_id", InboxId),
         threadId: core.serialization.property("thread_id", ThreadId),
         messageId: core.serialization.property("message_id", MessageId),
-        eventId: core.serialization.property("event_id", MessageEventId),
         labels: MessageLabels,
         timestamp: MessageTimestamp,
         from: MessageFrom,
@@ -37,8 +33,6 @@ export const MessageItem: core.serialization.ObjectSchema<serializers.MessageIte
         subject: MessageSubject.optional(),
         preview: MessagePreview.optional(),
         attachments: MessageAttachments.optional(),
-        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
-        references: MessageReferences.optional(),
     });
 
 export declare namespace MessageItem {
@@ -46,7 +40,6 @@ export declare namespace MessageItem {
         inbox_id: InboxId.Raw;
         thread_id: ThreadId.Raw;
         message_id: MessageId.Raw;
-        event_id: MessageEventId.Raw;
         labels: MessageLabels.Raw;
         timestamp: MessageTimestamp.Raw;
         from: MessageFrom.Raw;
@@ -56,7 +49,5 @@ export declare namespace MessageItem {
         subject?: MessageSubject.Raw | null;
         preview?: MessagePreview.Raw | null;
         attachments?: MessageAttachments.Raw | null;
-        in_reply_to?: MessageInReplyTo.Raw | null;
-        references?: MessageReferences.Raw | null;
     }
 }

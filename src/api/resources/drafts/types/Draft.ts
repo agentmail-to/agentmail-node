@@ -8,10 +8,7 @@ export interface Draft {
     inboxId: AgentMail.inboxes.InboxId;
     threadId: AgentMail.ThreadId;
     draftId: AgentMail.DraftId;
-    eventId: AgentMail.DraftEventId;
     labels: AgentMail.DraftLabels;
-    updatedAt: AgentMail.DraftUpdatedAt;
-    createdAt: AgentMail.DraftCreatedAt;
     to?: AgentMail.DraftTo;
     cc?: AgentMail.DraftCc;
     bcc?: AgentMail.DraftBcc;
@@ -20,6 +17,11 @@ export interface Draft {
     text?: AgentMail.DraftText;
     html?: AgentMail.DraftHtml;
     attachments?: AgentMail.DraftAttachments;
-    inReplyTo?: AgentMail.DraftInReplyTo;
-    references?: AgentMail.DraftReferences;
+    /** ID of message being replied to. */
+    inReplyTo?: string;
+    /** IDs of previous messages in thread. */
+    references?: string[];
+    updatedAt: AgentMail.DraftUpdatedAt;
+    /** Time at which draft was created. */
+    createdAt: Date;
 }

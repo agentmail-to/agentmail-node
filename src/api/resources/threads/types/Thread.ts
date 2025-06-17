@@ -7,15 +7,18 @@ import * as AgentMail from "../../../index";
 export interface Thread {
     inboxId: AgentMail.inboxes.InboxId;
     threadId: AgentMail.ThreadId;
-    eventId: AgentMail.ThreadEventId;
     labels: AgentMail.ThreadLabels;
     timestamp: AgentMail.ThreadTimestamp;
     senders: AgentMail.ThreadSenders;
     recipients: AgentMail.ThreadRecipients;
-    messageCount: AgentMail.ThreadMessageCount;
     subject?: AgentMail.ThreadSubject;
     preview?: AgentMail.ThreadPreview;
     attachments?: AgentMail.ThreadAttachments;
+    messageCount: AgentMail.ThreadMessageCount;
     /** Messages in thread. Ordered by `timestamp` ascending. */
     messages: AgentMail.Message[];
+    /** Time at which thread was last updated. */
+    updatedAt: Date;
+    /** Time at which thread was created. */
+    createdAt: Date;
 }

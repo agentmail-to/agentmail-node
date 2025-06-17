@@ -7,13 +7,12 @@ import * as AgentMail from "../../../index";
 export interface ThreadItem {
     inboxId: AgentMail.inboxes.InboxId;
     threadId: AgentMail.ThreadId;
-    eventId: AgentMail.ThreadEventId;
     labels: AgentMail.ThreadLabels;
     timestamp: AgentMail.ThreadTimestamp;
     senders: AgentMail.ThreadSenders;
     recipients: AgentMail.ThreadRecipients;
-    messageCount: AgentMail.ThreadMessageCount;
     subject?: AgentMail.ThreadSubject;
     preview?: AgentMail.ThreadPreview;
     attachments?: AgentMail.ThreadAttachments;
+    messageCount: AgentMail.ThreadMessageCount;
 }

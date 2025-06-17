@@ -8,7 +8,6 @@ import * as core from "../../../../core";
 import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadId } from "../../threads/types/ThreadId";
 import { MessageId } from "./MessageId";
-import { MessageEventId } from "./MessageEventId";
 import { MessageLabels } from "./MessageLabels";
 import { MessageTimestamp } from "./MessageTimestamp";
 import { MessageFrom } from "./MessageFrom";
@@ -20,8 +19,6 @@ import { MessagePreview } from "./MessagePreview";
 import { MessageText } from "./MessageText";
 import { MessageHtml } from "./MessageHtml";
 import { MessageAttachments } from "./MessageAttachments";
-import { MessageInReplyTo } from "./MessageInReplyTo";
-import { MessageReferences } from "./MessageReferences";
 import { Attachment } from "../../attachments/types/Attachment";
 
 export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, AgentMail.Message> =
@@ -29,7 +26,6 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         inboxId: core.serialization.property("inbox_id", InboxId),
         threadId: core.serialization.property("thread_id", ThreadId),
         messageId: core.serialization.property("message_id", MessageId),
-        eventId: core.serialization.property("event_id", MessageEventId),
         labels: MessageLabels,
         timestamp: MessageTimestamp,
         from: MessageFrom,
@@ -41,8 +37,10 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         text: MessageText.optional(),
         html: MessageHtml.optional(),
         attachments: MessageAttachments.optional(),
-        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
-        references: MessageReferences.optional(),
+        inReplyTo: core.serialization.property("in_reply_to", core.serialization.string().optional()),
+        references: core.serialization.list(core.serialization.string()).optional(),
+        updatedAt: core.serialization.property("updated_at", core.serialization.date()),
+        createdAt: core.serialization.property("created_at", core.serialization.date()),
     });
 
 export declare namespace Message {
@@ -50,7 +48,6 @@ export declare namespace Message {
         inbox_id: InboxId.Raw;
         thread_id: ThreadId.Raw;
         message_id: MessageId.Raw;
-        event_id: MessageEventId.Raw;
         labels: MessageLabels.Raw;
         timestamp: MessageTimestamp.Raw;
         from: MessageFrom.Raw;
@@ -62,7 +59,9 @@ export declare namespace Message {
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
         attachments?: MessageAttachments.Raw | null;
-        in_reply_to?: MessageInReplyTo.Raw | null;
-        references?: MessageReferences.Raw | null;
+        in_reply_to?: string | null;
+        references?: string[] | null;
+        updated_at: string;
+        created_at: string;
     }
 }

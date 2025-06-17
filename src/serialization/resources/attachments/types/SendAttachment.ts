@@ -11,14 +11,14 @@ import { AttachmentContent } from "./AttachmentContent";
 
 export const SendAttachment: core.serialization.ObjectSchema<serializers.SendAttachment.Raw, AgentMail.SendAttachment> =
     core.serialization.object({
-        filename: AttachmentFilename,
+        filename: AttachmentFilename.optional(),
         contentType: core.serialization.property("content_type", AttachmentContentType.optional()),
         content: AttachmentContent,
     });
 
 export declare namespace SendAttachment {
     export interface Raw {
-        filename: AttachmentFilename.Raw;
+        filename?: AttachmentFilename.Raw | null;
         content_type?: AttachmentContentType.Raw | null;
         content: AttachmentContent.Raw;
     }

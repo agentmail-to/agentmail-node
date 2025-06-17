@@ -8,7 +8,6 @@ export interface Message {
     inboxId: AgentMail.inboxes.InboxId;
     threadId: AgentMail.ThreadId;
     messageId: AgentMail.MessageId;
-    eventId: AgentMail.MessageEventId;
     labels: AgentMail.MessageLabels;
     timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;
@@ -20,6 +19,12 @@ export interface Message {
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.MessageAttachments;
-    inReplyTo?: AgentMail.MessageInReplyTo;
-    references?: AgentMail.MessageReferences;
+    /** ID of message being replied to. */
+    inReplyTo?: string;
+    /** IDs of previous messages in thread. */
+    references?: string[];
+    /** Time at which message was last updated. */
+    updatedAt: Date;
+    /** Time at which message was created. */
+    createdAt: Date;
 }

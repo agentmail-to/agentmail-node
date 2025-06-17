@@ -7,44 +7,41 @@ import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadId } from "./ThreadId";
-import { ThreadEventId } from "./ThreadEventId";
 import { ThreadLabels } from "./ThreadLabels";
 import { ThreadTimestamp } from "./ThreadTimestamp";
 import { ThreadSenders } from "./ThreadSenders";
 import { ThreadRecipients } from "./ThreadRecipients";
-import { ThreadMessageCount } from "./ThreadMessageCount";
 import { ThreadSubject } from "./ThreadSubject";
 import { ThreadPreview } from "./ThreadPreview";
 import { ThreadAttachments } from "./ThreadAttachments";
+import { ThreadMessageCount } from "./ThreadMessageCount";
 import { Attachment } from "../../attachments/types/Attachment";
 
 export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.Raw, AgentMail.ThreadItem> =
     core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
         threadId: core.serialization.property("thread_id", ThreadId),
-        eventId: core.serialization.property("event_id", ThreadEventId),
         labels: ThreadLabels,
         timestamp: ThreadTimestamp,
         senders: ThreadSenders,
         recipients: ThreadRecipients,
-        messageCount: core.serialization.property("message_count", ThreadMessageCount),
         subject: ThreadSubject.optional(),
         preview: ThreadPreview.optional(),
         attachments: ThreadAttachments.optional(),
+        messageCount: core.serialization.property("message_count", ThreadMessageCount),
     });
 
 export declare namespace ThreadItem {
     export interface Raw {
         inbox_id: InboxId.Raw;
         thread_id: ThreadId.Raw;
-        event_id: ThreadEventId.Raw;
         labels: ThreadLabels.Raw;
         timestamp: ThreadTimestamp.Raw;
         senders: ThreadSenders.Raw;
         recipients: ThreadRecipients.Raw;
-        message_count: ThreadMessageCount.Raw;
         subject?: ThreadSubject.Raw | null;
         preview?: ThreadPreview.Raw | null;
         attachments?: ThreadAttachments.Raw | null;
+        message_count: ThreadMessageCount.Raw;
     }
 }

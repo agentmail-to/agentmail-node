@@ -8,7 +8,6 @@ export interface MessageItem {
     inboxId: AgentMail.inboxes.InboxId;
     threadId: AgentMail.ThreadId;
     messageId: AgentMail.MessageId;
-    eventId: AgentMail.MessageEventId;
     labels: AgentMail.MessageLabels;
     timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;
@@ -18,6 +17,4 @@ export interface MessageItem {
     subject?: AgentMail.MessageSubject;
     preview?: AgentMail.MessagePreview;
     attachments?: AgentMail.MessageAttachments;
-    inReplyTo?: AgentMail.MessageInReplyTo;
-    references?: AgentMail.MessageReferences;
 }

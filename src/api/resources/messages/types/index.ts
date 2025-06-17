@@ -1,5 +1,4 @@
 export * from "./MessageId";
-export * from "./MessageEventId";
 export * from "./MessageLabels";
 export * from "./MessageTimestamp";
 export * from "./MessageFrom";
@@ -11,8 +10,6 @@ export * from "./MessagePreview";
 export * from "./MessageText";
 export * from "./MessageHtml";
 export * from "./MessageAttachments";
-export * from "./MessageInReplyTo";
-export * from "./MessageReferences";
 export * from "./MessageItem";
 export * from "./Message";
 export * from "./ListMessagesResponse";

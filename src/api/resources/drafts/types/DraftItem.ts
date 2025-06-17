@@ -8,16 +8,12 @@ export interface DraftItem {
     inboxId: AgentMail.inboxes.InboxId;
     threadId: AgentMail.ThreadId;
     draftId: AgentMail.DraftId;
-    eventId: AgentMail.DraftEventId;
     labels: AgentMail.DraftLabels;
-    updatedAt: AgentMail.DraftUpdatedAt;
-    createdAt: AgentMail.DraftCreatedAt;
     to?: AgentMail.DraftTo;
     cc?: AgentMail.DraftCc;
     bcc?: AgentMail.DraftBcc;
     subject?: AgentMail.DraftSubject;
     preview?: AgentMail.DraftPreview;
     attachments?: AgentMail.DraftAttachments;
-    inReplyTo?: AgentMail.DraftInReplyTo;
-    references?: AgentMail.DraftReferences;
+    updatedAt: AgentMail.DraftUpdatedAt;
 }
