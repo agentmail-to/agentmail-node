@@ -6,6 +6,7 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { MessageLabels } from "./MessageLabels";
+import { SendMessageReplyTo } from "./SendMessageReplyTo";
 import { SendMessageTo } from "./SendMessageTo";
 import { SendMessageCc } from "./SendMessageCc";
 import { SendMessageBcc } from "./SendMessageBcc";
@@ -20,6 +21,7 @@ export const SendMessageRequest: core.serialization.ObjectSchema<
     AgentMail.SendMessageRequest
 > = core.serialization.object({
     labels: MessageLabels.optional(),
+    replyTo: core.serialization.property("reply_to", SendMessageReplyTo.optional()),
     to: SendMessageTo.optional(),
     cc: SendMessageCc.optional(),
     bcc: SendMessageBcc.optional(),
@@ -32,6 +34,7 @@ export const SendMessageRequest: core.serialization.ObjectSchema<
 export declare namespace SendMessageRequest {
     export interface Raw {
         labels?: MessageLabels.Raw | null;
+        reply_to?: SendMessageReplyTo.Raw | null;
         to?: SendMessageTo.Raw | null;
         cc?: SendMessageCc.Raw | null;
         bcc?: SendMessageBcc.Raw | null;

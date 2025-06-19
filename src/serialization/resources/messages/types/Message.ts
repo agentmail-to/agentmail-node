@@ -29,6 +29,10 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         labels: MessageLabels,
         timestamp: MessageTimestamp,
         from: MessageFrom,
+        replyTo: core.serialization.property(
+            "reply_to",
+            core.serialization.list(core.serialization.string()).optional(),
+        ),
         to: MessageTo,
         cc: MessageCc.optional(),
         bcc: MessageBcc.optional(),
@@ -51,6 +55,7 @@ export declare namespace Message {
         labels: MessageLabels.Raw;
         timestamp: MessageTimestamp.Raw;
         from: MessageFrom.Raw;
+        reply_to?: string[] | null;
         to: MessageTo.Raw;
         cc?: MessageCc.Raw | null;
         bcc?: MessageBcc.Raw | null;

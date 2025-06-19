@@ -11,6 +11,8 @@ export interface Message {
     labels: AgentMail.MessageLabels;
     timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;
+    /** Addresses of reply-to recipient. In format `username@domain.com` or `Display Name <username@domain.com>`. */
+    replyTo?: string[];
     to: AgentMail.MessageTo;
     cc?: AgentMail.MessageCc;
     bcc?: AgentMail.MessageBcc;

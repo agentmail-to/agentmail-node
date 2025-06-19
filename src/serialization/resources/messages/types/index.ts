@@ -14,6 +14,7 @@ export * from "./MessageItem";
 export * from "./Message";
 export * from "./ListMessagesResponse";
 export * from "./Addresses";
+export * from "./SendMessageReplyTo";
 export * from "./SendMessageTo";
 export * from "./SendMessageCc";
 export * from "./SendMessageBcc";

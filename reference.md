@@ -825,6 +825,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 ```typescript
 await client.inboxes.messages.send("inbox_id", {
     labels: undefined,
+    replyTo: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -890,6 +891,7 @@ await client.inboxes.messages.send("inbox_id", {
 ```typescript
 await client.inboxes.messages.reply("inbox_id", "message_id", {
     labels: undefined,
+    replyTo: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,

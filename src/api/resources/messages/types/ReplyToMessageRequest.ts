@@ -6,6 +6,7 @@ import * as AgentMail from "../../../index";
 
 export interface ReplyToMessageRequest {
     labels?: AgentMail.MessageLabels;
+    replyTo?: AgentMail.SendMessageReplyTo;
     to?: AgentMail.SendMessageTo;
     cc?: AgentMail.SendMessageCc;
     bcc?: AgentMail.SendMessageBcc;
