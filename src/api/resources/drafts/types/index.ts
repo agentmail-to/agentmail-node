@@ -1,5 +1,6 @@
 export * from "./DraftId";
 export * from "./DraftLabels";
+export * from "./DraftReplyTo";
 export * from "./DraftTo";
 export * from "./DraftCc";
 export * from "./DraftBcc";

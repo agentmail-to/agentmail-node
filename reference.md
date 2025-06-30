@@ -115,6 +115,7 @@ await client.inboxes.create({
     username: undefined,
     domain: undefined,
     displayName: undefined,
+    clientId: undefined,
 });
 ```
 
@@ -580,6 +581,7 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 ```typescript
 await client.inboxes.drafts.create("inbox_id", {
     labels: undefined,
+    replyTo: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -1343,6 +1345,7 @@ await client.webhooks.create({
     url: "url",
     eventTypes: ["message.received", "message.received"],
     inboxIds: undefined,
+    clientId: undefined,
 });
 ```
 

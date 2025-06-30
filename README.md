@@ -27,6 +27,7 @@ await client.inboxes.create({
     username: undefined,
     domain: undefined,
     displayName: undefined,
+    clientId: undefined,
 });
 ```
 

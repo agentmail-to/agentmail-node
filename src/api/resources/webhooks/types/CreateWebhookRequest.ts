@@ -8,4 +8,5 @@ export interface CreateWebhookRequest {
     url: AgentMail.Url;
     eventTypes: AgentMail.EventTypes;
     inboxIds?: AgentMail.InboxIds;
+    clientId?: AgentMail.ClientId;
 }

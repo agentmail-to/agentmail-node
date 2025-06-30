@@ -17,4 +17,5 @@ export interface Webhook {
     updatedAt: Date;
     /** Time at which webhook was created. */
     createdAt: Date;
+    clientId?: AgentMail.ClientId;
 }

@@ -9,6 +9,7 @@ import { WebhookId } from "./WebhookId";
 import { Url } from "./Url";
 import { EventTypes } from "./EventTypes";
 import { InboxIds } from "./InboxIds";
+import { ClientId } from "./ClientId";
 import { EventType } from "./EventType";
 
 export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, AgentMail.Webhook> =
@@ -21,6 +22,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, A
         enabled: core.serialization.boolean(),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
+        clientId: core.serialization.property("client_id", ClientId.optional()),
     });
 
 export declare namespace Webhook {
@@ -33,5 +35,6 @@ export declare namespace Webhook {
         enabled: boolean;
         updated_at: string;
         created_at: string;
+        client_id?: ClientId.Raw | null;
     }
 }

@@ -1,4 +1,5 @@
 export * from "./WebhookId";
+export * from "./ClientId";
 export * from "./Url";
 export * from "./EventType";
 export * from "./EventTypes";

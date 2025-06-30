@@ -9,6 +9,7 @@ export interface Draft {
     threadId: AgentMail.ThreadId;
     draftId: AgentMail.DraftId;
     labels: AgentMail.DraftLabels;
+    replyTo?: AgentMail.DraftReplyTo;
     to?: AgentMail.DraftTo;
     cc?: AgentMail.DraftCc;
     bcc?: AgentMail.DraftBcc;

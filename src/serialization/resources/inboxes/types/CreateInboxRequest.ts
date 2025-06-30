@@ -5,6 +5,7 @@
 import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
+import { ClientId } from "./ClientId";
 
 export const CreateInboxRequest: core.serialization.ObjectSchema<
     serializers.inboxes.CreateInboxRequest.Raw,
@@ -13,6 +14,7 @@ export const CreateInboxRequest: core.serialization.ObjectSchema<
     username: core.serialization.string().optional(),
     domain: core.serialization.string().optional(),
     displayName: core.serialization.property("display_name", core.serialization.string().optional()),
+    clientId: core.serialization.property("client_id", ClientId.optional()),
 });
 
 export declare namespace CreateInboxRequest {
@@ -20,5 +22,6 @@ export declare namespace CreateInboxRequest {
         username?: string | null;
         domain?: string | null;
         display_name?: string | null;
+        client_id?: ClientId.Raw | null;
     }
 }

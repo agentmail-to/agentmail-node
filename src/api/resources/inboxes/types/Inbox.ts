@@ -12,4 +12,5 @@ export interface Inbox {
     updatedAt: Date;
     /** Time at which inbox was created. */
     createdAt: Date;
+    clientId?: AgentMail.inboxes.ClientId;
 }

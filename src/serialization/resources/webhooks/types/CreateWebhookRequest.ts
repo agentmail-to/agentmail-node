@@ -8,6 +8,7 @@ import * as core from "../../../../core";
 import { Url } from "./Url";
 import { EventTypes } from "./EventTypes";
 import { InboxIds } from "./InboxIds";
+import { ClientId } from "./ClientId";
 import { EventType } from "./EventType";
 
 export const CreateWebhookRequest: core.serialization.ObjectSchema<
@@ -17,6 +18,7 @@ export const CreateWebhookRequest: core.serialization.ObjectSchema<
     url: Url,
     eventTypes: core.serialization.property("event_types", EventTypes),
     inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
+    clientId: core.serialization.property("client_id", ClientId.optional()),
 });
 
 export declare namespace CreateWebhookRequest {
@@ -24,5 +26,6 @@ export declare namespace CreateWebhookRequest {
         url: Url.Raw;
         event_types: EventTypes.Raw;
         inbox_ids?: InboxIds.Raw | null;
+        client_id?: ClientId.Raw | null;
     }
 }

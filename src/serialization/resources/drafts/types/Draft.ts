@@ -9,6 +9,7 @@ import { InboxId } from "../../inboxes/types/InboxId";
 import { ThreadId } from "../../threads/types/ThreadId";
 import { DraftId } from "./DraftId";
 import { DraftLabels } from "./DraftLabels";
+import { DraftReplyTo } from "./DraftReplyTo";
 import { DraftTo } from "./DraftTo";
 import { DraftCc } from "./DraftCc";
 import { DraftBcc } from "./DraftBcc";
@@ -26,6 +27,7 @@ export const Draft: core.serialization.ObjectSchema<serializers.Draft.Raw, Agent
         threadId: core.serialization.property("thread_id", ThreadId),
         draftId: core.serialization.property("draft_id", DraftId),
         labels: DraftLabels,
+        replyTo: core.serialization.property("reply_to", DraftReplyTo.optional()),
         to: DraftTo.optional(),
         cc: DraftCc.optional(),
         bcc: DraftBcc.optional(),
@@ -47,6 +49,7 @@ export declare namespace Draft {
         thread_id: ThreadId.Raw;
         draft_id: DraftId.Raw;
         labels: DraftLabels.Raw;
+        reply_to?: DraftReplyTo.Raw | null;
         to?: DraftTo.Raw | null;
         cc?: DraftCc.Raw | null;
         bcc?: DraftBcc.Raw | null;
