@@ -9,7 +9,7 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
-export declare namespace Webhooks {
+export declare namespace Credentials {
     export interface Options {
         environment?: core.Supplier<environments.AgentMailEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
@@ -29,20 +29,20 @@ export declare namespace Webhooks {
     }
 }
 
-export class Webhooks {
-    constructor(protected readonly _options: Webhooks.Options = {}) {}
+export class Credentials {
+    constructor(protected readonly _options: Credentials.Options = {}) {}
 
     /**
-     * @param {AgentMail.ListWebhooksRequest} request
-     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.ListCredentialsRequest} request
+     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.webhooks.list()
+     *     await client.credentials.list()
      */
     public async list(
-        request: AgentMail.ListWebhooksRequest = {},
-        requestOptions?: Webhooks.RequestOptions,
-    ): Promise<AgentMail.ListWebhooksResponse> {
+        request: AgentMail.ListCredentialsRequest = {},
+        requestOptions?: Credentials.RequestOptions,
+    ): Promise<AgentMail.ListCredentialsResponse> {
         const { limit, pageToken } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -58,7 +58,7 @@ export class Webhooks {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                "/v0/webhooks",
+                "/v0/credentials",
             ),
             method: "GET",
             headers: {
@@ -79,7 +79,7 @@ export class Webhooks {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListWebhooksResponse.parseOrThrow(_response.body, {
+            return serializers.ListCredentialsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -102,7 +102,7 @@ export class Webhooks {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/webhooks.");
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/credentials.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -111,24 +111,24 @@ export class Webhooks {
     }
 
     /**
-     * @param {AgentMail.WebhookId} webhookId
-     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.CredentialId} credentialId
+     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.webhooks.get("webhook_id")
+     *     await client.credentials.get("credential_id")
      */
     public async get(
-        webhookId: AgentMail.WebhookId,
-        requestOptions?: Webhooks.RequestOptions,
-    ): Promise<AgentMail.Webhook> {
+        credentialId: AgentMail.CredentialId,
+        requestOptions?: Credentials.RequestOptions,
+    ): Promise<AgentMail.Credential> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/webhooks/${encodeURIComponent(serializers.WebhookId.jsonOrThrow(webhookId))}`,
+                `/v0/credentials/${encodeURIComponent(serializers.CredentialId.jsonOrThrow(credentialId))}`,
             ),
             method: "GET",
             headers: {
@@ -148,7 +148,7 @@ export class Webhooks {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Webhook.parseOrThrow(_response.body, {
+            return serializers.Credential.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -184,7 +184,9 @@ export class Webhooks {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/webhooks/{webhook_id}.");
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling GET /v0/credentials/{credential_id}.",
+                );
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -193,29 +195,20 @@ export class Webhooks {
     }
 
     /**
-     * @param {AgentMail.CreateWebhookRequest} request
-     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.webhooks.create({
-     *         url: "url",
-     *         eventTypes: ["message.received", "message.received"],
-     *         inboxIds: undefined,
-     *         clientId: undefined
-     *     })
+     *     await client.credentials.create()
      */
-    public async create(
-        request: AgentMail.CreateWebhookRequest,
-        requestOptions?: Webhooks.RequestOptions,
-    ): Promise<AgentMail.Webhook> {
+    public async create(requestOptions?: Credentials.RequestOptions): Promise<AgentMail.CreateCredentialResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                "/v0/webhooks",
+                "/v0/credentials",
             ),
             method: "POST",
             headers: {
@@ -230,13 +223,12 @@ export class Webhooks {
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.CreateWebhookRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Webhook.parseOrThrow(_response.body, {
+            return serializers.CreateCredentialResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -272,7 +264,7 @@ export class Webhooks {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling POST /v0/webhooks.");
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling POST /v0/credentials.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -281,21 +273,24 @@ export class Webhooks {
     }
 
     /**
-     * @param {AgentMail.WebhookId} webhookId
-     * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.CredentialId} credentialId
+     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.webhooks.delete("webhook_id")
+     *     await client.credentials.delete("credential_id")
      */
-    public async delete(webhookId: AgentMail.WebhookId, requestOptions?: Webhooks.RequestOptions): Promise<void> {
+    public async delete(
+        credentialId: AgentMail.CredentialId,
+        requestOptions?: Credentials.RequestOptions,
+    ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/webhooks/${encodeURIComponent(serializers.WebhookId.jsonOrThrow(webhookId))}`,
+                `/v0/credentials/${encodeURIComponent(serializers.CredentialId.jsonOrThrow(credentialId))}`,
             ),
             method: "DELETE",
             headers: {
@@ -346,7 +341,7 @@ export class Webhooks {
                 });
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling DELETE /v0/webhooks/{webhook_id}.",
+                    "Timeout exceeded when calling DELETE /v0/credentials/{credential_id}.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({
