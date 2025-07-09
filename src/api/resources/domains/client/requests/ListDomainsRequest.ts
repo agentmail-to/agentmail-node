@@ -8,7 +8,7 @@ import * as AgentMail from "../../../../index";
  * @example
  *     {}
  */
-export interface ListCredentialsRequest {
+export interface ListDomainsRequest {
     limit?: AgentMail.Limit;
     pageToken?: AgentMail.PageToken;
 }

@@ -6,9 +6,9 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const CreatedAt: core.serialization.Schema<serializers.CreatedAt.Raw, AgentMail.CreatedAt> =
-    core.serialization.date();
+export const DomainName: core.serialization.Schema<serializers.DomainName.Raw, AgentMail.DomainName> =
+    core.serialization.string();
 
-export declare namespace CreatedAt {
+export declare namespace DomainName {
     export type Raw = string;
 }

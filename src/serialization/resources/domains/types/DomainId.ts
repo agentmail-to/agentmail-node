@@ -6,9 +6,9 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const SmtpUsername: core.serialization.Schema<serializers.SmtpUsername.Raw, AgentMail.SmtpUsername> =
+export const DomainId: core.serialization.Schema<serializers.DomainId.Raw, AgentMail.DomainId> =
     core.serialization.string();
 
-export declare namespace SmtpUsername {
+export declare namespace DomainId {
     export type Raw = string;
 }

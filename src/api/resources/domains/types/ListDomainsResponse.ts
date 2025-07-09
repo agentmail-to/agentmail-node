@@ -4,10 +4,9 @@
 
 import * as AgentMail from "../../../index";
 
-export interface ListCredentialsResponse {
+export interface ListDomainsResponse {
     count: AgentMail.Count;
-    limit?: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
     /** Ordered by `created_at` descending. */
-    credentials: AgentMail.Credential[];
+    domains: AgentMail.DomainSummary[];
 }

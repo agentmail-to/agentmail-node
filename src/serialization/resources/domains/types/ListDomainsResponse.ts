@@ -6,25 +6,22 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 import { Count } from "../../../types/Count";
-import { Limit } from "../../../types/Limit";
 import { PageToken } from "../../../types/PageToken";
-import { Credential } from "./Credential";
+import { DomainSummary } from "./DomainSummary";
 
-export const ListCredentialsResponse: core.serialization.ObjectSchema<
-    serializers.ListCredentialsResponse.Raw,
-    AgentMail.ListCredentialsResponse
+export const ListDomainsResponse: core.serialization.ObjectSchema<
+    serializers.ListDomainsResponse.Raw,
+    AgentMail.ListDomainsResponse
 > = core.serialization.object({
     count: Count,
-    limit: Limit.optional(),
     nextPageToken: core.serialization.property("next_page_token", PageToken.optional()),
-    credentials: core.serialization.list(Credential),
+    domains: core.serialization.list(DomainSummary),
 });
 
-export declare namespace ListCredentialsResponse {
+export declare namespace ListDomainsResponse {
     export interface Raw {
         count: Count.Raw;
-        limit?: Limit.Raw | null;
         next_page_token?: PageToken.Raw | null;
-        credentials: Credential.Raw[];
+        domains: DomainSummary.Raw[];
     }
 }

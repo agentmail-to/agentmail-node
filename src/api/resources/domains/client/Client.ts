@@ -9,7 +9,7 @@ import urlJoin from "url-join";
 import * as serializers from "../../../../serialization/index";
 import * as errors from "../../../../errors/index";
 
-export declare namespace Credentials {
+export declare namespace Domains {
     export interface Options {
         environment?: core.Supplier<environments.AgentMailEnvironment | string>;
         /** Specify a custom URL to connect the client to. */
@@ -29,20 +29,20 @@ export declare namespace Credentials {
     }
 }
 
-export class Credentials {
-    constructor(protected readonly _options: Credentials.Options = {}) {}
+export class Domains {
+    constructor(protected readonly _options: Domains.Options = {}) {}
 
     /**
-     * @param {AgentMail.ListCredentialsRequest} request
-     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.ListDomainsRequest} request
+     * @param {Domains.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
-     *     await client.credentials.list()
+     *     await client.domains.list()
      */
     public async list(
-        request: AgentMail.ListCredentialsRequest = {},
-        requestOptions?: Credentials.RequestOptions,
-    ): Promise<AgentMail.ListCredentialsResponse> {
+        request: AgentMail.ListDomainsRequest = {},
+        requestOptions?: Domains.RequestOptions,
+    ): Promise<AgentMail.ListDomainsResponse> {
         const { limit, pageToken } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -58,15 +58,15 @@ export class Credentials {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                "/v0/credentials",
+                "/v0/domains",
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.41",
-                "User-Agent": "agentmail/0.0.41",
+                "X-Fern-SDK-Version": "0.0.42",
+                "User-Agent": "agentmail/0.0.42",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -79,7 +79,7 @@ export class Credentials {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListCredentialsResponse.parseOrThrow(_response.body, {
+            return serializers.ListDomainsResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -102,7 +102,7 @@ export class Credentials {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/credentials.");
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/domains.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -111,32 +111,29 @@ export class Credentials {
     }
 
     /**
-     * @param {AgentMail.CredentialId} credentialId
-     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.DomainId} domain
+     * @param {Domains.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.credentials.get("credential_id")
+     *     await client.domains.get(" your-domain.com")
      */
-    public async get(
-        credentialId: AgentMail.CredentialId,
-        requestOptions?: Credentials.RequestOptions,
-    ): Promise<AgentMail.Credential> {
+    public async get(domain: AgentMail.DomainId, requestOptions?: Domains.RequestOptions): Promise<AgentMail.Domain> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/credentials/${encodeURIComponent(serializers.CredentialId.jsonOrThrow(credentialId))}`,
+                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.41",
-                "User-Agent": "agentmail/0.0.41",
+                "X-Fern-SDK-Version": "0.0.42",
+                "User-Agent": "agentmail/0.0.42",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -148,7 +145,7 @@ export class Credentials {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Credential.parseOrThrow(_response.body, {
+            return serializers.Domain.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -184,9 +181,7 @@ export class Credentials {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/credentials/{credential_id}.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/domains/{domain}.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -195,40 +190,47 @@ export class Credentials {
     }
 
     /**
-     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.CreateDomainRequest} request
+     * @param {Domains.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.credentials.create()
+     *     await client.domains.create({
+     *         domain: "your-domain.com"
+     *     })
      */
-    public async create(requestOptions?: Credentials.RequestOptions): Promise<AgentMail.CreateCredentialResponse> {
+    public async create(
+        request: AgentMail.CreateDomainRequest,
+        requestOptions?: Domains.RequestOptions,
+    ): Promise<AgentMail.CreateDomainResponse> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                "/v0/credentials",
+                "/v0/domains",
             ),
             method: "POST",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.41",
-                "User-Agent": "agentmail/0.0.41",
+                "X-Fern-SDK-Version": "0.0.42",
+                "User-Agent": "agentmail/0.0.42",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
+            body: serializers.CreateDomainRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.CreateCredentialResponse.parseOrThrow(_response.body, {
+            return serializers.CreateDomainResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -264,7 +266,7 @@ export class Credentials {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling POST /v0/credentials.");
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling POST /v0/domains.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -273,32 +275,29 @@ export class Credentials {
     }
 
     /**
-     * @param {AgentMail.CredentialId} credentialId
-     * @param {Credentials.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.DomainId} domain
+     * @param {Domains.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.credentials.delete("credential_id")
+     *     await client.domains.delete("dom_12345")
      */
-    public async delete(
-        credentialId: AgentMail.CredentialId,
-        requestOptions?: Credentials.RequestOptions,
-    ): Promise<void> {
+    public async delete(domain: AgentMail.DomainId, requestOptions?: Domains.RequestOptions): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (await core.Supplier.get(this._options.environment)) ??
                     environments.AgentMailEnvironment.Production,
-                `/v0/credentials/${encodeURIComponent(serializers.CredentialId.jsonOrThrow(credentialId))}`,
+                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.41",
-                "User-Agent": "agentmail/0.0.41",
+                "X-Fern-SDK-Version": "0.0.42",
+                "User-Agent": "agentmail/0.0.42",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -340,9 +339,7 @@ export class Credentials {
                     body: _response.error.rawBody,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling DELETE /v0/credentials/{credential_id}.",
-                );
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling DELETE /v0/domains/{domain}.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,

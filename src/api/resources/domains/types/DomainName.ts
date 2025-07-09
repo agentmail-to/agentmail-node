@@ -3,6 +3,6 @@
  */
 
 /**
- * Time at which credential was last updated.
+ * The name of the domain. (e.g., "example.com")
  */
-export type UpdatedAt = Date;
+export type DomainName = string;

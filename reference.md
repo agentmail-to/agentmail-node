@@ -354,9 +354,9 @@ await client.contexts.delete("context_id");
 </dl>
 </details>
 
-## Credentials
+## Domains
 
-<details><summary><code>client.credentials.<a href="/src/api/resources/credentials/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListCredentialsResponse</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListDomainsResponse</code></summary>
 <dl>
 <dd>
 
@@ -369,7 +369,7 @@ await client.contexts.delete("context_id");
 <dd>
 
 ```typescript
-await client.credentials.list();
+await client.domains.list();
 ```
 
 </dd>
@@ -385,7 +385,7 @@ await client.credentials.list();
 <dl>
 <dd>
 
-**request:** `AgentMail.ListCredentialsRequest`
+**request:** `AgentMail.ListDomainsRequest`
 
 </dd>
 </dl>
@@ -393,7 +393,7 @@ await client.credentials.list();
 <dl>
 <dd>
 
-**requestOptions:** `Credentials.RequestOptions`
+**requestOptions:** `Domains.RequestOptions`
 
 </dd>
 </dl>
@@ -404,7 +404,7 @@ await client.credentials.list();
 </dl>
 </details>
 
-<details><summary><code>client.credentials.<a href="/src/api/resources/credentials/client/Client.ts">get</a>(credentialId) -> AgentMail.Credential</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">get</a>(domain) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
 
@@ -417,7 +417,7 @@ await client.credentials.list();
 <dd>
 
 ```typescript
-await client.credentials.get("credential_id");
+await client.domains.get(" your-domain.com");
 ```
 
 </dd>
@@ -433,7 +433,7 @@ await client.credentials.get("credential_id");
 <dl>
 <dd>
 
-**credentialId:** `AgentMail.CredentialId`
+**domain:** `AgentMail.DomainId`
 
 </dd>
 </dl>
@@ -441,7 +441,7 @@ await client.credentials.get("credential_id");
 <dl>
 <dd>
 
-**requestOptions:** `Credentials.RequestOptions`
+**requestOptions:** `Domains.RequestOptions`
 
 </dd>
 </dl>
@@ -452,7 +452,7 @@ await client.credentials.get("credential_id");
 </dl>
 </details>
 
-<details><summary><code>client.credentials.<a href="/src/api/resources/credentials/client/Client.ts">create</a>() -> AgentMail.CreateCredentialResponse</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">create</a>({ ...params }) -> AgentMail.CreateDomainResponse</code></summary>
 <dl>
 <dd>
 
@@ -465,7 +465,9 @@ await client.credentials.get("credential_id");
 <dd>
 
 ```typescript
-await client.credentials.create();
+await client.domains.create({
+    domain: "your-domain.com",
+});
 ```
 
 </dd>
@@ -481,7 +483,15 @@ await client.credentials.create();
 <dl>
 <dd>
 
-**requestOptions:** `Credentials.RequestOptions`
+**request:** `AgentMail.CreateDomainRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Domains.RequestOptions`
 
 </dd>
 </dl>
@@ -492,7 +502,7 @@ await client.credentials.create();
 </dl>
 </details>
 
-<details><summary><code>client.credentials.<a href="/src/api/resources/credentials/client/Client.ts">delete</a>(credentialId) -> void</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">delete</a>(domain) -> void</code></summary>
 <dl>
 <dd>
 
@@ -505,7 +515,7 @@ await client.credentials.create();
 <dd>
 
 ```typescript
-await client.credentials.delete("credential_id");
+await client.domains.delete("dom_12345");
 ```
 
 </dd>
@@ -521,7 +531,7 @@ await client.credentials.delete("credential_id");
 <dl>
 <dd>
 
-**credentialId:** `AgentMail.CredentialId`
+**domain:** `AgentMail.DomainId`
 
 </dd>
 </dl>
@@ -529,7 +539,7 @@ await client.credentials.delete("credential_id");
 <dl>
 <dd>
 
-**requestOptions:** `Credentials.RequestOptions`
+**requestOptions:** `Domains.RequestOptions`
 
 </dd>
 </dl>
