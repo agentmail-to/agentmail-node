@@ -5,7 +5,6 @@
 import * as environments from "./environments";
 import * as core from "./core";
 import { Inboxes } from "./api/resources/inboxes/client/Client";
-import { Contexts } from "./api/resources/contexts/client/Client";
 import { Domains } from "./api/resources/domains/client/Client";
 import { Drafts } from "./api/resources/drafts/client/Client";
 import { Threads } from "./api/resources/threads/client/Client";
@@ -33,7 +32,6 @@ export declare namespace AgentMailClient {
 
 export class AgentMailClient {
     protected _inboxes: Inboxes | undefined;
-    protected _contexts: Contexts | undefined;
     protected _domains: Domains | undefined;
     protected _drafts: Drafts | undefined;
     protected _threads: Threads | undefined;
@@ -43,10 +41,6 @@ export class AgentMailClient {
 
     public get inboxes(): Inboxes {
         return (this._inboxes ??= new Inboxes(this._options));
-    }
-
-    public get contexts(): Contexts {
-        return (this._contexts ??= new Contexts(this._options));
     }
 
     public get domains(): Domains {

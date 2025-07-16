@@ -1,8 +1,6 @@
 export * as inboxes from "./inboxes";
 export * as attachments from "./attachments";
 export * from "./attachments/types";
-export * as contexts from "./contexts";
-export * from "./contexts/types";
 export * as domains from "./domains";
 export * from "./domains/types";
 export * as drafts from "./drafts";
