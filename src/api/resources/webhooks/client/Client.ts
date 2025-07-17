@@ -11,7 +11,7 @@ import * as errors from "../../../../errors/index";
 
 export declare namespace Webhooks {
     export interface Options {
-        environment?: core.Supplier<environments.AgentMailEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailEnvironment | environments.AgentMailEnvironmentUrls>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -33,16 +33,16 @@ export class Webhooks {
     constructor(protected readonly _options: Webhooks.Options = {}) {}
 
     /**
-     * @param {AgentMail.ListWebhooksRequest} request
+     * @param {AgentMail.webhooks.ListWebhooksRequest} request
      * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @example
      *     await client.webhooks.list()
      */
     public async list(
-        request: AgentMail.ListWebhooksRequest = {},
+        request: AgentMail.webhooks.ListWebhooksRequest = {},
         requestOptions?: Webhooks.RequestOptions,
-    ): Promise<AgentMail.ListWebhooksResponse> {
+    ): Promise<AgentMail.webhooks.ListWebhooksResponse> {
         const { limit, pageToken } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
@@ -56,8 +56,10 @@ export class Webhooks {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 "/v0/webhooks",
             ),
             method: "GET",
@@ -65,8 +67,8 @@ export class Webhooks {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -79,7 +81,7 @@ export class Webhooks {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.ListWebhooksResponse.parseOrThrow(_response.body, {
+            return serializers.webhooks.ListWebhooksResponse.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -111,7 +113,7 @@ export class Webhooks {
     }
 
     /**
-     * @param {AgentMail.WebhookId} webhookId
+     * @param {AgentMail.webhooks.WebhookId} webhookId
      * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -120,23 +122,25 @@ export class Webhooks {
      *     await client.webhooks.get("webhook_id")
      */
     public async get(
-        webhookId: AgentMail.WebhookId,
+        webhookId: AgentMail.webhooks.WebhookId,
         requestOptions?: Webhooks.RequestOptions,
-    ): Promise<AgentMail.Webhook> {
+    ): Promise<AgentMail.webhooks.Webhook> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
-                `/v0/webhooks/${encodeURIComponent(serializers.WebhookId.jsonOrThrow(webhookId))}`,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/webhooks/${encodeURIComponent(serializers.webhooks.WebhookId.jsonOrThrow(webhookId))}`,
             ),
             method: "GET",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -148,7 +152,7 @@ export class Webhooks {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Webhook.parseOrThrow(_response.body, {
+            return serializers.webhooks.Webhook.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -193,7 +197,7 @@ export class Webhooks {
     }
 
     /**
-     * @param {AgentMail.CreateWebhookRequest} request
+     * @param {AgentMail.webhooks.CreateWebhookRequest} request
      * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
@@ -207,14 +211,16 @@ export class Webhooks {
      *     })
      */
     public async create(
-        request: AgentMail.CreateWebhookRequest,
+        request: AgentMail.webhooks.CreateWebhookRequest,
         requestOptions?: Webhooks.RequestOptions,
-    ): Promise<AgentMail.Webhook> {
+    ): Promise<AgentMail.webhooks.Webhook> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 "/v0/webhooks",
             ),
             method: "POST",
@@ -222,21 +228,21 @@ export class Webhooks {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
             },
             contentType: "application/json",
             requestType: "json",
-            body: serializers.CreateWebhookRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
+            body: serializers.webhooks.CreateWebhookRequest.jsonOrThrow(request, { unrecognizedObjectKeys: "strip" }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return serializers.Webhook.parseOrThrow(_response.body, {
+            return serializers.webhooks.Webhook.parseOrThrow(_response.body, {
                 unrecognizedObjectKeys: "passthrough",
                 allowUnrecognizedUnionMembers: true,
                 allowUnrecognizedEnumValues: true,
@@ -281,7 +287,7 @@ export class Webhooks {
     }
 
     /**
-     * @param {AgentMail.WebhookId} webhookId
+     * @param {AgentMail.webhooks.WebhookId} webhookId
      * @param {Webhooks.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -289,21 +295,26 @@ export class Webhooks {
      * @example
      *     await client.webhooks.delete("webhook_id")
      */
-    public async delete(webhookId: AgentMail.WebhookId, requestOptions?: Webhooks.RequestOptions): Promise<void> {
+    public async delete(
+        webhookId: AgentMail.webhooks.WebhookId,
+        requestOptions?: Webhooks.RequestOptions,
+    ): Promise<void> {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
-                `/v0/webhooks/${encodeURIComponent(serializers.WebhookId.jsonOrThrow(webhookId))}`,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/webhooks/${encodeURIComponent(serializers.webhooks.WebhookId.jsonOrThrow(webhookId))}`,
             ),
             method: "DELETE",
             headers: {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

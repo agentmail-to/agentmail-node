@@ -1,4 +1,5 @@
 export * as inboxes from "./inboxes";
+export * as webhooks from "./webhooks";
 export * as attachments from "./attachments";
 export * from "./attachments/types";
 export * as domains from "./domains";
@@ -9,10 +10,9 @@ export * as messages from "./messages";
 export * from "./messages/types";
 export * as threads from "./threads";
 export * from "./threads/types";
-export * as webhooks from "./webhooks";
-export * from "./webhooks/types";
+export * as websockets from "./websockets";
+export * from "./websockets/types";
 export * from "./messages/errors";
 export * from "./domains/client/requests";
 export * from "./drafts/client/requests";
 export * from "./threads/client/requests";
-export * from "./webhooks/client/requests";

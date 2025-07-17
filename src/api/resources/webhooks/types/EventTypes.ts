@@ -7,4 +7,4 @@ import * as AgentMail from "../../../index";
 /**
  * Event types to send. Must explicitly include all event types to receive.
  */
-export type EventTypes = AgentMail.EventType[];
+export type EventTypes = AgentMail.webhooks.EventType[];

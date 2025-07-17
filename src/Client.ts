@@ -5,14 +5,14 @@
 import * as environments from "./environments";
 import * as core from "./core";
 import { Inboxes } from "./api/resources/inboxes/client/Client";
+import { Webhooks } from "./api/resources/webhooks/client/Client";
 import { Domains } from "./api/resources/domains/client/Client";
 import { Drafts } from "./api/resources/drafts/client/Client";
 import { Threads } from "./api/resources/threads/client/Client";
-import { Webhooks } from "./api/resources/webhooks/client/Client";
 
 export declare namespace AgentMailClient {
     export interface Options {
-        environment?: core.Supplier<environments.AgentMailEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailEnvironment | environments.AgentMailEnvironmentUrls>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -32,15 +32,19 @@ export declare namespace AgentMailClient {
 
 export class AgentMailClient {
     protected _inboxes: Inboxes | undefined;
+    protected _webhooks: Webhooks | undefined;
     protected _domains: Domains | undefined;
     protected _drafts: Drafts | undefined;
     protected _threads: Threads | undefined;
-    protected _webhooks: Webhooks | undefined;
 
     constructor(protected readonly _options: AgentMailClient.Options = {}) {}
 
     public get inboxes(): Inboxes {
         return (this._inboxes ??= new Inboxes(this._options));
+    }
+
+    public get webhooks(): Webhooks {
+        return (this._webhooks ??= new Webhooks(this._options));
     }
 
     public get domains(): Domains {
@@ -53,9 +57,5 @@ export class AgentMailClient {
 
     public get threads(): Threads {
         return (this._threads ??= new Threads(this._options));
-    }
-
-    public get webhooks(): Webhooks {
-        return (this._webhooks ??= new Webhooks(this._options));
     }
 }

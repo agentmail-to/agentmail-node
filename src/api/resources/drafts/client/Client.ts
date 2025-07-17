@@ -12,7 +12,7 @@ import * as errors from "../../../../errors/index";
 
 export declare namespace Drafts {
     export interface Options {
-        environment?: core.Supplier<environments.AgentMailEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailEnvironment | environments.AgentMailEnvironmentUrls>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -69,8 +69,10 @@ export class Drafts {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 "/v0/drafts",
             ),
             method: "GET",
@@ -78,8 +80,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -149,8 +151,10 @@ export class Drafts {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 `/v0/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId))}`,
             ),
             method: "GET",
@@ -158,8 +162,8 @@ export class Drafts {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

@@ -7,8 +7,3 @@ export * from "./InboxIds";
 export * from "./Webhook";
 export * from "./ListWebhooksResponse";
 export * from "./CreateWebhookRequest";
-export * from "./EventId";
-export * from "./MessageReceivedPayload";
-export * from "./SvixId";
-export * from "./SvixTimestamp";
-export * from "./SvixSignature";

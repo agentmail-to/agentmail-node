@@ -12,8 +12,8 @@ import { ClientId } from "./ClientId";
 import { EventType } from "./EventType";
 
 export const CreateWebhookRequest: core.serialization.ObjectSchema<
-    serializers.CreateWebhookRequest.Raw,
-    AgentMail.CreateWebhookRequest
+    serializers.webhooks.CreateWebhookRequest.Raw,
+    AgentMail.webhooks.CreateWebhookRequest
 > = core.serialization.object({
     url: Url,
     eventTypes: core.serialization.property("event_types", EventTypes),

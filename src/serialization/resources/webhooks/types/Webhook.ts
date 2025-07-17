@@ -12,7 +12,7 @@ import { InboxIds } from "./InboxIds";
 import { ClientId } from "./ClientId";
 import { EventType } from "./EventType";
 
-export const Webhook: core.serialization.ObjectSchema<serializers.Webhook.Raw, AgentMail.Webhook> =
+export const Webhook: core.serialization.ObjectSchema<serializers.webhooks.Webhook.Raw, AgentMail.webhooks.Webhook> =
     core.serialization.object({
         webhookId: core.serialization.property("webhook_id", WebhookId),
         url: Url,

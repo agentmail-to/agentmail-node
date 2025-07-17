@@ -6,7 +6,8 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const Url: core.serialization.Schema<serializers.Url.Raw, AgentMail.Url> = core.serialization.string();
+export const Url: core.serialization.Schema<serializers.webhooks.Url.Raw, AgentMail.webhooks.Url> =
+    core.serialization.string();
 
 export declare namespace Url {
     export type Raw = string;

@@ -9,5 +9,5 @@ export interface ListWebhooksResponse {
     limit?: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
     /** Ordered by `created_at` descending. */
-    webhooks: AgentMail.Webhook[];
+    webhooks: AgentMail.webhooks.Webhook[];
 }

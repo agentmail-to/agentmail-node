@@ -11,7 +11,7 @@ import * as errors from "../../../../errors/index";
 
 export declare namespace Domains {
     export interface Options {
-        environment?: core.Supplier<environments.AgentMailEnvironment | string>;
+        environment?: core.Supplier<environments.AgentMailEnvironment | environments.AgentMailEnvironmentUrls>;
         /** Specify a custom URL to connect the client to. */
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
@@ -56,8 +56,10 @@ export class Domains {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 "/v0/domains",
             ),
             method: "GET",
@@ -65,8 +67,8 @@ export class Domains {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -123,8 +125,10 @@ export class Domains {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain))}`,
             ),
             method: "GET",
@@ -132,8 +136,8 @@ export class Domains {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -207,8 +211,10 @@ export class Domains {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 "/v0/domains",
             ),
             method: "POST",
@@ -216,8 +222,8 @@ export class Domains {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,
@@ -287,8 +293,10 @@ export class Domains {
         const _response = await core.fetcher({
             url: urlJoin(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (await core.Supplier.get(this._options.environment)) ??
-                    environments.AgentMailEnvironment.Production,
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
                 `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain))}`,
             ),
             method: "DELETE",
@@ -296,8 +304,8 @@ export class Domains {
                 Authorization: await this._getAuthorizationHeader(),
                 "X-Fern-Language": "JavaScript",
                 "X-Fern-SDK-Name": "agentmail",
-                "X-Fern-SDK-Version": "0.0.43",
-                "User-Agent": "agentmail/0.0.43",
+                "X-Fern-SDK-Version": "0.0.44",
+                "User-Agent": "agentmail/0.0.44",
                 "X-Fern-Runtime": core.RUNTIME.type,
                 "X-Fern-Runtime-Version": core.RUNTIME.version,
                 ...requestOptions?.headers,

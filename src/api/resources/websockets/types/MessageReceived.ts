@@ -4,8 +4,9 @@
 
 import * as AgentMail from "../../../index";
 
-export interface MessageReceivedPayload {
-    eventType: AgentMail.EventType;
+export interface MessageReceived {
+    type: "event";
+    eventType: "message.received";
     eventId: AgentMail.EventId;
     message: AgentMail.Message;
 }

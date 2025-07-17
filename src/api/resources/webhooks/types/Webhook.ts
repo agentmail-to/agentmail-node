@@ -5,10 +5,10 @@
 import * as AgentMail from "../../../index";
 
 export interface Webhook {
-    webhookId: AgentMail.WebhookId;
-    url: AgentMail.Url;
-    eventTypes?: AgentMail.EventTypes;
-    inboxIds?: AgentMail.InboxIds;
+    webhookId: AgentMail.webhooks.WebhookId;
+    url: AgentMail.webhooks.Url;
+    eventTypes?: AgentMail.webhooks.EventTypes;
+    inboxIds?: AgentMail.webhooks.InboxIds;
     /** Secret for webhook signature verification. */
     secret: string;
     /** Whether the webhook is enabled. */
@@ -17,5 +17,5 @@ export interface Webhook {
     updatedAt: Date;
     /** Time at which webhook was created. */
     createdAt: Date;
-    clientId?: AgentMail.ClientId;
+    clientId?: AgentMail.webhooks.ClientId;
 }

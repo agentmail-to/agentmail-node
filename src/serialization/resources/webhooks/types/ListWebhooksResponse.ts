@@ -11,8 +11,8 @@ import { PageToken } from "../../../types/PageToken";
 import { Webhook } from "./Webhook";
 
 export const ListWebhooksResponse: core.serialization.ObjectSchema<
-    serializers.ListWebhooksResponse.Raw,
-    AgentMail.ListWebhooksResponse
+    serializers.webhooks.ListWebhooksResponse.Raw,
+    AgentMail.webhooks.ListWebhooksResponse
 > = core.serialization.object({
     count: Count,
     limit: Limit.optional(),

@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const WebhookId: core.serialization.Schema<serializers.WebhookId.Raw, AgentMail.WebhookId> =
+export const WebhookId: core.serialization.Schema<serializers.webhooks.WebhookId.Raw, AgentMail.webhooks.WebhookId> =
     core.serialization.string();
 
 export declare namespace WebhookId {

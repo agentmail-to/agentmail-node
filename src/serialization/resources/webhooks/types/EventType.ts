@@ -6,7 +6,7 @@ import * as serializers from "../../../index";
 import * as AgentMail from "../../../../api/index";
 import * as core from "../../../../core";
 
-export const EventType: core.serialization.Schema<serializers.EventType.Raw, AgentMail.EventType> =
+export const EventType: core.serialization.Schema<serializers.webhooks.EventType.Raw, AgentMail.webhooks.EventType> =
     core.serialization.enum_(["message.received"]);
 
 export declare namespace EventType {
