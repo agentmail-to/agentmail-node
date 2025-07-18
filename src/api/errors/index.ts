@@ -1,3 +1,3 @@
-export * from "./ValidationError";
-export * from "./IsTakenError";
-export * from "./NotFoundError";
+export * from "./ValidationError.js";
+export * from "./IsTakenError.js";
+export * from "./NotFoundError.js";

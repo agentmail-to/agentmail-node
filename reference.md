@@ -114,8 +114,8 @@ await client.inboxes.get("inbox_id");
 await client.inboxes.create({
     username: undefined,
     domain: undefined,
-    displayName: undefined,
-    clientId: undefined,
+    display_name: undefined,
+    client_id: undefined,
 });
 ```
 
@@ -264,9 +264,9 @@ await client.webhooks.get("webhook_id");
 ```typescript
 await client.webhooks.create({
     url: "url",
-    eventTypes: ["message.received", "message.received"],
-    inboxIds: undefined,
-    clientId: undefined,
+    event_types: ["message.received", "message.received"],
+    inbox_ids: undefined,
+    client_id: undefined,
 });
 ```
 
@@ -773,7 +773,7 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 ```typescript
 await client.inboxes.drafts.create("inbox_id", {
     labels: undefined,
-    replyTo: undefined,
+    reply_to: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -837,8 +837,8 @@ await client.inboxes.drafts.create("inbox_id", {
 
 ```typescript
 await client.inboxes.drafts.send("inbox_id", "draft_id", {
-    addLabels: undefined,
-    removeLabels: undefined,
+    add_labels: undefined,
+    remove_labels: undefined,
 });
 ```
 
@@ -1019,7 +1019,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 ```typescript
 await client.inboxes.messages.send("inbox_id", {
     labels: undefined,
-    replyTo: undefined,
+    reply_to: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -1085,7 +1085,7 @@ await client.inboxes.messages.send("inbox_id", {
 ```typescript
 await client.inboxes.messages.reply("inbox_id", "message_id", {
     labels: undefined,
-    replyTo: undefined,
+    reply_to: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -1157,8 +1157,8 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {
 
 ```typescript
 await client.inboxes.messages.update("inbox_id", "message_id", {
-    addLabels: undefined,
-    removeLabels: undefined,
+    add_labels: undefined,
+    remove_labels: undefined,
 });
 ```
 

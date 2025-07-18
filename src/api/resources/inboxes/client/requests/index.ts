@@ -1,1 +1,1 @@
-export { type ListInboxesRequest } from "./ListInboxesRequest";
+export { type ListInboxesRequest } from "./ListInboxesRequest.js";

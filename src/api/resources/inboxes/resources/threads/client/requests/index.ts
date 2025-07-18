@@ -1,1 +1,1 @@
-export { type ListThreadsRequest } from "./ListThreadsRequest";
+export { type ListThreadsRequest } from "./ListThreadsRequest.js";

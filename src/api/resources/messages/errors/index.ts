@@ -1,1 +1,1 @@
-export * from "./MessageRejectedError";
+export * from "./MessageRejectedError.js";

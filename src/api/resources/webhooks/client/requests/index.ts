@@ -1,1 +1,1 @@
-export { type ListWebhooksRequest } from "./ListWebhooksRequest";
+export { type ListWebhooksRequest } from "./ListWebhooksRequest.js";

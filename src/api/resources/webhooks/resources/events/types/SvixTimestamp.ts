@@ -5,4 +5,4 @@
 /**
  * Timestamp of webhook message.
  */
-export type SvixTimestamp = Date;
+export type SvixTimestamp = string;

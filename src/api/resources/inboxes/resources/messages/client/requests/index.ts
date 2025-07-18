@@ -1,1 +1,1 @@
-export { type ListMessagesRequest } from "./ListMessagesRequest";
+export { type ListMessagesRequest } from "./ListMessagesRequest.js";

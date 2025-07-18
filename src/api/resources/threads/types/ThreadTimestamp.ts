@@ -5,4 +5,4 @@
 /**
  * Time at which last message was sent.
  */
-export type ThreadTimestamp = Date;
+export type ThreadTimestamp = string;

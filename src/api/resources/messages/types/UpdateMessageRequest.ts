@@ -4,7 +4,7 @@
 
 export interface UpdateMessageRequest {
     /** Labels to add to message. */
-    addLabels?: string[];
+    add_labels?: string[];
     /** Labels to remove from message. */
-    removeLabels?: string[];
+    remove_labels?: string[];
 }

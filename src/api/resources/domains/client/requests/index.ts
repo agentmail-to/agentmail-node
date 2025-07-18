@@ -1,1 +1,1 @@
-export { type ListDomainsRequest } from "./ListDomainsRequest";
+export { type ListDomainsRequest } from "./ListDomainsRequest.js";

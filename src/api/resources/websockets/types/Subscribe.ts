@@ -5,5 +5,5 @@
 export interface Subscribe {
     type: "subscribe";
     /** IDs of the inboxes to subscribe to. */
-    inboxIds: string[];
+    inbox_ids: string[];
 }
