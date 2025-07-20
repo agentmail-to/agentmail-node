@@ -299,6 +299,81 @@ export class Messages {
     }
 
     /**
+     * @throws {@link AgentMail.NotFoundError}
+     */
+    public getRawMessage(
+        inboxId: AgentMail.inboxes.InboxId,
+        messageId: AgentMail.MessageId,
+        requestOptions?: Messages.RequestOptions,
+    ): core.HttpResponsePromise<core.BinaryResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getRawMessage(inboxId, messageId, requestOptions));
+    }
+
+    private async __getRawMessage(
+        inboxId: AgentMail.inboxes.InboxId,
+        messageId: AgentMail.MessageId,
+        requestOptions?: Messages.RequestOptions,
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        const _response = await core.fetcher<core.BinaryResponse>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages/${encodeURIComponent(messageId)}/raw`,
+            ),
+            method: "GET",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            responseType: "binary-response",
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: _response.body, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        _response.error.body as AgentMail.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}/raw.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
      * @param {AgentMail.inboxes.InboxId} inboxId
      * @param {AgentMail.SendMessageRequest} request
      * @param {Messages.RequestOptions} requestOptions - Request-specific configuration.
