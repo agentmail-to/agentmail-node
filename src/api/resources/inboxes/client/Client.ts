@@ -10,6 +10,7 @@ import * as errors from "../../../../errors/index.js";
 import { Threads } from "../resources/threads/client/Client.js";
 import { Messages } from "../resources/messages/client/Client.js";
 import { Drafts } from "../resources/drafts/client/Client.js";
+import { Metrics } from "../resources/metrics/client/Client.js";
 
 export declare namespace Inboxes {
     export interface Options {
@@ -38,6 +39,7 @@ export class Inboxes {
     protected _threads: Threads | undefined;
     protected _messages: Messages | undefined;
     protected _drafts: Drafts | undefined;
+    protected _metrics: Metrics | undefined;
 
     constructor(_options: Inboxes.Options = {}) {
         this._options = _options;
@@ -53,6 +55,10 @@ export class Inboxes {
 
     public get drafts(): Drafts {
         return (this._drafts ??= new Drafts(this._options));
+    }
+
+    public get metrics(): Metrics {
+        return (this._metrics ??= new Metrics(this._options));
     }
 
     /**

@@ -780,6 +780,7 @@ await client.inboxes.drafts.create("inbox_id", {
     subject: undefined,
     text: undefined,
     html: undefined,
+    send_at: undefined,
 });
 ```
 
@@ -1210,6 +1211,67 @@ await client.inboxes.messages.update("inbox_id", "message_id", {
 </dl>
 </details>
 
+## Inboxes Metrics
+
+<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">get</a>(inboxId, { ...params }) -> AgentMail.ListMetricsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.metrics.get("inbox_id", {
+    start_timestamp: "2024-01-15T09:30:00Z",
+    end_timestamp: "2024-01-15T09:30:00Z",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inboxId:** `AgentMail.InboxId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.ListInboxMetricsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Metrics.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Threads
 
 <details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
@@ -1314,6 +1376,59 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 <dd>
 
 **requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+## Metrics
+
+<details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListMetricsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.metrics.list({
+    start_timestamp: "2024-01-15T09:30:00Z",
+    end_timestamp: "2024-01-15T09:30:00Z",
+});
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ListMetricsRequest`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Metrics.RequestOptions`
 
 </dd>
 </dl>

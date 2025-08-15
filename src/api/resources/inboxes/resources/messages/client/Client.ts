@@ -301,15 +301,15 @@ export class Messages {
     /**
      * @throws {@link AgentMail.NotFoundError}
      */
-    public getRawMessage(
+    public getRaw(
         inboxId: AgentMail.inboxes.InboxId,
         messageId: AgentMail.MessageId,
         requestOptions?: Messages.RequestOptions,
     ): core.HttpResponsePromise<core.BinaryResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__getRawMessage(inboxId, messageId, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__getRaw(inboxId, messageId, requestOptions));
     }
 
-    private async __getRawMessage(
+    private async __getRaw(
         inboxId: AgentMail.inboxes.InboxId,
         messageId: AgentMail.MessageId,
         requestOptions?: Messages.RequestOptions,

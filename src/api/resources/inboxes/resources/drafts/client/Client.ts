@@ -235,7 +235,8 @@ export class Drafts {
      *         bcc: undefined,
      *         subject: undefined,
      *         text: undefined,
-     *         html: undefined
+     *         html: undefined,
+     *         send_at: undefined
      *     })
      */
     public create(

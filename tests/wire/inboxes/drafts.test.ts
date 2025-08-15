@@ -44,6 +44,8 @@ describe("Drafts", () => {
                             inline: true,
                         },
                     ],
+                    send_status: "scheduled",
+                    send_at: "2024-01-15T09:30:00Z",
                     updated_at: "2024-01-15T09:30:00Z",
                 },
                 {
@@ -72,6 +74,8 @@ describe("Drafts", () => {
                             inline: true,
                         },
                     ],
+                    send_status: "scheduled",
+                    send_at: "2024-01-15T09:30:00Z",
                     updated_at: "2024-01-15T09:30:00Z",
                 },
             ],
@@ -116,6 +120,8 @@ describe("Drafts", () => {
                             inline: true,
                         },
                     ],
+                    send_status: "scheduled",
+                    send_at: "2024-01-15T09:30:00Z",
                     updated_at: "2024-01-15T09:30:00Z",
                 },
                 {
@@ -144,6 +150,8 @@ describe("Drafts", () => {
                             inline: true,
                         },
                     ],
+                    send_status: "scheduled",
+                    send_at: "2024-01-15T09:30:00Z",
                     updated_at: "2024-01-15T09:30:00Z",
                 },
             ],
@@ -188,6 +196,8 @@ describe("Drafts", () => {
             ],
             in_reply_to: "in_reply_to",
             references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -231,6 +241,8 @@ describe("Drafts", () => {
             ],
             in_reply_to: "in_reply_to",
             references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         });
@@ -251,6 +263,7 @@ describe("Drafts", () => {
             subject: undefined,
             text: undefined,
             html: undefined,
+            send_at: undefined,
         };
         const rawResponseBody = {
             inbox_id: "inbox_id",
@@ -283,6 +296,8 @@ describe("Drafts", () => {
             ],
             in_reply_to: "in_reply_to",
             references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -304,6 +319,7 @@ describe("Drafts", () => {
             subject: undefined,
             text: undefined,
             html: undefined,
+            send_at: undefined,
         });
         expect(response).toEqual({
             inbox_id: "inbox_id",
@@ -336,6 +352,8 @@ describe("Drafts", () => {
             ],
             in_reply_to: "in_reply_to",
             references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         });

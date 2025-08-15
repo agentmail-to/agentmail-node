@@ -9,6 +9,7 @@ import { Inboxes } from "./api/resources/inboxes/client/Client.js";
 import { Webhooks } from "./api/resources/webhooks/client/Client.js";
 import { Domains } from "./api/resources/domains/client/Client.js";
 import { Drafts } from "./api/resources/drafts/client/Client.js";
+import { Metrics } from "./api/resources/metrics/client/Client.js";
 import { Threads } from "./api/resources/threads/client/Client.js";
 import { Websockets } from "./api/resources/websockets/client/Client.js";
 
@@ -40,6 +41,7 @@ export class AgentMailClient {
     protected _webhooks: Webhooks | undefined;
     protected _domains: Domains | undefined;
     protected _drafts: Drafts | undefined;
+    protected _metrics: Metrics | undefined;
     protected _threads: Threads | undefined;
     protected _websockets: Websockets | undefined;
 
@@ -50,8 +52,8 @@ export class AgentMailClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "agentmail",
-                    "X-Fern-SDK-Version": "0.0.46",
-                    "User-Agent": "agentmail/0.0.46",
+                    "X-Fern-SDK-Version": "0.0.47",
+                    "User-Agent": "agentmail/0.0.47",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -74,6 +76,10 @@ export class AgentMailClient {
 
     public get drafts(): Drafts {
         return (this._drafts ??= new Drafts(this._options));
+    }
+
+    public get metrics(): Metrics {
+        return (this._metrics ??= new Metrics(this._options));
     }
 
     public get threads(): Threads {
