@@ -15,7 +15,5 @@ export interface DraftItem {
     subject?: AgentMail.DraftSubject;
     preview?: AgentMail.DraftPreview;
     attachments?: AgentMail.DraftAttachments;
-    send_status?: AgentMail.DraftSendStatus;
-    send_at?: AgentMail.DraftSendAt;
     updated_at: AgentMail.DraftUpdatedAt;
 }

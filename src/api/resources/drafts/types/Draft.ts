@@ -22,8 +22,6 @@ export interface Draft {
     in_reply_to?: string;
     /** IDs of previous messages in thread. */
     references?: string[];
-    send_status?: AgentMail.DraftSendStatus;
-    send_at?: AgentMail.DraftSendAt;
     updated_at: AgentMail.DraftUpdatedAt;
     /** Time at which draft was created. */
     created_at: string;

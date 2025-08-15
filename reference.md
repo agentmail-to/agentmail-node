@@ -780,7 +780,6 @@ await client.inboxes.drafts.create("inbox_id", {
     subject: undefined,
     text: undefined,
     html: undefined,
-    send_at: undefined,
 });
 ```
 
