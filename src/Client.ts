@@ -52,8 +52,8 @@ export class AgentMailClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "agentmail",
-                    "X-Fern-SDK-Version": "0.0.49",
-                    "User-Agent": "agentmail/0.0.49",
+                    "X-Fern-SDK-Version": "0.0.50",
+                    "User-Agent": "agentmail/0.0.50",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },

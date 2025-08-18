@@ -9,6 +9,8 @@ export * from "./DraftPreview.js";
 export * from "./DraftText.js";
 export * from "./DraftHtml.js";
 export * from "./DraftAttachments.js";
+export * from "./DraftSendStatus.js";
+export * from "./DraftSendAt.js";
 export * from "./DraftUpdatedAt.js";
 export * from "./DraftItem.js";
 export * from "./Draft.js";

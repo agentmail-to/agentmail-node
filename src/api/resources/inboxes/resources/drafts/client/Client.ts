@@ -235,7 +235,8 @@ export class Drafts {
      *         bcc: undefined,
      *         subject: undefined,
      *         text: undefined,
-     *         html: undefined
+     *         html: undefined,
+     *         send_at: undefined
      *     })
      */
     public create(
@@ -405,6 +406,87 @@ export class Drafts {
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
                     "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/drafts/{draft_id}/send.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {AgentMail.inboxes.InboxId} inboxId
+     * @param {AgentMail.DraftId} draftId
+     * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.drafts.delete("inbox_id", "draft_id")
+     */
+    public delete(
+        inboxId: AgentMail.inboxes.InboxId,
+        draftId: AgentMail.DraftId,
+        requestOptions?: Drafts.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(inboxId, draftId, requestOptions));
+    }
+
+    private async __delete(
+        inboxId: AgentMail.inboxes.InboxId,
+        draftId: AgentMail.DraftId,
+        requestOptions?: Drafts.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${encodeURIComponent(inboxId)}/drafts/${encodeURIComponent(draftId)}`,
+            ),
+            method: "DELETE",
+            headers: mergeHeaders(
+                this._options?.headers,
+                mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                requestOptions?.headers,
+            ),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        _response.error.body as AgentMail.ErrorResponse,
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling DELETE /v0/inboxes/{inbox_id}/drafts/{draft_id}.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({
