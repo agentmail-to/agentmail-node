@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.0.53",
+    "version": "0.0.54",
     "private": false,
     "repository": "github:agentmail-to/agentmail-node",
     "type": "commonjs",
