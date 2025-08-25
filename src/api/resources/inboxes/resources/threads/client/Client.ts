@@ -63,7 +63,7 @@ export class Threads {
         request: AgentMail.inboxes.ListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListThreadsResponse>> {
-        const { limit, page_token: pageToken, labels, ascending } = request;
+        const { limit, page_token: pageToken, labels, before, after, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -75,6 +75,14 @@ export class Threads {
 
         if (labels != null) {
             _queryParams["labels"] = toJson(labels);
+        }
+
+        if (before != null) {
+            _queryParams["before"] = before;
+        }
+
+        if (after != null) {
+            _queryParams["after"] = after;
         }
 
         if (ascending != null) {

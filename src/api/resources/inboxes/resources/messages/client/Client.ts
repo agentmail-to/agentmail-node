@@ -63,7 +63,7 @@ export class Messages {
         request: AgentMail.inboxes.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListMessagesResponse>> {
-        const { limit, page_token: pageToken, labels, ascending } = request;
+        const { limit, page_token: pageToken, labels, before, after, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -75,6 +75,14 @@ export class Messages {
 
         if (labels != null) {
             _queryParams["labels"] = toJson(labels);
+        }
+
+        if (before != null) {
+            _queryParams["before"] = before;
+        }
+
+        if (after != null) {
+            _queryParams["after"] = after;
         }
 
         if (ascending != null) {

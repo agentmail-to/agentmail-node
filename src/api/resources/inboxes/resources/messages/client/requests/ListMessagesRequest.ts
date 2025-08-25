@@ -12,5 +12,7 @@ export interface ListMessagesRequest {
     limit?: AgentMail.Limit;
     page_token?: AgentMail.PageToken;
     labels?: AgentMail.Labels;
+    before?: AgentMail.Before;
+    after?: AgentMail.After;
     ascending?: AgentMail.Ascending;
 }
