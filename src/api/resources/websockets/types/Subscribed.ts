@@ -5,5 +5,5 @@
 export interface Subscribed {
     type: "subscribed";
     /** IDs of the inboxes that have been subscribed to. */
-    inbox_ids: string[];
+    inboxIds: string[];
 }

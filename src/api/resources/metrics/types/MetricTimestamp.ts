@@ -5,4 +5,4 @@
 /**
  * Timestamp when the metric event occurred.
  */
-export type MetricTimestamp = string;
+export type MetricTimestamp = Date;

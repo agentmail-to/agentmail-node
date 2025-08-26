@@ -5,9 +5,9 @@
 import * as AgentMail from "../../../index.js";
 
 export interface DraftItem {
-    inbox_id: AgentMail.inboxes.InboxId;
-    thread_id: AgentMail.ThreadId;
-    draft_id: AgentMail.DraftId;
+    inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
+    draftId: AgentMail.DraftId;
     labels: AgentMail.DraftLabels;
     to?: AgentMail.DraftTo;
     cc?: AgentMail.DraftCc;
@@ -15,7 +15,7 @@ export interface DraftItem {
     subject?: AgentMail.DraftSubject;
     preview?: AgentMail.DraftPreview;
     attachments?: AgentMail.DraftAttachments;
-    send_status?: AgentMail.DraftSendStatus;
-    send_at?: AgentMail.DraftSendAt;
-    updated_at: AgentMail.DraftUpdatedAt;
+    sendStatus?: AgentMail.DraftSendStatus;
+    sendAt?: AgentMail.DraftSendAt;
+    updatedAt: AgentMail.DraftUpdatedAt;
 }

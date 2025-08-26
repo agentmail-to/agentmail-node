@@ -10,7 +10,7 @@ import * as AgentMail from "../../../../../../index.js";
  */
 export interface ListThreadsRequest {
     limit?: AgentMail.Limit;
-    page_token?: AgentMail.PageToken;
+    pageToken?: AgentMail.PageToken;
     labels?: AgentMail.Labels;
     before?: AgentMail.Before;
     after?: AgentMail.After;

@@ -5,6 +5,7 @@
 import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
 import * as AgentMail from "../../../index.js";
+import * as serializers from "../../../../serialization/index.js";
 import { toJson } from "../../../../core/json.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
 import * as errors from "../../../../errors/index.js";
@@ -60,7 +61,7 @@ export class Threads {
         request: AgentMail.ListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListThreadsResponse>> {
-        const { limit, page_token: pageToken, labels, before, after, ascending } = request;
+        const { limit, pageToken, labels, before, after, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -71,15 +72,17 @@ export class Threads {
         }
 
         if (labels != null) {
-            _queryParams["labels"] = toJson(labels);
+            _queryParams["labels"] = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
         }
 
         if (before != null) {
-            _queryParams["before"] = before;
+            _queryParams["before"] = before.toISOString();
         }
 
         if (after != null) {
-            _queryParams["after"] = after;
+            _queryParams["after"] = after.toISOString();
         }
 
         if (ascending != null) {
@@ -108,14 +111,29 @@ export class Threads {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.ListThreadsResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.ListThreadsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -176,7 +194,7 @@ export class Threads {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/threads/${encodeURIComponent(threadId)}`,
+                `/v0/threads/${encodeURIComponent(serializers.ThreadId.jsonOrThrow(threadId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -186,14 +204,29 @@ export class Threads {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.Thread, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.Thread.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -250,7 +283,7 @@ export class Threads {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/threads/${encodeURIComponent(threadId)}/attachments/${encodeURIComponent(attachmentId)}`,
+                `/v0/threads/${encodeURIComponent(serializers.ThreadId.jsonOrThrow(threadId, { omitUndefined: true }))}/attachments/${encodeURIComponent(serializers.AttachmentId.jsonOrThrow(attachmentId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -268,7 +301,13 @@ export class Threads {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

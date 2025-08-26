@@ -18,7 +18,7 @@ export declare namespace Websockets {
     }
 
     export interface ConnectArgs {
-        auth_token?: string | undefined;
+        authToken?: string | undefined;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
@@ -36,10 +36,10 @@ export class Websockets {
     }
 
     public async connect(args: Websockets.ConnectArgs = {}): Promise<WebsocketsSocket> {
-        const { auth_token, headers, debug, reconnectAttempts } = args;
+        const { authToken, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (auth_token != null) {
-            _queryParams["auth_token"] = auth_token;
+        if (authToken != null) {
+            _queryParams["auth_token"] = authToken;
         }
 
         let _headers: Record<string, string> = {

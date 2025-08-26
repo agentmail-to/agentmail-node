@@ -6,6 +6,7 @@ import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
 import * as AgentMail from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as serializers from "../../../../serialization/index.js";
 import * as errors from "../../../../errors/index.js";
 
 export declare namespace Domains {
@@ -57,7 +58,7 @@ export class Domains {
         request: AgentMail.ListDomainsRequest = {},
         requestOptions?: Domains.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListDomainsResponse>> {
-        const { limit, page_token: pageToken } = request;
+        const { limit, pageToken } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -89,7 +90,16 @@ export class Domains {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.ListDomainsResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.ListDomainsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -149,7 +159,7 @@ export class Domains {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/domains/${encodeURIComponent(domain)}`,
+                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -159,14 +169,29 @@ export class Domains {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.Domain, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.Domain.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -236,20 +261,38 @@ export class Domains {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.CreateDomainRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.CreateDomainResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.CreateDomainResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new AgentMail.ValidationError(
-                        _response.error.body as AgentMail.ValidationErrorResponse,
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -307,7 +350,7 @@ export class Domains {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/domains/${encodeURIComponent(domain)}`,
+                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -324,7 +367,13 @@ export class Domains {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

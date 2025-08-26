@@ -5,4 +5,4 @@
 /**
  * Time at which message was sent or drafted.
  */
-export type MessageTimestamp = string;
+export type MessageTimestamp = Date;

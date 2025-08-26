@@ -5,12 +5,12 @@
 import * as AgentMail from "../../../index.js";
 
 export interface Inbox {
-    inbox_id: AgentMail.inboxes.InboxId;
+    inboxId: AgentMail.inboxes.InboxId;
     /** Display name: `Display Name <username@domain.com>`. */
-    display_name: string;
+    displayName: string;
     /** Time at which inbox was last updated. */
-    updated_at: string;
+    updatedAt: Date;
     /** Time at which inbox was created. */
-    created_at: string;
-    client_id?: AgentMail.inboxes.ClientId;
+    createdAt: Date;
+    clientId?: AgentMail.inboxes.ClientId;
 }

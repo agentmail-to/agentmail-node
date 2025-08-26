@@ -114,8 +114,8 @@ await client.inboxes.get("inbox_id");
 await client.inboxes.create({
     username: undefined,
     domain: undefined,
-    display_name: undefined,
-    client_id: undefined,
+    displayName: undefined,
+    clientId: undefined,
 });
 ```
 
@@ -264,9 +264,9 @@ await client.webhooks.get("webhook_id");
 ```typescript
 await client.webhooks.create({
     url: "url",
-    event_types: ["message.received", "message.received"],
-    inbox_ids: undefined,
-    client_id: undefined,
+    eventTypes: ["message.received", "message.received"],
+    inboxIds: undefined,
+    clientId: undefined,
 });
 ```
 
@@ -773,14 +773,14 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 ```typescript
 await client.inboxes.drafts.create("inbox_id", {
     labels: undefined,
-    reply_to: undefined,
+    replyTo: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
     subject: undefined,
     text: undefined,
     html: undefined,
-    send_at: undefined,
+    sendAt: undefined,
 });
 ```
 
@@ -838,8 +838,8 @@ await client.inboxes.drafts.create("inbox_id", {
 
 ```typescript
 await client.inboxes.drafts.send("inbox_id", "draft_id", {
-    add_labels: undefined,
-    remove_labels: undefined,
+    addLabels: undefined,
+    removeLabels: undefined,
 });
 ```
 
@@ -1076,7 +1076,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 ```typescript
 await client.inboxes.messages.send("inbox_id", {
     labels: undefined,
-    reply_to: undefined,
+    replyTo: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -1142,7 +1142,7 @@ await client.inboxes.messages.send("inbox_id", {
 ```typescript
 await client.inboxes.messages.reply("inbox_id", "message_id", {
     labels: undefined,
-    reply_to: undefined,
+    replyTo: undefined,
     to: undefined,
     cc: undefined,
     bcc: undefined,
@@ -1214,8 +1214,8 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {
 
 ```typescript
 await client.inboxes.messages.update("inbox_id", "message_id", {
-    add_labels: undefined,
-    remove_labels: undefined,
+    addLabels: undefined,
+    removeLabels: undefined,
 });
 ```
 
@@ -1283,8 +1283,8 @@ await client.inboxes.messages.update("inbox_id", "message_id", {
 
 ```typescript
 await client.inboxes.metrics.get("inbox_id", {
-    start_timestamp: "2024-01-15T09:30:00Z",
-    end_timestamp: "2024-01-15T09:30:00Z",
+    startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+    endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
 });
 ```
 
@@ -1458,8 +1458,8 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 
 ```typescript
 await client.metrics.list({
-    start_timestamp: "2024-01-15T09:30:00Z",
-    end_timestamp: "2024-01-15T09:30:00Z",
+    startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+    endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
 });
 ```
 

@@ -4,7 +4,9 @@
 
 import * as core from "../../../../core/index.js";
 import * as AgentMail from "../../../index.js";
-import { fromJson, toJson } from "../../../../core/json.js";
+import { Subscribe } from "../../../../serialization/resources/websockets/types/Subscribe.js";
+import { fromJson } from "../../../../core/json.js";
+import * as serializers from "../../../../serialization/index.js";
 
 export declare namespace WebsocketsSocket {
     export interface Args {
@@ -29,7 +31,18 @@ export class WebsocketsSocket {
     private handleMessage: (event: { data: string }) => void = (event) => {
         const data = fromJson(event.data);
 
-        this.eventHandlers.message?.(data as WebsocketsSocket.Response);
+        const parsedResponse = serializers.WebsocketsSocketResponse.parse(data, {
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            skipValidation: true,
+            omitUndefined: true,
+        });
+        if (parsedResponse.ok) {
+            this.eventHandlers.message?.(parsedResponse.value);
+        } else {
+            this.eventHandlers.error?.(new Error("Received unknown message type"));
+        }
     };
     private handleClose: (event: core.CloseEvent) => void = (event) => {
         this.eventHandlers.close?.(event);
@@ -68,7 +81,14 @@ export class WebsocketsSocket {
 
     public sendSubscribe(message: AgentMail.Subscribe): void {
         this.assertSocketIsOpen();
-        this.sendJson(message);
+        const jsonPayload = Subscribe.jsonOrThrow(message, {
+            unrecognizedObjectKeys: "passthrough",
+            allowUnrecognizedUnionMembers: true,
+            allowUnrecognizedEnumValues: true,
+            skipValidation: true,
+            omitUndefined: true,
+        });
+        this.socket.send(JSON.stringify(jsonPayload));
     }
 
     /** Connect to the websocket and register event handlers. */
@@ -126,11 +146,5 @@ export class WebsocketsSocket {
     /** Send a binary payload to the websocket. */
     protected sendBinary(payload: ArrayBufferLike | Blob | ArrayBufferView): void {
         this.socket.send(payload);
-    }
-
-    /** Send a JSON payload to the websocket. */
-    protected sendJson(payload: AgentMail.Subscribe): void {
-        const jsonPayload = toJson(payload);
-        this.socket.send(jsonPayload);
     }
 }

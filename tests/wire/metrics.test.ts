@@ -27,18 +27,18 @@ describe("Metrics", () => {
         server.mockEndpoint().get("/v0/metrics").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.metrics.list({
-            start_timestamp: "2024-01-15T09:30:00Z",
-            end_timestamp: "2024-01-15T09:30:00Z",
+            startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+            endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
         });
         expect(response).toEqual({
             message: {
-                sent: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                delivered: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                bounced: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                delayed: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                rejected: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                complained: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                received: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
+                sent: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
+                delivered: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
+                bounced: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
+                delayed: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
+                rejected: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
+                complained: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
+                received: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
             },
         });
     });

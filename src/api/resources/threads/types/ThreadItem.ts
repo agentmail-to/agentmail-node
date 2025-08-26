@@ -5,8 +5,8 @@
 import * as AgentMail from "../../../index.js";
 
 export interface ThreadItem {
-    inbox_id: AgentMail.inboxes.InboxId;
-    thread_id: AgentMail.ThreadId;
+    inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
     labels: AgentMail.ThreadLabels;
     timestamp: AgentMail.ThreadTimestamp;
     senders: AgentMail.ThreadSenders;
@@ -14,5 +14,5 @@ export interface ThreadItem {
     subject?: AgentMail.ThreadSubject;
     preview?: AgentMail.ThreadPreview;
     attachments?: AgentMail.ThreadAttachments;
-    message_count: AgentMail.ThreadMessageCount;
+    messageCount: AgentMail.ThreadMessageCount;
 }

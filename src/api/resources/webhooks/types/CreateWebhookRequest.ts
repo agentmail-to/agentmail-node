@@ -6,7 +6,7 @@ import * as AgentMail from "../../../index.js";
 
 export interface CreateWebhookRequest {
     url: AgentMail.webhooks.Url;
-    event_types: AgentMail.webhooks.EventTypes;
-    inbox_ids?: AgentMail.webhooks.InboxIds;
-    client_id?: AgentMail.webhooks.ClientId;
+    eventTypes: AgentMail.webhooks.EventTypes;
+    inboxIds?: AgentMail.webhooks.InboxIds;
+    clientId?: AgentMail.webhooks.ClientId;
 }

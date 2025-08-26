@@ -5,8 +5,8 @@
 import * as AgentMail from "../../../../../index.js";
 
 export interface Delivery {
-    inbox_id: AgentMail.inboxes.InboxId;
-    message_id: AgentMail.MessageId;
+    inboxId: AgentMail.inboxes.InboxId;
+    messageId: AgentMail.MessageId;
     timestamp: AgentMail.webhooks.Timestamp;
     /** Delivered recipients. */
     recipients: string[];

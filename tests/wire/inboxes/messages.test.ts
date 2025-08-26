@@ -90,14 +90,14 @@ describe("Messages", () => {
         expect(response).toEqual({
             count: 1,
             limit: 1,
-            next_page_token: "next_page_token",
+            nextPageToken: "next_page_token",
             messages: [
                 {
-                    inbox_id: "inbox_id",
-                    thread_id: "thread_id",
-                    message_id: "message_id",
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    messageId: "message_id",
                     labels: ["labels", "labels"],
-                    timestamp: "2024-01-15T09:30:00Z",
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
                     from: "from",
                     to: ["to", "to"],
                     cc: ["cc", "cc"],
@@ -106,27 +106,27 @@ describe("Messages", () => {
                     preview: "preview",
                     attachments: [
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
                     ],
                 },
                 {
-                    inbox_id: "inbox_id",
-                    thread_id: "thread_id",
-                    message_id: "message_id",
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    messageId: "message_id",
                     labels: ["labels", "labels"],
-                    timestamp: "2024-01-15T09:30:00Z",
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
                     from: "from",
                     to: ["to", "to"],
                     cc: ["cc", "cc"],
@@ -135,16 +135,16 @@ describe("Messages", () => {
                     preview: "preview",
                     attachments: [
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
@@ -207,13 +207,13 @@ describe("Messages", () => {
 
         const response = await client.inboxes.messages.get("inbox_id", "message_id");
         expect(response).toEqual({
-            inbox_id: "inbox_id",
-            thread_id: "thread_id",
-            message_id: "message_id",
+            inboxId: "inbox_id",
+            threadId: "thread_id",
+            messageId: "message_id",
             labels: ["labels", "labels"],
-            timestamp: "2024-01-15T09:30:00Z",
+            timestamp: new Date("2024-01-15T09:30:00.000Z"),
             from: "from",
-            reply_to: ["reply_to", "reply_to"],
+            replyTo: ["reply_to", "reply_to"],
             to: ["to", "to"],
             cc: ["cc", "cc"],
             bcc: ["bcc", "bcc"],
@@ -223,24 +223,24 @@ describe("Messages", () => {
             html: "html",
             attachments: [
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
             ],
-            in_reply_to: "in_reply_to",
+            inReplyTo: "in_reply_to",
             references: ["references", "references"],
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 
@@ -273,7 +273,7 @@ describe("Messages", () => {
 
         const response = await client.inboxes.messages.send("inbox_id", {
             labels: undefined,
-            reply_to: undefined,
+            replyTo: undefined,
             to: undefined,
             cc: undefined,
             bcc: undefined,
@@ -283,8 +283,8 @@ describe("Messages", () => {
             attachments: undefined,
         });
         expect(response).toEqual({
-            message_id: "message_id",
-            thread_id: "thread_id",
+            messageId: "message_id",
+            threadId: "thread_id",
         });
     });
 
@@ -316,7 +316,7 @@ describe("Messages", () => {
 
         const response = await client.inboxes.messages.reply("inbox_id", "message_id", {
             labels: undefined,
-            reply_to: undefined,
+            replyTo: undefined,
             to: undefined,
             cc: undefined,
             bcc: undefined,
@@ -325,8 +325,8 @@ describe("Messages", () => {
             attachments: undefined,
         });
         expect(response).toEqual({
-            message_id: "message_id",
-            thread_id: "thread_id",
+            messageId: "message_id",
+            threadId: "thread_id",
         });
     });
 
@@ -383,17 +383,17 @@ describe("Messages", () => {
             .build();
 
         const response = await client.inboxes.messages.update("inbox_id", "message_id", {
-            add_labels: undefined,
-            remove_labels: undefined,
+            addLabels: undefined,
+            removeLabels: undefined,
         });
         expect(response).toEqual({
-            inbox_id: "inbox_id",
-            thread_id: "thread_id",
-            message_id: "message_id",
+            inboxId: "inbox_id",
+            threadId: "thread_id",
+            messageId: "message_id",
             labels: ["labels", "labels"],
-            timestamp: "2024-01-15T09:30:00Z",
+            timestamp: new Date("2024-01-15T09:30:00.000Z"),
             from: "from",
-            reply_to: ["reply_to", "reply_to"],
+            replyTo: ["reply_to", "reply_to"],
             to: ["to", "to"],
             cc: ["cc", "cc"],
             bcc: ["bcc", "bcc"],
@@ -403,24 +403,24 @@ describe("Messages", () => {
             html: "html",
             attachments: [
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
             ],
-            in_reply_to: "in_reply_to",
+            inReplyTo: "in_reply_to",
             references: ["references", "references"],
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 });

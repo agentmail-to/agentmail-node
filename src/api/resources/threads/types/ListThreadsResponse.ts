@@ -7,7 +7,7 @@ import * as AgentMail from "../../../index.js";
 export interface ListThreadsResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
-    next_page_token?: AgentMail.PageToken;
+    nextPageToken?: AgentMail.PageToken;
     /** Ordered by `timestamp` descending. */
     threads: AgentMail.ThreadItem[];
 }

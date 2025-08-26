@@ -40,21 +40,21 @@ describe("Inboxes", () => {
         expect(response).toEqual({
             count: 1,
             limit: 1,
-            next_page_token: "next_page_token",
+            nextPageToken: "next_page_token",
             inboxes: [
                 {
-                    inbox_id: "inbox_id",
-                    display_name: "display_name",
-                    updated_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
-                    client_id: "client_id",
+                    inboxId: "inbox_id",
+                    displayName: "display_name",
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    clientId: "client_id",
                 },
                 {
-                    inbox_id: "inbox_id",
-                    display_name: "display_name",
-                    updated_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
-                    client_id: "client_id",
+                    inboxId: "inbox_id",
+                    displayName: "display_name",
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    clientId: "client_id",
                 },
             ],
         });
@@ -84,11 +84,11 @@ describe("Inboxes", () => {
 
         const response = await client.inboxes.get("inbox_id");
         expect(response).toEqual({
-            inbox_id: "inbox_id",
-            display_name: "display_name",
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
-            client_id: "client_id",
+            inboxId: "inbox_id",
+            displayName: "display_name",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            clientId: "client_id",
         });
     });
 
@@ -123,15 +123,15 @@ describe("Inboxes", () => {
         const response = await client.inboxes.create({
             username: undefined,
             domain: undefined,
-            display_name: undefined,
-            client_id: undefined,
+            displayName: undefined,
+            clientId: undefined,
         });
         expect(response).toEqual({
-            inbox_id: "inbox_id",
-            display_name: "display_name",
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
-            client_id: "client_id",
+            inboxId: "inbox_id",
+            displayName: "display_name",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            clientId: "client_id",
         });
     });
 });

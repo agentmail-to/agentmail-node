@@ -5,6 +5,7 @@
 import * as environments from "../../../../../../environments.js";
 import * as core from "../../../../../../core/index.js";
 import * as AgentMail from "../../../../../index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import { toJson } from "../../../../../../core/json.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
@@ -63,7 +64,7 @@ export class Drafts {
         request: AgentMail.inboxes.ListDraftsRequest = {},
         requestOptions?: Drafts.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListDraftsResponse>> {
-        const { limit, page_token: pageToken, labels, before, after, ascending } = request;
+        const { limit, pageToken, labels, before, after, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -74,15 +75,17 @@ export class Drafts {
         }
 
         if (labels != null) {
-            _queryParams["labels"] = toJson(labels);
+            _queryParams["labels"] = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
         }
 
         if (before != null) {
-            _queryParams["before"] = before;
+            _queryParams["before"] = before.toISOString();
         }
 
         if (after != null) {
-            _queryParams["after"] = after;
+            _queryParams["after"] = after.toISOString();
         }
 
         if (ascending != null) {
@@ -101,7 +104,7 @@ export class Drafts {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/drafts`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts`,
             ),
             method: "GET",
             headers: _headers,
@@ -111,14 +114,29 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.ListDraftsResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.ListDraftsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -184,7 +202,7 @@ export class Drafts {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/drafts/${encodeURIComponent(draftId)}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -194,14 +212,29 @@ export class Drafts {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.Draft, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.Draft.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -242,14 +275,14 @@ export class Drafts {
      * @example
      *     await client.inboxes.drafts.create("inbox_id", {
      *         labels: undefined,
-     *         reply_to: undefined,
+     *         replyTo: undefined,
      *         to: undefined,
      *         cc: undefined,
      *         bcc: undefined,
      *         subject: undefined,
      *         text: undefined,
      *         html: undefined,
-     *         send_at: undefined
+     *         sendAt: undefined
      *     })
      */
     public create(
@@ -277,27 +310,45 @@ export class Drafts {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/drafts`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.CreateDraftRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.Draft, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.Draft.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -340,8 +391,8 @@ export class Drafts {
      *
      * @example
      *     await client.inboxes.drafts.send("inbox_id", "draft_id", {
-     *         add_labels: undefined,
-     *         remove_labels: undefined
+     *         addLabels: undefined,
+     *         removeLabels: undefined
      *     })
      */
     public send(
@@ -371,37 +422,67 @@ export class Drafts {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/drafts/${encodeURIComponent(draftId)}/send`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId, { omitUndefined: true }))}/send`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.UpdateMessageRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.SendMessageResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.SendMessageResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 400:
                     throw new AgentMail.ValidationError(
-                        _response.error.body as AgentMail.ValidationErrorResponse,
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 403:
                     throw new AgentMail.MessageRejectedError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -467,7 +548,7 @@ export class Drafts {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/drafts/${encodeURIComponent(draftId)}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -484,7 +565,13 @@ export class Drafts {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

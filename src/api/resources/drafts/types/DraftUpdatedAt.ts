@@ -5,4 +5,4 @@
 /**
  * Time at which draft was last updated.
  */
-export type DraftUpdatedAt = string;
+export type DraftUpdatedAt = Date;

@@ -5,4 +5,4 @@
 /**
  * Timestamp before which to filter by.
  */
-export type Before = string;
+export type Before = Date;

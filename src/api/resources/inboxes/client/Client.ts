@@ -6,6 +6,7 @@ import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
 import * as AgentMail from "../../../index.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import * as serializers from "../../../../serialization/index.js";
 import * as errors from "../../../../errors/index.js";
 import { Threads } from "../resources/threads/client/Client.js";
 import { Messages } from "../resources/messages/client/Client.js";
@@ -81,7 +82,7 @@ export class Inboxes {
         request: AgentMail.inboxes.ListInboxesRequest = {},
         requestOptions?: Inboxes.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.inboxes.ListInboxesResponse>> {
-        const { limit, page_token: pageToken } = request;
+        const { limit, pageToken } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -114,7 +115,13 @@ export class Inboxes {
         });
         if (_response.ok) {
             return {
-                data: _response.body as AgentMail.inboxes.ListInboxesResponse,
+                data: serializers.inboxes.ListInboxesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
                 rawResponse: _response.rawResponse,
             };
         }
@@ -176,7 +183,7 @@ export class Inboxes {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -186,14 +193,29 @@ export class Inboxes {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.inboxes.Inbox, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.inboxes.Inbox.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -232,8 +254,8 @@ export class Inboxes {
      *     await client.inboxes.create({
      *         username: undefined,
      *         domain: undefined,
-     *         display_name: undefined,
-     *         client_id: undefined
+     *         displayName: undefined,
+     *         clientId: undefined
      *     })
      */
     public create(
@@ -266,20 +288,38 @@ export class Inboxes {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.inboxes.CreateInboxRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.inboxes.Inbox, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.inboxes.Inbox.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new AgentMail.ValidationError(
-                        _response.error.body as AgentMail.ValidationErrorResponse,
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

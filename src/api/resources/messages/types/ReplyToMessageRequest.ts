@@ -6,7 +6,7 @@ import * as AgentMail from "../../../index.js";
 
 export interface ReplyToMessageRequest {
     labels?: AgentMail.MessageLabels;
-    reply_to?: AgentMail.SendMessageReplyTo;
+    replyTo?: AgentMail.SendMessageReplyTo;
     to?: AgentMail.SendMessageTo;
     cc?: AgentMail.SendMessageCc;
     bcc?: AgentMail.SendMessageBcc;

@@ -6,12 +6,12 @@ import * as AgentMail from "../../../index.js";
 
 export interface CreateDraftRequest {
     labels?: AgentMail.DraftLabels;
-    reply_to?: AgentMail.DraftReplyTo;
+    replyTo?: AgentMail.DraftReplyTo;
     to?: AgentMail.DraftTo;
     cc?: AgentMail.DraftCc;
     bcc?: AgentMail.DraftBcc;
     subject?: AgentMail.DraftSubject;
     text?: AgentMail.DraftText;
     html?: AgentMail.DraftHtml;
-    send_at?: AgentMail.DraftSendAt;
+    sendAt?: AgentMail.DraftSendAt;
 }

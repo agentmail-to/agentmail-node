@@ -92,12 +92,12 @@ describe("Drafts", () => {
         expect(response).toEqual({
             count: 1,
             limit: 1,
-            next_page_token: "next_page_token",
+            nextPageToken: "next_page_token",
             drafts: [
                 {
-                    inbox_id: "inbox_id",
-                    thread_id: "thread_id",
-                    draft_id: "draft_id",
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    draftId: "draft_id",
                     labels: ["labels", "labels"],
                     to: ["to", "to"],
                     cc: ["cc", "cc"],
@@ -106,28 +106,28 @@ describe("Drafts", () => {
                     preview: "preview",
                     attachments: [
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
                     ],
-                    send_status: "scheduled",
-                    send_at: "2024-01-15T09:30:00Z",
-                    updated_at: "2024-01-15T09:30:00Z",
+                    sendStatus: "scheduled",
+                    sendAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
-                    inbox_id: "inbox_id",
-                    thread_id: "thread_id",
-                    draft_id: "draft_id",
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    draftId: "draft_id",
                     labels: ["labels", "labels"],
                     to: ["to", "to"],
                     cc: ["cc", "cc"],
@@ -136,23 +136,23 @@ describe("Drafts", () => {
                     preview: "preview",
                     attachments: [
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
                         {
-                            attachment_id: "attachment_id",
+                            attachmentId: "attachment_id",
                             filename: "filename",
-                            content_type: "content_type",
+                            contentType: "content_type",
                             size: 1,
                             inline: true,
                         },
                     ],
-                    send_status: "scheduled",
-                    send_at: "2024-01-15T09:30:00Z",
-                    updated_at: "2024-01-15T09:30:00Z",
+                    sendStatus: "scheduled",
+                    sendAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
         });
@@ -211,11 +211,11 @@ describe("Drafts", () => {
 
         const response = await client.inboxes.drafts.get("inbox_id", "draft_id");
         expect(response).toEqual({
-            inbox_id: "inbox_id",
-            thread_id: "thread_id",
-            draft_id: "draft_id",
+            inboxId: "inbox_id",
+            threadId: "thread_id",
+            draftId: "draft_id",
             labels: ["labels", "labels"],
-            reply_to: ["reply_to", "reply_to"],
+            replyTo: ["reply_to", "reply_to"],
             to: ["to", "to"],
             cc: ["cc", "cc"],
             bcc: ["bcc", "bcc"],
@@ -225,26 +225,26 @@ describe("Drafts", () => {
             html: "html",
             attachments: [
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
             ],
-            in_reply_to: "in_reply_to",
+            inReplyTo: "in_reply_to",
             references: ["references", "references"],
-            send_status: "scheduled",
-            send_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
+            sendStatus: "scheduled",
+            sendAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 
@@ -312,21 +312,21 @@ describe("Drafts", () => {
 
         const response = await client.inboxes.drafts.create("inbox_id", {
             labels: undefined,
-            reply_to: undefined,
+            replyTo: undefined,
             to: undefined,
             cc: undefined,
             bcc: undefined,
             subject: undefined,
             text: undefined,
             html: undefined,
-            send_at: undefined,
+            sendAt: undefined,
         });
         expect(response).toEqual({
-            inbox_id: "inbox_id",
-            thread_id: "thread_id",
-            draft_id: "draft_id",
+            inboxId: "inbox_id",
+            threadId: "thread_id",
+            draftId: "draft_id",
             labels: ["labels", "labels"],
-            reply_to: ["reply_to", "reply_to"],
+            replyTo: ["reply_to", "reply_to"],
             to: ["to", "to"],
             cc: ["cc", "cc"],
             bcc: ["bcc", "bcc"],
@@ -336,26 +336,26 @@ describe("Drafts", () => {
             html: "html",
             attachments: [
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
                 {
-                    attachment_id: "attachment_id",
+                    attachmentId: "attachment_id",
                     filename: "filename",
-                    content_type: "content_type",
+                    contentType: "content_type",
                     size: 1,
                     inline: true,
                 },
             ],
-            in_reply_to: "in_reply_to",
+            inReplyTo: "in_reply_to",
             references: ["references", "references"],
-            send_status: "scheduled",
-            send_at: "2024-01-15T09:30:00Z",
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
+            sendStatus: "scheduled",
+            sendAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 
@@ -377,12 +377,12 @@ describe("Drafts", () => {
             .build();
 
         const response = await client.inboxes.drafts.send("inbox_id", "draft_id", {
-            add_labels: undefined,
-            remove_labels: undefined,
+            addLabels: undefined,
+            removeLabels: undefined,
         });
         expect(response).toEqual({
-            message_id: "message_id",
-            thread_id: "thread_id",
+            messageId: "message_id",
+            threadId: "thread_id",
         });
     });
 

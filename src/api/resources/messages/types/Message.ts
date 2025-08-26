@@ -5,14 +5,14 @@
 import * as AgentMail from "../../../index.js";
 
 export interface Message {
-    inbox_id: AgentMail.inboxes.InboxId;
-    thread_id: AgentMail.ThreadId;
-    message_id: AgentMail.MessageId;
+    inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
+    messageId: AgentMail.MessageId;
     labels: AgentMail.MessageLabels;
     timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;
     /** Reply-to addresses. In format `username@domain.com` or `Display Name <username@domain.com>`. */
-    reply_to?: string[];
+    replyTo?: string[];
     to: AgentMail.MessageTo;
     cc?: AgentMail.MessageCc;
     bcc?: AgentMail.MessageBcc;
@@ -22,11 +22,11 @@ export interface Message {
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.MessageAttachments;
     /** ID of message being replied to. */
-    in_reply_to?: string;
+    inReplyTo?: string;
     /** IDs of previous messages in thread. */
     references?: string[];
     /** Time at which message was last updated. */
-    updated_at: string;
+    updatedAt: Date;
     /** Time at which message was created. */
-    created_at: string;
+    createdAt: Date;
 }

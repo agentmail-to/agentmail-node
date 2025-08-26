@@ -6,7 +6,7 @@ import * as AgentMail from "../../../index.js";
 
 export interface ListDomainsResponse {
     count: AgentMail.Count;
-    next_page_token?: AgentMail.PageToken;
+    nextPageToken?: AgentMail.PageToken;
     /** Ordered by `created_at` descending. */
     domains: AgentMail.DomainSummary[];
 }

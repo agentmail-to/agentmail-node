@@ -5,6 +5,7 @@
 import * as environments from "../../../../../../environments.js";
 import * as core from "../../../../../../core/index.js";
 import * as AgentMail from "../../../../../index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import { toJson } from "../../../../../../core/json.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
@@ -63,7 +64,7 @@ export class Messages {
         request: AgentMail.inboxes.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListMessagesResponse>> {
-        const { limit, page_token: pageToken, labels, before, after, ascending } = request;
+        const { limit, pageToken, labels, before, after, ascending } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams["limit"] = limit.toString();
@@ -74,15 +75,17 @@ export class Messages {
         }
 
         if (labels != null) {
-            _queryParams["labels"] = toJson(labels);
+            _queryParams["labels"] = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
         }
 
         if (before != null) {
-            _queryParams["before"] = before;
+            _queryParams["before"] = before.toISOString();
         }
 
         if (after != null) {
-            _queryParams["after"] = after;
+            _queryParams["after"] = after.toISOString();
         }
 
         if (ascending != null) {
@@ -101,7 +104,7 @@ export class Messages {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/messages`,
             ),
             method: "GET",
             headers: _headers,
@@ -111,14 +114,29 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.ListMessagesResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.ListMessagesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -184,7 +202,7 @@ export class Messages {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages/${encodeURIComponent(messageId)}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -194,14 +212,29 @@ export class Messages {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.Message, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.Message.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -264,7 +297,7 @@ export class Messages {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages/${encodeURIComponent(messageId)}/attachments/${encodeURIComponent(attachmentId)}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId, { omitUndefined: true }))}/attachments/${encodeURIComponent(serializers.AttachmentId.jsonOrThrow(attachmentId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -282,7 +315,13 @@ export class Messages {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -341,7 +380,7 @@ export class Messages {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages/${encodeURIComponent(messageId)}/raw`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId, { omitUndefined: true }))}/raw`,
             ),
             method: "GET",
             headers: _headers,
@@ -359,7 +398,13 @@ export class Messages {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -402,7 +447,7 @@ export class Messages {
      * @example
      *     await client.inboxes.messages.send("inbox_id", {
      *         labels: undefined,
-     *         reply_to: undefined,
+     *         replyTo: undefined,
      *         to: undefined,
      *         cc: undefined,
      *         bcc: undefined,
@@ -437,37 +482,67 @@ export class Messages {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages/send`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/messages/send`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.SendMessageRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.SendMessageResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.SendMessageResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new AgentMail.ValidationError(
-                        _response.error.body as AgentMail.ValidationErrorResponse,
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 403:
                     throw new AgentMail.MessageRejectedError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -511,7 +586,7 @@ export class Messages {
      * @example
      *     await client.inboxes.messages.reply("inbox_id", "message_id", {
      *         labels: undefined,
-     *         reply_to: undefined,
+     *         replyTo: undefined,
      *         to: undefined,
      *         cc: undefined,
      *         bcc: undefined,
@@ -547,37 +622,67 @@ export class Messages {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages/${encodeURIComponent(messageId)}/reply`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId, { omitUndefined: true }))}/reply`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.ReplyToMessageRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.SendMessageResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.SendMessageResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new AgentMail.ValidationError(
-                        _response.error.body as AgentMail.ValidationErrorResponse,
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 403:
                     throw new AgentMail.MessageRejectedError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:
@@ -619,8 +724,8 @@ export class Messages {
      *
      * @example
      *     await client.inboxes.messages.update("inbox_id", "message_id", {
-     *         add_labels: undefined,
-     *         remove_labels: undefined
+     *         addLabels: undefined,
+     *         removeLabels: undefined
      *     })
      */
     public update(
@@ -650,32 +755,56 @@ export class Messages {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/messages/${encodeURIComponent(messageId)}`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/messages/${encodeURIComponent(serializers.MessageId.jsonOrThrow(messageId, { omitUndefined: true }))}`,
             ),
             method: "PATCH",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: request,
+            body: serializers.UpdateMessageRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
             maxRetries: requestOptions?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.Message, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.Message.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 400:
                     throw new AgentMail.ValidationError(
-                        _response.error.body as AgentMail.ValidationErrorResponse,
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

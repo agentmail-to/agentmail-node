@@ -5,6 +5,6 @@
 import * as AgentMail from "../../../index.js";
 
 export interface SendMessageResponse {
-    message_id: AgentMail.MessageId;
-    thread_id: AgentMail.ThreadId;
+    messageId: AgentMail.MessageId;
+    threadId: AgentMail.ThreadId;
 }

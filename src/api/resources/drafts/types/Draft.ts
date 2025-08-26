@@ -5,11 +5,11 @@
 import * as AgentMail from "../../../index.js";
 
 export interface Draft {
-    inbox_id: AgentMail.inboxes.InboxId;
-    thread_id: AgentMail.ThreadId;
-    draft_id: AgentMail.DraftId;
+    inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
+    draftId: AgentMail.DraftId;
     labels: AgentMail.DraftLabels;
-    reply_to?: AgentMail.DraftReplyTo;
+    replyTo?: AgentMail.DraftReplyTo;
     to?: AgentMail.DraftTo;
     cc?: AgentMail.DraftCc;
     bcc?: AgentMail.DraftBcc;
@@ -19,12 +19,12 @@ export interface Draft {
     html?: AgentMail.DraftHtml;
     attachments?: AgentMail.DraftAttachments;
     /** ID of message being replied to. */
-    in_reply_to?: string;
+    inReplyTo?: string;
     /** IDs of previous messages in thread. */
     references?: string[];
-    send_status?: AgentMail.DraftSendStatus;
-    send_at?: AgentMail.DraftSendAt;
-    updated_at: AgentMail.DraftUpdatedAt;
+    sendStatus?: AgentMail.DraftSendStatus;
+    sendAt?: AgentMail.DraftSendAt;
+    updatedAt: AgentMail.DraftUpdatedAt;
     /** Time at which draft was created. */
-    created_at: string;
+    createdAt: Date;
 }

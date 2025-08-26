@@ -5,4 +5,4 @@
 /**
  * Timestamp after which to filter by.
  */
-export type After = string;
+export type After = Date;

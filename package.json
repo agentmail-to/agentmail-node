@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.0.55",
+    "version": "0.0.56",
     "private": false,
     "repository": "github:agentmail-to/agentmail-node",
     "type": "commonjs",
@@ -19,6 +19,18 @@
                 "default": "./dist/cjs/index.js"
             },
             "default": "./dist/cjs/index.js"
+        },
+        "./serialization": {
+            "types": "./dist/cjs/serialization/index.d.ts",
+            "import": {
+                "types": "./dist/esm/serialization/index.d.mts",
+                "default": "./dist/esm/serialization/index.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/serialization/index.d.ts",
+                "default": "./dist/cjs/serialization/index.js"
+            },
+            "default": "./dist/cjs/serialization/index.js"
         },
         "./package.json": "./package.json"
     },

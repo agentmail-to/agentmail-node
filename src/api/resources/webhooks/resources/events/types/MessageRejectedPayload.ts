@@ -5,7 +5,7 @@
 import * as AgentMail from "../../../../../index.js";
 
 export interface MessageRejectedPayload {
-    event_type: AgentMail.webhooks.EventType;
-    event_id: AgentMail.webhooks.EventId;
+    eventType: AgentMail.webhooks.EventType;
+    eventId: AgentMail.webhooks.EventId;
     reject: AgentMail.webhooks.Reject;
 }

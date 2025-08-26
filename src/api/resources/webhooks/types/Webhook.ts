@@ -5,17 +5,17 @@
 import * as AgentMail from "../../../index.js";
 
 export interface Webhook {
-    webhook_id: AgentMail.webhooks.WebhookId;
+    webhookId: AgentMail.webhooks.WebhookId;
     url: AgentMail.webhooks.Url;
-    event_types?: AgentMail.webhooks.EventTypes;
-    inbox_ids?: AgentMail.webhooks.InboxIds;
+    eventTypes?: AgentMail.webhooks.EventTypes;
+    inboxIds?: AgentMail.webhooks.InboxIds;
     /** Secret for webhook signature verification. */
     secret: string;
     /** Whether the webhook is enabled. */
     enabled: boolean;
     /** Time at which webhook was last updated. */
-    updated_at: string;
+    updatedAt: Date;
     /** Time at which webhook was created. */
-    created_at: string;
-    client_id?: AgentMail.webhooks.ClientId;
+    createdAt: Date;
+    clientId?: AgentMail.webhooks.ClientId;
 }

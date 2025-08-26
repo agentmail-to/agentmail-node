@@ -5,4 +5,4 @@
 /**
  * Time at which to schedule send draft.
  */
-export type DraftSendAt = string;
+export type DraftSendAt = Date;

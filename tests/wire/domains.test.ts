@@ -32,11 +32,11 @@ describe("Domains", () => {
             count: 1,
             domains: [
                 {
-                    domain_id: "your-domain.com",
-                    organization_id: "org_12345",
-                    feedback_enabled: true,
-                    created_at: "2025-07-06T08:40:50.417Z",
-                    updated_at: "2025-07-06T08:40:50.417Z",
+                    domainId: "your-domain.com",
+                    organizationId: "org_12345",
+                    feedbackEnabled: true,
+                    createdAt: new Date("2025-07-06T08:40:50.417Z"),
+                    updatedAt: new Date("2025-07-06T08:40:50.417Z"),
                 },
             ],
         });
@@ -88,11 +88,11 @@ describe("Domains", () => {
 
         const response = await client.domains.get(" your-domain.com");
         expect(response).toEqual({
-            domain_id: " your-domain.com",
-            organization_id: "org_12345",
-            created_at: "2025-07-06T08:40:50.417Z",
-            updated_at: "2025-07-06T08:40:50.417Z",
-            feedback_enabled: true,
+            domainId: " your-domain.com",
+            organizationId: "org_12345",
+            createdAt: new Date("2025-07-06T08:40:50.417Z"),
+            updatedAt: new Date("2025-07-06T08:40:50.417Z"),
+            feedbackEnabled: true,
             status: "PENDING",
             records: [
                 {
@@ -167,12 +167,12 @@ describe("Domains", () => {
             domain: "your-domain.com",
         });
         expect(response).toEqual({
-            domain_id: "your-domain.com",
-            organization_id: "org_12345",
+            domainId: "your-domain.com",
+            organizationId: "org_12345",
             status: "PENDING",
-            created_at: "2025-07-06T08:40:50.417Z",
-            updated_at: "2025-07-06T08:40:50.417Z",
-            feedback_enabled: true,
+            createdAt: new Date("2025-07-06T08:40:50.417Z"),
+            updatedAt: new Date("2025-07-06T08:40:50.417Z"),
+            feedbackEnabled: true,
             records: [
                 {
                     type: "CNAME",

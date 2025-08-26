@@ -5,6 +5,7 @@
 import * as environments from "../../../../../../environments.js";
 import * as core from "../../../../../../core/index.js";
 import * as AgentMail from "../../../../../index.js";
+import * as serializers from "../../../../../../serialization/index.js";
 import { toJson } from "../../../../../../core/json.js";
 import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../../../core/headers.js";
 import * as errors from "../../../../../../errors/index.js";
@@ -50,8 +51,8 @@ export class Metrics {
      *
      * @example
      *     await client.inboxes.metrics.get("inbox_id", {
-     *         start_timestamp: "2024-01-15T09:30:00Z",
-     *         end_timestamp: "2024-01-15T09:30:00Z"
+     *         startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+     *         endTimestamp: new Date("2024-01-15T09:30:00.000Z")
      *     })
      */
     public get(
@@ -67,14 +68,19 @@ export class Metrics {
         request: AgentMail.inboxes.ListInboxMetricsRequest,
         requestOptions?: Metrics.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListMetricsResponse>> {
-        const { event_types: eventTypes, start_timestamp: startTimestamp, end_timestamp: endTimestamp } = request;
+        const { eventTypes, startTimestamp, endTimestamp } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (eventTypes != null) {
-            _queryParams["event_types"] = toJson(eventTypes);
+            _queryParams["event_types"] = toJson(
+                serializers.MetricEventTypes.jsonOrThrow(eventTypes, {
+                    unrecognizedObjectKeys: "strip",
+                    omitUndefined: true,
+                }),
+            );
         }
 
-        _queryParams["start_timestamp"] = startTimestamp;
-        _queryParams["end_timestamp"] = endTimestamp;
+        _queryParams["start_timestamp"] = startTimestamp.toISOString();
+        _queryParams["end_timestamp"] = endTimestamp.toISOString();
         var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -87,7 +93,7 @@ export class Metrics {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/inboxes/${encodeURIComponent(inboxId)}/metrics`,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/metrics`,
             ),
             method: "GET",
             headers: _headers,
@@ -97,19 +103,40 @@ export class Metrics {
             abortSignal: requestOptions?.abortSignal,
         });
         if (_response.ok) {
-            return { data: _response.body as AgentMail.ListMetricsResponse, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.ListMetricsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
-                        _response.error.body as AgentMail.ErrorResponse,
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 case 400:
                     throw new AgentMail.ValidationError(
-                        _response.error.body as AgentMail.ValidationErrorResponse,
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
                         _response.rawResponse,
                     );
                 default:

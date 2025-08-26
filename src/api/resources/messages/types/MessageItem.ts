@@ -5,9 +5,9 @@
 import * as AgentMail from "../../../index.js";
 
 export interface MessageItem {
-    inbox_id: AgentMail.inboxes.InboxId;
-    thread_id: AgentMail.ThreadId;
-    message_id: AgentMail.MessageId;
+    inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
+    messageId: AgentMail.MessageId;
     labels: AgentMail.MessageLabels;
     timestamp: AgentMail.MessageTimestamp;
     from: AgentMail.MessageFrom;

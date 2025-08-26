@@ -5,9 +5,9 @@
 import * as AgentMail from "../../../index.js";
 
 export interface Attachment {
-    attachment_id: AgentMail.AttachmentId;
+    attachmentId: AgentMail.AttachmentId;
     filename?: AgentMail.AttachmentFilename;
-    content_type?: AgentMail.AttachmentContentType;
+    contentType?: AgentMail.AttachmentContentType;
     size: AgentMail.AttachmentSize;
     inline: AgentMail.AttachmentInline;
 }

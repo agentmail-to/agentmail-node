@@ -5,7 +5,7 @@
 import * as AgentMail from "../../../../../index.js";
 
 export interface MessageReceivedPayload {
-    event_type: AgentMail.webhooks.EventType;
-    event_id: AgentMail.webhooks.EventId;
+    eventType: AgentMail.webhooks.EventType;
+    eventId: AgentMail.webhooks.EventId;
     message: AgentMail.Message;
 }

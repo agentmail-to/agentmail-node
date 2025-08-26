@@ -5,4 +5,4 @@
 /**
  * End timestamp for the metrics query range.
  */
-export type MetricEndTimestamp = string;
+export type MetricEndTimestamp = Date;

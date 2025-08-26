@@ -48,29 +48,29 @@ describe("Webhooks", () => {
         expect(response).toEqual({
             count: 1,
             limit: 1,
-            next_page_token: "next_page_token",
+            nextPageToken: "next_page_token",
             webhooks: [
                 {
-                    webhook_id: "webhook_id",
+                    webhookId: "webhook_id",
                     url: "url",
-                    event_types: ["message.received", "message.received"],
-                    inbox_ids: ["inbox_ids", "inbox_ids"],
+                    eventTypes: ["message.received", "message.received"],
+                    inboxIds: ["inbox_ids", "inbox_ids"],
                     secret: "secret",
                     enabled: true,
-                    updated_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
-                    client_id: "client_id",
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    clientId: "client_id",
                 },
                 {
-                    webhook_id: "webhook_id",
+                    webhookId: "webhook_id",
                     url: "url",
-                    event_types: ["message.received", "message.received"],
-                    inbox_ids: ["inbox_ids", "inbox_ids"],
+                    eventTypes: ["message.received", "message.received"],
+                    inboxIds: ["inbox_ids", "inbox_ids"],
                     secret: "secret",
                     enabled: true,
-                    updated_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
-                    client_id: "client_id",
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    clientId: "client_id",
                 },
             ],
         });
@@ -104,15 +104,15 @@ describe("Webhooks", () => {
 
         const response = await client.webhooks.get("webhook_id");
         expect(response).toEqual({
-            webhook_id: "webhook_id",
+            webhookId: "webhook_id",
             url: "url",
-            event_types: ["message.received", "message.received"],
-            inbox_ids: ["inbox_ids", "inbox_ids"],
+            eventTypes: ["message.received", "message.received"],
+            inboxIds: ["inbox_ids", "inbox_ids"],
             secret: "secret",
             enabled: true,
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
-            client_id: "client_id",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            clientId: "client_id",
         });
     });
 
@@ -150,20 +150,20 @@ describe("Webhooks", () => {
 
         const response = await client.webhooks.create({
             url: "url",
-            event_types: ["message.received", "message.received"],
-            inbox_ids: undefined,
-            client_id: undefined,
+            eventTypes: ["message.received", "message.received"],
+            inboxIds: undefined,
+            clientId: undefined,
         });
         expect(response).toEqual({
-            webhook_id: "webhook_id",
+            webhookId: "webhook_id",
             url: "url",
-            event_types: ["message.received", "message.received"],
-            inbox_ids: ["inbox_ids", "inbox_ids"],
+            eventTypes: ["message.received", "message.received"],
+            inboxIds: ["inbox_ids", "inbox_ids"],
             secret: "secret",
             enabled: true,
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
-            client_id: "client_id",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            clientId: "client_id",
         });
     });
 

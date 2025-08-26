@@ -5,13 +5,13 @@
 import * as AgentMail from "../../../../../index.js";
 
 export interface Bounce {
-    inbox_id: AgentMail.inboxes.InboxId;
-    message_id: AgentMail.MessageId;
+    inboxId: AgentMail.inboxes.InboxId;
+    messageId: AgentMail.MessageId;
     timestamp: AgentMail.webhooks.Timestamp;
     /** Bounce type. */
     type: string;
     /** Bounce sub-type. */
-    sub_type: string;
+    subType: string;
     /** Bounced recipients. */
     recipients: AgentMail.webhooks.Recipient[];
 }

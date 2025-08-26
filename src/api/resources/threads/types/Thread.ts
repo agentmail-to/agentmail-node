@@ -5,8 +5,8 @@
 import * as AgentMail from "../../../index.js";
 
 export interface Thread {
-    inbox_id: AgentMail.inboxes.InboxId;
-    thread_id: AgentMail.ThreadId;
+    inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
     labels: AgentMail.ThreadLabels;
     timestamp: AgentMail.ThreadTimestamp;
     senders: AgentMail.ThreadSenders;
@@ -14,11 +14,11 @@ export interface Thread {
     subject?: AgentMail.ThreadSubject;
     preview?: AgentMail.ThreadPreview;
     attachments?: AgentMail.ThreadAttachments;
-    message_count: AgentMail.ThreadMessageCount;
+    messageCount: AgentMail.ThreadMessageCount;
     /** Messages in thread. Ordered by `timestamp` ascending. */
     messages: AgentMail.Message[];
     /** Time at which thread was last updated. */
-    updated_at: string;
+    updatedAt: Date;
     /** Time at which thread was created. */
-    created_at: string;
+    createdAt: Date;
 }

@@ -5,4 +5,4 @@
 /**
  * Timestamp of event.
  */
-export type Timestamp = string;
+export type Timestamp = Date;

@@ -7,7 +7,7 @@ import * as AgentMail from "../../../index.js";
 export interface ListDraftsResponse {
     count: AgentMail.Count;
     limit?: AgentMail.Limit;
-    next_page_token?: AgentMail.PageToken;
+    nextPageToken?: AgentMail.PageToken;
     /** Ordered by `updated_at` descending. */
     drafts: AgentMail.DraftItem[];
 }

@@ -7,12 +7,12 @@ import * as AgentMail from "../../../../../../index.js";
 /**
  * @example
  *     {
- *         start_timestamp: "2024-01-15T09:30:00Z",
- *         end_timestamp: "2024-01-15T09:30:00Z"
+ *         startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+ *         endTimestamp: new Date("2024-01-15T09:30:00.000Z")
  *     }
  */
 export interface ListInboxMetricsRequest {
-    event_types?: AgentMail.MetricEventTypes;
-    start_timestamp: AgentMail.MetricStartTimestamp;
-    end_timestamp: AgentMail.MetricEndTimestamp;
+    eventTypes?: AgentMail.MetricEventTypes;
+    startTimestamp: AgentMail.MetricStartTimestamp;
+    endTimestamp: AgentMail.MetricEndTimestamp;
 }
