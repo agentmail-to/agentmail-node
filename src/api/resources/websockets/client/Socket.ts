@@ -13,7 +13,14 @@ export declare namespace WebsocketsSocket {
         socket: core.ReconnectingWebSocket;
     }
 
-    export type Response = AgentMail.Subscribed | AgentMail.MessageReceived;
+    export type Response =
+        | AgentMail.Subscribed
+        | AgentMail.MessageReceivedEvent
+        | AgentMail.MessageSentEvent
+        | AgentMail.MessageDeliveredEvent
+        | AgentMail.MessageBouncedEvent
+        | AgentMail.MessageComplainedEvent
+        | AgentMail.MessageRejectedEvent;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;

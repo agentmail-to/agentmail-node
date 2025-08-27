@@ -8,6 +8,8 @@ export * as domains from "./domains/index.js";
 export * from "./domains/types/index.js";
 export * as drafts from "./drafts/index.js";
 export * from "./drafts/types/index.js";
+export * as events from "./events/index.js";
+export * from "./events/types/index.js";
 export * as messages from "./messages/index.js";
 export * from "./messages/types/index.js";
 export * as metrics from "./metrics/index.js";

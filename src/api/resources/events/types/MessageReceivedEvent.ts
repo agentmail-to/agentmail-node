@@ -4,7 +4,7 @@
 
 import * as AgentMail from "../../../index.js";
 
-export interface MessageReceived {
+export interface MessageReceivedEvent {
     type: "event";
     eventType: "message.received";
     eventId: AgentMail.EventId;

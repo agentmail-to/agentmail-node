@@ -6,23 +6,23 @@ import * as serializers from "../../../index.js";
 import * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import { EventId } from "./EventId.js";
-import { Message } from "../../messages/types/Message.js";
+import { Send } from "./Send.js";
 
-export const MessageReceived: core.serialization.ObjectSchema<
-    serializers.MessageReceived.Raw,
-    AgentMail.MessageReceived
+export const MessageSentEvent: core.serialization.ObjectSchema<
+    serializers.MessageSentEvent.Raw,
+    AgentMail.MessageSentEvent
 > = core.serialization.object({
     type: core.serialization.stringLiteral("event"),
-    eventType: core.serialization.property("event_type", core.serialization.stringLiteral("message.received")),
+    eventType: core.serialization.property("event_type", core.serialization.stringLiteral("message.sent")),
     eventId: core.serialization.property("event_id", EventId),
-    message: Message,
+    send: Send,
 });
 
-export declare namespace MessageReceived {
+export declare namespace MessageSentEvent {
     export interface Raw {
         type: "event";
-        event_type: "message.received";
+        event_type: "message.sent";
         event_id: EventId.Raw;
-        message: Message.Raw;
+        send: Send.Raw;
     }
 }

@@ -6,13 +6,39 @@ import * as serializers from "../../../../index.js";
 import * as AgentMail from "../../../../../api/index.js";
 import * as core from "../../../../../core/index.js";
 import { Subscribed } from "../../types/Subscribed.js";
-import { MessageReceived } from "../../types/MessageReceived.js";
+import { MessageReceivedEvent } from "../../../events/types/MessageReceivedEvent.js";
+import { MessageSentEvent } from "../../../events/types/MessageSentEvent.js";
+import { MessageDeliveredEvent } from "../../../events/types/MessageDeliveredEvent.js";
+import { MessageBouncedEvent } from "../../../events/types/MessageBouncedEvent.js";
+import { MessageComplainedEvent } from "../../../events/types/MessageComplainedEvent.js";
+import { MessageRejectedEvent } from "../../../events/types/MessageRejectedEvent.js";
 
 export const WebsocketsSocketResponse: core.serialization.Schema<
     serializers.WebsocketsSocketResponse.Raw,
-    AgentMail.Subscribed | AgentMail.MessageReceived
-> = core.serialization.undiscriminatedUnion([Subscribed, MessageReceived]);
+    | AgentMail.Subscribed
+    | AgentMail.MessageReceivedEvent
+    | AgentMail.MessageSentEvent
+    | AgentMail.MessageDeliveredEvent
+    | AgentMail.MessageBouncedEvent
+    | AgentMail.MessageComplainedEvent
+    | AgentMail.MessageRejectedEvent
+> = core.serialization.undiscriminatedUnion([
+    Subscribed,
+    MessageReceivedEvent,
+    MessageSentEvent,
+    MessageDeliveredEvent,
+    MessageBouncedEvent,
+    MessageComplainedEvent,
+    MessageRejectedEvent,
+]);
 
 export declare namespace WebsocketsSocketResponse {
-    export type Raw = Subscribed.Raw | MessageReceived.Raw;
+    export type Raw =
+        | Subscribed.Raw
+        | MessageReceivedEvent.Raw
+        | MessageSentEvent.Raw
+        | MessageDeliveredEvent.Raw
+        | MessageBouncedEvent.Raw
+        | MessageComplainedEvent.Raw
+        | MessageRejectedEvent.Raw;
 }
