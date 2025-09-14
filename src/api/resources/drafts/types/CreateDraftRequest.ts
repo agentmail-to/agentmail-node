@@ -13,5 +13,6 @@ export interface CreateDraftRequest {
     subject?: AgentMail.DraftSubject;
     text?: AgentMail.DraftText;
     html?: AgentMail.DraftHtml;
+    inReplyTo?: AgentMail.DraftInReplyTo;
     sendAt?: AgentMail.DraftSendAt;
 }

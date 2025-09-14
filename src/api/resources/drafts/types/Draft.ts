@@ -18,8 +18,7 @@ export interface Draft {
     text?: AgentMail.DraftText;
     html?: AgentMail.DraftHtml;
     attachments?: AgentMail.DraftAttachments;
-    /** ID of message being replied to. */
-    inReplyTo?: string;
+    inReplyTo?: AgentMail.DraftInReplyTo;
     /** IDs of previous messages in thread. */
     references?: string[];
     sendStatus?: AgentMail.DraftSendStatus;

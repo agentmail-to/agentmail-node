@@ -263,6 +263,7 @@ describe("Drafts", () => {
             subject: undefined,
             text: undefined,
             html: undefined,
+            in_reply_to: undefined,
             send_at: undefined,
         };
         const rawResponseBody = {
@@ -319,6 +320,7 @@ describe("Drafts", () => {
             subject: undefined,
             text: undefined,
             html: undefined,
+            inReplyTo: undefined,
             sendAt: undefined,
         });
         expect(response).toEqual({

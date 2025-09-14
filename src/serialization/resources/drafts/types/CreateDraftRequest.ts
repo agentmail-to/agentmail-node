@@ -13,6 +13,7 @@ import { DraftBcc } from "./DraftBcc.js";
 import { DraftSubject } from "./DraftSubject.js";
 import { DraftText } from "./DraftText.js";
 import { DraftHtml } from "./DraftHtml.js";
+import { DraftInReplyTo } from "./DraftInReplyTo.js";
 import { DraftSendAt } from "./DraftSendAt.js";
 
 export const CreateDraftRequest: core.serialization.ObjectSchema<
@@ -27,6 +28,7 @@ export const CreateDraftRequest: core.serialization.ObjectSchema<
     subject: DraftSubject.optional(),
     text: DraftText.optional(),
     html: DraftHtml.optional(),
+    inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
     sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
 });
 
@@ -40,6 +42,7 @@ export declare namespace CreateDraftRequest {
         subject?: DraftSubject.Raw | null;
         text?: DraftText.Raw | null;
         html?: DraftHtml.Raw | null;
+        in_reply_to?: DraftInReplyTo.Raw | null;
         send_at?: DraftSendAt.Raw | null;
     }
 }

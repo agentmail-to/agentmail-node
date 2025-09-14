@@ -282,6 +282,7 @@ export class Drafts {
      *         subject: undefined,
      *         text: undefined,
      *         html: undefined,
+     *         inReplyTo: undefined,
      *         sendAt: undefined
      *     })
      */
