@@ -134,4 +134,17 @@ describe("Inboxes", () => {
             clientId: "client_id",
         });
     });
+
+    test("delete", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server.mockEndpoint().delete("/v0/inboxes/inbox_id").respondWith().statusCode(200).build();
+
+        const response = await client.inboxes.delete("inbox_id");
+        expect(response).toEqual(undefined);
+    });
 });

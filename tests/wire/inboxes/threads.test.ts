@@ -405,4 +405,17 @@ describe("Threads", () => {
             ],
         });
     });
+
+    test("delete", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server.mockEndpoint().delete("/v0/inboxes/inbox_id/threads/thread_id").respondWith().statusCode(200).build();
+
+        const response = await client.inboxes.threads.delete("inbox_id", "thread_id");
+        expect(response).toEqual(undefined);
+    });
 });

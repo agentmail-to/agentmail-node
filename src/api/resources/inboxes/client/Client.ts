@@ -348,6 +348,90 @@ export class Inboxes {
         }
     }
 
+    /**
+     * @param {AgentMail.inboxes.InboxId} inboxId
+     * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.delete("inbox_id")
+     */
+    public delete(
+        inboxId: AgentMail.inboxes.InboxId,
+        requestOptions?: Inboxes.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(inboxId, requestOptions));
+    }
+
+    private async __delete(
+        inboxId: AgentMail.inboxes.InboxId,
+        requestOptions?: Inboxes.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling DELETE /v0/inboxes/{inbox_id}.");
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
     protected async _getAuthorizationHeader(): Promise<string> {
         const bearer = (await core.Supplier.get(this._options.apiKey)) ?? process?.env["AGENTMAIL_API_KEY"];
         if (bearer == null) {

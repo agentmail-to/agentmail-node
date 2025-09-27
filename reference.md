@@ -151,6 +151,54 @@ await client.inboxes.create({
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">delete</a>(inboxId) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.delete("inbox_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inboxId:** `AgentMail.InboxId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Inboxes.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Webhooks
 
 <details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListWebhooksResponse</code></summary>
@@ -1627,6 +1675,62 @@ await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">delete</a>(inboxId, threadId) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.threads.delete("inbox_id", "thread_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inboxId:** `AgentMail.InboxId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**threadId:** `AgentMail.ThreadId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 ## Metrics
 
 <details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListMetricsResponse</code></summary>
@@ -1816,6 +1920,54 @@ await client.threads.getAttachment("thread_id", "attachment_id");
 <dd>
 
 **attachmentId:** `AgentMail.AttachmentId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Threads.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">delete</a>(threadId) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.delete("thread_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**threadId:** `AgentMail.ThreadId`
 
 </dd>
 </dl>
