@@ -9,12 +9,18 @@ import { InboxId } from "../../inboxes/types/InboxId.js";
 import { ThreadId } from "./ThreadId.js";
 import { ThreadLabels } from "./ThreadLabels.js";
 import { ThreadTimestamp } from "./ThreadTimestamp.js";
+import { ThreadReceivedTimestamp } from "./ThreadReceivedTimestamp.js";
+import { ThreadSentTimestamp } from "./ThreadSentTimestamp.js";
 import { ThreadSenders } from "./ThreadSenders.js";
 import { ThreadRecipients } from "./ThreadRecipients.js";
 import { ThreadSubject } from "./ThreadSubject.js";
 import { ThreadPreview } from "./ThreadPreview.js";
 import { ThreadAttachments } from "./ThreadAttachments.js";
+import { ThreadLastMessageId } from "./ThreadLastMessageId.js";
 import { ThreadMessageCount } from "./ThreadMessageCount.js";
+import { ThreadSize } from "./ThreadSize.js";
+import { ThreadUpdatedAt } from "./ThreadUpdatedAt.js";
+import { ThreadCreatedAt } from "./ThreadCreatedAt.js";
 import { Attachment } from "../../attachments/types/Attachment.js";
 
 export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.Raw, AgentMail.ThreadItem> =
@@ -23,12 +29,18 @@ export const ThreadItem: core.serialization.ObjectSchema<serializers.ThreadItem.
         threadId: core.serialization.property("thread_id", ThreadId),
         labels: ThreadLabels,
         timestamp: ThreadTimestamp,
+        receivedTimestamp: core.serialization.property("received_timestamp", ThreadReceivedTimestamp),
+        sentTimestamp: core.serialization.property("sent_timestamp", ThreadSentTimestamp),
         senders: ThreadSenders,
         recipients: ThreadRecipients,
         subject: ThreadSubject.optional(),
         preview: ThreadPreview.optional(),
         attachments: ThreadAttachments.optional(),
+        lastMessageId: core.serialization.property("last_message_id", ThreadLastMessageId),
         messageCount: core.serialization.property("message_count", ThreadMessageCount),
+        size: ThreadSize,
+        updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
+        createdAt: core.serialization.property("created_at", ThreadCreatedAt),
     });
 
 export declare namespace ThreadItem {
@@ -37,11 +49,17 @@ export declare namespace ThreadItem {
         thread_id: ThreadId.Raw;
         labels: ThreadLabels.Raw;
         timestamp: ThreadTimestamp.Raw;
+        received_timestamp: ThreadReceivedTimestamp.Raw;
+        sent_timestamp: ThreadSentTimestamp.Raw;
         senders: ThreadSenders.Raw;
         recipients: ThreadRecipients.Raw;
         subject?: ThreadSubject.Raw | null;
         preview?: ThreadPreview.Raw | null;
         attachments?: ThreadAttachments.Raw | null;
+        last_message_id: ThreadLastMessageId.Raw;
         message_count: ThreadMessageCount.Raw;
+        size: ThreadSize.Raw;
+        updated_at: ThreadUpdatedAt.Raw;
+        created_at: ThreadCreatedAt.Raw;
     }
 }

@@ -21,12 +21,9 @@ export interface Message {
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.MessageAttachments;
-    /** ID of message being replied to. */
-    inReplyTo?: string;
-    /** IDs of previous messages in thread. */
-    references?: string[];
-    /** Time at which message was last updated. */
-    updatedAt: Date;
-    /** Time at which message was created. */
-    createdAt: Date;
+    inReplyTo?: AgentMail.MessageInReplyTo;
+    references?: AgentMail.MessageReferences;
+    size: AgentMail.MessageSize;
+    updatedAt: AgentMail.MessageUpdatedAt;
+    createdAt: AgentMail.MessageCreatedAt;
 }

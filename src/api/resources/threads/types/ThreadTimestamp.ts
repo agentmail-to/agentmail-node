@@ -3,6 +3,6 @@
  */
 
 /**
- * Time at which last message was sent.
+ * Timestamp of last sent or received message.
  */
 export type ThreadTimestamp = Date;

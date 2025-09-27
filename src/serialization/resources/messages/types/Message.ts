@@ -19,6 +19,11 @@ import { MessagePreview } from "./MessagePreview.js";
 import { MessageText } from "./MessageText.js";
 import { MessageHtml } from "./MessageHtml.js";
 import { MessageAttachments } from "./MessageAttachments.js";
+import { MessageInReplyTo } from "./MessageInReplyTo.js";
+import { MessageReferences } from "./MessageReferences.js";
+import { MessageSize } from "./MessageSize.js";
+import { MessageUpdatedAt } from "./MessageUpdatedAt.js";
+import { MessageCreatedAt } from "./MessageCreatedAt.js";
 import { Attachment } from "../../attachments/types/Attachment.js";
 
 export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, AgentMail.Message> =
@@ -41,10 +46,11 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         text: MessageText.optional(),
         html: MessageHtml.optional(),
         attachments: MessageAttachments.optional(),
-        inReplyTo: core.serialization.property("in_reply_to", core.serialization.string().optional()),
-        references: core.serialization.list(core.serialization.string()).optional(),
-        updatedAt: core.serialization.property("updated_at", core.serialization.date()),
-        createdAt: core.serialization.property("created_at", core.serialization.date()),
+        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
+        references: MessageReferences.optional(),
+        size: MessageSize,
+        updatedAt: core.serialization.property("updated_at", MessageUpdatedAt),
+        createdAt: core.serialization.property("created_at", MessageCreatedAt),
     });
 
 export declare namespace Message {
@@ -64,9 +70,10 @@ export declare namespace Message {
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
         attachments?: MessageAttachments.Raw | null;
-        in_reply_to?: string | null;
-        references?: string[] | null;
-        updated_at: string;
-        created_at: string;
+        in_reply_to?: MessageInReplyTo.Raw | null;
+        references?: MessageReferences.Raw | null;
+        size: MessageSize.Raw;
+        updated_at: MessageUpdatedAt.Raw;
+        created_at: MessageCreatedAt.Raw;
     }
 }

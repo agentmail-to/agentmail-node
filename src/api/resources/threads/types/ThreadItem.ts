@@ -9,10 +9,16 @@ export interface ThreadItem {
     threadId: AgentMail.ThreadId;
     labels: AgentMail.ThreadLabels;
     timestamp: AgentMail.ThreadTimestamp;
+    receivedTimestamp: AgentMail.ThreadReceivedTimestamp;
+    sentTimestamp: AgentMail.ThreadSentTimestamp;
     senders: AgentMail.ThreadSenders;
     recipients: AgentMail.ThreadRecipients;
     subject?: AgentMail.ThreadSubject;
     preview?: AgentMail.ThreadPreview;
     attachments?: AgentMail.ThreadAttachments;
+    lastMessageId: AgentMail.ThreadLastMessageId;
     messageCount: AgentMail.ThreadMessageCount;
+    size: AgentMail.ThreadSize;
+    updatedAt: AgentMail.ThreadUpdatedAt;
+    createdAt: AgentMail.ThreadCreatedAt;
 }

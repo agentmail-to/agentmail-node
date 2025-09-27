@@ -17,6 +17,11 @@ import { MessageBcc } from "./MessageBcc.js";
 import { MessageSubject } from "./MessageSubject.js";
 import { MessagePreview } from "./MessagePreview.js";
 import { MessageAttachments } from "./MessageAttachments.js";
+import { MessageInReplyTo } from "./MessageInReplyTo.js";
+import { MessageReferences } from "./MessageReferences.js";
+import { MessageSize } from "./MessageSize.js";
+import { MessageUpdatedAt } from "./MessageUpdatedAt.js";
+import { MessageCreatedAt } from "./MessageCreatedAt.js";
 import { Attachment } from "../../attachments/types/Attachment.js";
 
 export const MessageItem: core.serialization.ObjectSchema<serializers.MessageItem.Raw, AgentMail.MessageItem> =
@@ -33,6 +38,11 @@ export const MessageItem: core.serialization.ObjectSchema<serializers.MessageIte
         subject: MessageSubject.optional(),
         preview: MessagePreview.optional(),
         attachments: MessageAttachments.optional(),
+        inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
+        references: MessageReferences.optional(),
+        size: MessageSize,
+        updatedAt: core.serialization.property("updated_at", MessageUpdatedAt),
+        createdAt: core.serialization.property("created_at", MessageCreatedAt),
     });
 
 export declare namespace MessageItem {
@@ -49,5 +59,10 @@ export declare namespace MessageItem {
         subject?: MessageSubject.Raw | null;
         preview?: MessagePreview.Raw | null;
         attachments?: MessageAttachments.Raw | null;
+        in_reply_to?: MessageInReplyTo.Raw | null;
+        references?: MessageReferences.Raw | null;
+        size: MessageSize.Raw;
+        updated_at: MessageUpdatedAt.Raw;
+        created_at: MessageCreatedAt.Raw;
     }
 }

@@ -46,6 +46,11 @@ describe("Messages", () => {
                             inline: true,
                         },
                     ],
+                    in_reply_to: "in_reply_to",
+                    references: ["references", "references"],
+                    size: 1,
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
                 },
                 {
                     inbox_id: "inbox_id",
@@ -75,6 +80,11 @@ describe("Messages", () => {
                             inline: true,
                         },
                     ],
+                    in_reply_to: "in_reply_to",
+                    references: ["references", "references"],
+                    size: 1,
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
                 },
             ],
         };
@@ -120,6 +130,11 @@ describe("Messages", () => {
                             inline: true,
                         },
                     ],
+                    inReplyTo: "in_reply_to",
+                    references: ["references", "references"],
+                    size: 1,
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
                     inboxId: "inbox_id",
@@ -149,6 +164,11 @@ describe("Messages", () => {
                             inline: true,
                         },
                     ],
+                    inReplyTo: "in_reply_to",
+                    references: ["references", "references"],
+                    size: 1,
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
         });
@@ -194,6 +214,7 @@ describe("Messages", () => {
             ],
             in_reply_to: "in_reply_to",
             references: ["references", "references"],
+            size: 1,
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -239,6 +260,7 @@ describe("Messages", () => {
             ],
             inReplyTo: "in_reply_to",
             references: ["references", "references"],
+            size: 1,
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
@@ -370,6 +392,7 @@ describe("Messages", () => {
             ],
             in_reply_to: "in_reply_to",
             references: ["references", "references"],
+            size: 1,
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -419,6 +442,7 @@ describe("Messages", () => {
             ],
             inReplyTo: "in_reply_to",
             references: ["references", "references"],
+            size: 1,
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
