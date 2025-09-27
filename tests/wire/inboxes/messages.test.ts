@@ -4,9 +4,10 @@
 
 import { mockServerPool } from "../../mock-server/MockServerPool";
 import { AgentMailClient } from "../../../src/Client";
+import * as AgentMail from "../../../src/api/index";
 
 describe("Messages", () => {
-    test("list", async () => {
+    test("list (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -174,7 +175,28 @@ describe("Messages", () => {
         });
     });
 
-    test("get", async () => {
+    test("list (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/messages")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.list("inbox_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -266,7 +288,28 @@ describe("Messages", () => {
         });
     });
 
-    test("send", async () => {
+    test("get (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/messages/message_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.get("inbox_id", "message_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("send (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -310,7 +353,133 @@ describe("Messages", () => {
         });
     });
 
-    test("reply", async () => {
+    test("send (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            labels: undefined,
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            subject: undefined,
+            text: undefined,
+            html: undefined,
+            attachments: undefined,
+        };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/send")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.send("inbox_id", {
+                labels: undefined,
+                replyTo: undefined,
+                to: undefined,
+                cc: undefined,
+                bcc: undefined,
+                subject: undefined,
+                text: undefined,
+                html: undefined,
+                attachments: undefined,
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("send (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            labels: undefined,
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            subject: undefined,
+            text: undefined,
+            html: undefined,
+            attachments: undefined,
+        };
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/send")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.send("inbox_id", {
+                labels: undefined,
+                replyTo: undefined,
+                to: undefined,
+                cc: undefined,
+                bcc: undefined,
+                subject: undefined,
+                text: undefined,
+                html: undefined,
+                attachments: undefined,
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("send (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            labels: undefined,
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            subject: undefined,
+            text: undefined,
+            html: undefined,
+            attachments: undefined,
+        };
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/send")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.send("inbox_id", {
+                labels: undefined,
+                replyTo: undefined,
+                to: undefined,
+                cc: undefined,
+                bcc: undefined,
+                subject: undefined,
+                text: undefined,
+                html: undefined,
+                attachments: undefined,
+            });
+        }).rejects.toThrow(AgentMail.MessageRejectedError);
+    });
+
+    test("reply (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -352,7 +521,127 @@ describe("Messages", () => {
         });
     });
 
-    test("update", async () => {
+    test("reply (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            labels: undefined,
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            text: undefined,
+            html: undefined,
+            attachments: undefined,
+        };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/reply")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.reply("inbox_id", "message_id", {
+                labels: undefined,
+                replyTo: undefined,
+                to: undefined,
+                cc: undefined,
+                bcc: undefined,
+                text: undefined,
+                html: undefined,
+                attachments: undefined,
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("reply (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            labels: undefined,
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            text: undefined,
+            html: undefined,
+            attachments: undefined,
+        };
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/reply")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.reply("inbox_id", "message_id", {
+                labels: undefined,
+                replyTo: undefined,
+                to: undefined,
+                cc: undefined,
+                bcc: undefined,
+                text: undefined,
+                html: undefined,
+                attachments: undefined,
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("reply (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            labels: undefined,
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            text: undefined,
+            html: undefined,
+            attachments: undefined,
+        };
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/reply")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.reply("inbox_id", "message_id", {
+                labels: undefined,
+                replyTo: undefined,
+                to: undefined,
+                cc: undefined,
+                bcc: undefined,
+                text: undefined,
+                html: undefined,
+                attachments: undefined,
+            });
+        }).rejects.toThrow(AgentMail.MessageRejectedError);
+    });
+
+    test("update (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -446,5 +735,55 @@ describe("Messages", () => {
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
+    });
+
+    test("update (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { add_labels: undefined, remove_labels: undefined };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+        server
+            .mockEndpoint()
+            .patch("/v0/inboxes/inbox_id/messages/message_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.update("inbox_id", "message_id", {
+                addLabels: undefined,
+                removeLabels: undefined,
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("update (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { add_labels: undefined, remove_labels: undefined };
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .patch("/v0/inboxes/inbox_id/messages/message_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.update("inbox_id", "message_id", {
+                addLabels: undefined,
+                removeLabels: undefined,
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
     });
 });

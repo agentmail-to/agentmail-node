@@ -4,9 +4,10 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { AgentMailClient } from "../../src/Client";
+import * as AgentMail from "../../src/api/index";
 
 describe("Drafts", () => {
-    test("list", async () => {
+    test("list (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -152,7 +153,22 @@ describe("Drafts", () => {
         });
     });
 
-    test("get", async () => {
+    test("list (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server.mockEndpoint().get("/v0/drafts").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.drafts.list();
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -240,5 +256,26 @@ describe("Drafts", () => {
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
+    });
+
+    test("get (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/drafts/draft_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.drafts.get("draft_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
     });
 });

@@ -4,9 +4,10 @@
 
 import { mockServerPool } from "../../mock-server/MockServerPool";
 import { AgentMailClient } from "../../../src/Client";
+import * as AgentMail from "../../../src/api/index";
 
 describe("Threads", () => {
-    test("list", async () => {
+    test("list (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -170,7 +171,28 @@ describe("Threads", () => {
         });
     });
 
-    test("get", async () => {
+    test("list (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/threads")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.threads.list("inbox_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -406,7 +428,28 @@ describe("Threads", () => {
         });
     });
 
-    test("delete", async () => {
+    test("get (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/threads/thread_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.threads.get("inbox_id", "thread_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -417,5 +460,26 @@ describe("Threads", () => {
 
         const response = await client.inboxes.threads.delete("inbox_id", "thread_id");
         expect(response).toEqual(undefined);
+    });
+
+    test("delete (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .delete("/v0/inboxes/inbox_id/threads/thread_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.threads.delete("inbox_id", "thread_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
     });
 });

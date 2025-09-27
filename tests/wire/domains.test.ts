@@ -4,6 +4,7 @@
 
 import { mockServerPool } from "../mock-server/MockServerPool";
 import { AgentMailClient } from "../../src/Client";
+import * as AgentMail from "../../src/api/index";
 
 describe("Domains", () => {
     test("list", async () => {
@@ -42,7 +43,7 @@ describe("Domains", () => {
         });
     });
 
-    test("get", async () => {
+    test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -118,7 +119,22 @@ describe("Domains", () => {
         });
     });
 
-    test("create", async () => {
+    test("get (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server.mockEndpoint().get("/v0/domains/domain").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.domains.get("domain");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("create (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -197,7 +213,32 @@ describe("Domains", () => {
         });
     });
 
-    test("delete", async () => {
+    test("create (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { domain: "domain", feedback_enabled: undefined };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+        server
+            .mockEndpoint()
+            .post("/v0/domains")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.create({
+                domain: "domain",
+                feedbackEnabled: undefined,
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -208,5 +249,26 @@ describe("Domains", () => {
 
         const response = await client.domains.delete("dom_12345");
         expect(response).toEqual(undefined);
+    });
+
+    test("delete (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .delete("/v0/domains/domain")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.delete("domain");
+        }).rejects.toThrow(AgentMail.NotFoundError);
     });
 });

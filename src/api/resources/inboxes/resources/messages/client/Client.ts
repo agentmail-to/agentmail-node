@@ -17,7 +17,7 @@ export declare namespace Messages {
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface RequestOptions {
@@ -30,7 +30,7 @@ export declare namespace Messages {
         /** Additional query string parameters to include in the request. */
         queryParams?: Record<string, unknown>;
         /** Additional headers to include in the request. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 }
 
@@ -92,7 +92,7 @@ export class Messages {
             _queryParams["ascending"] = ascending.toString();
         }
 
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -190,7 +190,7 @@ export class Messages {
         messageId: AgentMail.MessageId,
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.Message>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -285,7 +285,7 @@ export class Messages {
         attachmentId: AgentMail.AttachmentId,
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<core.BinaryResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -368,7 +368,7 @@ export class Messages {
         messageId: AgentMail.MessageId,
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<core.BinaryResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -470,7 +470,7 @@ export class Messages {
         request: AgentMail.SendMessageRequest,
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.SendMessageResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -610,7 +610,7 @@ export class Messages {
         request: AgentMail.ReplyToMessageRequest,
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.SendMessageResponse>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,
@@ -743,7 +743,7 @@ export class Messages {
         request: AgentMail.UpdateMessageRequest,
         requestOptions?: Messages.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.Message>> {
-        var _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
             requestOptions?.headers,

@@ -4,9 +4,10 @@
 
 import { mockServerPool } from "../../mock-server/MockServerPool";
 import { AgentMailClient } from "../../../src/Client";
+import * as AgentMail from "../../../src/api/index";
 
 describe("Metrics", () => {
-    test("get", async () => {
+    test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             apiKey: "test",
@@ -47,5 +48,53 @@ describe("Metrics", () => {
                 received: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
             },
         });
+    });
+
+    test("get (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/metrics")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.metrics.get("inbox_id", {
+                startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+                endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("get (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/metrics")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.metrics.get("inbox_id", {
+                startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+                endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
     });
 });

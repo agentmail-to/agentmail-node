@@ -4,6 +4,7 @@
 
 import * as environments from "../../../../environments.js";
 import * as core from "../../../../core/index.js";
+import { mergeOnlyDefinedHeaders, mergeHeaders } from "../../../../core/headers.js";
 import { WebsocketsSocket } from "./Socket.js";
 import * as errors from "../../../../errors/index.js";
 
@@ -14,7 +15,7 @@ export declare namespace Websockets {
         baseUrl?: core.Supplier<string>;
         apiKey?: core.Supplier<core.BearerToken | undefined>;
         /** Additional headers to include in requests. */
-        headers?: Record<string, string | core.Supplier<string | undefined> | undefined>;
+        headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
     }
 
     export interface ConnectArgs {
@@ -42,9 +43,10 @@ export class Websockets {
             _queryParams["auth_token"] = authToken;
         }
 
-        let _headers: Record<string, string> = {
-            ...headers,
-        };
+        let _headers: Record<string, unknown> = mergeHeaders(
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            headers,
+        );
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options["baseUrl"])) ??
