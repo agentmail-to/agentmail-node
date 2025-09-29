@@ -37,8 +37,7 @@ describe("Inboxes", () => {
         };
         server.mockEndpoint().get("/v0/inboxes").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.inboxes.list();
-        expect(response).toEqual({
+        const expected = {
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
@@ -58,7 +57,13 @@ describe("Inboxes", () => {
                     clientId: "client_id",
                 },
             ],
-        });
+        };
+        const page = await client.inboxes.list();
+
+        expect(expected.inboxes).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.inboxes).toEqual(nextPage.data);
     });
 
     test("get (1)", async () => {

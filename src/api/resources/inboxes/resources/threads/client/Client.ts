@@ -51,120 +51,126 @@ export class Threads {
      * @example
      *     await client.inboxes.threads.list("inbox_id")
      */
-    public list(
+    public async list(
         inboxId: AgentMail.inboxes.InboxId,
         request: AgentMail.inboxes.ListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListThreadsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__list(inboxId, request, requestOptions));
-    }
-
-    private async __list(
-        inboxId: AgentMail.inboxes.InboxId,
-        request: AgentMail.inboxes.ListThreadsRequest = {},
-        requestOptions?: Threads.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListThreadsResponse>> {
-        const { limit, pageToken, labels, before, after, ascending } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (limit != null) {
-            _queryParams["limit"] = limit.toString();
-        }
-
-        if (pageToken != null) {
-            _queryParams["page_token"] = pageToken;
-        }
-
-        if (labels != null) {
-            _queryParams["labels"] = toJson(
-                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            );
-        }
-
-        if (before != null) {
-            _queryParams["before"] = before.toISOString();
-        }
-
-        if (after != null) {
-            _queryParams["after"] = after.toISOString();
-        }
-
-        if (ascending != null) {
-            _queryParams["ascending"] = ascending.toString();
-        }
-
-        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
-                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/threads`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-            maxRetries: requestOptions?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.ListThreadsResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+    ): Promise<core.Page<AgentMail.ThreadItem>> {
+        const list = core.HttpResponsePromise.interceptFunction(
+            async (
+                request: AgentMail.inboxes.ListThreadsRequest,
+            ): Promise<core.WithRawResponse<AgentMail.ListThreadsResponse>> => {
+                const { limit, pageToken, labels, before, after, ascending } = request;
+                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+                if (limit != null) {
+                    _queryParams["limit"] = limit.toString();
+                }
+                if (pageToken != null) {
+                    _queryParams["page_token"] = pageToken;
+                }
+                if (labels != null) {
+                    _queryParams["labels"] = toJson(
+                        serializers.Labels.jsonOrThrow(labels, {
+                            unrecognizedObjectKeys: "strip",
+                            omitUndefined: true,
+                        }),
+                    );
+                }
+                if (before != null) {
+                    _queryParams["before"] = before.toISOString();
+                }
+                if (after != null) {
+                    _queryParams["after"] = after.toISOString();
+                }
+                if (ascending != null) {
+                    _queryParams["ascending"] = ascending.toString();
+                }
+                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+                    this._options?.headers,
+                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+                    requestOptions?.headers,
+                );
+                const _response = await core.fetcher({
+                    url: core.url.join(
+                        (await core.Supplier.get(this._options.baseUrl)) ??
+                            (
+                                (await core.Supplier.get(this._options.environment)) ??
+                                environments.AgentMailEnvironment.Production
+                            ).http,
+                        `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/threads`,
+                    ),
+                    method: "GET",
+                    headers: _headers,
+                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+                    timeoutMs:
+                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+                    maxRetries: requestOptions?.maxRetries,
+                    abortSignal: requestOptions?.abortSignal,
+                });
+                if (_response.ok) {
+                    return {
+                        data: serializers.ListThreadsResponse.parseOrThrow(_response.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
                         }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
                         rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/threads.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+                    };
+                }
+                if (_response.error.reason === "status-code") {
+                    switch (_response.error.statusCode) {
+                        case 404:
+                            throw new AgentMail.NotFoundError(
+                                serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                                    unrecognizedObjectKeys: "passthrough",
+                                    allowUnrecognizedUnionMembers: true,
+                                    allowUnrecognizedEnumValues: true,
+                                    skipValidation: true,
+                                    breadcrumbsPrefix: ["response"],
+                                }),
+                                _response.rawResponse,
+                            );
+                        default:
+                            throw new errors.AgentMailError({
+                                statusCode: _response.error.statusCode,
+                                body: _response.error.body,
+                                rawResponse: _response.rawResponse,
+                            });
+                    }
+                }
+                switch (_response.error.reason) {
+                    case "non-json":
+                        throw new errors.AgentMailError({
+                            statusCode: _response.error.statusCode,
+                            body: _response.error.rawBody,
+                            rawResponse: _response.rawResponse,
+                        });
+                    case "timeout":
+                        throw new errors.AgentMailTimeoutError(
+                            "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/threads.",
+                        );
+                    case "unknown":
+                        throw new errors.AgentMailError({
+                            message: _response.error.errorMessage,
+                            rawResponse: _response.rawResponse,
+                        });
+                }
+            },
+        );
+        const dataWithRawResponse = await list(request).withRawResponse();
+        return new core.Pageable<AgentMail.ListThreadsResponse, AgentMail.ThreadItem>({
+            response: dataWithRawResponse.data,
+            rawResponse: dataWithRawResponse.rawResponse,
+            hasNextPage: (response) =>
+                response?.nextPageToken != null &&
+                !(typeof response?.nextPageToken === "string" && response?.nextPageToken === ""),
+            getItems: (response) => response?.threads ?? [],
+            loadPage: (response) => {
+                return list(core.setObjectProperty(request, "pageToken", response?.nextPageToken));
+            },
+        });
     }
 
     /**

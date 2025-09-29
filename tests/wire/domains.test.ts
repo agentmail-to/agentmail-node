@@ -28,8 +28,7 @@ describe("Domains", () => {
         };
         server.mockEndpoint().get("/v0/domains").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.domains.list();
-        expect(response).toEqual({
+        const expected = {
             count: 1,
             domains: [
                 {
@@ -40,7 +39,13 @@ describe("Domains", () => {
                     updatedAt: new Date("2025-07-06T08:40:50.417Z"),
                 },
             ],
-        });
+        };
+        const page = await client.domains.list();
+
+        expect(expected.domains).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.domains).toEqual(nextPage.data);
     });
 
     test("get (1)", async () => {

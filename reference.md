@@ -2,7 +2,7 @@
 
 ## Inboxes
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListInboxesResponse</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.Inbox></code></summary>
 <dl>
 <dd>
 
@@ -201,7 +201,7 @@ await client.inboxes.delete("inbox_id");
 
 ## Webhooks
 
-<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListWebhooksResponse</code></summary>
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.Webhook></code></summary>
 <dl>
 <dd>
 
@@ -400,7 +400,7 @@ await client.webhooks.delete("webhook_id");
 
 ## Domains
 
-<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListDomainsResponse</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.DomainSummary></code></summary>
 <dl>
 <dd>
 
@@ -596,7 +596,7 @@ await client.domains.delete("dom_12345");
 
 ## Drafts
 
-<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListDraftsResponse</code></summary>
+<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.DraftItem></code></summary>
 <dl>
 <dd>
 
@@ -694,7 +694,7 @@ await client.drafts.get("draft_id");
 
 ## Inboxes Drafts
 
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inboxId, { ...params }) -> core.Page<AgentMail.DraftItem></code></summary>
 <dl>
 <dd>
 
@@ -998,7 +998,7 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 
 ## Inboxes Messages
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> core.Page<AgentMail.MessageItem></code></summary>
 <dl>
 <dd>
 
@@ -1499,7 +1499,7 @@ await client.inboxes.metrics.get("inbox_id", {
 
 ## Inboxes Threads
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> core.Page<AgentMail.ThreadItem></code></summary>
 <dl>
 <dd>
 
@@ -1786,7 +1786,7 @@ await client.metrics.list({
 
 ## Threads
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListThreadsResponse</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.ThreadItem></code></summary>
 <dl>
 <dd>
 
