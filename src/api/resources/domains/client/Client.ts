@@ -142,7 +142,7 @@ export class Domains {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.domains.get(" your-domain.com")
+     *     await client.domains.get("domain")
      */
     public get(
         domain: AgentMail.DomainId,
@@ -236,7 +236,8 @@ export class Domains {
      *
      * @example
      *     await client.domains.create({
-     *         domain: "your-domain.com"
+     *         domain: "domain",
+     *         feedbackEnabled: undefined
      *     })
      */
     public create(
@@ -336,7 +337,7 @@ export class Domains {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.domains.delete("dom_12345")
+     *     await client.domains.delete("domain")
      */
     public delete(domain: AgentMail.DomainId, requestOptions?: Domains.RequestOptions): core.HttpResponsePromise<void> {
         return core.HttpResponsePromise.fromPromise(this.__delete(domain, requestOptions));

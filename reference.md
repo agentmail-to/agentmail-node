@@ -461,7 +461,7 @@ await client.domains.list();
 <dd>
 
 ```typescript
-await client.domains.get(" your-domain.com");
+await client.domains.get("domain");
 ```
 
 </dd>
@@ -510,7 +510,8 @@ await client.domains.get(" your-domain.com");
 
 ```typescript
 await client.domains.create({
-    domain: "your-domain.com",
+    domain: "domain",
+    feedbackEnabled: undefined,
 });
 ```
 
@@ -559,7 +560,7 @@ await client.domains.create({
 <dd>
 
 ```typescript
-await client.domains.delete("dom_12345");
+await client.domains.delete("domain");
 ```
 
 </dd>

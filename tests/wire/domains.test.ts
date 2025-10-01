@@ -16,13 +16,21 @@ describe("Domains", () => {
 
         const rawResponseBody = {
             count: 1,
+            next_page_token: "next_page_token",
             domains: [
                 {
-                    domain_id: "your-domain.com",
-                    organization_id: "org_12345",
+                    domain_id: "domain_id",
+                    organization_id: "organization_id",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
                     feedback_enabled: true,
-                    created_at: "2025-07-06T08:40:50.417Z",
-                    updated_at: "2025-07-06T08:40:50.417Z",
+                },
+                {
+                    domain_id: "domain_id",
+                    organization_id: "organization_id",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                    feedback_enabled: true,
                 },
             ],
         };
@@ -30,13 +38,21 @@ describe("Domains", () => {
 
         const expected = {
             count: 1,
+            nextPageToken: "next_page_token",
             domains: [
                 {
-                    domainId: "your-domain.com",
-                    organizationId: "org_12345",
+                    domainId: "domain_id",
+                    organizationId: "organization_id",
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
                     feedbackEnabled: true,
-                    createdAt: new Date("2025-07-06T08:40:50.417Z"),
-                    updatedAt: new Date("2025-07-06T08:40:50.417Z"),
+                },
+                {
+                    domainId: "domain_id",
+                    organizationId: "organization_id",
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    feedbackEnabled: true,
                 },
             ],
         };
@@ -56,71 +72,43 @@ describe("Domains", () => {
         });
 
         const rawResponseBody = {
-            domain_id: " your-domain.com",
-            organization_id: "org_12345",
-            created_at: "2025-07-06T08:40:50.417Z",
-            updated_at: "2025-07-06T08:40:50.417Z",
+            domain_id: "domain_id",
+            organization_id: "organization_id",
+            status: "PENDING",
             feedback_enabled: true,
-            status: "PENDING",
             records: [
-                {
-                    type: "CNAME",
-                    name: "{token}._domainkey. your-domain.com",
-                    value: "{token}.dkim.amazonses.com",
-                    status: "MISSING",
-                },
-                {
-                    type: "MX",
-                    name: " your-domain.com",
-                    value: "inbound-smtp.us-east-1.amazonaws.com",
-                    status: "VERIFIED",
-                    priority: 10,
-                },
-                {
-                    type: "TXT",
-                    name: "_dmarc. your-domain.com",
-                    value: "v=DMARC1; p=reject; rua=mailto:dmarc@agentmail.dev",
-                    status: "VERIFIED",
-                },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
             ],
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
         };
-        server
-            .mockEndpoint()
-            .get("/v0/domains/%20your-domain.com")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/v0/domains/domain").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.domains.get(" your-domain.com");
+        const response = await client.domains.get("domain");
         expect(response).toEqual({
-            domainId: " your-domain.com",
-            organizationId: "org_12345",
-            createdAt: new Date("2025-07-06T08:40:50.417Z"),
-            updatedAt: new Date("2025-07-06T08:40:50.417Z"),
-            feedbackEnabled: true,
+            domainId: "domain_id",
+            organizationId: "organization_id",
             status: "PENDING",
+            feedbackEnabled: true,
             records: [
                 {
-                    type: "CNAME",
-                    name: "{token}._domainkey. your-domain.com",
-                    value: "{token}.dkim.amazonses.com",
+                    type: "TXT",
+                    name: "name",
+                    value: "value",
                     status: "MISSING",
-                },
-                {
-                    type: "MX",
-                    name: " your-domain.com",
-                    value: "inbound-smtp.us-east-1.amazonaws.com",
-                    status: "VERIFIED",
-                    priority: 10,
+                    priority: 1,
                 },
                 {
                     type: "TXT",
-                    name: "_dmarc. your-domain.com",
-                    value: "v=DMARC1; p=reject; rua=mailto:dmarc@agentmail.dev",
-                    status: "VERIFIED",
+                    name: "name",
+                    value: "value",
+                    status: "MISSING",
+                    priority: 1,
                 },
             ],
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 
@@ -145,35 +133,18 @@ describe("Domains", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { domain: "your-domain.com" };
+        const rawRequestBody = { domain: "domain", feedback_enabled: undefined };
         const rawResponseBody = {
-            domain_id: "your-domain.com",
-            organization_id: "org_12345",
+            domain_id: "domain_id",
+            organization_id: "organization_id",
             status: "PENDING",
-            created_at: "2025-07-06T08:40:50.417Z",
-            updated_at: "2025-07-06T08:40:50.417Z",
             feedback_enabled: true,
             records: [
-                {
-                    type: "CNAME",
-                    name: "{token}._domainkey.your-domain.com",
-                    value: "{token}.dkim.amazonses.com",
-                    status: "MISSING",
-                },
-                {
-                    type: "MX",
-                    name: "your-domain.com",
-                    value: "inbound-smtp.us-east-1.amazonaws.com",
-                    priority: 10,
-                    status: "VERIFIED",
-                },
-                {
-                    type: "TXT",
-                    name: "_dmarc.your-domain.com",
-                    value: "v=DMARC1; p=reject; rua=mailto:dmarc@agentmail.to",
-                    status: "MISSING",
-                },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
             ],
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
         };
         server
             .mockEndpoint()
@@ -185,36 +156,32 @@ describe("Domains", () => {
             .build();
 
         const response = await client.domains.create({
-            domain: "your-domain.com",
+            domain: "domain",
+            feedbackEnabled: undefined,
         });
         expect(response).toEqual({
-            domainId: "your-domain.com",
-            organizationId: "org_12345",
+            domainId: "domain_id",
+            organizationId: "organization_id",
             status: "PENDING",
-            createdAt: new Date("2025-07-06T08:40:50.417Z"),
-            updatedAt: new Date("2025-07-06T08:40:50.417Z"),
             feedbackEnabled: true,
             records: [
                 {
-                    type: "CNAME",
-                    name: "{token}._domainkey.your-domain.com",
-                    value: "{token}.dkim.amazonses.com",
+                    type: "TXT",
+                    name: "name",
+                    value: "value",
                     status: "MISSING",
-                },
-                {
-                    type: "MX",
-                    name: "your-domain.com",
-                    value: "inbound-smtp.us-east-1.amazonaws.com",
-                    priority: 10,
-                    status: "VERIFIED",
+                    priority: 1,
                 },
                 {
                     type: "TXT",
-                    name: "_dmarc.your-domain.com",
-                    value: "v=DMARC1; p=reject; rua=mailto:dmarc@agentmail.to",
+                    name: "name",
+                    value: "value",
                     status: "MISSING",
+                    priority: 1,
                 },
             ],
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 
@@ -250,9 +217,9 @@ describe("Domains", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
 
-        server.mockEndpoint().delete("/v0/domains/dom_12345").respondWith().statusCode(200).build();
+        server.mockEndpoint().delete("/v0/domains/domain").respondWith().statusCode(200).build();
 
-        const response = await client.domains.delete("dom_12345");
+        const response = await client.domains.delete("domain");
         expect(response).toEqual(undefined);
     });
 
