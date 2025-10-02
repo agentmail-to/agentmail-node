@@ -15,7 +15,16 @@
 <dd>
 
 ```typescript
-await client.inboxes.list();
+const response = await client.inboxes.list();
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inboxes.list();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>
@@ -214,7 +223,16 @@ await client.inboxes.delete("inbox_id");
 <dd>
 
 ```typescript
-await client.webhooks.list();
+const response = await client.webhooks.list();
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.webhooks.list();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>
@@ -413,7 +431,16 @@ await client.webhooks.delete("webhook_id");
 <dd>
 
 ```typescript
-await client.domains.list();
+const response = await client.domains.list();
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.domains.list();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>
@@ -610,7 +637,16 @@ await client.domains.delete("domain");
 <dd>
 
 ```typescript
-await client.drafts.list();
+const response = await client.drafts.list();
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.drafts.list();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>
@@ -708,7 +744,16 @@ await client.drafts.get("draft_id");
 <dd>
 
 ```typescript
-await client.inboxes.drafts.list("inbox_id");
+const response = await client.inboxes.drafts.list("inbox_id");
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inboxes.drafts.list("inbox_id");
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>
@@ -1012,7 +1057,16 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 <dd>
 
 ```typescript
-await client.inboxes.messages.list("inbox_id");
+const response = await client.inboxes.messages.list("inbox_id");
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inboxes.messages.list("inbox_id");
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>
@@ -1513,7 +1567,16 @@ await client.inboxes.metrics.get("inbox_id", {
 <dd>
 
 ```typescript
-await client.inboxes.threads.list("inbox_id");
+const response = await client.inboxes.threads.list("inbox_id");
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inboxes.threads.list("inbox_id");
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>
@@ -1800,7 +1863,16 @@ await client.metrics.list({
 <dd>
 
 ```typescript
-await client.threads.list();
+const response = await client.threads.list();
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.threads.list();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
 ```
 
 </dd>

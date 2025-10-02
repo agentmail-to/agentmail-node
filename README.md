@@ -64,6 +64,26 @@ try {
 }
 ```
 
+## Pagination
+
+List endpoints are paginated. The SDK provides an iterator so that you can simply loop over the items:
+
+```typescript
+import { AgentMailClient } from "agentmail";
+
+const client = new AgentMailClient({ apiKey: "YOUR_API_KEY" });
+const response = await client.inboxes.list();
+for await (const item of response) {
+    console.log(item);
+}
+
+// Or you can manually iterate page-by-page
+let page = await client.inboxes.list();
+while (page.hasNextPage()) {
+    page = page.getNextPage();
+}
+```
+
 ## Advanced
 
 ### Additional Headers
