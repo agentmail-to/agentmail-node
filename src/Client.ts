@@ -7,6 +7,7 @@ import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Inboxes } from "./api/resources/inboxes/client/Client.js";
 import { Webhooks } from "./api/resources/webhooks/client/Client.js";
+import { ApiKeys } from "./api/resources/apiKeys/client/Client.js";
 import { Domains } from "./api/resources/domains/client/Client.js";
 import { Drafts } from "./api/resources/drafts/client/Client.js";
 import { Metrics } from "./api/resources/metrics/client/Client.js";
@@ -41,6 +42,7 @@ export class AgentMailClient {
     protected readonly _options: AgentMailClient.Options;
     protected _inboxes: Inboxes | undefined;
     protected _webhooks: Webhooks | undefined;
+    protected _apiKeys: ApiKeys | undefined;
     protected _domains: Domains | undefined;
     protected _drafts: Drafts | undefined;
     protected _metrics: Metrics | undefined;
@@ -54,8 +56,8 @@ export class AgentMailClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "agentmail",
-                    "X-Fern-SDK-Version": "0.0.69",
-                    "User-Agent": "agentmail/0.0.69",
+                    "X-Fern-SDK-Version": "0.0.70",
+                    "User-Agent": "agentmail/0.0.70",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -70,6 +72,10 @@ export class AgentMailClient {
 
     public get webhooks(): Webhooks {
         return (this._webhooks ??= new Webhooks(this._options));
+    }
+
+    public get apiKeys(): ApiKeys {
+        return (this._apiKeys ??= new ApiKeys(this._options));
     }
 
     public get domains(): Domains {

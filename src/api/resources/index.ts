@@ -1,5 +1,7 @@
 export * as inboxes from "./inboxes/index.js";
 export * as webhooks from "./webhooks/index.js";
+export * as apiKeys from "./apiKeys/index.js";
+export * from "./apiKeys/types/index.js";
 export * as attachments from "./attachments/index.js";
 export * from "./attachments/types/index.js";
 export * as domains from "./domains/index.js";
@@ -17,6 +19,7 @@ export * from "./threads/types/index.js";
 export * as websockets from "./websockets/index.js";
 export * from "./websockets/types/index.js";
 export * from "./messages/errors/index.js";
+export * from "./apiKeys/client/requests/index.js";
 export * from "./domains/client/requests/index.js";
 export * from "./drafts/client/requests/index.js";
 export * from "./metrics/client/requests/index.js";
