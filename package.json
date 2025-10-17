@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.0.71",
+    "version": "0.0.72",
     "private": false,
     "repository": "github:agentmail-to/agentmail-node",
     "type": "commonjs",
@@ -42,7 +42,7 @@
     ],
     "scripts": {
         "format": "prettier . --write --ignore-unknown",
-        "build": "tsc && node -e \"const https=require('https'),fs=require('fs');const download=(f)=>new Promise((res,rej)=>https.get('https://docs.agentmail.to/'+f,r=>r.pipe(fs.createWriteStream('dist/'+f)).on('finish',res).on('error',rej)));Promise.all(['llms.txt','llms-full.txt'].map(download)).catch(e=>{console.error(e);process.exit(1)});\"",
+        "build": "yarn build:cjs && yarn build:esm && node -e \"const https=require('https'),fs=require('fs');const download=(f)=>new Promise((res,rej)=>https.get('https://docs.agentmail.to/'+f,r=>r.pipe(fs.createWriteStream('dist/'+f)).on('finish',res).on('error',rej)));Promise.all(['llms.txt','llms-full.txt'].map(download)).catch(e=>{console.error(e);process.exit(1)});\"",
         "build:cjs": "tsc --project ./tsconfig.cjs.json",
         "build:esm": "tsc --project ./tsconfig.esm.json && node scripts/rename-to-esm-files.js dist/esm",
         "test": "jest --config jest.config.mjs",
