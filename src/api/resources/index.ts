@@ -1,4 +1,5 @@
 export * as inboxes from "./inboxes/index.js";
+export * as pods from "./pods/index.js";
 export * as webhooks from "./webhooks/index.js";
 export * as apiKeys from "./apiKeys/index.js";
 export * from "./apiKeys/types/index.js";

@@ -9,7 +9,6 @@ export interface CreateInboxRequest {
     username?: string;
     /** Domain of address. Must be verified domain. Defaults to `agentmail.to`. */
     domain?: string;
-    /** Display name: `Display Name <username@domain.com>`. Defaults to `AgentMail`. Pass empty string to omit. */
-    displayName?: string;
+    displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;
 }

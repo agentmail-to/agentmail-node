@@ -6,18 +6,19 @@ import * as serializers from "../../../index.js";
 import * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import { DomainName } from "./DomainName.js";
+import { FeedbackEnabled } from "./FeedbackEnabled.js";
 
 export const CreateDomainRequest: core.serialization.ObjectSchema<
     serializers.CreateDomainRequest.Raw,
     AgentMail.CreateDomainRequest
 > = core.serialization.object({
     domain: DomainName,
-    feedbackEnabled: core.serialization.property("feedback_enabled", core.serialization.boolean().optional()),
+    feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
 });
 
 export declare namespace CreateDomainRequest {
     export interface Raw {
         domain: DomainName.Raw;
-        feedback_enabled?: boolean | null;
+        feedback_enabled: FeedbackEnabled.Raw;
     }
 }

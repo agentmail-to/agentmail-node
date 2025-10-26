@@ -237,20 +237,20 @@ export class Domains {
      * @example
      *     await client.domains.create({
      *         domain: "domain",
-     *         feedbackEnabled: undefined
+     *         feedbackEnabled: true
      *     })
      */
     public create(
         request: AgentMail.CreateDomainRequest,
         requestOptions?: Domains.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.CreateDomainResponse> {
+    ): core.HttpResponsePromise<AgentMail.Domain> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
         request: AgentMail.CreateDomainRequest,
         requestOptions?: Domains.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.CreateDomainResponse>> {
+    ): Promise<core.WithRawResponse<AgentMail.Domain>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             this._options?.headers,
             mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
@@ -280,7 +280,7 @@ export class Domains {
         });
         if (_response.ok) {
             return {
-                data: serializers.CreateDomainResponse.parseOrThrow(_response.body, {
+                data: serializers.Domain.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

@@ -20,17 +20,17 @@ describe("Domains", () => {
             domains: [
                 {
                     domain_id: "domain_id",
-                    organization_id: "organization_id",
+                    feedback_enabled: true,
+                    client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
-                    feedback_enabled: true,
                 },
                 {
                     domain_id: "domain_id",
-                    organization_id: "organization_id",
+                    feedback_enabled: true,
+                    client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
-                    feedback_enabled: true,
                 },
             ],
         };
@@ -42,17 +42,17 @@ describe("Domains", () => {
             domains: [
                 {
                     domainId: "domain_id",
-                    organizationId: "organization_id",
+                    feedbackEnabled: true,
+                    clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
-                    feedbackEnabled: true,
                 },
                 {
                     domainId: "domain_id",
-                    organizationId: "organization_id",
+                    feedbackEnabled: true,
+                    clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
-                    feedbackEnabled: true,
                 },
             ],
         };
@@ -73,13 +73,14 @@ describe("Domains", () => {
 
         const rawResponseBody = {
             domain_id: "domain_id",
-            organization_id: "organization_id",
+            domain: "domain",
             status: "PENDING",
             feedback_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
             ],
+            client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -88,7 +89,7 @@ describe("Domains", () => {
         const response = await client.domains.get("domain");
         expect(response).toEqual({
             domainId: "domain_id",
-            organizationId: "organization_id",
+            domain: "domain",
             status: "PENDING",
             feedbackEnabled: true,
             records: [
@@ -107,6 +108,7 @@ describe("Domains", () => {
                     priority: 1,
                 },
             ],
+            clientId: "client_id",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
@@ -133,16 +135,17 @@ describe("Domains", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { domain: "domain", feedback_enabled: undefined };
+        const rawRequestBody = { domain: "domain", feedback_enabled: true };
         const rawResponseBody = {
             domain_id: "domain_id",
-            organization_id: "organization_id",
+            domain: "domain",
             status: "PENDING",
             feedback_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
             ],
+            client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -157,11 +160,11 @@ describe("Domains", () => {
 
         const response = await client.domains.create({
             domain: "domain",
-            feedbackEnabled: undefined,
+            feedbackEnabled: true,
         });
         expect(response).toEqual({
             domainId: "domain_id",
-            organizationId: "organization_id",
+            domain: "domain",
             status: "PENDING",
             feedbackEnabled: true,
             records: [
@@ -180,6 +183,7 @@ describe("Domains", () => {
                     priority: 1,
                 },
             ],
+            clientId: "client_id",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
@@ -191,7 +195,7 @@ describe("Domains", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { domain: "domain", feedback_enabled: undefined };
+        const rawRequestBody = { domain: "domain", feedback_enabled: true };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
         server
             .mockEndpoint()
@@ -205,7 +209,7 @@ describe("Domains", () => {
         await expect(async () => {
             return await client.domains.create({
                 domain: "domain",
-                feedbackEnabled: undefined,
+                feedbackEnabled: true,
             });
         }).rejects.toThrow(AgentMail.ValidationError);
     });

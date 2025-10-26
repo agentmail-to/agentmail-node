@@ -6,13 +6,13 @@ import * as AgentMail from "../../../index.js";
 
 export interface Domain {
     domainId: AgentMail.DomainId;
-    organizationId: AgentMail.OrganizationId;
+    domain: AgentMail.DomainName;
     /** The verification status of the domain. */
     status: AgentMail.VerificationStatus;
-    /** Whether bounce and complaint notifications are forwarded to your domain. */
-    feedbackEnabled?: boolean;
+    feedbackEnabled: AgentMail.FeedbackEnabled;
     /** A list of DNS records required to verify the domain. */
     records: AgentMail.VerificationRecord[];
+    clientId?: AgentMail.ClientId;
     /** Time at which the domain was last updated. */
     updatedAt: Date;
     /** Time at which the domain was created. */

@@ -6,6 +6,7 @@ import * as environments from "./environments.js";
 import * as core from "./core/index.js";
 import { mergeHeaders } from "./core/headers.js";
 import { Inboxes } from "./api/resources/inboxes/client/Client.js";
+import { Pods } from "./api/resources/pods/client/Client.js";
 import { Webhooks } from "./api/resources/webhooks/client/Client.js";
 import { ApiKeys } from "./api/resources/apiKeys/client/Client.js";
 import { Domains } from "./api/resources/domains/client/Client.js";
@@ -41,6 +42,7 @@ export declare namespace AgentMailClient {
 export class AgentMailClient {
     protected readonly _options: AgentMailClient.Options;
     protected _inboxes: Inboxes | undefined;
+    protected _pods: Pods | undefined;
     protected _webhooks: Webhooks | undefined;
     protected _apiKeys: ApiKeys | undefined;
     protected _domains: Domains | undefined;
@@ -56,8 +58,8 @@ export class AgentMailClient {
                 {
                     "X-Fern-Language": "JavaScript",
                     "X-Fern-SDK-Name": "agentmail",
-                    "X-Fern-SDK-Version": "0.0.72",
-                    "User-Agent": "agentmail/0.0.72",
+                    "X-Fern-SDK-Version": "0.0.73",
+                    "User-Agent": "agentmail/0.0.73",
                     "X-Fern-Runtime": core.RUNTIME.type,
                     "X-Fern-Runtime-Version": core.RUNTIME.version,
                 },
@@ -68,6 +70,10 @@ export class AgentMailClient {
 
     public get inboxes(): Inboxes {
         return (this._inboxes ??= new Inboxes(this._options));
+    }
+
+    public get pods(): Pods {
+        return (this._pods ??= new Pods(this._options));
     }
 
     public get webhooks(): Webhooks {

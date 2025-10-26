@@ -6,6 +6,5 @@ import * as AgentMail from "../../../index.js";
 
 export interface CreateDomainRequest {
     domain: AgentMail.DomainName;
-    /** Whether to forward bounce and complaint notifications to your domain. */
-    feedbackEnabled?: boolean;
+    feedbackEnabled: AgentMail.FeedbackEnabled;
 }

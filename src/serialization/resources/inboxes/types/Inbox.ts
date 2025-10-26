@@ -6,23 +6,24 @@ import * as serializers from "../../../index.js";
 import * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import { InboxId } from "./InboxId.js";
+import { DisplayName } from "./DisplayName.js";
 import { ClientId } from "./ClientId.js";
 
 export const Inbox: core.serialization.ObjectSchema<serializers.inboxes.Inbox.Raw, AgentMail.inboxes.Inbox> =
     core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
-        displayName: core.serialization.property("display_name", core.serialization.string()),
+        displayName: core.serialization.property("display_name", DisplayName.optional()),
+        clientId: core.serialization.property("client_id", ClientId.optional()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
-        clientId: core.serialization.property("client_id", ClientId.optional()),
     });
 
 export declare namespace Inbox {
     export interface Raw {
         inbox_id: InboxId.Raw;
-        display_name: string;
+        display_name?: DisplayName.Raw | null;
+        client_id?: ClientId.Raw | null;
         updated_at: string;
         created_at: string;
-        client_id?: ClientId.Raw | null;
     }
 }

@@ -6,11 +6,10 @@ import * as AgentMail from "../../../index.js";
 
 export interface DomainSummary {
     domainId: AgentMail.DomainId;
-    organizationId: AgentMail.OrganizationId;
+    feedbackEnabled: AgentMail.FeedbackEnabled;
+    clientId?: AgentMail.ClientId;
     /** Time at which the domain was last updated. */
     updatedAt: Date;
     /** Time at which the domain was created. */
     createdAt: Date;
-    /** Whether to forward bounce and complaint notifications to your domain. */
-    feedbackEnabled?: boolean;
 }

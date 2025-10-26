@@ -441,38 +441,4 @@ describe("Threads", () => {
             return await client.threads.get("thread_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
-
-    test("delete (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new AgentMailClient({
-            apiKey: "test",
-            environment: { http: server.baseUrl, websockets: server.baseUrl },
-        });
-
-        server.mockEndpoint().delete("/v0/threads/thread_id").respondWith().statusCode(200).build();
-
-        const response = await client.threads.delete("thread_id");
-        expect(response).toEqual(undefined);
-    });
-
-    test("delete (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new AgentMailClient({
-            apiKey: "test",
-            environment: { http: server.baseUrl, websockets: server.baseUrl },
-        });
-
-        const rawResponseBody = { name: "name", message: "message" };
-        server
-            .mockEndpoint()
-            .delete("/v0/threads/thread_id")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.threads.delete("thread_id");
-        }).rejects.toThrow(AgentMail.NotFoundError);
-    });
 });

@@ -22,16 +22,16 @@ describe("Inboxes", () => {
                 {
                     inbox_id: "inbox_id",
                     display_name: "display_name",
+                    client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
-                    client_id: "client_id",
                 },
                 {
                     inbox_id: "inbox_id",
                     display_name: "display_name",
+                    client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
-                    client_id: "client_id",
                 },
             ],
         };
@@ -45,16 +45,16 @@ describe("Inboxes", () => {
                 {
                     inboxId: "inbox_id",
                     displayName: "display_name",
+                    clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
-                    clientId: "client_id",
                 },
                 {
                     inboxId: "inbox_id",
                     displayName: "display_name",
+                    clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
-                    clientId: "client_id",
                 },
             ],
         };
@@ -76,9 +76,9 @@ describe("Inboxes", () => {
         const rawResponseBody = {
             inbox_id: "inbox_id",
             display_name: "display_name",
+            client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
-            client_id: "client_id",
         };
         server
             .mockEndpoint()
@@ -92,9 +92,9 @@ describe("Inboxes", () => {
         expect(response).toEqual({
             inboxId: "inbox_id",
             displayName: "display_name",
+            clientId: "client_id",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
-            clientId: "client_id",
         });
     });
 
@@ -134,9 +134,9 @@ describe("Inboxes", () => {
         const rawResponseBody = {
             inbox_id: "inbox_id",
             display_name: "display_name",
+            client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
-            client_id: "client_id",
         };
         server
             .mockEndpoint()
@@ -156,9 +156,9 @@ describe("Inboxes", () => {
         expect(response).toEqual({
             inboxId: "inbox_id",
             displayName: "display_name",
+            clientId: "client_id",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
-            clientId: "client_id",
         });
     });
 

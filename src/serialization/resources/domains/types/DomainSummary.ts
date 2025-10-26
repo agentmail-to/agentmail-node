@@ -6,23 +6,24 @@ import * as serializers from "../../../index.js";
 import * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import { DomainId } from "./DomainId.js";
-import { OrganizationId } from "../../../types/OrganizationId.js";
+import { FeedbackEnabled } from "./FeedbackEnabled.js";
+import { ClientId } from "./ClientId.js";
 
 export const DomainSummary: core.serialization.ObjectSchema<serializers.DomainSummary.Raw, AgentMail.DomainSummary> =
     core.serialization.object({
         domainId: core.serialization.property("domain_id", DomainId),
-        organizationId: core.serialization.property("organization_id", OrganizationId),
+        feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
+        clientId: core.serialization.property("client_id", ClientId.optional()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
-        feedbackEnabled: core.serialization.property("feedback_enabled", core.serialization.boolean().optional()),
     });
 
 export declare namespace DomainSummary {
     export interface Raw {
         domain_id: DomainId.Raw;
-        organization_id: OrganizationId.Raw;
+        feedback_enabled: FeedbackEnabled.Raw;
+        client_id?: ClientId.Raw | null;
         updated_at: string;
         created_at: string;
-        feedback_enabled?: boolean | null;
     }
 }
