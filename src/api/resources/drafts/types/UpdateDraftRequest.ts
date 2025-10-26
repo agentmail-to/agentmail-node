@@ -4,8 +4,7 @@
 
 import * as AgentMail from "../../../index.js";
 
-export interface CreateDraftRequest {
-    labels?: AgentMail.DraftLabels;
+export interface UpdateDraftRequest {
     replyTo?: AgentMail.DraftReplyTo;
     to?: AgentMail.DraftTo;
     cc?: AgentMail.DraftCc;
@@ -13,7 +12,5 @@ export interface CreateDraftRequest {
     subject?: AgentMail.DraftSubject;
     text?: AgentMail.DraftText;
     html?: AgentMail.DraftHtml;
-    inReplyTo?: AgentMail.DraftInReplyTo;
     sendAt?: AgentMail.DraftSendAt;
-    clientId?: AgentMail.DraftClientId;
 }

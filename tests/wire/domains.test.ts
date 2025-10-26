@@ -36,7 +36,8 @@ describe("Domains", () => {
         };
         server.mockEndpoint().get("/v0/domains").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const expected = {
+        const response = await client.domains.list();
+        expect(response).toEqual({
             count: 1,
             nextPageToken: "next_page_token",
             domains: [
@@ -55,13 +56,7 @@ describe("Domains", () => {
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        };
-        const page = await client.domains.list();
-
-        expect(expected.domains).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.domains).toEqual(nextPage.data);
+        });
     });
 
     test("get (1)", async () => {
@@ -73,7 +68,6 @@ describe("Domains", () => {
 
         const rawResponseBody = {
             domain_id: "domain_id",
-            domain: "domain",
             status: "PENDING",
             feedback_enabled: true,
             records: [
@@ -84,12 +78,17 @@ describe("Domains", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
-        server.mockEndpoint().get("/v0/domains/domain").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint()
+            .get("/v0/domains/domain_id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
-        const response = await client.domains.get("domain");
+        const response = await client.domains.get("domain_id");
         expect(response).toEqual({
             domainId: "domain_id",
-            domain: "domain",
             status: "PENDING",
             feedbackEnabled: true,
             records: [
@@ -122,10 +121,16 @@ describe("Domains", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
-        server.mockEndpoint().get("/v0/domains/domain").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
+        server
+            .mockEndpoint()
+            .get("/v0/domains/domain_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
 
         await expect(async () => {
-            return await client.domains.get("domain");
+            return await client.domains.get("domain_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
@@ -138,7 +143,6 @@ describe("Domains", () => {
         const rawRequestBody = { domain: "domain", feedback_enabled: true };
         const rawResponseBody = {
             domain_id: "domain_id",
-            domain: "domain",
             status: "PENDING",
             feedback_enabled: true,
             records: [
@@ -164,7 +168,6 @@ describe("Domains", () => {
         });
         expect(response).toEqual({
             domainId: "domain_id",
-            domain: "domain",
             status: "PENDING",
             feedbackEnabled: true,
             records: [
@@ -221,9 +224,9 @@ describe("Domains", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
 
-        server.mockEndpoint().delete("/v0/domains/domain").respondWith().statusCode(200).build();
+        server.mockEndpoint().delete("/v0/domains/domain_id").respondWith().statusCode(200).build();
 
-        const response = await client.domains.delete("domain");
+        const response = await client.domains.delete("domain_id");
         expect(response).toEqual(undefined);
     });
 
@@ -237,14 +240,48 @@ describe("Domains", () => {
         const rawResponseBody = { name: "name", message: "message" };
         server
             .mockEndpoint()
-            .delete("/v0/domains/domain")
+            .delete("/v0/domains/domain_id")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.domains.delete("domain");
+            return await client.domains.delete("domain_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("verify (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server.mockEndpoint().post("/v0/domains/domain_id/verify").respondWith().statusCode(200).build();
+
+        const response = await client.domains.verify("domain_id");
+        expect(response).toEqual(undefined);
+    });
+
+    test("verify (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .post("/v0/domains/domain_id/verify")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.verify("domain_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 });

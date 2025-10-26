@@ -89,7 +89,8 @@ describe("Drafts", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
+        const response = await client.inboxes.drafts.list("inbox_id");
+        expect(response).toEqual({
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
@@ -155,13 +156,7 @@ describe("Drafts", () => {
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        };
-        const page = await client.inboxes.drafts.list("inbox_id");
-
-        expect(expected.drafts).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.drafts).toEqual(nextPage.data);
+        });
     });
 
     test("list (2)", async () => {
@@ -196,6 +191,7 @@ describe("Drafts", () => {
             inbox_id: "inbox_id",
             thread_id: "thread_id",
             draft_id: "draft_id",
+            client_id: "client_id",
             labels: ["labels", "labels"],
             reply_to: ["reply_to", "reply_to"],
             to: ["to", "to"],
@@ -241,6 +237,7 @@ describe("Drafts", () => {
             inboxId: "inbox_id",
             threadId: "thread_id",
             draftId: "draft_id",
+            clientId: "client_id",
             labels: ["labels", "labels"],
             replyTo: ["reply_to", "reply_to"],
             to: ["to", "to"],
@@ -313,11 +310,13 @@ describe("Drafts", () => {
             html: undefined,
             in_reply_to: undefined,
             send_at: undefined,
+            client_id: undefined,
         };
         const rawResponseBody = {
             inbox_id: "inbox_id",
             thread_id: "thread_id",
             draft_id: "draft_id",
+            client_id: "client_id",
             labels: ["labels", "labels"],
             reply_to: ["reply_to", "reply_to"],
             to: ["to", "to"],
@@ -370,11 +369,13 @@ describe("Drafts", () => {
             html: undefined,
             inReplyTo: undefined,
             sendAt: undefined,
+            clientId: undefined,
         });
         expect(response).toEqual({
             inboxId: "inbox_id",
             threadId: "thread_id",
             draftId: "draft_id",
+            clientId: "client_id",
             labels: ["labels", "labels"],
             replyTo: ["reply_to", "reply_to"],
             to: ["to", "to"],
@@ -426,6 +427,7 @@ describe("Drafts", () => {
             html: undefined,
             in_reply_to: undefined,
             send_at: undefined,
+            client_id: undefined,
         };
         const rawResponseBody = { name: "name", message: "message" };
         server
@@ -448,6 +450,158 @@ describe("Drafts", () => {
                 text: undefined,
                 html: undefined,
                 inReplyTo: undefined,
+                sendAt: undefined,
+                clientId: undefined,
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("update (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            subject: undefined,
+            text: undefined,
+            html: undefined,
+            send_at: undefined,
+        };
+        const rawResponseBody = {
+            inbox_id: "inbox_id",
+            thread_id: "thread_id",
+            draft_id: "draft_id",
+            client_id: "client_id",
+            labels: ["labels", "labels"],
+            reply_to: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    content_type: "content_type",
+                    size: 1,
+                    inline: true,
+                },
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    content_type: "content_type",
+                    size: 1,
+                    inline: true,
+                },
+            ],
+            in_reply_to: "in_reply_to",
+            references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+        };
+        server
+            .mockEndpoint()
+            .patch("/v0/inboxes/inbox_id/drafts/draft_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.drafts.update("inbox_id", "draft_id", {
+            replyTo: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            subject: undefined,
+            text: undefined,
+            html: undefined,
+            sendAt: undefined,
+        });
+        expect(response).toEqual({
+            inboxId: "inbox_id",
+            threadId: "thread_id",
+            draftId: "draft_id",
+            clientId: "client_id",
+            labels: ["labels", "labels"],
+            replyTo: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    contentType: "content_type",
+                    size: 1,
+                    inline: true,
+                },
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    contentType: "content_type",
+                    size: 1,
+                    inline: true,
+                },
+            ],
+            inReplyTo: "in_reply_to",
+            references: ["references", "references"],
+            sendStatus: "scheduled",
+            sendAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("update (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            reply_to: undefined,
+            to: undefined,
+            cc: undefined,
+            bcc: undefined,
+            subject: undefined,
+            text: undefined,
+            html: undefined,
+            send_at: undefined,
+        };
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .patch("/v0/inboxes/inbox_id/drafts/draft_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.drafts.update("inbox_id", "draft_id", {
+                replyTo: undefined,
+                to: undefined,
+                cc: undefined,
+                bcc: undefined,
+                subject: undefined,
+                text: undefined,
+                html: undefined,
                 sendAt: undefined,
             });
         }).rejects.toThrow(AgentMail.NotFoundError);

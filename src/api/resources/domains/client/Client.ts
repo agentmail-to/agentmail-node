@@ -47,112 +47,104 @@ export class Domains {
      * @example
      *     await client.domains.list()
      */
-    public async list(
+    public list(
         request: AgentMail.ListDomainsRequest = {},
         requestOptions?: Domains.RequestOptions,
-    ): Promise<core.Page<AgentMail.DomainSummary>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: AgentMail.ListDomainsRequest,
-            ): Promise<core.WithRawResponse<AgentMail.ListDomainsResponse>> => {
-                const { limit, pageToken } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (limit != null) {
-                    _queryParams["limit"] = limit.toString();
-                }
-                if (pageToken != null) {
-                    _queryParams["page_token"] = pageToken;
-                }
-                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (
-                                (await core.Supplier.get(this._options.environment)) ??
-                                environments.AgentMailEnvironment.Production
-                            ).http,
-                        "/v0/domains",
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                });
-                if (_response.ok) {
-                    return {
-                        data: serializers.ListDomainsResponse.parseOrThrow(_response.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.AgentMailError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/domains.");
-                    case "unknown":
-                        throw new errors.AgentMailError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
+    ): core.HttpResponsePromise<AgentMail.ListDomainsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
+    }
+
+    private async __list(
+        request: AgentMail.ListDomainsRequest = {},
+        requestOptions?: Domains.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListDomainsResponse>> {
+        const { limit, pageToken } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        if (pageToken != null) {
+            _queryParams["page_token"] = pageToken;
+        }
+
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
         );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListDomainsResponse, AgentMail.DomainSummary>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.nextPageToken != null &&
-                !(typeof response?.nextPageToken === "string" && response?.nextPageToken === ""),
-            getItems: (response) => response?.domains ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "pageToken", response?.nextPageToken));
-            },
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                "/v0/domains",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
         });
+        if (_response.ok) {
+            return {
+                data: serializers.ListDomainsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.AgentMailError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/domains.");
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
-     * @param {AgentMail.DomainId} domain
+     * @param {AgentMail.DomainId} domainId
      * @param {Domains.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.domains.get("domain")
+     *     await client.domains.get("domain_id")
      */
     public get(
-        domain: AgentMail.DomainId,
+        domainId: AgentMail.DomainId,
         requestOptions?: Domains.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.Domain> {
-        return core.HttpResponsePromise.fromPromise(this.__get(domain, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__get(domainId, requestOptions));
     }
 
     private async __get(
-        domain: AgentMail.DomainId,
+        domainId: AgentMail.DomainId,
         requestOptions?: Domains.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.Domain>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -167,7 +159,7 @@ export class Domains {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain, { omitUndefined: true }))}`,
+                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domainId, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -219,7 +211,7 @@ export class Domains {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/domains/{domain}.");
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/domains/{domain_id}.");
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,
@@ -331,20 +323,23 @@ export class Domains {
     }
 
     /**
-     * @param {AgentMail.DomainId} domain
+     * @param {AgentMail.DomainId} domainId
      * @param {Domains.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.domains.delete("domain")
+     *     await client.domains.delete("domain_id")
      */
-    public delete(domain: AgentMail.DomainId, requestOptions?: Domains.RequestOptions): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__delete(domain, requestOptions));
+    public delete(
+        domainId: AgentMail.DomainId,
+        requestOptions?: Domains.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(domainId, requestOptions));
     }
 
     private async __delete(
-        domain: AgentMail.DomainId,
+        domainId: AgentMail.DomainId,
         requestOptions?: Domains.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -359,7 +354,7 @@ export class Domains {
                         (await core.Supplier.get(this._options.environment)) ??
                         environments.AgentMailEnvironment.Production
                     ).http,
-                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domain, { omitUndefined: true }))}`,
+                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domainId, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -402,7 +397,93 @@ export class Domains {
                     rawResponse: _response.rawResponse,
                 });
             case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling DELETE /v0/domains/{domain}.");
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling DELETE /v0/domains/{domain_id}.");
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {AgentMail.DomainId} domainId
+     * @param {Domains.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.domains.verify("domain_id")
+     */
+    public verify(
+        domainId: AgentMail.DomainId,
+        requestOptions?: Domains.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__verify(domainId, requestOptions));
+    }
+
+    private async __verify(
+        domainId: AgentMail.DomainId,
+        requestOptions?: Domains.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/domains/${encodeURIComponent(serializers.DomainId.jsonOrThrow(domainId, { omitUndefined: true }))}/verify`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling POST /v0/domains/{domain_id}/verify.",
+                );
             case "unknown":
                 throw new errors.AgentMailError({
                     message: _response.error.errorMessage,

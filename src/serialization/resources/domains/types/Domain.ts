@@ -6,7 +6,6 @@ import * as serializers from "../../../index.js";
 import * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import { DomainId } from "./DomainId.js";
-import { DomainName } from "./DomainName.js";
 import { VerificationStatus } from "./VerificationStatus.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
 import { VerificationRecord } from "./VerificationRecord.js";
@@ -15,7 +14,6 @@ import { ClientId } from "./ClientId.js";
 export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, AgentMail.Domain> =
     core.serialization.object({
         domainId: core.serialization.property("domain_id", DomainId),
-        domain: DomainName,
         status: VerificationStatus,
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
         records: core.serialization.list(VerificationRecord),
@@ -27,7 +25,6 @@ export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, Age
 export declare namespace Domain {
     export interface Raw {
         domain_id: DomainId.Raw;
-        domain: DomainName.Raw;
         status: VerificationStatus.Raw;
         feedback_enabled: FeedbackEnabled.Raw;
         records: VerificationRecord.Raw[];

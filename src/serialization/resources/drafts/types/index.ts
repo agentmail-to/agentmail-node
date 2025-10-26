@@ -1,4 +1,5 @@
 export * from "./DraftId.js";
+export * from "./DraftClientId.js";
 export * from "./DraftLabels.js";
 export * from "./DraftReplyTo.js";
 export * from "./DraftTo.js";
@@ -17,3 +18,4 @@ export * from "./DraftItem.js";
 export * from "./Draft.js";
 export * from "./ListDraftsResponse.js";
 export * from "./CreateDraftRequest.js";
+export * from "./UpdateDraftRequest.js";

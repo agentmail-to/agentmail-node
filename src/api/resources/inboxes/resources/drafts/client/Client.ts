@@ -51,126 +51,120 @@ export class Drafts {
      * @example
      *     await client.inboxes.drafts.list("inbox_id")
      */
-    public async list(
+    public list(
         inboxId: AgentMail.inboxes.InboxId,
         request: AgentMail.inboxes.ListDraftsRequest = {},
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<core.Page<AgentMail.DraftItem>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: AgentMail.inboxes.ListDraftsRequest,
-            ): Promise<core.WithRawResponse<AgentMail.ListDraftsResponse>> => {
-                const { limit, pageToken, labels, before, after, ascending } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (limit != null) {
-                    _queryParams["limit"] = limit.toString();
-                }
-                if (pageToken != null) {
-                    _queryParams["page_token"] = pageToken;
-                }
-                if (labels != null) {
-                    _queryParams["labels"] = toJson(
-                        serializers.Labels.jsonOrThrow(labels, {
-                            unrecognizedObjectKeys: "strip",
-                            omitUndefined: true,
-                        }),
-                    );
-                }
-                if (before != null) {
-                    _queryParams["before"] = before.toISOString();
-                }
-                if (after != null) {
-                    _queryParams["after"] = after.toISOString();
-                }
-                if (ascending != null) {
-                    _queryParams["ascending"] = ascending.toString();
-                }
-                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (
-                                (await core.Supplier.get(this._options.environment)) ??
-                                environments.AgentMailEnvironment.Production
-                            ).http,
-                        `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts`,
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                });
-                if (_response.ok) {
-                    return {
-                        data: serializers.ListDraftsResponse.parseOrThrow(_response.body, {
+    ): core.HttpResponsePromise<AgentMail.ListDraftsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(inboxId, request, requestOptions));
+    }
+
+    private async __list(
+        inboxId: AgentMail.inboxes.InboxId,
+        request: AgentMail.inboxes.ListDraftsRequest = {},
+        requestOptions?: Drafts.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListDraftsResponse>> {
+        const { limit, pageToken, labels, before, after, ascending } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        if (pageToken != null) {
+            _queryParams["page_token"] = pageToken;
+        }
+
+        if (labels != null) {
+            _queryParams["labels"] = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
+        }
+
+        if (before != null) {
+            _queryParams["before"] = before.toISOString();
+        }
+
+        if (after != null) {
+            _queryParams["after"] = after.toISOString();
+        }
+
+        if (ascending != null) {
+            _queryParams["ascending"] = ascending.toString();
+        }
+
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ListDraftsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
                         rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    switch (_response.error.statusCode) {
-                        case 404:
-                            throw new AgentMail.NotFoundError(
-                                serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                    skipValidation: true,
-                                    breadcrumbsPrefix: ["response"],
-                                }),
-                                _response.rawResponse,
-                            );
-                        default:
-                            throw new errors.AgentMailError({
-                                statusCode: _response.error.statusCode,
-                                body: _response.error.body,
-                                rawResponse: _response.rawResponse,
-                            });
-                    }
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.AgentMailError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.AgentMailTimeoutError(
-                            "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/drafts.",
-                        );
-                    case "unknown":
-                        throw new errors.AgentMailError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListDraftsResponse, AgentMail.DraftItem>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.nextPageToken != null &&
-                !(typeof response?.nextPageToken === "string" && response?.nextPageToken === ""),
-            getItems: (response) => response?.drafts ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "pageToken", response?.nextPageToken));
-            },
-        });
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/drafts.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
@@ -289,7 +283,8 @@ export class Drafts {
      *         text: undefined,
      *         html: undefined,
      *         inReplyTo: undefined,
-     *         sendAt: undefined
+     *         sendAt: undefined,
+     *         clientId: undefined
      *     })
      */
     public create(
@@ -377,6 +372,122 @@ export class Drafts {
             case "timeout":
                 throw new errors.AgentMailTimeoutError(
                     "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/drafts.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {AgentMail.inboxes.InboxId} inboxId
+     * @param {AgentMail.DraftId} draftId
+     * @param {AgentMail.UpdateDraftRequest} request
+     * @param {Drafts.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.drafts.update("inbox_id", "draft_id", {
+     *         replyTo: undefined,
+     *         to: undefined,
+     *         cc: undefined,
+     *         bcc: undefined,
+     *         subject: undefined,
+     *         text: undefined,
+     *         html: undefined,
+     *         sendAt: undefined
+     *     })
+     */
+    public update(
+        inboxId: AgentMail.inboxes.InboxId,
+        draftId: AgentMail.DraftId,
+        request: AgentMail.UpdateDraftRequest,
+        requestOptions?: Drafts.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.Draft> {
+        return core.HttpResponsePromise.fromPromise(this.__update(inboxId, draftId, request, requestOptions));
+    }
+
+    private async __update(
+        inboxId: AgentMail.inboxes.InboxId,
+        draftId: AgentMail.DraftId,
+        request: AgentMail.UpdateDraftRequest,
+        requestOptions?: Drafts.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.Draft>> {
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${encodeURIComponent(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}/drafts/${encodeURIComponent(serializers.DraftId.jsonOrThrow(draftId, { omitUndefined: true }))}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.UpdateDraftRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Draft.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling PATCH /v0/inboxes/{inbox_id}/drafts/{draft_id}.",
                 );
             case "unknown":
                 throw new errors.AgentMailError({

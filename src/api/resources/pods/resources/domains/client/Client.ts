@@ -51,126 +51,118 @@ export class Domains {
      * @example
      *     await client.pods.domains.list("pod_id")
      */
-    public async list(
+    public list(
         podId: AgentMail.pods.PodId,
         request: AgentMail.pods.ListDomainsRequest = {},
         requestOptions?: Domains.RequestOptions,
-    ): Promise<core.Page<AgentMail.DomainSummary>> {
-        const list = core.HttpResponsePromise.interceptFunction(
-            async (
-                request: AgentMail.pods.ListDomainsRequest,
-            ): Promise<core.WithRawResponse<AgentMail.ListDomainsResponse>> => {
-                const { limit, pageToken, labels, before, after, ascending } = request;
-                const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-                if (limit != null) {
-                    _queryParams["limit"] = limit.toString();
-                }
-                if (pageToken != null) {
-                    _queryParams["page_token"] = pageToken;
-                }
-                if (labels != null) {
-                    _queryParams["labels"] = toJson(
-                        serializers.Labels.jsonOrThrow(labels, {
-                            unrecognizedObjectKeys: "strip",
-                            omitUndefined: true,
-                        }),
-                    );
-                }
-                if (before != null) {
-                    _queryParams["before"] = before.toISOString();
-                }
-                if (after != null) {
-                    _queryParams["after"] = after.toISOString();
-                }
-                if (ascending != null) {
-                    _queryParams["ascending"] = ascending.toString();
-                }
-                let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-                    this._options?.headers,
-                    mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
-                    requestOptions?.headers,
-                );
-                const _response = await core.fetcher({
-                    url: core.url.join(
-                        (await core.Supplier.get(this._options.baseUrl)) ??
-                            (
-                                (await core.Supplier.get(this._options.environment)) ??
-                                environments.AgentMailEnvironment.Production
-                            ).http,
-                        `/v0/pods/${encodeURIComponent(serializers.pods.PodId.jsonOrThrow(podId, { omitUndefined: true }))}/domains`,
-                    ),
-                    method: "GET",
-                    headers: _headers,
-                    queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-                    timeoutMs:
-                        requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
-                    maxRetries: requestOptions?.maxRetries,
-                    abortSignal: requestOptions?.abortSignal,
-                });
-                if (_response.ok) {
-                    return {
-                        data: serializers.ListDomainsResponse.parseOrThrow(_response.body, {
+    ): core.HttpResponsePromise<AgentMail.ListDomainsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(podId, request, requestOptions));
+    }
+
+    private async __list(
+        podId: AgentMail.pods.PodId,
+        request: AgentMail.pods.ListDomainsRequest = {},
+        requestOptions?: Domains.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListDomainsResponse>> {
+        const { limit, pageToken, labels, before, after, ascending } = request;
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (limit != null) {
+            _queryParams["limit"] = limit.toString();
+        }
+
+        if (pageToken != null) {
+            _queryParams["page_token"] = pageToken;
+        }
+
+        if (labels != null) {
+            _queryParams["labels"] = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
+        }
+
+        if (before != null) {
+            _queryParams["before"] = before.toISOString();
+        }
+
+        if (after != null) {
+            _queryParams["after"] = after.toISOString();
+        }
+
+        if (ascending != null) {
+            _queryParams["ascending"] = ascending.toString();
+        }
+
+        let _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/pods/${encodeURIComponent(serializers.pods.PodId.jsonOrThrow(podId, { omitUndefined: true }))}/domains`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: requestOptions?.timeoutInSeconds != null ? requestOptions.timeoutInSeconds * 1000 : 60000,
+            maxRetries: requestOptions?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ListDomainsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
                             skipValidation: true,
                             breadcrumbsPrefix: ["response"],
                         }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
                         rawResponse: _response.rawResponse,
-                    };
-                }
-                if (_response.error.reason === "status-code") {
-                    switch (_response.error.statusCode) {
-                        case 404:
-                            throw new AgentMail.NotFoundError(
-                                serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                                    unrecognizedObjectKeys: "passthrough",
-                                    allowUnrecognizedUnionMembers: true,
-                                    allowUnrecognizedEnumValues: true,
-                                    skipValidation: true,
-                                    breadcrumbsPrefix: ["response"],
-                                }),
-                                _response.rawResponse,
-                            );
-                        default:
-                            throw new errors.AgentMailError({
-                                statusCode: _response.error.statusCode,
-                                body: _response.error.body,
-                                rawResponse: _response.rawResponse,
-                            });
-                    }
-                }
-                switch (_response.error.reason) {
-                    case "non-json":
-                        throw new errors.AgentMailError({
-                            statusCode: _response.error.statusCode,
-                            body: _response.error.rawBody,
-                            rawResponse: _response.rawResponse,
-                        });
-                    case "timeout":
-                        throw new errors.AgentMailTimeoutError(
-                            "Timeout exceeded when calling GET /v0/pods/{pod_id}/domains.",
-                        );
-                    case "unknown":
-                        throw new errors.AgentMailError({
-                            message: _response.error.errorMessage,
-                            rawResponse: _response.rawResponse,
-                        });
-                }
-            },
-        );
-        const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListDomainsResponse, AgentMail.DomainSummary>({
-            response: dataWithRawResponse.data,
-            rawResponse: dataWithRawResponse.rawResponse,
-            hasNextPage: (response) =>
-                response?.nextPageToken != null &&
-                !(typeof response?.nextPageToken === "string" && response?.nextPageToken === ""),
-            getItems: (response) => response?.domains ?? [],
-            loadPage: (response) => {
-                return list(core.setObjectProperty(request, "pageToken", response?.nextPageToken));
-            },
-        });
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/pods/{pod_id}/domains.");
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**

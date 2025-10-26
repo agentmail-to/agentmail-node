@@ -6,7 +6,6 @@ import * as AgentMail from "../../../index.js";
 
 export interface Domain {
     domainId: AgentMail.DomainId;
-    domain: AgentMail.DomainName;
     /** The verification status of the domain. */
     status: AgentMail.VerificationStatus;
     feedbackEnabled: AgentMail.FeedbackEnabled;

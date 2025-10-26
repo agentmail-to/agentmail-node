@@ -5,7 +5,6 @@
 import * as serializers from "../../../index.js";
 import * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
-import { DraftLabels } from "./DraftLabels.js";
 import { DraftReplyTo } from "./DraftReplyTo.js";
 import { DraftTo } from "./DraftTo.js";
 import { DraftCc } from "./DraftCc.js";
@@ -13,15 +12,12 @@ import { DraftBcc } from "./DraftBcc.js";
 import { DraftSubject } from "./DraftSubject.js";
 import { DraftText } from "./DraftText.js";
 import { DraftHtml } from "./DraftHtml.js";
-import { DraftInReplyTo } from "./DraftInReplyTo.js";
 import { DraftSendAt } from "./DraftSendAt.js";
-import { DraftClientId } from "./DraftClientId.js";
 
-export const CreateDraftRequest: core.serialization.ObjectSchema<
-    serializers.CreateDraftRequest.Raw,
-    AgentMail.CreateDraftRequest
+export const UpdateDraftRequest: core.serialization.ObjectSchema<
+    serializers.UpdateDraftRequest.Raw,
+    AgentMail.UpdateDraftRequest
 > = core.serialization.object({
-    labels: DraftLabels.optional(),
     replyTo: core.serialization.property("reply_to", DraftReplyTo.optional()),
     to: DraftTo.optional(),
     cc: DraftCc.optional(),
@@ -29,14 +25,11 @@ export const CreateDraftRequest: core.serialization.ObjectSchema<
     subject: DraftSubject.optional(),
     text: DraftText.optional(),
     html: DraftHtml.optional(),
-    inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
     sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
-    clientId: core.serialization.property("client_id", DraftClientId.optional()),
 });
 
-export declare namespace CreateDraftRequest {
+export declare namespace UpdateDraftRequest {
     export interface Raw {
-        labels?: DraftLabels.Raw | null;
         reply_to?: DraftReplyTo.Raw | null;
         to?: DraftTo.Raw | null;
         cc?: DraftCc.Raw | null;
@@ -44,8 +37,6 @@ export declare namespace CreateDraftRequest {
         subject?: DraftSubject.Raw | null;
         text?: DraftText.Raw | null;
         html?: DraftHtml.Raw | null;
-        in_reply_to?: DraftInReplyTo.Raw | null;
         send_at?: DraftSendAt.Raw | null;
-        client_id?: DraftClientId.Raw | null;
     }
 }

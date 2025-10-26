@@ -83,7 +83,8 @@ describe("Drafts", () => {
         };
         server.mockEndpoint().get("/v0/drafts").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const expected = {
+        const response = await client.drafts.list();
+        expect(response).toEqual({
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
@@ -149,13 +150,7 @@ describe("Drafts", () => {
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        };
-        const page = await client.drafts.list();
-
-        expect(expected.drafts).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.drafts).toEqual(nextPage.data);
+        });
     });
 
     test("list (2)", async () => {
@@ -184,6 +179,7 @@ describe("Drafts", () => {
             inbox_id: "inbox_id",
             thread_id: "thread_id",
             draft_id: "draft_id",
+            client_id: "client_id",
             labels: ["labels", "labels"],
             reply_to: ["reply_to", "reply_to"],
             to: ["to", "to"],
@@ -229,6 +225,7 @@ describe("Drafts", () => {
             inboxId: "inbox_id",
             threadId: "thread_id",
             draftId: "draft_id",
+            clientId: "client_id",
             labels: ["labels", "labels"],
             replyTo: ["reply_to", "reply_to"],
             to: ["to", "to"],

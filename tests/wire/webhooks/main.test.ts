@@ -45,7 +45,8 @@ describe("Webhooks", () => {
         };
         server.mockEndpoint().get("/v0/webhooks").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const expected = {
+        const response = await client.webhooks.list();
+        expect(response).toEqual({
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
@@ -73,13 +74,7 @@ describe("Webhooks", () => {
                     clientId: "client_id",
                 },
             ],
-        };
-        const page = await client.webhooks.list();
-
-        expect(expected.webhooks).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.webhooks).toEqual(nextPage.data);
+        });
     });
 
     test("get (1)", async () => {
