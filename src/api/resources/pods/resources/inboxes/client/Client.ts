@@ -36,7 +36,7 @@ export class Inboxes {
         podId: AgentMail.pods.PodId,
         request: AgentMail.pods.ListInboxesRequest = {},
         requestOptions?: Inboxes.RequestOptions,
-    ): Promise<core.Page<AgentMail.inboxes.Inbox>> {
+    ): Promise<core.Page<AgentMail.inboxes.ListInboxesResponse, AgentMail.inboxes.Inbox>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.pods.ListInboxesRequest,
@@ -140,7 +140,7 @@ export class Inboxes {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.inboxes.ListInboxesResponse, AgentMail.inboxes.Inbox>({
+        return new core.Page<AgentMail.inboxes.ListInboxesResponse, AgentMail.inboxes.Inbox>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

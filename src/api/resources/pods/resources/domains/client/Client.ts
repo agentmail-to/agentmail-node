@@ -36,7 +36,7 @@ export class Domains {
         podId: AgentMail.pods.PodId,
         request: AgentMail.pods.ListDomainsRequest = {},
         requestOptions?: Domains.RequestOptions,
-    ): Promise<core.Page<AgentMail.DomainSummary>> {
+    ): Promise<core.Page<AgentMail.ListDomainsResponse, AgentMail.DomainSummary>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.pods.ListDomainsRequest,
@@ -140,7 +140,7 @@ export class Domains {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListDomainsResponse, AgentMail.DomainSummary>({
+        return new core.Page<AgentMail.ListDomainsResponse, AgentMail.DomainSummary>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

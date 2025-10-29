@@ -31,7 +31,7 @@ export class Webhooks {
     public async list(
         request: AgentMail.webhooks.ListWebhooksRequest = {},
         requestOptions?: Webhooks.RequestOptions,
-    ): Promise<core.Page<AgentMail.webhooks.Webhook>> {
+    ): Promise<core.Page<AgentMail.webhooks.ListWebhooksResponse, AgentMail.webhooks.Webhook>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.webhooks.ListWebhooksRequest,
@@ -102,7 +102,7 @@ export class Webhooks {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.webhooks.ListWebhooksResponse, AgentMail.webhooks.Webhook>({
+        return new core.Page<AgentMail.webhooks.ListWebhooksResponse, AgentMail.webhooks.Webhook>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
