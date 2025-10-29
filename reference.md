@@ -841,6 +841,54 @@ await client.domains.get("domain_id");
 </dl>
 </details>
 
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">getZoneFile</a>(domainId) -> core.BinaryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.domains.getZoneFile("domain_id");
+```
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domainId:** `AgentMail.DomainId`
+
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `Domains.RequestOptions`
+
+</dd>
+</dl>
+</dd>
+</dl>
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">create</a>({ ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
