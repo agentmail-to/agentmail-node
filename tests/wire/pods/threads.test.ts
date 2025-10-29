@@ -93,8 +93,7 @@ describe("Threads", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.pods.threads.list("pod_id");
-        expect(response).toEqual({
+        const expected = {
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
@@ -166,7 +165,13 @@ describe("Threads", () => {
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        });
+        };
+        const page = await client.pods.threads.list("pod_id");
+
+        expect(expected.threads).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.threads).toEqual(nextPage.data);
     });
 
     test("list (2)", async () => {

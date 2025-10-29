@@ -34,8 +34,7 @@ describe("ApiKeys", () => {
         };
         server.mockEndpoint().get("/v0/api-keys").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.apiKeys.list();
-        expect(response).toEqual({
+        const expected = {
             count: 1,
             nextPageToken: "next_page_token",
             apiKeys: [
@@ -54,7 +53,13 @@ describe("ApiKeys", () => {
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        });
+        };
+        const page = await client.apiKeys.list();
+
+        expect(expected.apiKeys).toEqual(page.data);
+        expect(page.hasNextPage()).toBe(true);
+        const nextPage = await page.getNextPage();
+        expect(expected.apiKeys).toEqual(nextPage.data);
     });
 
     test("create (1)", async () => {
