@@ -36,7 +36,7 @@ export class Drafts {
         podId: AgentMail.pods.PodId,
         request: AgentMail.pods.ListDraftsRequest = {},
         requestOptions?: Drafts.RequestOptions,
-    ): Promise<core.Page<AgentMail.DraftItem>> {
+    ): Promise<core.Page<AgentMail.ListDraftsResponse, AgentMail.DraftItem>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.pods.ListDraftsRequest,
@@ -140,7 +140,7 @@ export class Drafts {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListDraftsResponse, AgentMail.DraftItem>({
+        return new core.Page<AgentMail.ListDraftsResponse, AgentMail.DraftItem>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>
