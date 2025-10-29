@@ -20,15 +20,10 @@ A full reference for this library is available [here](https://github.com/agentma
 Instantiate and use the client with the following:
 
 ```typescript
-import { AgentMailClient } from "agentmail";
+import { AgentMailClient, AgentMail } from "agentmail";
 
 const client = new AgentMailClient({ apiKey: "YOUR_API_KEY" });
-await client.inboxes.create({
-    username: undefined,
-    domain: undefined,
-    displayName: undefined,
-    clientId: undefined,
-});
+await client.inboxes.create({});
 ```
 
 ## Request And Response Types
@@ -166,7 +161,10 @@ console.log(rawResponse.headers['X-My-Header']);
 
 ### Runtime Compatibility
 
+
 The SDK works in the following runtimes:
+
+
 
 - Node.js 18+
 - Vercel
@@ -198,7 +196,6 @@ a proof of concept, but know that we will not be able to merge it as-is. We sugg
 an issue first to discuss with us!
 
 On the other hand, contributions to the README are always very welcome!
-
 ## Binary Response
 
 You can consume binary data from endpoints using the `BinaryResponse` type which lets you choose how to consume the data:
@@ -213,7 +210,6 @@ const stream: ReadableStream<Uint8Array> = response.stream();
 // If you want to check if the response body has been used, you can use the following property.
 const bodyUsed = response.bodyUsed;
 ```
-
 <details>
 <summary>Save binary response to a file</summary>
 

@@ -1,1 +1,1 @@
-export { type ListApiKeysRequest } from "./ListApiKeysRequest.js";
+export type { ListApiKeysRequest } from "./ListApiKeysRequest.js";

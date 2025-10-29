@@ -1,1 +1,1 @@
-export { type ListPodsRequest } from "./ListPodsRequest.js";
+export type { ListPodsRequest } from "./ListPodsRequest.js";
