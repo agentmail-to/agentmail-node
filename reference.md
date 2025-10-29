@@ -1,6 +1,6 @@
 # Reference
 ## Inboxes
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.Inbox></code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListInboxesResponse</code></summary>
 <dl>
 <dd>
 
@@ -13,16 +13,7 @@
 <dd>
 
 ```typescript
-const response = await client.inboxes.list();
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inboxes.list();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.inboxes.list();
 
 ```
 </dd>
@@ -206,7 +197,7 @@ await client.inboxes.delete("inbox_id");
 </details>
 
 ## Pods
-<details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.Pod></code></summary>
+<details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListPodsResponse</code></summary>
 <dl>
 <dd>
 
@@ -219,16 +210,7 @@ await client.inboxes.delete("inbox_id");
 <dd>
 
 ```typescript
-const response = await client.pods.list();
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.pods.list();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.pods.list();
 
 ```
 </dd>
@@ -412,7 +394,7 @@ await client.pods.delete("pod_id");
 </details>
 
 ## Webhooks
-<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.Webhook></code></summary>
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListWebhooksResponse</code></summary>
 <dl>
 <dd>
 
@@ -425,16 +407,7 @@ await client.pods.delete("pod_id");
 <dd>
 
 ```typescript
-const response = await client.webhooks.list();
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.webhooks.list();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.webhooks.list();
 
 ```
 </dd>
@@ -621,7 +594,7 @@ await client.webhooks.delete("webhook_id");
 </details>
 
 ## ApiKeys
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.ApiKey></code></summary>
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListApiKeysResponse</code></summary>
 <dl>
 <dd>
 
@@ -634,16 +607,7 @@ await client.webhooks.delete("webhook_id");
 <dd>
 
 ```typescript
-const response = await client.apiKeys.list();
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.apiKeys.list();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.apiKeys.list();
 
 ```
 </dd>
@@ -780,7 +744,7 @@ await client.apiKeys.delete("api_key");
 </details>
 
 ## Domains
-<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.DomainSummary></code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListDomainsResponse</code></summary>
 <dl>
 <dd>
 
@@ -793,16 +757,7 @@ await client.apiKeys.delete("api_key");
 <dd>
 
 ```typescript
-const response = await client.domains.list();
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.domains.list();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.domains.list();
 
 ```
 </dd>
@@ -1087,7 +1042,7 @@ await client.domains.verify("domain_id");
 </details>
 
 ## Drafts
-<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.DraftItem></code></summary>
+<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1100,16 +1055,7 @@ await client.domains.verify("domain_id");
 <dd>
 
 ```typescript
-const response = await client.drafts.list();
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.drafts.list();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.drafts.list();
 
 ```
 </dd>
@@ -1195,7 +1141,7 @@ await client.drafts.get("draft_id");
 </details>
 
 ## Inboxes Drafts
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inboxId, { ...params }) -> core.Page<AgentMail.DraftItem></code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1208,16 +1154,7 @@ await client.drafts.get("draft_id");
 <dd>
 
 ```typescript
-const response = await client.inboxes.drafts.list("inbox_id");
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inboxes.drafts.list("inbox_id");
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.inboxes.drafts.list("inbox_id");
 
 ```
 </dd>
@@ -1563,7 +1500,7 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 </details>
 
 ## Inboxes Messages
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> core.Page<AgentMail.MessageItem></code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1576,16 +1513,7 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 <dd>
 
 ```typescript
-const response = await client.inboxes.messages.list("inbox_id");
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inboxes.messages.list("inbox_id");
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.inboxes.messages.list("inbox_id");
 
 ```
 </dd>
@@ -2057,7 +1985,7 @@ await client.inboxes.metrics.get("inbox_id", {
 </details>
 
 ## Inboxes Threads
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> core.Page<AgentMail.ThreadItem></code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2070,16 +1998,7 @@ await client.inboxes.metrics.get("inbox_id", {
 <dd>
 
 ```typescript
-const response = await client.inboxes.threads.list("inbox_id");
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.inboxes.threads.list("inbox_id");
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.inboxes.threads.list("inbox_id");
 
 ```
 </dd>
@@ -2356,7 +2275,7 @@ await client.metrics.list({
 </details>
 
 ## Pods Domains
-<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">list</a>(podId, { ...params }) -> core.Page<AgentMail.DomainSummary></code></summary>
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListDomainsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2369,16 +2288,7 @@ await client.metrics.list({
 <dd>
 
 ```typescript
-const response = await client.pods.domains.list("pod_id");
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.pods.domains.list("pod_id");
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.pods.domains.list("pod_id");
 
 ```
 </dd>
@@ -2540,7 +2450,7 @@ await client.pods.domains.delete("pod_id", "domain_id");
 </details>
 
 ## Pods Drafts
-<details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">list</a>(podId, { ...params }) -> core.Page<AgentMail.DraftItem></code></summary>
+<details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2553,16 +2463,7 @@ await client.pods.domains.delete("pod_id", "domain_id");
 <dd>
 
 ```typescript
-const response = await client.pods.drafts.list("pod_id");
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.pods.drafts.list("pod_id");
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.pods.drafts.list("pod_id");
 
 ```
 </dd>
@@ -2664,7 +2565,7 @@ await client.pods.drafts.get("pod_id", "draft_id");
 </details>
 
 ## Pods Inboxes
-<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">list</a>(podId, { ...params }) -> core.Page<AgentMail.Inbox></code></summary>
+<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListInboxesResponse</code></summary>
 <dl>
 <dd>
 
@@ -2677,16 +2578,7 @@ await client.pods.drafts.get("pod_id", "draft_id");
 <dd>
 
 ```typescript
-const response = await client.pods.inboxes.list("pod_id");
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.pods.inboxes.list("pod_id");
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.pods.inboxes.list("pod_id");
 
 ```
 </dd>
@@ -2902,7 +2794,7 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 </details>
 
 ## Pods Threads
-<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">list</a>(podId, { ...params }) -> core.Page<AgentMail.ThreadItem></code></summary>
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2915,16 +2807,7 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 <dd>
 
 ```typescript
-const response = await client.pods.threads.list("pod_id");
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.pods.threads.list("pod_id");
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.pods.threads.list("pod_id");
 
 ```
 </dd>
@@ -3091,7 +2974,7 @@ await client.pods.threads.getAttachment("pod_id", "thread_id", "attachment_id");
 </details>
 
 ## Threads
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>({ ...params }) -> core.Page<AgentMail.ThreadItem></code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -3104,16 +2987,7 @@ await client.pods.threads.getAttachment("pod_id", "thread_id", "attachment_id");
 <dd>
 
 ```typescript
-const response = await client.threads.list();
-for await (const item of response) {
-    console.log(item);
-}
-
-// Or you can manually iterate page-by-page
-let page = await client.threads.list();
-while (page.hasNextPage()) {
-    page = page.getNextPage();
-}
+await client.threads.list();
 
 ```
 </dd>

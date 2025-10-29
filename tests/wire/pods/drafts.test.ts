@@ -87,7 +87,8 @@ describe("Drafts", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
+        const response = await client.pods.drafts.list("pod_id");
+        expect(response).toEqual({
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
@@ -153,13 +154,7 @@ describe("Drafts", () => {
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        };
-        const page = await client.pods.drafts.list("pod_id");
-
-        expect(expected.drafts).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.drafts).toEqual(nextPage.data);
+        });
     });
 
     test("list (2)", async () => {

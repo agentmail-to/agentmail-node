@@ -40,7 +40,8 @@ describe("Domains", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const expected = {
+        const response = await client.pods.domains.list("pod_id");
+        expect(response).toEqual({
             count: 1,
             nextPageToken: "next_page_token",
             domains: [
@@ -59,13 +60,7 @@ describe("Domains", () => {
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        };
-        const page = await client.pods.domains.list("pod_id");
-
-        expect(expected.domains).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.domains).toEqual(nextPage.data);
+        });
     });
 
     test("list (2)", async () => {
