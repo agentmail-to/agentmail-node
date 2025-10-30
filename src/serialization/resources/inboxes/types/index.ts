@@ -4,3 +4,4 @@ export * from "./DisplayName.js";
 export * from "./Inbox.js";
 export * from "./InboxId.js";
 export * from "./ListInboxesResponse.js";
+export * from "./UpdateInboxRequest.js";

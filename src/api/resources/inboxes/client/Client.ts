@@ -326,6 +326,110 @@ export class Inboxes {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inboxId
+     * @param {AgentMail.inboxes.UpdateInboxRequest} request
+     * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.update("inbox_id", {
+     *         displayName: "display_name"
+     *     })
+     */
+    public update(
+        inboxId: AgentMail.inboxes.InboxId,
+        request: AgentMail.inboxes.UpdateInboxRequest,
+        requestOptions?: Inboxes.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.inboxes.Inbox> {
+        return core.HttpResponsePromise.fromPromise(this.__update(inboxId, request, requestOptions));
+    }
+
+    private async __update(
+        inboxId: AgentMail.inboxes.InboxId,
+        request: AgentMail.inboxes.UpdateInboxRequest,
+        requestOptions?: Inboxes.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.inboxes.Inbox>> {
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            this._options?.headers,
+            mergeOnlyDefinedHeaders({ Authorization: await this._getAuthorizationHeader() }),
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inboxId, { omitUndefined: true }))}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.inboxes.UpdateInboxRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.inboxes.Inbox.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling PATCH /v0/inboxes/{inbox_id}.");
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {AgentMail.inboxes.InboxId} inboxId
      * @param {Inboxes.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
