@@ -87,7 +87,8 @@ describe("Threads", () => {
         };
         server.mockEndpoint().get("/v0/threads").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const expected = {
+        const response = await client.threads.list();
+        expect(response).toEqual({
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
@@ -159,13 +160,7 @@ describe("Threads", () => {
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
-        };
-        const page = await client.threads.list();
-
-        expect(expected.threads).toEqual(page.data);
-        expect(page.hasNextPage()).toBe(true);
-        const nextPage = await page.getNextPage();
-        expect(expected.threads).toEqual(nextPage.data);
+        });
     });
 
     test("list (2)", async () => {
