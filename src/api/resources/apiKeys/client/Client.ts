@@ -31,7 +31,7 @@ export class ApiKeys {
     public async list(
         request: AgentMail.ListApiKeysRequest = {},
         requestOptions?: ApiKeys.RequestOptions,
-    ): Promise<core.Page<AgentMail.ApiKey>> {
+    ): Promise<core.Page<AgentMail.ApiKey, AgentMail.ListApiKeysResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.ListApiKeysRequest,
@@ -102,7 +102,7 @@ export class ApiKeys {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListApiKeysResponse, AgentMail.ApiKey>({
+        return new core.Page<AgentMail.ApiKey, AgentMail.ListApiKeysResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

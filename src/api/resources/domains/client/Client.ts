@@ -31,7 +31,7 @@ export class Domains {
     public async list(
         request: AgentMail.ListDomainsRequest = {},
         requestOptions?: Domains.RequestOptions,
-    ): Promise<core.Page<AgentMail.DomainSummary>> {
+    ): Promise<core.Page<AgentMail.DomainSummary, AgentMail.ListDomainsResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.ListDomainsRequest,
@@ -102,7 +102,7 @@ export class Domains {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListDomainsResponse, AgentMail.DomainSummary>({
+        return new core.Page<AgentMail.DomainSummary, AgentMail.ListDomainsResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

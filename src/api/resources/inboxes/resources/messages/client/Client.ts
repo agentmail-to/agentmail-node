@@ -36,7 +36,7 @@ export class Messages {
         inboxId: AgentMail.inboxes.InboxId,
         request: AgentMail.inboxes.ListMessagesRequest = {},
         requestOptions?: Messages.RequestOptions,
-    ): Promise<core.Page<AgentMail.MessageItem>> {
+    ): Promise<core.Page<AgentMail.MessageItem, AgentMail.ListMessagesResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.inboxes.ListMessagesRequest,
@@ -140,7 +140,7 @@ export class Messages {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListMessagesResponse, AgentMail.MessageItem>({
+        return new core.Page<AgentMail.MessageItem, AgentMail.ListMessagesResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

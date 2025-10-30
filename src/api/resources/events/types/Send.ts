@@ -4,6 +4,7 @@ import type * as AgentMail from "../../../index.js";
 
 export interface Send {
     inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
     messageId: AgentMail.MessageId;
     timestamp: AgentMail.Timestamp;
     /** Sent recipients. */

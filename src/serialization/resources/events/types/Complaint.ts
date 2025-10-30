@@ -5,11 +5,13 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
 import { MessageId } from "../../messages/types/MessageId.js";
+import { ThreadId } from "../../threads/types/ThreadId.js";
 import { Timestamp } from "./Timestamp.js";
 
 export const Complaint: core.serialization.ObjectSchema<serializers.Complaint.Raw, AgentMail.Complaint> =
     core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
+        threadId: core.serialization.property("thread_id", ThreadId),
         messageId: core.serialization.property("message_id", MessageId),
         timestamp: Timestamp,
         type: core.serialization.string(),
@@ -20,6 +22,7 @@ export const Complaint: core.serialization.ObjectSchema<serializers.Complaint.Ra
 export declare namespace Complaint {
     export interface Raw {
         inbox_id: InboxId.Raw;
+        thread_id: ThreadId.Raw;
         message_id: MessageId.Raw;
         timestamp: Timestamp.Raw;
         type: string;

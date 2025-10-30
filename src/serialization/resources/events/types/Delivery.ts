@@ -5,11 +5,13 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
 import { MessageId } from "../../messages/types/MessageId.js";
+import { ThreadId } from "../../threads/types/ThreadId.js";
 import { Timestamp } from "./Timestamp.js";
 
 export const Delivery: core.serialization.ObjectSchema<serializers.Delivery.Raw, AgentMail.Delivery> =
     core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
+        threadId: core.serialization.property("thread_id", ThreadId),
         messageId: core.serialization.property("message_id", MessageId),
         timestamp: Timestamp,
         recipients: core.serialization.list(core.serialization.string()),
@@ -18,6 +20,7 @@ export const Delivery: core.serialization.ObjectSchema<serializers.Delivery.Raw,
 export declare namespace Delivery {
     export interface Raw {
         inbox_id: InboxId.Raw;
+        thread_id: ThreadId.Raw;
         message_id: MessageId.Raw;
         timestamp: Timestamp.Raw;
         recipients: string[];

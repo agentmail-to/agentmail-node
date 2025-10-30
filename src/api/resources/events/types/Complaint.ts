@@ -4,6 +4,7 @@ import type * as AgentMail from "../../../index.js";
 
 export interface Complaint {
     inboxId: AgentMail.inboxes.InboxId;
+    threadId: AgentMail.ThreadId;
     messageId: AgentMail.MessageId;
     timestamp: AgentMail.Timestamp;
     /** Complaint type. */

@@ -34,7 +34,7 @@ export class Threads {
     public async list(
         request: AgentMail.ListThreadsRequest = {},
         requestOptions?: Threads.RequestOptions,
-    ): Promise<core.Page<AgentMail.ThreadItem>> {
+    ): Promise<core.Page<AgentMail.ThreadItem, AgentMail.ListThreadsResponse>> {
         const list = core.HttpResponsePromise.interceptFunction(
             async (
                 request: AgentMail.ListThreadsRequest,
@@ -136,7 +136,7 @@ export class Threads {
             },
         );
         const dataWithRawResponse = await list(request).withRawResponse();
-        return new core.Pageable<AgentMail.ListThreadsResponse, AgentMail.ThreadItem>({
+        return new core.Page<AgentMail.ThreadItem, AgentMail.ListThreadsResponse>({
             response: dataWithRawResponse.data,
             rawResponse: dataWithRawResponse.rawResponse,
             hasNextPage: (response) =>

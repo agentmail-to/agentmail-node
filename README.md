@@ -67,8 +67,8 @@ List endpoints are paginated. The SDK provides an iterator so that you can simpl
 import { AgentMailClient } from "agentmail";
 
 const client = new AgentMailClient({ apiKey: "YOUR_API_KEY" });
-const response = await client.inboxes.list();
-for await (const item of response) {
+const pageableResponse = await client.inboxes.list();
+for await (const item of pageableResponse) {
     console.log(item);
 }
 
@@ -77,6 +77,9 @@ let page = await client.inboxes.list();
 while (page.hasNextPage()) {
     page = page.getNextPage();
 }
+
+// You can also access the underlying response
+const response = page.response;
 ```
 
 ## Advanced
