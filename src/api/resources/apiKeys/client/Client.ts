@@ -150,7 +150,9 @@ export class ApiKeys {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.CreateApiKeyRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

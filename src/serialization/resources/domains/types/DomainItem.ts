@@ -7,7 +7,7 @@ import { ClientId } from "./ClientId.js";
 import { DomainId } from "./DomainId.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
 
-export const DomainSummary: core.serialization.ObjectSchema<serializers.DomainSummary.Raw, AgentMail.DomainSummary> =
+export const DomainItem: core.serialization.ObjectSchema<serializers.DomainItem.Raw, AgentMail.DomainItem> =
     core.serialization.object({
         domainId: core.serialization.property("domain_id", DomainId),
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
@@ -16,7 +16,7 @@ export const DomainSummary: core.serialization.ObjectSchema<serializers.DomainSu
         createdAt: core.serialization.property("created_at", core.serialization.date()),
     });
 
-export declare namespace DomainSummary {
+export declare namespace DomainItem {
     export interface Raw {
         domain_id: DomainId.Raw;
         feedback_enabled: FeedbackEnabled.Raw;

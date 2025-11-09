@@ -57,7 +57,12 @@ export class Messages {
 
         if (labels != null) {
             _queryParams.labels = toJson(
-                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+                serializers.Labels.jsonOrThrow(labels, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    omitUndefined: true,
+                }),
             );
         }
 
@@ -461,7 +466,9 @@ export class Messages {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.SendMessageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -592,7 +599,9 @@ export class Messages {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.ReplyToMessageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -722,7 +731,9 @@ export class Messages {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.UpdateMessageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

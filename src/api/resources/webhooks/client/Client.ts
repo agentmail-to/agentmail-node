@@ -244,7 +244,9 @@ export class Webhooks {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.webhooks.CreateWebhookRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

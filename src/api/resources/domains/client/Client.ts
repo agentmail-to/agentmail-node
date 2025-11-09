@@ -325,7 +325,9 @@ export class Domains {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.CreateDomainRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

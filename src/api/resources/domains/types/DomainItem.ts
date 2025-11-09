@@ -2,7 +2,7 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface DomainSummary {
+export interface DomainItem {
     domainId: AgentMail.DomainId;
     feedbackEnabled: AgentMail.FeedbackEnabled;
     clientId?: AgentMail.ClientId;

@@ -57,7 +57,12 @@ export class Domains {
 
         if (labels != null) {
             _queryParams.labels = toJson(
-                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+                serializers.Labels.jsonOrThrow(labels, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    omitUndefined: true,
+                }),
             );
         }
 
@@ -192,7 +197,9 @@ export class Domains {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.CreateDomainRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
+                unrecognizedObjectKeys: "passthrough",
+                allowUnrecognizedUnionMembers: true,
+                allowUnrecognizedEnumValues: true,
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

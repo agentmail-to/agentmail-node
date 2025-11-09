@@ -14,6 +14,7 @@ describe("Domains", () => {
 
         const rawResponseBody = {
             count: 1,
+            limit: 1,
             next_page_token: "next_page_token",
             domains: [
                 {
@@ -43,6 +44,7 @@ describe("Domains", () => {
         const response = await client.pods.domains.list("pod_id");
         expect(response).toEqual({
             count: 1,
+            limit: 1,
             nextPageToken: "next_page_token",
             domains: [
                 {

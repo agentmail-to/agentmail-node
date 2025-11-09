@@ -4,22 +4,25 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Count } from "../../../types/Count.js";
+import { Limit } from "../../../types/Limit.js";
 import { PageToken } from "../../../types/PageToken.js";
-import { DomainSummary } from "./DomainSummary.js";
+import { DomainItem } from "./DomainItem.js";
 
 export const ListDomainsResponse: core.serialization.ObjectSchema<
     serializers.ListDomainsResponse.Raw,
     AgentMail.ListDomainsResponse
 > = core.serialization.object({
     count: Count,
+    limit: Limit.optional(),
     nextPageToken: core.serialization.property("next_page_token", PageToken.optional()),
-    domains: core.serialization.list(DomainSummary),
+    domains: core.serialization.list(DomainItem),
 });
 
 export declare namespace ListDomainsResponse {
     export interface Raw {
         count: Count.Raw;
+        limit?: Limit.Raw | null;
         next_page_token?: PageToken.Raw | null;
-        domains: DomainSummary.Raw[];
+        domains: DomainItem.Raw[];
     }
 }
