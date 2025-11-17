@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../index.js";
 
 export interface Inbox {
+    podId: AgentMail.pods.PodId;
     inboxId: AgentMail.inboxes.InboxId;
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;

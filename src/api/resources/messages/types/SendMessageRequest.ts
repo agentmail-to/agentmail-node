@@ -12,4 +12,5 @@ export interface SendMessageRequest {
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.SendMessageAttachments;
+    headers?: AgentMail.SendMessageHeaders;
 }

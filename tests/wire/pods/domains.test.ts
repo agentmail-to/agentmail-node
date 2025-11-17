@@ -18,6 +18,7 @@ describe("Domains", () => {
             next_page_token: "next_page_token",
             domains: [
                 {
+                    pod_id: "pod_id",
                     domain_id: "domain_id",
                     feedback_enabled: true,
                     client_id: "client_id",
@@ -25,6 +26,7 @@ describe("Domains", () => {
                     created_at: "2024-01-15T09:30:00Z",
                 },
                 {
+                    pod_id: "pod_id",
                     domain_id: "domain_id",
                     feedback_enabled: true,
                     client_id: "client_id",
@@ -48,6 +50,7 @@ describe("Domains", () => {
             nextPageToken: "next_page_token",
             domains: [
                 {
+                    podId: "pod_id",
                     domainId: "domain_id",
                     feedbackEnabled: true,
                     clientId: "client_id",
@@ -55,6 +58,7 @@ describe("Domains", () => {
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
+                    podId: "pod_id",
                     domainId: "domain_id",
                     feedbackEnabled: true,
                     clientId: "client_id",
@@ -94,6 +98,7 @@ describe("Domains", () => {
         });
         const rawRequestBody = { domain: "domain", feedback_enabled: true };
         const rawResponseBody = {
+            pod_id: "pod_id",
             domain_id: "domain_id",
             status: "PENDING",
             feedback_enabled: true,
@@ -119,6 +124,7 @@ describe("Domains", () => {
             feedbackEnabled: true,
         });
         expect(response).toEqual({
+            podId: "pod_id",
             domainId: "domain_id",
             status: "PENDING",
             feedbackEnabled: true,
