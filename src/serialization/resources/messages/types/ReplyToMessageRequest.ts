@@ -9,6 +9,7 @@ import { MessageText } from "./MessageText.js";
 import { SendMessageAttachments } from "./SendMessageAttachments.js";
 import { SendMessageBcc } from "./SendMessageBcc.js";
 import { SendMessageCc } from "./SendMessageCc.js";
+import { SendMessageHeaders } from "./SendMessageHeaders.js";
 import { SendMessageReplyTo } from "./SendMessageReplyTo.js";
 import { SendMessageTo } from "./SendMessageTo.js";
 
@@ -24,6 +25,7 @@ export const ReplyToMessageRequest: core.serialization.ObjectSchema<
     text: MessageText.optional(),
     html: MessageHtml.optional(),
     attachments: SendMessageAttachments.optional(),
+    headers: SendMessageHeaders.optional(),
 });
 
 export declare namespace ReplyToMessageRequest {
@@ -36,5 +38,6 @@ export declare namespace ReplyToMessageRequest {
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
         attachments?: SendMessageAttachments.Raw | null;
+        headers?: SendMessageHeaders.Raw | null;
     }
 }

@@ -3,12 +3,14 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { PodId } from "../../pods/types/PodId.js";
 import { ClientId } from "./ClientId.js";
 import { DomainId } from "./DomainId.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
 
 export const DomainItem: core.serialization.ObjectSchema<serializers.DomainItem.Raw, AgentMail.DomainItem> =
     core.serialization.object({
+        podId: core.serialization.property("pod_id", PodId.optional()),
         domainId: core.serialization.property("domain_id", DomainId),
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
         clientId: core.serialization.property("client_id", ClientId.optional()),
@@ -18,6 +20,7 @@ export const DomainItem: core.serialization.ObjectSchema<serializers.DomainItem.
 
 export declare namespace DomainItem {
     export interface Raw {
+        pod_id?: PodId.Raw | null;
         domain_id: DomainId.Raw;
         feedback_enabled: FeedbackEnabled.Raw;
         client_id?: ClientId.Raw | null;

@@ -3,12 +3,14 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { PodId } from "../../pods/types/PodId.js";
 import { ClientId } from "./ClientId.js";
 import { DisplayName } from "./DisplayName.js";
 import { InboxId } from "./InboxId.js";
 
 export const Inbox: core.serialization.ObjectSchema<serializers.inboxes.Inbox.Raw, AgentMail.inboxes.Inbox> =
     core.serialization.object({
+        podId: core.serialization.property("pod_id", PodId),
         inboxId: core.serialization.property("inbox_id", InboxId),
         displayName: core.serialization.property("display_name", DisplayName.optional()),
         clientId: core.serialization.property("client_id", ClientId.optional()),
@@ -18,6 +20,7 @@ export const Inbox: core.serialization.ObjectSchema<serializers.inboxes.Inbox.Ra
 
 export declare namespace Inbox {
     export interface Raw {
+        pod_id: PodId.Raw;
         inbox_id: InboxId.Raw;
         display_name?: DisplayName.Raw | null;
         client_id?: ClientId.Raw | null;

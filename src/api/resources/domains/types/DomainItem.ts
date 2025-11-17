@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../index.js";
 
 export interface DomainItem {
+    podId?: AgentMail.pods.PodId;
     domainId: AgentMail.DomainId;
     feedbackEnabled: AgentMail.FeedbackEnabled;
     clientId?: AgentMail.ClientId;
