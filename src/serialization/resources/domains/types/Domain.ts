@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { PodId } from "../../pods/types/PodId.js";
 import { ClientId } from "./ClientId.js";
 import { DomainId } from "./DomainId.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
@@ -11,6 +12,7 @@ import { VerificationStatus } from "./VerificationStatus.js";
 
 export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, AgentMail.Domain> =
     core.serialization.object({
+        podId: core.serialization.property("pod_id", PodId.optional()),
         domainId: core.serialization.property("domain_id", DomainId),
         status: VerificationStatus,
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
@@ -22,6 +24,7 @@ export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, Age
 
 export declare namespace Domain {
     export interface Raw {
+        pod_id?: PodId.Raw | null;
         domain_id: DomainId.Raw;
         status: VerificationStatus.Raw;
         feedback_enabled: FeedbackEnabled.Raw;

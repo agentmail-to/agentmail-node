@@ -18,6 +18,7 @@ describe("Inboxes", () => {
             next_page_token: "next_page_token",
             inboxes: [
                 {
+                    pod_id: "pod_id",
                     inbox_id: "inbox_id",
                     display_name: "display_name",
                     client_id: "client_id",
@@ -25,6 +26,7 @@ describe("Inboxes", () => {
                     created_at: "2024-01-15T09:30:00Z",
                 },
                 {
+                    pod_id: "pod_id",
                     inbox_id: "inbox_id",
                     display_name: "display_name",
                     client_id: "client_id",
@@ -42,6 +44,7 @@ describe("Inboxes", () => {
             nextPageToken: "next_page_token",
             inboxes: [
                 {
+                    podId: "pod_id",
                     inboxId: "inbox_id",
                     displayName: "display_name",
                     clientId: "client_id",
@@ -49,6 +52,7 @@ describe("Inboxes", () => {
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
+                    podId: "pod_id",
                     inboxId: "inbox_id",
                     displayName: "display_name",
                     clientId: "client_id",
@@ -67,6 +71,7 @@ describe("Inboxes", () => {
         });
 
         const rawResponseBody = {
+            pod_id: "pod_id",
             inbox_id: "inbox_id",
             display_name: "display_name",
             client_id: "client_id",
@@ -83,6 +88,7 @@ describe("Inboxes", () => {
 
         const response = await client.inboxes.get("inbox_id");
         expect(response).toEqual({
+            podId: "pod_id",
             inboxId: "inbox_id",
             displayName: "display_name",
             clientId: "client_id",
@@ -120,6 +126,7 @@ describe("Inboxes", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = {
+            pod_id: "pod_id",
             inbox_id: "inbox_id",
             display_name: "display_name",
             client_id: "client_id",
@@ -137,6 +144,7 @@ describe("Inboxes", () => {
 
         const response = await client.inboxes.create({});
         expect(response).toEqual({
+            podId: "pod_id",
             inboxId: "inbox_id",
             displayName: "display_name",
             clientId: "client_id",
@@ -175,6 +183,7 @@ describe("Inboxes", () => {
         });
         const rawRequestBody = { display_name: "display_name" };
         const rawResponseBody = {
+            pod_id: "pod_id",
             inbox_id: "inbox_id",
             display_name: "display_name",
             client_id: "client_id",
@@ -194,6 +203,7 @@ describe("Inboxes", () => {
             displayName: "display_name",
         });
         expect(response).toEqual({
+            podId: "pod_id",
             inboxId: "inbox_id",
             displayName: "display_name",
             clientId: "client_id",

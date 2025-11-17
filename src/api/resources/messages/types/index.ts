@@ -24,6 +24,7 @@ export * from "./ReplyToMessageRequest.js";
 export * from "./SendMessageAttachments.js";
 export * from "./SendMessageBcc.js";
 export * from "./SendMessageCc.js";
+export * from "./SendMessageHeaders.js";
 export * from "./SendMessageReplyTo.js";
 export * from "./SendMessageRequest.js";
 export * from "./SendMessageResponse.js";

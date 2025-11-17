@@ -11,4 +11,5 @@ export interface ReplyToMessageRequest {
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.SendMessageAttachments;
+    headers?: AgentMail.SendMessageHeaders;
 }
