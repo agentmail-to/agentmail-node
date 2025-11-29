@@ -3,8 +3,8 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { EventTypes } from "../../events/types/EventTypes.js";
 import { ClientId } from "./ClientId.js";
-import { EventTypes } from "./EventTypes.js";
 import { InboxIds } from "./InboxIds.js";
 import { Url } from "./Url.js";
 import { WebhookId } from "./WebhookId.js";

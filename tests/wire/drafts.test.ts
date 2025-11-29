@@ -4,10 +4,11 @@ import * as AgentMail from "../../src/api/index";
 import { AgentMailClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Drafts", () => {
+describe("DraftsClient", () => {
     test("list (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -154,6 +155,7 @@ describe("Drafts", () => {
     test("list (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -169,6 +171,7 @@ describe("Drafts", () => {
     test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -261,6 +264,7 @@ describe("Drafts", () => {
     test("get (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });

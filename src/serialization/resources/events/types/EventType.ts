@@ -4,7 +4,7 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const EventType: core.serialization.Schema<serializers.webhooks.EventType.Raw, AgentMail.webhooks.EventType> =
+export const EventType: core.serialization.Schema<serializers.EventType.Raw, AgentMail.EventType> =
     core.serialization.enum_([
         "message.received",
         "message.sent",
@@ -12,6 +12,7 @@ export const EventType: core.serialization.Schema<serializers.webhooks.EventType
         "message.bounced",
         "message.complained",
         "message.rejected",
+        "domain.verified",
     ]);
 
 export declare namespace EventType {
@@ -21,5 +22,6 @@ export declare namespace EventType {
         | "message.delivered"
         | "message.bounced"
         | "message.complained"
-        | "message.rejected";
+        | "message.rejected"
+        | "domain.verified";
 }

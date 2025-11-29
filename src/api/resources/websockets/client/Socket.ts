@@ -18,7 +18,8 @@ export declare namespace WebsocketsSocket {
         | AgentMail.MessageDeliveredEvent
         | AgentMail.MessageBouncedEvent
         | AgentMail.MessageComplainedEvent
-        | AgentMail.MessageRejectedEvent;
+        | AgentMail.MessageRejectedEvent
+        | AgentMail.DomainVerifiedEvent;
     type EventHandlers = {
         open?: () => void;
         message?: (message: Response) => void;

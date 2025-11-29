@@ -37,7 +37,7 @@ await client.inboxes.list();
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -49,7 +49,7 @@ await client.inboxes.list();
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">get</a>(inboxId) -> AgentMail.Inbox</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">get</a>(inbox_id) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -78,7 +78,7 @@ await client.inboxes.get("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -86,7 +86,7 @@ await client.inboxes.get("inbox_id");
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -135,7 +135,7 @@ await client.inboxes.create({});
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -147,7 +147,7 @@ await client.inboxes.create({});
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">update</a>(inboxId, { ...params }) -> AgentMail.Inbox</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">update</a>(inbox_id, { ...params }) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -178,7 +178,7 @@ await client.inboxes.update("inbox_id", {
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -194,7 +194,7 @@ await client.inboxes.update("inbox_id", {
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -206,7 +206,7 @@ await client.inboxes.update("inbox_id", {
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">delete</a>(inboxId) -> void</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">delete</a>(inbox_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -235,7 +235,7 @@ await client.inboxes.delete("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -243,7 +243,7 @@ await client.inboxes.delete("inbox_id");
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -293,7 +293,7 @@ await client.pods.list();
 <dl>
 <dd>
 
-**requestOptions:** `Pods.RequestOptions` 
+**requestOptions:** `PodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -305,7 +305,7 @@ await client.pods.list();
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">get</a>(podId) -> AgentMail.Pod</code></summary>
+<details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">get</a>(pod_id) -> AgentMail.Pod</code></summary>
 <dl>
 <dd>
 
@@ -334,7 +334,7 @@ await client.pods.get("pod_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -342,7 +342,7 @@ await client.pods.get("pod_id");
 <dl>
 <dd>
 
-**requestOptions:** `Pods.RequestOptions` 
+**requestOptions:** `PodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -391,7 +391,7 @@ await client.pods.create({});
 <dl>
 <dd>
 
-**requestOptions:** `Pods.RequestOptions` 
+**requestOptions:** `PodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -403,7 +403,7 @@ await client.pods.create({});
 </dl>
 </details>
 
-<details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">delete</a>(podId) -> void</code></summary>
+<details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">delete</a>(pod_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -432,7 +432,7 @@ await client.pods.delete("pod_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -440,7 +440,7 @@ await client.pods.delete("pod_id");
 <dl>
 <dd>
 
-**requestOptions:** `Pods.RequestOptions` 
+**requestOptions:** `PodsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -490,7 +490,7 @@ await client.webhooks.list();
 <dl>
 <dd>
 
-**requestOptions:** `Webhooks.RequestOptions` 
+**requestOptions:** `WebhooksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -502,7 +502,7 @@ await client.webhooks.list();
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">get</a>(webhookId) -> AgentMail.Webhook</code></summary>
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">get</a>(webhook_id) -> AgentMail.Webhook</code></summary>
 <dl>
 <dd>
 
@@ -531,7 +531,7 @@ await client.webhooks.get("webhook_id");
 <dl>
 <dd>
 
-**webhookId:** `AgentMail.WebhookId` 
+**webhook_id:** `AgentMail.WebhookId` 
     
 </dd>
 </dl>
@@ -539,7 +539,7 @@ await client.webhooks.get("webhook_id");
 <dl>
 <dd>
 
-**requestOptions:** `Webhooks.RequestOptions` 
+**requestOptions:** `WebhooksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -591,7 +591,7 @@ await client.webhooks.create({
 <dl>
 <dd>
 
-**requestOptions:** `Webhooks.RequestOptions` 
+**requestOptions:** `WebhooksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -603,7 +603,7 @@ await client.webhooks.create({
 </dl>
 </details>
 
-<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">delete</a>(webhookId) -> void</code></summary>
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">delete</a>(webhook_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -632,7 +632,7 @@ await client.webhooks.delete("webhook_id");
 <dl>
 <dd>
 
-**webhookId:** `AgentMail.WebhookId` 
+**webhook_id:** `AgentMail.WebhookId` 
     
 </dd>
 </dl>
@@ -640,7 +640,7 @@ await client.webhooks.delete("webhook_id");
 <dl>
 <dd>
 
-**requestOptions:** `Webhooks.RequestOptions` 
+**requestOptions:** `WebhooksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -690,7 +690,7 @@ await client.apiKeys.list();
 <dl>
 <dd>
 
-**requestOptions:** `ApiKeys.RequestOptions` 
+**requestOptions:** `ApiKeysClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -741,7 +741,7 @@ await client.apiKeys.create({
 <dl>
 <dd>
 
-**requestOptions:** `ApiKeys.RequestOptions` 
+**requestOptions:** `ApiKeysClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -753,7 +753,7 @@ await client.apiKeys.create({
 </dl>
 </details>
 
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">delete</a>(apiKey) -> void</code></summary>
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">delete</a>(api_key) -> void</code></summary>
 <dl>
 <dd>
 
@@ -782,7 +782,7 @@ await client.apiKeys.delete("api_key");
 <dl>
 <dd>
 
-**apiKey:** `AgentMail.ApiKeyId` 
+**api_key:** `AgentMail.ApiKeyId` 
     
 </dd>
 </dl>
@@ -790,7 +790,7 @@ await client.apiKeys.delete("api_key");
 <dl>
 <dd>
 
-**requestOptions:** `ApiKeys.RequestOptions` 
+**requestOptions:** `ApiKeysClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -840,7 +840,7 @@ await client.domains.list();
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -852,7 +852,7 @@ await client.domains.list();
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">get</a>(domainId) -> AgentMail.Domain</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">get</a>(domain_id) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
 
@@ -881,7 +881,7 @@ await client.domains.get("domain_id");
 <dl>
 <dd>
 
-**domainId:** `AgentMail.DomainId` 
+**domain_id:** `AgentMail.DomainId` 
     
 </dd>
 </dl>
@@ -889,7 +889,7 @@ await client.domains.get("domain_id");
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -901,7 +901,7 @@ await client.domains.get("domain_id");
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">getZoneFile</a>(domainId) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">getZoneFile</a>(domain_id) -> core.BinaryResponse</code></summary>
 <dl>
 <dd>
 
@@ -930,7 +930,7 @@ await client.domains.getZoneFile("domain_id");
 <dl>
 <dd>
 
-**domainId:** `AgentMail.DomainId` 
+**domain_id:** `AgentMail.DomainId` 
     
 </dd>
 </dl>
@@ -938,7 +938,7 @@ await client.domains.getZoneFile("domain_id");
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -990,7 +990,7 @@ await client.domains.create({
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1002,7 +1002,7 @@ await client.domains.create({
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">delete</a>(domainId) -> void</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">delete</a>(domain_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1031,7 +1031,7 @@ await client.domains.delete("domain_id");
 <dl>
 <dd>
 
-**domainId:** `AgentMail.DomainId` 
+**domain_id:** `AgentMail.DomainId` 
     
 </dd>
 </dl>
@@ -1039,7 +1039,7 @@ await client.domains.delete("domain_id");
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1051,7 +1051,7 @@ await client.domains.delete("domain_id");
 </dl>
 </details>
 
-<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">verify</a>(domainId) -> void</code></summary>
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">verify</a>(domain_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1080,7 +1080,7 @@ await client.domains.verify("domain_id");
 <dl>
 <dd>
 
-**domainId:** `AgentMail.DomainId` 
+**domain_id:** `AgentMail.DomainId` 
     
 </dd>
 </dl>
@@ -1088,7 +1088,7 @@ await client.domains.verify("domain_id");
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1138,7 +1138,7 @@ await client.drafts.list();
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1150,7 +1150,7 @@ await client.drafts.list();
 </dl>
 </details>
 
-<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">get</a>(draftId) -> AgentMail.Draft</code></summary>
+<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">get</a>(draft_id) -> AgentMail.Draft</code></summary>
 <dl>
 <dd>
 
@@ -1179,7 +1179,7 @@ await client.drafts.get("draft_id");
 <dl>
 <dd>
 
-**draftId:** `AgentMail.DraftId` 
+**draft_id:** `AgentMail.DraftId` 
     
 </dd>
 </dl>
@@ -1187,7 +1187,7 @@ await client.drafts.get("draft_id");
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1200,7 +1200,7 @@ await client.drafts.get("draft_id");
 </details>
 
 ## Inboxes Drafts
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -1229,7 +1229,7 @@ await client.inboxes.drafts.list("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1245,7 +1245,7 @@ await client.inboxes.drafts.list("inbox_id");
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1257,7 +1257,7 @@ await client.inboxes.drafts.list("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">get</a>(inboxId, draftId) -> AgentMail.Draft</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">get</a>(inbox_id, draft_id) -> AgentMail.Draft</code></summary>
 <dl>
 <dd>
 
@@ -1286,7 +1286,7 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1294,7 +1294,7 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 <dl>
 <dd>
 
-**draftId:** `AgentMail.DraftId` 
+**draft_id:** `AgentMail.DraftId` 
     
 </dd>
 </dl>
@@ -1302,7 +1302,7 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1314,7 +1314,7 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">create</a>(inboxId, { ...params }) -> AgentMail.Draft</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">create</a>(inbox_id, { ...params }) -> AgentMail.Draft</code></summary>
 <dl>
 <dd>
 
@@ -1343,7 +1343,7 @@ await client.inboxes.drafts.create("inbox_id", {});
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1359,7 +1359,7 @@ await client.inboxes.drafts.create("inbox_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1371,7 +1371,7 @@ await client.inboxes.drafts.create("inbox_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">update</a>(inboxId, draftId, { ...params }) -> AgentMail.Draft</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">update</a>(inbox_id, draft_id, { ...params }) -> AgentMail.Draft</code></summary>
 <dl>
 <dd>
 
@@ -1400,7 +1400,7 @@ await client.inboxes.drafts.update("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1408,7 +1408,7 @@ await client.inboxes.drafts.update("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
-**draftId:** `AgentMail.DraftId` 
+**draft_id:** `AgentMail.DraftId` 
     
 </dd>
 </dl>
@@ -1424,7 +1424,7 @@ await client.inboxes.drafts.update("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1436,7 +1436,7 @@ await client.inboxes.drafts.update("inbox_id", "draft_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">send</a>(inboxId, draftId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">send</a>(inbox_id, draft_id, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -1465,7 +1465,7 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1473,7 +1473,7 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
-**draftId:** `AgentMail.DraftId` 
+**draft_id:** `AgentMail.DraftId` 
     
 </dd>
 </dl>
@@ -1489,7 +1489,7 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1501,7 +1501,7 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">delete</a>(inboxId, draftId) -> void</code></summary>
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">delete</a>(inbox_id, draft_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1530,7 +1530,7 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1538,7 +1538,7 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 <dl>
 <dd>
 
-**draftId:** `AgentMail.DraftId` 
+**draft_id:** `AgentMail.DraftId` 
     
 </dd>
 </dl>
@@ -1546,7 +1546,7 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1559,7 +1559,7 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 </details>
 
 ## Inboxes Messages
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListMessagesResponse</code></summary>
 <dl>
 <dd>
 
@@ -1588,7 +1588,7 @@ await client.inboxes.messages.list("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1604,7 +1604,7 @@ await client.inboxes.messages.list("inbox_id");
 <dl>
 <dd>
 
-**requestOptions:** `Messages.RequestOptions` 
+**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1616,7 +1616,7 @@ await client.inboxes.messages.list("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">get</a>(inboxId, messageId) -> AgentMail.Message</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">get</a>(inbox_id, message_id) -> AgentMail.Message</code></summary>
 <dl>
 <dd>
 
@@ -1645,7 +1645,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1653,7 +1653,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 <dl>
 <dd>
 
-**messageId:** `AgentMail.MessageId` 
+**message_id:** `AgentMail.MessageId` 
     
 </dd>
 </dl>
@@ -1661,7 +1661,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 <dl>
 <dd>
 
-**requestOptions:** `Messages.RequestOptions` 
+**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1673,7 +1673,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getAttachment</a>(inboxId, messageId, attachmentId) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getAttachment</a>(inbox_id, message_id, attachment_id) -> core.BinaryResponse</code></summary>
 <dl>
 <dd>
 
@@ -1702,7 +1702,7 @@ await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachmen
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1710,7 +1710,7 @@ await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachmen
 <dl>
 <dd>
 
-**messageId:** `AgentMail.MessageId` 
+**message_id:** `AgentMail.MessageId` 
     
 </dd>
 </dl>
@@ -1718,7 +1718,7 @@ await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachmen
 <dl>
 <dd>
 
-**attachmentId:** `AgentMail.AttachmentId` 
+**attachment_id:** `AgentMail.AttachmentId` 
     
 </dd>
 </dl>
@@ -1726,7 +1726,7 @@ await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachmen
 <dl>
 <dd>
 
-**requestOptions:** `Messages.RequestOptions` 
+**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1738,7 +1738,7 @@ await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachmen
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getRaw</a>(inboxId, messageId) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getRaw</a>(inbox_id, message_id) -> core.BinaryResponse</code></summary>
 <dl>
 <dd>
 
@@ -1767,7 +1767,7 @@ await client.inboxes.messages.getRaw("inbox_id", "message_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1775,7 +1775,7 @@ await client.inboxes.messages.getRaw("inbox_id", "message_id");
 <dl>
 <dd>
 
-**messageId:** `AgentMail.MessageId` 
+**message_id:** `AgentMail.MessageId` 
     
 </dd>
 </dl>
@@ -1783,7 +1783,7 @@ await client.inboxes.messages.getRaw("inbox_id", "message_id");
 <dl>
 <dd>
 
-**requestOptions:** `Messages.RequestOptions` 
+**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1795,7 +1795,7 @@ await client.inboxes.messages.getRaw("inbox_id", "message_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">send</a>(inboxId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">send</a>(inbox_id, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -1824,7 +1824,7 @@ await client.inboxes.messages.send("inbox_id", {});
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1840,7 +1840,7 @@ await client.inboxes.messages.send("inbox_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `Messages.RequestOptions` 
+**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1852,7 +1852,7 @@ await client.inboxes.messages.send("inbox_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">reply</a>(inboxId, messageId, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">reply</a>(inbox_id, message_id, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -1881,7 +1881,7 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1889,7 +1889,7 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**messageId:** `AgentMail.MessageId` 
+**message_id:** `AgentMail.MessageId` 
     
 </dd>
 </dl>
@@ -1905,7 +1905,7 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `Messages.RequestOptions` 
+**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1917,7 +1917,7 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">update</a>(inboxId, messageId, { ...params }) -> AgentMail.Message</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">update</a>(inbox_id, message_id, { ...params }) -> AgentMail.Message</code></summary>
 <dl>
 <dd>
 
@@ -1946,7 +1946,7 @@ await client.inboxes.messages.update("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -1954,7 +1954,7 @@ await client.inboxes.messages.update("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**messageId:** `AgentMail.MessageId` 
+**message_id:** `AgentMail.MessageId` 
     
 </dd>
 </dl>
@@ -1970,7 +1970,7 @@ await client.inboxes.messages.update("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `Messages.RequestOptions` 
+**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -1983,7 +1983,7 @@ await client.inboxes.messages.update("inbox_id", "message_id", {});
 </details>
 
 ## Inboxes Metrics
-<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">get</a>(inboxId, { ...params }) -> AgentMail.ListMetricsResponse</code></summary>
+<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">get</a>(inbox_id, { ...params }) -> AgentMail.ListMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2015,7 +2015,7 @@ await client.inboxes.metrics.get("inbox_id", {
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -2031,7 +2031,7 @@ await client.inboxes.metrics.get("inbox_id", {
 <dl>
 <dd>
 
-**requestOptions:** `Metrics.RequestOptions` 
+**requestOptions:** `MetricsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2044,7 +2044,7 @@ await client.inboxes.metrics.get("inbox_id", {
 </details>
 
 ## Inboxes Threads
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inboxId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2073,7 +2073,7 @@ await client.inboxes.threads.list("inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -2089,7 +2089,7 @@ await client.inboxes.threads.list("inbox_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2101,7 +2101,7 @@ await client.inboxes.threads.list("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">get</a>(inboxId, threadId) -> AgentMail.Thread</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">get</a>(inbox_id, thread_id) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -2130,7 +2130,7 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -2138,7 +2138,7 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**threadId:** `AgentMail.ThreadId` 
+**thread_id:** `AgentMail.ThreadId` 
     
 </dd>
 </dl>
@@ -2146,7 +2146,7 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2158,7 +2158,7 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">getAttachment</a>(inboxId, threadId, attachmentId) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">getAttachment</a>(inbox_id, thread_id, attachment_id) -> core.BinaryResponse</code></summary>
 <dl>
 <dd>
 
@@ -2187,7 +2187,7 @@ await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -2195,7 +2195,7 @@ await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_
 <dl>
 <dd>
 
-**threadId:** `AgentMail.ThreadId` 
+**thread_id:** `AgentMail.ThreadId` 
     
 </dd>
 </dl>
@@ -2203,7 +2203,7 @@ await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_
 <dl>
 <dd>
 
-**attachmentId:** `AgentMail.AttachmentId` 
+**attachment_id:** `AgentMail.AttachmentId` 
     
 </dd>
 </dl>
@@ -2211,7 +2211,7 @@ await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2223,7 +2223,7 @@ await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">delete</a>(inboxId, threadId) -> void</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">delete</a>(inbox_id, thread_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2252,7 +2252,7 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -2260,7 +2260,7 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**threadId:** `AgentMail.ThreadId` 
+**thread_id:** `AgentMail.ThreadId` 
     
 </dd>
 </dl>
@@ -2268,7 +2268,7 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2321,7 +2321,7 @@ await client.metrics.list({
 <dl>
 <dd>
 
-**requestOptions:** `Metrics.RequestOptions` 
+**requestOptions:** `MetricsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2334,7 +2334,7 @@ await client.metrics.list({
 </details>
 
 ## Pods Domains
-<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListDomainsResponse</code></summary>
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListDomainsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2363,7 +2363,7 @@ await client.pods.domains.list("pod_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2379,7 +2379,7 @@ await client.pods.domains.list("pod_id");
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2391,7 +2391,7 @@ await client.pods.domains.list("pod_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">create</a>(podId, { ...params }) -> AgentMail.Domain</code></summary>
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">create</a>(pod_id, { ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
 
@@ -2423,7 +2423,7 @@ await client.pods.domains.create("pod_id", {
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2439,7 +2439,7 @@ await client.pods.domains.create("pod_id", {
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2451,7 +2451,7 @@ await client.pods.domains.create("pod_id", {
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">delete</a>(podId, domainId) -> void</code></summary>
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">delete</a>(pod_id, domain_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2480,7 +2480,7 @@ await client.pods.domains.delete("pod_id", "domain_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2488,7 +2488,7 @@ await client.pods.domains.delete("pod_id", "domain_id");
 <dl>
 <dd>
 
-**domainId:** `AgentMail.DomainId` 
+**domain_id:** `AgentMail.DomainId` 
     
 </dd>
 </dl>
@@ -2496,7 +2496,7 @@ await client.pods.domains.delete("pod_id", "domain_id");
 <dl>
 <dd>
 
-**requestOptions:** `Domains.RequestOptions` 
+**requestOptions:** `DomainsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2509,7 +2509,7 @@ await client.pods.domains.delete("pod_id", "domain_id");
 </details>
 
 ## Pods Drafts
-<details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
+<details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2538,7 +2538,7 @@ await client.pods.drafts.list("pod_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2554,7 +2554,7 @@ await client.pods.drafts.list("pod_id");
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2566,7 +2566,7 @@ await client.pods.drafts.list("pod_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">get</a>(podId, draftId) -> AgentMail.Draft</code></summary>
+<details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">get</a>(pod_id, draft_id) -> AgentMail.Draft</code></summary>
 <dl>
 <dd>
 
@@ -2595,7 +2595,7 @@ await client.pods.drafts.get("pod_id", "draft_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2603,7 +2603,7 @@ await client.pods.drafts.get("pod_id", "draft_id");
 <dl>
 <dd>
 
-**draftId:** `AgentMail.DraftId` 
+**draft_id:** `AgentMail.DraftId` 
     
 </dd>
 </dl>
@@ -2611,7 +2611,7 @@ await client.pods.drafts.get("pod_id", "draft_id");
 <dl>
 <dd>
 
-**requestOptions:** `Drafts.RequestOptions` 
+**requestOptions:** `DraftsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2624,7 +2624,7 @@ await client.pods.drafts.get("pod_id", "draft_id");
 </details>
 
 ## Pods Inboxes
-<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListInboxesResponse</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListInboxesResponse</code></summary>
 <dl>
 <dd>
 
@@ -2653,7 +2653,7 @@ await client.pods.inboxes.list("pod_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2669,7 +2669,7 @@ await client.pods.inboxes.list("pod_id");
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2681,7 +2681,7 @@ await client.pods.inboxes.list("pod_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">get</a>(podId, inboxId) -> AgentMail.Inbox</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">get</a>(pod_id, inbox_id) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -2710,7 +2710,7 @@ await client.pods.inboxes.get("pod_id", "inbox_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2718,7 +2718,7 @@ await client.pods.inboxes.get("pod_id", "inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -2726,7 +2726,7 @@ await client.pods.inboxes.get("pod_id", "inbox_id");
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2738,7 +2738,7 @@ await client.pods.inboxes.get("pod_id", "inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">create</a>(podId, { ...params }) -> AgentMail.Inbox</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">create</a>(pod_id, { ...params }) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
 
@@ -2767,7 +2767,7 @@ await client.pods.inboxes.create("pod_id", {});
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2783,7 +2783,7 @@ await client.pods.inboxes.create("pod_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2795,7 +2795,7 @@ await client.pods.inboxes.create("pod_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">delete</a>(podId, inboxId) -> void</code></summary>
+<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">delete</a>(pod_id, inbox_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -2824,7 +2824,7 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2832,7 +2832,7 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 <dl>
 <dd>
 
-**inboxId:** `AgentMail.InboxId` 
+**inbox_id:** `AgentMail.InboxId` 
     
 </dd>
 </dl>
@@ -2840,7 +2840,7 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 <dl>
 <dd>
 
-**requestOptions:** `Inboxes.RequestOptions` 
+**requestOptions:** `InboxesClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2853,7 +2853,7 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 </details>
 
 ## Pods Threads
-<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">list</a>(podId, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2882,7 +2882,7 @@ await client.pods.threads.list("pod_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2898,7 +2898,7 @@ await client.pods.threads.list("pod_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2910,7 +2910,7 @@ await client.pods.threads.list("pod_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">get</a>(podId, threadId) -> AgentMail.Thread</code></summary>
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">get</a>(pod_id, thread_id) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -2939,7 +2939,7 @@ await client.pods.threads.get("pod_id", "thread_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -2947,7 +2947,7 @@ await client.pods.threads.get("pod_id", "thread_id");
 <dl>
 <dd>
 
-**threadId:** `AgentMail.ThreadId` 
+**thread_id:** `AgentMail.ThreadId` 
     
 </dd>
 </dl>
@@ -2955,7 +2955,7 @@ await client.pods.threads.get("pod_id", "thread_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2967,7 +2967,7 @@ await client.pods.threads.get("pod_id", "thread_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">getAttachment</a>(podId, threadId, attachmentId) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">getAttachment</a>(pod_id, thread_id, attachment_id) -> core.BinaryResponse</code></summary>
 <dl>
 <dd>
 
@@ -2996,7 +2996,7 @@ await client.pods.threads.getAttachment("pod_id", "thread_id", "attachment_id");
 <dl>
 <dd>
 
-**podId:** `AgentMail.PodId` 
+**pod_id:** `AgentMail.PodId` 
     
 </dd>
 </dl>
@@ -3004,7 +3004,7 @@ await client.pods.threads.getAttachment("pod_id", "thread_id", "attachment_id");
 <dl>
 <dd>
 
-**threadId:** `AgentMail.ThreadId` 
+**thread_id:** `AgentMail.ThreadId` 
     
 </dd>
 </dl>
@@ -3012,7 +3012,7 @@ await client.pods.threads.getAttachment("pod_id", "thread_id", "attachment_id");
 <dl>
 <dd>
 
-**attachmentId:** `AgentMail.AttachmentId` 
+**attachment_id:** `AgentMail.AttachmentId` 
     
 </dd>
 </dl>
@@ -3020,7 +3020,7 @@ await client.pods.threads.getAttachment("pod_id", "thread_id", "attachment_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3070,7 +3070,7 @@ await client.threads.list();
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3082,7 +3082,7 @@ await client.threads.list();
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(threadId) -> AgentMail.Thread</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(thread_id) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -3111,7 +3111,7 @@ await client.threads.get("thread_id");
 <dl>
 <dd>
 
-**threadId:** `AgentMail.ThreadId` 
+**thread_id:** `AgentMail.ThreadId` 
     
 </dd>
 </dl>
@@ -3119,7 +3119,7 @@ await client.threads.get("thread_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -3131,7 +3131,7 @@ await client.threads.get("thread_id");
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getAttachment</a>(threadId, attachmentId) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getAttachment</a>(thread_id, attachment_id) -> core.BinaryResponse</code></summary>
 <dl>
 <dd>
 
@@ -3160,7 +3160,7 @@ await client.threads.getAttachment("thread_id", "attachment_id");
 <dl>
 <dd>
 
-**threadId:** `AgentMail.ThreadId` 
+**thread_id:** `AgentMail.ThreadId` 
     
 </dd>
 </dl>
@@ -3168,7 +3168,7 @@ await client.threads.getAttachment("thread_id", "attachment_id");
 <dl>
 <dd>
 
-**attachmentId:** `AgentMail.AttachmentId` 
+**attachment_id:** `AgentMail.AttachmentId` 
     
 </dd>
 </dl>
@@ -3176,7 +3176,7 @@ await client.threads.getAttachment("thread_id", "attachment_id");
 <dl>
 <dd>
 
-**requestOptions:** `Threads.RequestOptions` 
+**requestOptions:** `ThreadsClient.RequestOptions` 
     
 </dd>
 </dl>

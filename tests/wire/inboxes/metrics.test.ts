@@ -4,10 +4,11 @@ import * as AgentMail from "../../../src/api/index";
 import { AgentMailClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
-describe("Metrics", () => {
+describe("MetricsClient", () => {
     test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -51,6 +52,7 @@ describe("Metrics", () => {
     test("get (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -75,6 +77,7 @@ describe("Metrics", () => {
     test("get (3)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });

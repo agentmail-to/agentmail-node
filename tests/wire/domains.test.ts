@@ -4,10 +4,11 @@ import * as AgentMail from "../../src/api/index";
 import { AgentMailClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("Domains", () => {
+describe("DomainsClient", () => {
     test("list", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -66,6 +67,7 @@ describe("Domains", () => {
     test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -122,6 +124,7 @@ describe("Domains", () => {
     test("get (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -143,6 +146,7 @@ describe("Domains", () => {
     test("create (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -203,6 +207,7 @@ describe("Domains", () => {
     test("create (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -228,6 +233,7 @@ describe("Domains", () => {
     test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -241,6 +247,7 @@ describe("Domains", () => {
     test("delete (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -262,6 +269,7 @@ describe("Domains", () => {
     test("verify (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
@@ -275,6 +283,7 @@ describe("Domains", () => {
     test("verify (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
+            maxRetries: 0,
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });

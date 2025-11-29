@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../../api/index.js";
 import * as core from "../../../../../core/index.js";
 import type * as serializers from "../../../../index.js";
+import { DomainVerifiedEvent } from "../../../events/types/DomainVerifiedEvent.js";
 import { MessageBouncedEvent } from "../../../events/types/MessageBouncedEvent.js";
 import { MessageComplainedEvent } from "../../../events/types/MessageComplainedEvent.js";
 import { MessageDeliveredEvent } from "../../../events/types/MessageDeliveredEvent.js";
@@ -20,6 +21,7 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     | AgentMail.MessageBouncedEvent
     | AgentMail.MessageComplainedEvent
     | AgentMail.MessageRejectedEvent
+    | AgentMail.DomainVerifiedEvent
 > = core.serialization.undiscriminatedUnion([
     Subscribed,
     MessageReceivedEvent,
@@ -28,6 +30,7 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     MessageBouncedEvent,
     MessageComplainedEvent,
     MessageRejectedEvent,
+    DomainVerifiedEvent,
 ]);
 
 export declare namespace WebsocketsSocketResponse {
@@ -38,5 +41,6 @@ export declare namespace WebsocketsSocketResponse {
         | MessageDeliveredEvent.Raw
         | MessageBouncedEvent.Raw
         | MessageComplainedEvent.Raw
-        | MessageRejectedEvent.Raw;
+        | MessageRejectedEvent.Raw
+        | DomainVerifiedEvent.Raw;
 }

@@ -5,7 +5,7 @@ import type * as AgentMail from "../../../index.js";
 export interface Webhook {
     webhookId: AgentMail.webhooks.WebhookId;
     url: AgentMail.webhooks.Url;
-    eventTypes?: AgentMail.webhooks.EventTypes;
+    eventTypes?: AgentMail.EventTypes;
     inboxIds?: AgentMail.webhooks.InboxIds;
     /** Secret for webhook signature verification. */
     secret: string;

@@ -1,7 +1,5 @@
 export * from "./ClientId.js";
 export * from "./CreateWebhookRequest.js";
-export * from "./EventType.js";
-export * from "./EventTypes.js";
 export * from "./InboxIds.js";
 export * from "./ListWebhooksResponse.js";
 export * from "./Url.js";

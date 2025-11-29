@@ -5,7 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { EventType } from "./EventType.js";
 
-export const EventTypes: core.serialization.Schema<serializers.webhooks.EventTypes.Raw, AgentMail.webhooks.EventTypes> =
+export const EventTypes: core.serialization.Schema<serializers.EventTypes.Raw, AgentMail.EventTypes> =
     core.serialization.list(EventType);
 
 export declare namespace EventTypes {
