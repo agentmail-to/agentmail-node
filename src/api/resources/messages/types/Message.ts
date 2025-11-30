@@ -18,6 +18,10 @@ export interface Message {
     preview?: AgentMail.MessagePreview;
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
+    /** Extracted new text content. */
+    extractedText?: string;
+    /** Extracted new HTML content. */
+    extractedHtml?: string;
     attachments?: AgentMail.MessageAttachments;
     inReplyTo?: AgentMail.MessageInReplyTo;
     references?: AgentMail.MessageReferences;

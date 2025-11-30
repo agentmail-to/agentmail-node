@@ -42,6 +42,8 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         preview: MessagePreview.optional(),
         text: MessageText.optional(),
         html: MessageHtml.optional(),
+        extractedText: core.serialization.property("extracted_text", core.serialization.string().optional()),
+        extractedHtml: core.serialization.property("extracted_html", core.serialization.string().optional()),
         attachments: MessageAttachments.optional(),
         inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
         references: MessageReferences.optional(),
@@ -66,6 +68,8 @@ export declare namespace Message {
         preview?: MessagePreview.Raw | null;
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
+        extracted_text?: string | null;
+        extracted_html?: string | null;
         attachments?: MessageAttachments.Raw | null;
         in_reply_to?: MessageInReplyTo.Raw | null;
         references?: MessageReferences.Raw | null;

@@ -248,6 +248,8 @@ describe("ThreadsClient", () => {
                     preview: "preview",
                     text: "text",
                     html: "html",
+                    extracted_text: "extracted_text",
+                    extracted_html: "extracted_html",
                     attachments: [
                         {
                             attachment_id: "attachment_id",
@@ -285,6 +287,8 @@ describe("ThreadsClient", () => {
                     preview: "preview",
                     text: "text",
                     html: "html",
+                    extracted_text: "extracted_text",
+                    extracted_html: "extracted_html",
                     attachments: [
                         {
                             attachment_id: "attachment_id",
@@ -366,6 +370,8 @@ describe("ThreadsClient", () => {
                     preview: "preview",
                     text: "text",
                     html: "html",
+                    extractedText: "extracted_text",
+                    extractedHtml: "extracted_html",
                     attachments: [
                         {
                             attachmentId: "attachment_id",
@@ -403,6 +409,8 @@ describe("ThreadsClient", () => {
                     preview: "preview",
                     text: "text",
                     html: "html",
+                    extractedText: "extracted_text",
+                    extractedHtml: "extracted_html",
                     attachments: [
                         {
                             attachmentId: "attachment_id",
