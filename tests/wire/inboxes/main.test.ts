@@ -128,7 +128,7 @@ describe("InboxesClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = {};
+
         const rawResponseBody = {
             pod_id: "pod_id",
             inbox_id: "inbox_id",
@@ -137,16 +137,9 @@ describe("InboxesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
-        server
-            .mockEndpoint()
-            .post("/v0/inboxes")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().post("/v0/inboxes").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.inboxes.create({});
+        const response = await client.inboxes.create(undefined);
         expect(response).toEqual({
             podId: "pod_id",
             inboxId: "inbox_id",
@@ -164,19 +157,12 @@ describe("InboxesClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = {};
+
         const rawResponseBody = { name: "name", errors: { key: "value" } };
-        server
-            .mockEndpoint()
-            .post("/v0/inboxes")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().post("/v0/inboxes").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
-            return await client.inboxes.create({});
+            return await client.inboxes.create(undefined);
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 

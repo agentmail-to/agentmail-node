@@ -111,7 +111,7 @@ await client.inboxes.get("inbox_id");
 <dd>
 
 ```typescript
-await client.inboxes.create({});
+await client.inboxes.create(undefined);
 
 ```
 </dd>

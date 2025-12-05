@@ -239,17 +239,17 @@ export class InboxesClient {
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.inboxes.create({})
+     *     await client.inboxes.create(undefined)
      */
     public create(
-        request: AgentMail.inboxes.CreateInboxRequest,
+        request?: AgentMail.inboxes.CreateInboxRequest,
         requestOptions?: InboxesClient.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.inboxes.Inbox> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
-        request: AgentMail.inboxes.CreateInboxRequest,
+        request?: AgentMail.inboxes.CreateInboxRequest,
         requestOptions?: InboxesClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.inboxes.Inbox>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -272,12 +272,15 @@ export class InboxesClient {
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.inboxes.CreateInboxRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
-                omitUndefined: true,
-            }),
+            body:
+                request != null
+                    ? serializers.inboxes.create.Request.jsonOrThrow(request, {
+                          unrecognizedObjectKeys: "passthrough",
+                          allowUnrecognizedUnionMembers: true,
+                          allowUnrecognizedEnumValues: true,
+                          omitUndefined: true,
+                      })
+                    : undefined,
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

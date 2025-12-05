@@ -20,10 +20,10 @@ A full reference for this library is available [here](https://github.com/agentma
 Instantiate and use the client with the following:
 
 ```typescript
-import { AgentMailClient, AgentMail } from "agentmail";
+import { AgentMailClient } from "agentmail";
 
 const client = new AgentMailClient({ apiKey: "YOUR_API_KEY" });
-await client.inboxes.create({});
+await client.inboxes.create(undefined);
 ```
 
 ## Request And Response Types
