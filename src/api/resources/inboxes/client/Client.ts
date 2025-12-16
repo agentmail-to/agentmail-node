@@ -275,9 +275,7 @@ export class InboxesClient {
             body:
                 request != null
                     ? serializers.inboxes.create.Request.jsonOrThrow(request, {
-                          unrecognizedObjectKeys: "passthrough",
-                          allowUnrecognizedUnionMembers: true,
-                          allowUnrecognizedEnumValues: true,
+                          unrecognizedObjectKeys: "strip",
                           omitUndefined: true,
                       })
                     : undefined,
@@ -385,9 +383,7 @@ export class InboxesClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.inboxes.UpdateInboxRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
+                unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

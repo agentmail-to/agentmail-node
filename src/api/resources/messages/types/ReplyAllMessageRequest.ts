@@ -2,13 +2,9 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface ReplyToMessageRequest {
+export interface ReplyAllMessageRequest {
     labels?: AgentMail.MessageLabels;
     replyTo?: AgentMail.SendMessageReplyTo;
-    to?: AgentMail.SendMessageTo;
-    cc?: AgentMail.SendMessageCc;
-    bcc?: AgentMail.SendMessageBcc;
-    replyAll?: AgentMail.ReplyAll;
     text?: AgentMail.MessageText;
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.SendMessageAttachments;

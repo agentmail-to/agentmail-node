@@ -20,6 +20,8 @@ export * from "./MessageText.js";
 export * from "./MessageTimestamp.js";
 export * from "./MessageTo.js";
 export * from "./MessageUpdatedAt.js";
+export * from "./ReplyAll.js";
+export * from "./ReplyAllMessageRequest.js";
 export * from "./ReplyToMessageRequest.js";
 export * from "./SendMessageAttachments.js";
 export * from "./SendMessageBcc.js";

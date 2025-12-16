@@ -58,12 +58,7 @@ export class MessagesClient {
 
         if (labels != null) {
             _queryParams.labels = toJson(
-                serializers.Labels.jsonOrThrow(labels, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    omitUndefined: true,
-                }),
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             );
         }
 
@@ -480,9 +475,7 @@ export class MessagesClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.SendMessageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
+                unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -616,9 +609,7 @@ export class MessagesClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.ReplyToMessageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
+                unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -706,6 +697,140 @@ export class MessagesClient {
     /**
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
+     * @param {AgentMail.ReplyAllMessageRequest} request
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.MessageRejectedError}
+     *
+     * @example
+     *     await client.inboxes.messages.replyAll("inbox_id", "message_id", {})
+     */
+    public replyAll(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.ReplyAllMessageRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.SendMessageResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__replyAll(inbox_id, message_id, request, requestOptions));
+    }
+
+    private async __replyAll(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.ReplyAllMessageRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.SendMessageResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/${core.url.encodePathParam(serializers.MessageId.jsonOrThrow(message_id, { omitUndefined: true }))}/reply-all`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.ReplyAllMessageRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.SendMessageResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new AgentMail.MessageRejectedError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/{message_id}/reply-all.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
+    }
+
+    /**
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
      * @param {AgentMail.UpdateMessageRequest} request
      * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -751,9 +876,7 @@ export class MessagesClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.UpdateMessageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
+                unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,

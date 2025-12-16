@@ -6,38 +6,26 @@ import type * as serializers from "../../../index.js";
 import { MessageHtml } from "./MessageHtml.js";
 import { MessageLabels } from "./MessageLabels.js";
 import { MessageText } from "./MessageText.js";
-import { ReplyAll } from "./ReplyAll.js";
 import { SendMessageAttachments } from "./SendMessageAttachments.js";
-import { SendMessageBcc } from "./SendMessageBcc.js";
-import { SendMessageCc } from "./SendMessageCc.js";
 import { SendMessageHeaders } from "./SendMessageHeaders.js";
 import { SendMessageReplyTo } from "./SendMessageReplyTo.js";
-import { SendMessageTo } from "./SendMessageTo.js";
 
-export const ReplyToMessageRequest: core.serialization.ObjectSchema<
-    serializers.ReplyToMessageRequest.Raw,
-    AgentMail.ReplyToMessageRequest
+export const ReplyAllMessageRequest: core.serialization.ObjectSchema<
+    serializers.ReplyAllMessageRequest.Raw,
+    AgentMail.ReplyAllMessageRequest
 > = core.serialization.object({
     labels: MessageLabels.optional(),
     replyTo: core.serialization.property("reply_to", SendMessageReplyTo.optional()),
-    to: SendMessageTo.optional(),
-    cc: SendMessageCc.optional(),
-    bcc: SendMessageBcc.optional(),
-    replyAll: core.serialization.property("reply_all", ReplyAll.optional()),
     text: MessageText.optional(),
     html: MessageHtml.optional(),
     attachments: SendMessageAttachments.optional(),
     headers: SendMessageHeaders.optional(),
 });
 
-export declare namespace ReplyToMessageRequest {
+export declare namespace ReplyAllMessageRequest {
     export interface Raw {
         labels?: MessageLabels.Raw | null;
         reply_to?: SendMessageReplyTo.Raw | null;
-        to?: SendMessageTo.Raw | null;
-        cc?: SendMessageCc.Raw | null;
-        bcc?: SendMessageBcc.Raw | null;
-        reply_all?: ReplyAll.Raw | null;
         text?: MessageText.Raw | null;
         html?: MessageHtml.Raw | null;
         attachments?: SendMessageAttachments.Raw | null;

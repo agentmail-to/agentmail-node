@@ -55,9 +55,7 @@ export class MetricsClient {
         if (eventTypes != null) {
             _queryParams.event_types = toJson(
                 serializers.MetricEventTypes.jsonOrThrow(eventTypes, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
+                    unrecognizedObjectKeys: "strip",
                     omitUndefined: true,
                 }),
             );

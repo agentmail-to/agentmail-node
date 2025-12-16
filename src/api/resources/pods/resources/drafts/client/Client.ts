@@ -58,12 +58,7 @@ export class DraftsClient {
 
         if (labels != null) {
             _queryParams.labels = toJson(
-                serializers.Labels.jsonOrThrow(labels, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    omitUndefined: true,
-                }),
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             );
         }
 

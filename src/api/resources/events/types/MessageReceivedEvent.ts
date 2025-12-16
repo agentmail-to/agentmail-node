@@ -7,4 +7,5 @@ export interface MessageReceivedEvent {
     eventType: "message.received";
     eventId: AgentMail.EventId;
     message: AgentMail.Message;
+    thread: AgentMail.ThreadItem;
 }

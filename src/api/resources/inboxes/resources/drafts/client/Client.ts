@@ -58,12 +58,7 @@ export class DraftsClient {
 
         if (labels != null) {
             _queryParams.labels = toJson(
-                serializers.Labels.jsonOrThrow(labels, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    omitUndefined: true,
-                }),
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
             );
         }
 
@@ -302,9 +297,7 @@ export class DraftsClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.CreateDraftRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
+                unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -414,9 +407,7 @@ export class DraftsClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.UpdateDraftRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
+                unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
@@ -528,9 +519,7 @@ export class DraftsClient {
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
             body: serializers.UpdateMessageRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "passthrough",
-                allowUnrecognizedUnionMembers: true,
-                allowUnrecognizedEnumValues: true,
+                unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
