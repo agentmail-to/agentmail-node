@@ -6,6 +6,7 @@ export * from "./MessageBcc.js";
 export * from "./MessageCc.js";
 export * from "./MessageCreatedAt.js";
 export * from "./MessageFrom.js";
+export * from "./MessageHeaders.js";
 export * from "./MessageHtml.js";
 export * from "./MessageId.js";
 export * from "./MessageInReplyTo.js";

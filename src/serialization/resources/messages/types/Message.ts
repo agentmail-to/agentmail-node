@@ -10,6 +10,7 @@ import { MessageBcc } from "./MessageBcc.js";
 import { MessageCc } from "./MessageCc.js";
 import { MessageCreatedAt } from "./MessageCreatedAt.js";
 import { MessageFrom } from "./MessageFrom.js";
+import { MessageHeaders } from "./MessageHeaders.js";
 import { MessageHtml } from "./MessageHtml.js";
 import { MessageId } from "./MessageId.js";
 import { MessageInReplyTo } from "./MessageInReplyTo.js";
@@ -47,6 +48,7 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         attachments: MessageAttachments.optional(),
         inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
         references: MessageReferences.optional(),
+        headers: MessageHeaders.optional(),
         size: MessageSize,
         updatedAt: core.serialization.property("updated_at", MessageUpdatedAt),
         createdAt: core.serialization.property("created_at", MessageCreatedAt),
@@ -73,6 +75,7 @@ export declare namespace Message {
         attachments?: MessageAttachments.Raw | null;
         in_reply_to?: MessageInReplyTo.Raw | null;
         references?: MessageReferences.Raw | null;
+        headers?: MessageHeaders.Raw | null;
         size: MessageSize.Raw;
         updated_at: MessageUpdatedAt.Raw;
         created_at: MessageCreatedAt.Raw;

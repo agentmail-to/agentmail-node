@@ -17,6 +17,7 @@ export interface MessageItem {
     attachments?: AgentMail.MessageAttachments;
     inReplyTo?: AgentMail.MessageInReplyTo;
     references?: AgentMail.MessageReferences;
+    headers?: AgentMail.MessageHeaders;
     size: AgentMail.MessageSize;
     updatedAt: AgentMail.MessageUpdatedAt;
     createdAt: AgentMail.MessageCreatedAt;
