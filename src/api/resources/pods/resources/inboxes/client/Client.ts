@@ -4,7 +4,6 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import { toJson } from "../../../../../../core/json.js";
 import * as environments from "../../../../../../environments.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
@@ -46,7 +45,7 @@ export class InboxesClient {
         request: AgentMail.pods.ListInboxesRequest = {},
         requestOptions?: InboxesClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.inboxes.ListInboxesResponse>> {
-        const { limit, pageToken, labels, before, after, ascending } = request;
+        const { limit, pageToken } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams.limit = limit.toString();
@@ -54,24 +53,6 @@ export class InboxesClient {
 
         if (pageToken != null) {
             _queryParams.page_token = pageToken;
-        }
-
-        if (labels != null) {
-            _queryParams.labels = toJson(
-                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            );
-        }
-
-        if (before != null) {
-            _queryParams.before = before.toISOString();
-        }
-
-        if (after != null) {
-            _queryParams.after = after.toISOString();
-        }
-
-        if (ascending != null) {
-            _queryParams.ascending = ascending.toString();
         }
 
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();

@@ -9,7 +9,7 @@ export interface Webhook {
     inboxIds?: AgentMail.webhooks.InboxIds;
     /** Secret for webhook signature verification. */
     secret: string;
-    /** Whether the webhook is enabled. */
+    /** Webhook is enabled. */
     enabled: boolean;
     /** Time at which webhook was last updated. */
     updatedAt: Date;

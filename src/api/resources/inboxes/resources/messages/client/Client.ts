@@ -46,7 +46,7 @@ export class MessagesClient {
         request: AgentMail.inboxes.ListMessagesRequest = {},
         requestOptions?: MessagesClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListMessagesResponse>> {
-        const { limit, pageToken, labels, before, after, ascending } = request;
+        const { limit, pageToken, labels, before, after, ascending, includeSpam } = request;
         const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
         if (limit != null) {
             _queryParams.limit = limit.toString();
@@ -72,6 +72,10 @@ export class MessagesClient {
 
         if (ascending != null) {
             _queryParams.ascending = ascending.toString();
+        }
+
+        if (includeSpam != null) {
+            _queryParams.include_spam = includeSpam.toString();
         }
 
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();

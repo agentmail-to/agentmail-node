@@ -13,4 +13,5 @@ export interface ListMessagesRequest {
     before?: AgentMail.Before;
     after?: AgentMail.After;
     ascending?: AgentMail.Ascending;
+    includeSpam?: AgentMail.IncludeSpam;
 }

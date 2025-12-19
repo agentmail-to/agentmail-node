@@ -9,8 +9,4 @@ import type * as AgentMail from "../../../../../../index.js";
 export interface ListDomainsRequest {
     limit?: AgentMail.Limit;
     pageToken?: AgentMail.PageToken;
-    labels?: AgentMail.Labels;
-    before?: AgentMail.Before;
-    after?: AgentMail.After;
-    ascending?: AgentMail.Ascending;
 }
