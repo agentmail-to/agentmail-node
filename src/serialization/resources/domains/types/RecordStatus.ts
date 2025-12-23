@@ -5,8 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const RecordStatus: core.serialization.Schema<serializers.RecordStatus.Raw, AgentMail.RecordStatus> =
-    core.serialization.enum_(["MISSING", "VERIFIED"]);
+    core.serialization.enum_(["MISSING", "INVALID", "VALID"]);
 
 export declare namespace RecordStatus {
-    export type Raw = "MISSING" | "VERIFIED";
+    export type Raw = "MISSING" | "INVALID" | "VALID";
 }

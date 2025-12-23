@@ -2,6 +2,7 @@
 
 export const RecordStatus = {
     Missing: "MISSING",
-    Verified: "VERIFIED",
+    Invalid: "INVALID",
+    Valid: "VALID",
 } as const;
 export type RecordStatus = (typeof RecordStatus)[keyof typeof RecordStatus];

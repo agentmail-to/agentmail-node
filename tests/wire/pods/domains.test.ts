@@ -103,7 +103,7 @@ describe("DomainsClient", () => {
         const rawResponseBody = {
             pod_id: "pod_id",
             domain_id: "domain_id",
-            status: "PENDING",
+            status: "NOT_STARTED",
             feedback_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
@@ -129,7 +129,7 @@ describe("DomainsClient", () => {
         expect(response).toEqual({
             podId: "pod_id",
             domainId: "domain_id",
-            status: "PENDING",
+            status: "NOT_STARTED",
             feedbackEnabled: true,
             records: [
                 {

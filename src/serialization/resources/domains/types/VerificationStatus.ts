@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const VerificationStatus: core.serialization.Schema<
     serializers.VerificationStatus.Raw,
     AgentMail.VerificationStatus
-> = core.serialization.enum_(["PENDING", "VERIFYING", "READY"]);
+> = core.serialization.enum_(["NOT_STARTED", "PENDING", "INVALID", "FAILED", "VERIFYING", "VERIFIED"]);
 
 export declare namespace VerificationStatus {
-    export type Raw = "PENDING" | "VERIFYING" | "READY";
+    export type Raw = "NOT_STARTED" | "PENDING" | "INVALID" | "FAILED" | "VERIFYING" | "VERIFIED";
 }
