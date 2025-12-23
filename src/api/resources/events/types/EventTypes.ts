@@ -3,6 +3,6 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Event types to subscribe to.
+ * Event types for which to send events.
  */
 export type EventTypes = AgentMail.EventType[];

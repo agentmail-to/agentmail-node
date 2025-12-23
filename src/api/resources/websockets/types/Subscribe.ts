@@ -5,8 +5,6 @@ import type * as AgentMail from "../../../index.js";
 export interface Subscribe {
     type: "subscribe";
     eventTypes?: AgentMail.EventTypes;
-    /** IDs of the inboxes to subscribe to. */
-    inboxIds?: string[];
-    /** IDs of the pods to subscribe to. */
-    podIds?: string[];
+    inboxIds?: AgentMail.InboxIds;
+    podIds?: AgentMail.PodIds;
 }

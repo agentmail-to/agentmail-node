@@ -4,8 +4,9 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { EventTypes } from "../../events/types/EventTypes.js";
+import { InboxIds } from "../../events/types/InboxIds.js";
+import { PodIds } from "../../events/types/PodIds.js";
 import { ClientId } from "./ClientId.js";
-import { InboxIds } from "./InboxIds.js";
 import { Url } from "./Url.js";
 import { WebhookId } from "./WebhookId.js";
 
@@ -14,6 +15,7 @@ export const Webhook: core.serialization.ObjectSchema<serializers.webhooks.Webho
         webhookId: core.serialization.property("webhook_id", WebhookId),
         url: Url,
         eventTypes: core.serialization.property("event_types", EventTypes.optional()),
+        podIds: core.serialization.property("pod_ids", PodIds.optional()),
         inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
         secret: core.serialization.string(),
         enabled: core.serialization.boolean(),
@@ -27,6 +29,7 @@ export declare namespace Webhook {
         webhook_id: WebhookId.Raw;
         url: Url.Raw;
         event_types?: EventTypes.Raw | null;
+        pod_ids?: PodIds.Raw | null;
         inbox_ids?: InboxIds.Raw | null;
         secret: string;
         enabled: boolean;

@@ -4,7 +4,7 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const InboxIds: core.serialization.Schema<serializers.webhooks.InboxIds.Raw, AgentMail.webhooks.InboxIds> =
+export const InboxIds: core.serialization.Schema<serializers.InboxIds.Raw, AgentMail.InboxIds> =
     core.serialization.list(core.serialization.string());
 
 export declare namespace InboxIds {

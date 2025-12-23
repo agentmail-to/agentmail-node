@@ -4,8 +4,9 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { EventTypes } from "../../events/types/EventTypes.js";
+import { InboxIds } from "../../events/types/InboxIds.js";
+import { PodIds } from "../../events/types/PodIds.js";
 import { ClientId } from "./ClientId.js";
-import { InboxIds } from "./InboxIds.js";
 import { Url } from "./Url.js";
 
 export const CreateWebhookRequest: core.serialization.ObjectSchema<
@@ -14,6 +15,7 @@ export const CreateWebhookRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     url: Url,
     eventTypes: core.serialization.property("event_types", EventTypes),
+    podIds: core.serialization.property("pod_ids", PodIds.optional()),
     inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
     clientId: core.serialization.property("client_id", ClientId.optional()),
 });
@@ -22,6 +24,7 @@ export declare namespace CreateWebhookRequest {
     export interface Raw {
         url: Url.Raw;
         event_types: EventTypes.Raw;
+        pod_ids?: PodIds.Raw | null;
         inbox_ids?: InboxIds.Raw | null;
         client_id?: ClientId.Raw | null;
     }

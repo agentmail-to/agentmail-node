@@ -6,7 +6,8 @@ export interface Webhook {
     webhookId: AgentMail.webhooks.WebhookId;
     url: AgentMail.webhooks.Url;
     eventTypes?: AgentMail.EventTypes;
-    inboxIds?: AgentMail.webhooks.InboxIds;
+    podIds?: AgentMail.PodIds;
+    inboxIds?: AgentMail.InboxIds;
     /** Secret for webhook signature verification. */
     secret: string;
     /** Webhook is enabled. */

@@ -4,23 +4,22 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { EventTypes } from "../../events/types/EventTypes.js";
+import { InboxIds } from "../../events/types/InboxIds.js";
+import { PodIds } from "../../events/types/PodIds.js";
 
 export const Subscribed: core.serialization.ObjectSchema<serializers.Subscribed.Raw, AgentMail.Subscribed> =
     core.serialization.object({
         type: core.serialization.stringLiteral("subscribed"),
         eventTypes: core.serialization.property("event_types", EventTypes.optional()),
-        inboxIds: core.serialization.property(
-            "inbox_ids",
-            core.serialization.list(core.serialization.string()).optional(),
-        ),
-        podIds: core.serialization.property("pod_ids", core.serialization.list(core.serialization.string()).optional()),
+        inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
+        podIds: core.serialization.property("pod_ids", PodIds.optional()),
     });
 
 export declare namespace Subscribed {
     export interface Raw {
         type: "subscribed";
         event_types?: EventTypes.Raw | null;
-        inbox_ids?: string[] | null;
-        pod_ids?: string[] | null;
+        inbox_ids?: InboxIds.Raw | null;
+        pod_ids?: PodIds.Raw | null;
     }
 }
