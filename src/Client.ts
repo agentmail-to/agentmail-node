@@ -5,6 +5,7 @@ import { DomainsClient } from "./api/resources/domains/client/Client.js";
 import { DraftsClient } from "./api/resources/drafts/client/Client.js";
 import { InboxesClient } from "./api/resources/inboxes/client/Client.js";
 import { MetricsClient } from "./api/resources/metrics/client/Client.js";
+import { OrganizationsClient } from "./api/resources/organizations/client/Client.js";
 import { PodsClient } from "./api/resources/pods/client/Client.js";
 import { ThreadsClient } from "./api/resources/threads/client/Client.js";
 import { WebhooksClient } from "./api/resources/webhooks/client/Client.js";
@@ -27,6 +28,7 @@ export class AgentMailClient {
     protected _domains: DomainsClient | undefined;
     protected _drafts: DraftsClient | undefined;
     protected _metrics: MetricsClient | undefined;
+    protected _organizations: OrganizationsClient | undefined;
     protected _threads: ThreadsClient | undefined;
     protected _websockets: WebsocketsClient | undefined;
 
@@ -60,6 +62,10 @@ export class AgentMailClient {
 
     public get metrics(): MetricsClient {
         return (this._metrics ??= new MetricsClient(this._options));
+    }
+
+    public get organizations(): OrganizationsClient {
+        return (this._organizations ??= new OrganizationsClient(this._options));
     }
 
     public get threads(): ThreadsClient {

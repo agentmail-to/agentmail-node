@@ -2398,6 +2398,62 @@ await client.metrics.list({
 </dl>
 </details>
 
+## Organizations
+<details><summary><code>client.organizations.<a href="/src/api/resources/organizations/client/Client.ts">get</a>() -> AgentMail.Organization</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the current organization.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.organizations.get();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `OrganizationsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Pods Domains
 <details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListDomainsResponse</code></summary>
 <dl>
