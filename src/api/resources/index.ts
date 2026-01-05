@@ -18,6 +18,8 @@ export * from "./messages/types/index.js";
 export * from "./metrics/client/requests/index.js";
 export * as metrics from "./metrics/index.js";
 export * from "./metrics/types/index.js";
+export * as organizations from "./organizations/index.js";
+export * from "./organizations/types/index.js";
 export * as pods from "./pods/index.js";
 export * from "./threads/client/requests/index.js";
 export * as threads from "./threads/index.js";
