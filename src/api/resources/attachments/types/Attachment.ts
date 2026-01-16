@@ -7,6 +7,6 @@ export interface Attachment {
     filename?: AgentMail.AttachmentFilename;
     size: AgentMail.AttachmentSize;
     contentType?: AgentMail.AttachmentContentType;
-    contentDisposition: AgentMail.AttachmentContentDisposition;
+    contentDisposition?: AgentMail.AttachmentContentDisposition;
     contentId?: AgentMail.AttachmentContentId;
 }

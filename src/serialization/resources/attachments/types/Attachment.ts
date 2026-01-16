@@ -16,7 +16,7 @@ export const Attachment: core.serialization.ObjectSchema<serializers.Attachment.
         filename: AttachmentFilename.optional(),
         size: AttachmentSize,
         contentType: core.serialization.property("content_type", AttachmentContentType.optional()),
-        contentDisposition: core.serialization.property("content_disposition", AttachmentContentDisposition),
+        contentDisposition: core.serialization.property("content_disposition", AttachmentContentDisposition.optional()),
         contentId: core.serialization.property("content_id", AttachmentContentId.optional()),
     });
 
@@ -26,7 +26,7 @@ export declare namespace Attachment {
         filename?: AttachmentFilename.Raw | null;
         size: AttachmentSize.Raw;
         content_type?: AttachmentContentType.Raw | null;
-        content_disposition: AttachmentContentDisposition.Raw;
+        content_disposition?: AttachmentContentDisposition.Raw | null;
         content_id?: AttachmentContentId.Raw | null;
     }
 }
