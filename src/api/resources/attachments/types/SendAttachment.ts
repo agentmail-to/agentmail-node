@@ -5,5 +5,7 @@ import type * as AgentMail from "../../../index.js";
 export interface SendAttachment {
     filename?: AgentMail.AttachmentFilename;
     contentType?: AgentMail.AttachmentContentType;
+    contentDisposition?: AgentMail.AttachmentContentDisposition;
+    contentId?: AgentMail.AttachmentContentId;
     content: AgentMail.AttachmentContent;
 }

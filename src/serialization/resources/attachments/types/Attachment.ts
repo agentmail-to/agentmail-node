@@ -3,27 +3,30 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AttachmentContentDisposition } from "./AttachmentContentDisposition.js";
+import { AttachmentContentId } from "./AttachmentContentId.js";
 import { AttachmentContentType } from "./AttachmentContentType.js";
 import { AttachmentFilename } from "./AttachmentFilename.js";
 import { AttachmentId } from "./AttachmentId.js";
-import { AttachmentInline } from "./AttachmentInline.js";
 import { AttachmentSize } from "./AttachmentSize.js";
 
 export const Attachment: core.serialization.ObjectSchema<serializers.Attachment.Raw, AgentMail.Attachment> =
     core.serialization.object({
         attachmentId: core.serialization.property("attachment_id", AttachmentId),
         filename: AttachmentFilename.optional(),
-        contentType: core.serialization.property("content_type", AttachmentContentType.optional()),
         size: AttachmentSize,
-        inline: AttachmentInline,
+        contentType: core.serialization.property("content_type", AttachmentContentType.optional()),
+        contentDisposition: core.serialization.property("content_disposition", AttachmentContentDisposition),
+        contentId: core.serialization.property("content_id", AttachmentContentId.optional()),
     });
 
 export declare namespace Attachment {
     export interface Raw {
         attachment_id: AttachmentId.Raw;
         filename?: AttachmentFilename.Raw | null;
-        content_type?: AttachmentContentType.Raw | null;
         size: AttachmentSize.Raw;
-        inline: AttachmentInline.Raw;
+        content_type?: AttachmentContentType.Raw | null;
+        content_disposition: AttachmentContentDisposition.Raw;
+        content_id?: AttachmentContentId.Raw | null;
     }
 }

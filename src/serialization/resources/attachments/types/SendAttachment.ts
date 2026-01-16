@@ -4,6 +4,8 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { AttachmentContent } from "./AttachmentContent.js";
+import { AttachmentContentDisposition } from "./AttachmentContentDisposition.js";
+import { AttachmentContentId } from "./AttachmentContentId.js";
 import { AttachmentContentType } from "./AttachmentContentType.js";
 import { AttachmentFilename } from "./AttachmentFilename.js";
 
@@ -11,6 +13,8 @@ export const SendAttachment: core.serialization.ObjectSchema<serializers.SendAtt
     core.serialization.object({
         filename: AttachmentFilename.optional(),
         contentType: core.serialization.property("content_type", AttachmentContentType.optional()),
+        contentDisposition: core.serialization.property("content_disposition", AttachmentContentDisposition.optional()),
+        contentId: core.serialization.property("content_id", AttachmentContentId.optional()),
         content: AttachmentContent,
     });
 
@@ -18,6 +22,8 @@ export declare namespace SendAttachment {
     export interface Raw {
         filename?: AttachmentFilename.Raw | null;
         content_type?: AttachmentContentType.Raw | null;
+        content_disposition?: AttachmentContentDisposition.Raw | null;
+        content_id?: AttachmentContentId.Raw | null;
         content: AttachmentContent.Raw;
     }
 }
