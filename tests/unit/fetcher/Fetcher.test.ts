@@ -113,12 +113,11 @@ describe("Test fetcherImpl", () => {
             expect(typeof body.stream).toBe("function");
             const stream = body.stream();
             expect(stream).toBeInstanceOf(ReadableStream);
-            const readableStream = stream as ReadableStream;
-            const reader = readableStream.getReader();
+            const reader = stream.getReader();
             const { value } = await reader.read();
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(value);
-            expect(streamContent.trim()).toBe("This is a test file!");
+            expect(streamContent).toBe("This is a test file!\n");
             expect(body.bodyUsed).toBe(true);
         }
     });
@@ -164,7 +163,7 @@ describe("Test fetcherImpl", () => {
             const { value } = await reader.read();
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(value);
-            expect(streamContent.trim()).toBe("This is a test file!");
+            expect(streamContent).toBe("This is a test file!\n");
             expect(body.bodyUsed).toBe(true);
         }
     });
@@ -208,7 +207,7 @@ describe("Test fetcherImpl", () => {
             expect(arrayBuffer).toBeInstanceOf(ArrayBuffer);
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(new Uint8Array(arrayBuffer));
-            expect(streamContent.trim()).toBe("This is a test file!");
+            expect(streamContent).toBe("This is a test file!\n");
             expect(body.bodyUsed).toBe(true);
         }
     });
@@ -255,7 +254,7 @@ describe("Test fetcherImpl", () => {
             expect(bytes).toBeInstanceOf(Uint8Array);
             const decoder = new TextDecoder();
             const streamContent = decoder.decode(bytes);
-            expect(streamContent.trim()).toBe("This is a test file!");
+            expect(streamContent).toBe("This is a test file!\n");
             expect(body.bodyUsed).toBe(true);
         }
     });

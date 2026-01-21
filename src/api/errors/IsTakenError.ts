@@ -12,11 +12,6 @@ export class IsTakenError extends errors.AgentMailError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, new.target.prototype);
-        if (Error.captureStackTrace) {
-            Error.captureStackTrace(this, this.constructor);
-        }
-
-        this.name = this.constructor.name;
+        Object.setPrototypeOf(this, IsTakenError.prototype);
     }
 }

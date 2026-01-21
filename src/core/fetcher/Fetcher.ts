@@ -20,7 +20,7 @@ export declare namespace Fetcher {
         url: string;
         method: string;
         contentType?: string;
-        headers?: Record<string, unknown>;
+        headers?: Record<string, string | EndpointSupplier<string | null | undefined> | null | undefined>;
         queryParameters?: Record<string, unknown>;
         body?: unknown;
         timeoutMs?: number;
@@ -35,7 +35,7 @@ export declare namespace Fetcher {
         logging?: LogConfig | Logger;
     }
 
-    export type Error = FailedStatusCodeError | NonJsonError | BodyIsNullError | TimeoutError | UnknownError;
+    export type Error = FailedStatusCodeError | NonJsonError | TimeoutError | UnknownError;
 
     export interface FailedStatusCodeError {
         reason: "status-code";
@@ -47,11 +47,6 @@ export declare namespace Fetcher {
         reason: "non-json";
         statusCode: number;
         rawBody: string;
-    }
-
-    export interface BodyIsNullError {
-        reason: "body-is-null";
-        statusCode: number;
     }
 
     export interface TimeoutError {
@@ -290,10 +285,9 @@ export async function fetcherImpl<R = unknown>(args: Fetcher.Args): Promise<APIR
                 };
                 logger.debug("HTTP request succeeded", metadata);
             }
-            const body = await getResponseBody(response, args.responseType);
             return {
                 ok: true,
-                body: body as R,
+                body: (await getResponseBody(response, args.responseType)) as R,
                 headers: response.headers,
                 rawResponse: toRawResponse(response),
             };

@@ -6,13 +6,12 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { toJson } from "../../../../../../core/json.js";
 import * as environments from "../../../../../../environments.js";
-import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 import * as AgentMail from "../../../../../index.js";
 
 export declare namespace DraftsClient {
-    export type Options = BaseClientOptions;
+    export interface Options extends BaseClientOptions {}
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -48,22 +47,33 @@ export class DraftsClient {
         requestOptions?: DraftsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListDraftsResponse>> {
         const { limit, pageToken, labels, before, after, ascending } = request;
-        const _queryParams: Record<string, unknown> = {
-            limit,
-            page_token: pageToken,
-            labels:
-                labels != null
-                    ? toJson(
-                          serializers.Labels.jsonOrThrow(labels, {
-                              unrecognizedObjectKeys: "strip",
-                              omitUndefined: true,
-                          }),
-                      )
-                    : undefined,
-            before: serializers.Before.jsonOrThrow(before, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            after: serializers.After.jsonOrThrow(after, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            ascending,
-        };
+        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
+        if (limit != null) {
+            _queryParams.limit = limit.toString();
+        }
+
+        if (pageToken != null) {
+            _queryParams.page_token = pageToken;
+        }
+
+        if (labels != null) {
+            _queryParams.labels = toJson(
+                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            );
+        }
+
+        if (before != null) {
+            _queryParams.before = before.toISOString();
+        }
+
+        if (after != null) {
+            _queryParams.after = after.toISOString();
+        }
+
+        if (ascending != null) {
+            _queryParams.ascending = ascending.toString();
+        }
+
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -123,7 +133,23 @@ export class DraftsClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/inboxes/{inbox_id}/drafts");
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/drafts.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
@@ -208,12 +234,23 @@ export class DraftsClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/v0/inboxes/{inbox_id}/drafts/{draft_id}",
-        );
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/drafts/{draft_id}.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
@@ -304,12 +341,23 @@ export class DraftsClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/v0/inboxes/{inbox_id}/drafts",
-        );
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/drafts.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
@@ -403,12 +451,23 @@ export class DraftsClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "PATCH",
-            "/v0/inboxes/{inbox_id}/drafts/{draft_id}",
-        );
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling PATCH /v0/inboxes/{inbox_id}/drafts/{draft_id}.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
@@ -526,12 +585,23 @@ export class DraftsClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/v0/inboxes/{inbox_id}/drafts/{draft_id}/send",
-        );
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/drafts/{draft_id}/send.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 
     /**
@@ -607,11 +677,22 @@ export class DraftsClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/v0/inboxes/{inbox_id}/drafts/{draft_id}",
-        );
+        switch (_response.error.reason) {
+            case "non-json":
+                throw new errors.AgentMailError({
+                    statusCode: _response.error.statusCode,
+                    body: _response.error.rawBody,
+                    rawResponse: _response.rawResponse,
+                });
+            case "timeout":
+                throw new errors.AgentMailTimeoutError(
+                    "Timeout exceeded when calling DELETE /v0/inboxes/{inbox_id}/drafts/{draft_id}.",
+                );
+            case "unknown":
+                throw new errors.AgentMailError({
+                    message: _response.error.errorMessage,
+                    rawResponse: _response.rawResponse,
+                });
+        }
     }
 }
