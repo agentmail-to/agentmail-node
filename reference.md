@@ -1673,7 +1673,7 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getAttachment</a>(inbox_id, message_id, attachment_id) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getAttachment</a>(inbox_id, message_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -2223,7 +2223,7 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">getAttachment</a>(inbox_id, thread_id, attachment_id) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">getAttachment</a>(inbox_id, thread_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -3088,7 +3088,7 @@ await client.pods.threads.get("pod_id", "thread_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">getAttachment</a>(pod_id, thread_id, attachment_id) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">getAttachment</a>(pod_id, thread_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
 
@@ -3252,7 +3252,7 @@ await client.threads.get("thread_id");
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getAttachment</a>(thread_id, attachment_id) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getAttachment</a>(thread_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
 

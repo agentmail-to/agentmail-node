@@ -1,7 +1,7 @@
 {
-    "cliVersion": "2.13.0",
+    "cliVersion": "3.47.8",
     "generatorName": "fernapi/fern-typescript-node-sdk",
-    "generatorVersion": "3.34.2",
+    "generatorVersion": "3.43.13",
     "generatorConfig": {
         "namespaceExport": "AgentMail",
         "noSerdeLayer": false,
@@ -12,5 +12,6 @@
                 "build": "npm run build:cjs && npm run build:esm && node -e \"const https=require('https'),fs=require('fs');const download=(f)=>new Promise((res,rej)=>https.get('https://docs.agentmail.to/'+f,r=>r.pipe(fs.createWriteStream('dist/'+f)).on('finish',res).on('error',rej)));Promise.all(['llms.txt','llms-full.txt'].map(download)).catch(e=>{console.error(e);process.exit(1)});\""
             }
         }
-    }
+    },
+    "sdkVersion": "0.2.0"
 }

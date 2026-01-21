@@ -5,5 +5,6 @@ export * from "./AttachmentContentId.js";
 export * from "./AttachmentContentType.js";
 export * from "./AttachmentFilename.js";
 export * from "./AttachmentId.js";
+export * from "./AttachmentResponse.js";
 export * from "./AttachmentSize.js";
 export * from "./SendAttachment.js";

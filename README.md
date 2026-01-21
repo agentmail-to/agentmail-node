@@ -5,6 +5,26 @@
 
 The Agentmail TypeScript library provides convenient access to the Agentmail APIs from TypeScript.
 
+## Table of Contents
+
+- [Installation](#installation)
+- [Reference](#reference)
+- [Usage](#usage)
+- [Request and Response Types](#request-and-response-types)
+- [Exception Handling](#exception-handling)
+- [Pagination](#pagination)
+- [Advanced](#advanced)
+  - [Additional Headers](#additional-headers)
+  - [Additional Query String Parameters](#additional-query-string-parameters)
+  - [Retries](#retries)
+  - [Timeouts](#timeouts)
+  - [Aborting Requests](#aborting-requests)
+  - [Access Raw Response Data](#access-raw-response-data)
+  - [Logging](#logging)
+  - [Runtime Compatibility](#runtime-compatibility)
+- [Contributing](#contributing)
+- [Binary Response](#binary-response)
+
 ## Installation
 
 ```sh
@@ -26,7 +46,7 @@ const client = new AgentMailClient({ apiKey: "YOUR_API_KEY" });
 await client.inboxes.create(undefined);
 ```
 
-## Request And Response Types
+## Request and Response Types
 
 The SDK exports all request and response types as TypeScript interfaces. Simply import them with the
 following namespace:
@@ -89,6 +109,15 @@ const response = page.response;
 If you would like to send additional headers as part of the request, use the `headers` request option.
 
 ```typescript
+import { AgentMailClient } from "agentmail";
+
+const client = new AgentMailClient({
+    ...
+    headers: {
+        'X-Custom-Header': 'custom value'
+    }
+});
+
 const response = await client.inboxes.create(..., {
     headers: {
         'X-Custom-Header': 'custom value'

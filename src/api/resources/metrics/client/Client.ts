@@ -6,12 +6,13 @@ import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import { toJson } from "../../../../core/json.js";
 import * as environments from "../../../../environments.js";
+import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
 
 export declare namespace MetricsClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -47,18 +48,25 @@ export class MetricsClient {
         requestOptions?: MetricsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListMetricsResponse>> {
         const { eventTypes, startTimestamp, endTimestamp } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (eventTypes != null) {
-            _queryParams.event_types = toJson(
-                serializers.MetricEventTypes.jsonOrThrow(eventTypes, {
-                    unrecognizedObjectKeys: "strip",
-                    omitUndefined: true,
-                }),
-            );
-        }
-
-        _queryParams.start_timestamp = startTimestamp.toISOString();
-        _queryParams.end_timestamp = endTimestamp.toISOString();
+        const _queryParams: Record<string, unknown> = {
+            event_types:
+                eventTypes != null
+                    ? toJson(
+                          serializers.MetricEventTypes.jsonOrThrow(eventTypes, {
+                              unrecognizedObjectKeys: "strip",
+                              omitUndefined: true,
+                          }),
+                      )
+                    : undefined,
+            start_timestamp: serializers.MetricStartTimestamp.jsonOrThrow(startTimestamp, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            end_timestamp: serializers.MetricEndTimestamp.jsonOrThrow(endTimestamp, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -118,20 +126,6 @@ export class MetricsClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError("Timeout exceeded when calling GET /v0/metrics.");
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/metrics");
     }
 }

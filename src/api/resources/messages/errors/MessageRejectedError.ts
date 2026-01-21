@@ -12,6 +12,11 @@ export class MessageRejectedError extends errors.AgentMailError {
             body: body,
             rawResponse: rawResponse,
         });
-        Object.setPrototypeOf(this, MessageRejectedError.prototype);
+        Object.setPrototypeOf(this, new.target.prototype);
+        if (Error.captureStackTrace) {
+            Error.captureStackTrace(this, this.constructor);
+        }
+
+        this.name = this.constructor.name;
     }
 }

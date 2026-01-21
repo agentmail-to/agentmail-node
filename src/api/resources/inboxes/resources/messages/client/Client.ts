@@ -6,12 +6,13 @@ import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
 import { toJson } from "../../../../../../core/json.js";
 import * as environments from "../../../../../../environments.js";
+import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 import * as AgentMail from "../../../../../index.js";
 
 export declare namespace MessagesClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
@@ -47,37 +48,23 @@ export class MessagesClient {
         requestOptions?: MessagesClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListMessagesResponse>> {
         const { limit, pageToken, labels, before, after, ascending, includeSpam } = request;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (limit != null) {
-            _queryParams.limit = limit.toString();
-        }
-
-        if (pageToken != null) {
-            _queryParams.page_token = pageToken;
-        }
-
-        if (labels != null) {
-            _queryParams.labels = toJson(
-                serializers.Labels.jsonOrThrow(labels, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            );
-        }
-
-        if (before != null) {
-            _queryParams.before = before.toISOString();
-        }
-
-        if (after != null) {
-            _queryParams.after = after.toISOString();
-        }
-
-        if (ascending != null) {
-            _queryParams.ascending = ascending.toString();
-        }
-
-        if (includeSpam != null) {
-            _queryParams.include_spam = includeSpam.toString();
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            page_token: pageToken,
+            labels:
+                labels != null
+                    ? toJson(
+                          serializers.Labels.jsonOrThrow(labels, {
+                              unrecognizedObjectKeys: "strip",
+                              omitUndefined: true,
+                          }),
+                      )
+                    : undefined,
+            before: serializers.Before.jsonOrThrow(before, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            after: serializers.After.jsonOrThrow(after, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            ascending,
+            include_spam: includeSpam,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -137,23 +124,12 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/inboxes/{inbox_id}/messages",
+        );
     }
 
     /**
@@ -238,34 +214,31 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}",
+        );
     }
 
     /**
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
+     * @param {AgentMail.AttachmentId} attachment_id
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
      * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachment_id")
      */
     public getAttachment(
         inbox_id: AgentMail.inboxes.InboxId,
         message_id: AgentMail.MessageId,
         attachment_id: AgentMail.AttachmentId,
         requestOptions?: MessagesClient.RequestOptions,
-    ): core.HttpResponsePromise<core.BinaryResponse> {
+    ): core.HttpResponsePromise<AgentMail.AttachmentResponse> {
         return core.HttpResponsePromise.fromPromise(
             this.__getAttachment(inbox_id, message_id, attachment_id, requestOptions),
         );
@@ -276,14 +249,14 @@ export class MessagesClient {
         message_id: AgentMail.MessageId,
         attachment_id: AgentMail.AttachmentId,
         requestOptions?: MessagesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
+    ): Promise<core.WithRawResponse<AgentMail.AttachmentResponse>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
             this._options?.headers,
             requestOptions?.headers,
         );
-        const _response = await core.fetcher<core.BinaryResponse>({
+        const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     (
@@ -295,7 +268,6 @@ export class MessagesClient {
             method: "GET",
             headers: _headers,
             queryParameters: requestOptions?.queryParams,
-            responseType: "binary-response",
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -303,7 +275,16 @@ export class MessagesClient {
             logging: this._options.logging,
         });
         if (_response.ok) {
-            return { data: _response.body, rawResponse: _response.rawResponse };
+            return {
+                data: serializers.AttachmentResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
         }
 
         if (_response.error.reason === "status-code") {
@@ -328,23 +309,12 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}/attachments/{attachment_id}.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/attachments/{attachment_id}",
+        );
     }
 
     /**
@@ -414,23 +384,12 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling GET /v0/inboxes/{inbox_id}/messages/{message_id}/raw.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/raw",
+        );
     }
 
     /**
@@ -545,23 +504,12 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/send.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/send",
+        );
     }
 
     /**
@@ -679,23 +627,12 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/{message_id}/reply.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/reply",
+        );
     }
 
     /**
@@ -813,23 +750,12 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling POST /v0/inboxes/{inbox_id}/messages/{message_id}/reply-all.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/reply-all",
+        );
     }
 
     /**
@@ -935,22 +861,11 @@ export class MessagesClient {
             }
         }
 
-        switch (_response.error.reason) {
-            case "non-json":
-                throw new errors.AgentMailError({
-                    statusCode: _response.error.statusCode,
-                    body: _response.error.rawBody,
-                    rawResponse: _response.rawResponse,
-                });
-            case "timeout":
-                throw new errors.AgentMailTimeoutError(
-                    "Timeout exceeded when calling PATCH /v0/inboxes/{inbox_id}/messages/{message_id}.",
-                );
-            case "unknown":
-                throw new errors.AgentMailError({
-                    message: _response.error.errorMessage,
-                    rawResponse: _response.rawResponse,
-                });
-        }
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "PATCH",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}",
+        );
     }
 }
