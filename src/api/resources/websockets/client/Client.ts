@@ -8,10 +8,10 @@ import * as environments from "../../../../environments.js";
 import { WebsocketsSocket } from "./Socket.js";
 
 export declare namespace WebsocketsClient {
-    export interface Options extends BaseClientOptions {}
+    export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
-        authToken?: string | undefined;
+        authToken?: string;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
@@ -30,11 +30,9 @@ export class WebsocketsClient {
 
     public async connect(args: WebsocketsClient.ConnectArgs = {}): Promise<WebsocketsSocket> {
         const { authToken, headers, debug, reconnectAttempts } = args;
-        const _queryParams: Record<string, string | string[] | object | object[] | null> = {};
-        if (authToken != null) {
-            _queryParams.auth_token = authToken;
-        }
-
+        const _queryParams: Record<string, unknown> = {
+            auth_token: authToken,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: Record<string, unknown> = mergeHeaders(_authRequest.headers, headers);
         const socket = new core.ReconnectingWebSocket({
