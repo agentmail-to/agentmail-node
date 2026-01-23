@@ -60,8 +60,14 @@ export class DraftsClient {
                           }),
                       )
                     : undefined,
-            before: serializers.Before.jsonOrThrow(before, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
-            after: serializers.After.jsonOrThrow(after, { unrecognizedObjectKeys: "strip", omitUndefined: true }),
+            before:
+                before != null
+                    ? serializers.Before.jsonOrThrow(before, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+            after:
+                after != null
+                    ? serializers.After.jsonOrThrow(after, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
             ascending,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
