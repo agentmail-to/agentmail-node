@@ -27,8 +27,8 @@ export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, Age
         threadId: core.serialization.property("thread_id", ThreadId),
         labels: ThreadLabels,
         timestamp: ThreadTimestamp,
-        receivedTimestamp: core.serialization.property("received_timestamp", ThreadReceivedTimestamp),
-        sentTimestamp: core.serialization.property("sent_timestamp", ThreadSentTimestamp),
+        receivedTimestamp: core.serialization.property("received_timestamp", ThreadReceivedTimestamp.optional()),
+        sentTimestamp: core.serialization.property("sent_timestamp", ThreadSentTimestamp.optional()),
         senders: ThreadSenders,
         recipients: ThreadRecipients,
         subject: ThreadSubject.optional(),
@@ -48,8 +48,8 @@ export declare namespace Thread {
         thread_id: ThreadId.Raw;
         labels: ThreadLabels.Raw;
         timestamp: ThreadTimestamp.Raw;
-        received_timestamp: ThreadReceivedTimestamp.Raw;
-        sent_timestamp: ThreadSentTimestamp.Raw;
+        received_timestamp?: ThreadReceivedTimestamp.Raw | null;
+        sent_timestamp?: ThreadSentTimestamp.Raw | null;
         senders: ThreadSenders.Raw;
         recipients: ThreadRecipients.Raw;
         subject?: ThreadSubject.Raw | null;

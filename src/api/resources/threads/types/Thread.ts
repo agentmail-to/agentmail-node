@@ -7,8 +7,8 @@ export interface Thread {
     threadId: AgentMail.ThreadId;
     labels: AgentMail.ThreadLabels;
     timestamp: AgentMail.ThreadTimestamp;
-    receivedTimestamp: AgentMail.ThreadReceivedTimestamp;
-    sentTimestamp: AgentMail.ThreadSentTimestamp;
+    receivedTimestamp?: AgentMail.ThreadReceivedTimestamp;
+    sentTimestamp?: AgentMail.ThreadSentTimestamp;
     senders: AgentMail.ThreadSenders;
     recipients: AgentMail.ThreadRecipients;
     subject?: AgentMail.ThreadSubject;
