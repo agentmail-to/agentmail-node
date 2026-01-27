@@ -767,6 +767,129 @@ export class MessagesClient {
     /**
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
+     * @param {AgentMail.SendMessageRequest} request
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.MessageRejectedError}
+     *
+     * @example
+     *     await client.inboxes.messages.forward("inbox_id", "message_id", {})
+     */
+    public forward(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.SendMessageRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.SendMessageResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__forward(inbox_id, message_id, request, requestOptions));
+    }
+
+    private async __forward(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.SendMessageRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.SendMessageResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/${core.url.encodePathParam(serializers.MessageId.jsonOrThrow(message_id, { omitUndefined: true }))}/forward`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.SendMessageRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.SendMessageResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new AgentMail.MessageRejectedError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/forward",
+        );
+    }
+
+    /**
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
      * @param {AgentMail.UpdateMessageRequest} request
      * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
