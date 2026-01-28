@@ -7,5 +7,8 @@ export interface SendAttachment {
     contentType?: AgentMail.AttachmentContentType;
     contentDisposition?: AgentMail.AttachmentContentDisposition;
     contentId?: AgentMail.AttachmentContentId;
-    content: AgentMail.AttachmentContent;
+    /** Base64 encoded content of attachment. */
+    content?: string;
+    /** URL to the attachment. */
+    url?: string;
 }

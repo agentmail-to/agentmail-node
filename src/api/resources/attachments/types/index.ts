@@ -1,5 +1,4 @@
 export * from "./Attachment.js";
-export * from "./AttachmentContent.js";
 export * from "./AttachmentContentDisposition.js";
 export * from "./AttachmentContentId.js";
 export * from "./AttachmentContentType.js";
