@@ -12,6 +12,8 @@ export declare namespace WebsocketsClient {
 
     export interface ConnectArgs {
         authToken?: string;
+        /** Additional query parameters to send with the websocket connect request. */
+        queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
         headers?: Record<string, string>;
         /** Enable debug mode on the websocket. Defaults to false. */
@@ -29,7 +31,7 @@ export class WebsocketsClient {
     }
 
     public async connect(args: WebsocketsClient.ConnectArgs = {}): Promise<WebsocketsSocket> {
-        const { authToken, headers, debug, reconnectAttempts } = args;
+        const { authToken, queryParams, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, unknown> = {
             auth_token: authToken,
         };
@@ -45,7 +47,7 @@ export class WebsocketsClient {
                 "/v0",
             ),
             protocols: [],
-            queryParameters: _queryParams,
+            queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
             options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
         });
