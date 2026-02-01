@@ -11,6 +11,8 @@ export interface CreateDraftRequest {
     subject?: AgentMail.DraftSubject;
     text?: AgentMail.DraftText;
     html?: AgentMail.DraftHtml;
+    /** Attachments to include in draft. */
+    attachments?: AgentMail.SendAttachment[];
     inReplyTo?: AgentMail.DraftInReplyTo;
     sendAt?: AgentMail.DraftSendAt;
     clientId?: AgentMail.DraftClientId;

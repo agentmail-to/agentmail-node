@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { SendAttachment } from "../../attachments/types/SendAttachment.js";
 import { DraftBcc } from "./DraftBcc.js";
 import { DraftCc } from "./DraftCc.js";
 import { DraftClientId } from "./DraftClientId.js";
@@ -27,6 +28,7 @@ export const CreateDraftRequest: core.serialization.ObjectSchema<
     subject: DraftSubject.optional(),
     text: DraftText.optional(),
     html: DraftHtml.optional(),
+    attachments: core.serialization.list(SendAttachment).optional(),
     inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
     sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
     clientId: core.serialization.property("client_id", DraftClientId.optional()),
@@ -42,6 +44,7 @@ export declare namespace CreateDraftRequest {
         subject?: DraftSubject.Raw | null;
         text?: DraftText.Raw | null;
         html?: DraftHtml.Raw | null;
+        attachments?: SendAttachment.Raw[] | null;
         in_reply_to?: DraftInReplyTo.Raw | null;
         send_at?: DraftSendAt.Raw | null;
         client_id?: DraftClientId.Raw | null;
