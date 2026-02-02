@@ -1256,6 +1256,63 @@ await client.drafts.get("draft_id");
 </dl>
 </details>
 
+<details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">getAttachment</a>(draft_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.drafts.getAttachment("draft_id", "attachment_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**draft_id:** `AgentMail.DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachment_id:** `AgentMail.AttachmentId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DraftsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Drafts
 <details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>
@@ -1352,6 +1409,71 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 <dd>
 
 **draft_id:** `AgentMail.DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DraftsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">getAttachment</a>(inbox_id, draft_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.drafts.getAttachment("inbox_id", "draft_id", "attachment_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `AgentMail.DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachment_id:** `AgentMail.AttachmentId` 
     
 </dd>
 </dl>
@@ -2847,6 +2969,71 @@ await client.pods.drafts.get("pod_id", "draft_id");
 <dd>
 
 **draft_id:** `AgentMail.DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DraftsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">getAttachment</a>(pod_id, draft_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.drafts.getAttachment("pod_id", "draft_id", "attachment_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `AgentMail.DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**attachment_id:** `AgentMail.AttachmentId` 
     
 </dd>
 </dl>

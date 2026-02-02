@@ -306,4 +306,65 @@ describe("DraftsClient", () => {
             return await client.pods.drafts.get("pod_id", "draft_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
+
+    test("getAttachment (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            attachment_id: "attachment_id",
+            filename: "filename",
+            size: 1,
+            content_type: "content_type",
+            content_disposition: "inline",
+            content_id: "content_id",
+            download_url: "download_url",
+            expires_at: "2024-01-15T09:30:00Z",
+        };
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/drafts/draft_id/attachments/attachment_id")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.pods.drafts.getAttachment("pod_id", "draft_id", "attachment_id");
+        expect(response).toEqual({
+            attachmentId: "attachment_id",
+            filename: "filename",
+            size: 1,
+            contentType: "content_type",
+            contentDisposition: "inline",
+            contentId: "content_id",
+            downloadUrl: "download_url",
+            expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("getAttachment (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/drafts/draft_id/attachments/attachment_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.drafts.getAttachment("pod_id", "draft_id", "attachment_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
 });

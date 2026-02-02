@@ -210,4 +210,94 @@ export class DraftsClient {
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/drafts/{draft_id}");
     }
+
+    /**
+     * @param {AgentMail.DraftId} draft_id
+     * @param {AgentMail.AttachmentId} attachment_id
+     * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.drafts.getAttachment("draft_id", "attachment_id")
+     */
+    public getAttachment(
+        draft_id: AgentMail.DraftId,
+        attachment_id: AgentMail.AttachmentId,
+        requestOptions?: DraftsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.AttachmentResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getAttachment(draft_id, attachment_id, requestOptions));
+    }
+
+    private async __getAttachment(
+        draft_id: AgentMail.DraftId,
+        attachment_id: AgentMail.AttachmentId,
+        requestOptions?: DraftsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.AttachmentResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    (
+                        (await core.Supplier.get(this._options.environment)) ??
+                        environments.AgentMailEnvironment.Production
+                    ).http,
+                `/v0/drafts/${core.url.encodePathParam(serializers.DraftId.jsonOrThrow(draft_id, { omitUndefined: true }))}/attachments/${core.url.encodePathParam(serializers.AttachmentId.jsonOrThrow(attachment_id, { omitUndefined: true }))}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.AttachmentResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/drafts/{draft_id}/attachments/{attachment_id}",
+        );
+    }
 }
