@@ -12,6 +12,14 @@ export const Organization: core.serialization.ObjectSchema<serializers.Organizat
         domainCount: core.serialization.property("domain_count", core.serialization.number()),
         inboxLimit: core.serialization.property("inbox_limit", core.serialization.number().optional()),
         domainLimit: core.serialization.property("domain_limit", core.serialization.number().optional()),
+        billingId: core.serialization.property("billing_id", core.serialization.string().optional()),
+        billingType: core.serialization.property("billing_type", core.serialization.string().optional()),
+        billingSubscriptionId: core.serialization.property(
+            "billing_subscription_id",
+            core.serialization.string().optional(),
+        ),
+        authenticationId: core.serialization.property("authentication_id", core.serialization.string().optional()),
+        authenticationType: core.serialization.property("authentication_type", core.serialization.string().optional()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
     });
@@ -23,6 +31,11 @@ export declare namespace Organization {
         domain_count: number;
         inbox_limit?: number | null;
         domain_limit?: number | null;
+        billing_id?: string | null;
+        billing_type?: string | null;
+        billing_subscription_id?: string | null;
+        authentication_id?: string | null;
+        authentication_type?: string | null;
         updated_at: string;
         created_at: string;
     }

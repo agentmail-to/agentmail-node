@@ -18,6 +18,11 @@ describe("OrganizationsClient", () => {
             domain_count: 1,
             inbox_limit: 1,
             domain_limit: 1,
+            billing_id: "billing_id",
+            billing_type: "billing_type",
+            billing_subscription_id: "billing_subscription_id",
+            authentication_id: "authentication_id",
+            authentication_type: "authentication_type",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -30,6 +35,11 @@ describe("OrganizationsClient", () => {
             domainCount: 1,
             inboxLimit: 1,
             domainLimit: 1,
+            billingId: "billing_id",
+            billingType: "billing_type",
+            billingSubscriptionId: "billing_subscription_id",
+            authenticationId: "authentication_id",
+            authenticationType: "authentication_type",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });

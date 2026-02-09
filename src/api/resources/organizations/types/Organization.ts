@@ -15,6 +15,16 @@ export interface Organization {
     inboxLimit?: number;
     /** Maximum number of domains allowed. */
     domainLimit?: number;
+    /** Provider-agnostic billing customer ID. */
+    billingId?: string;
+    /** Billing provider type (e.g. "stripe"). */
+    billingType?: string;
+    /** Active billing subscription ID. */
+    billingSubscriptionId?: string;
+    /** Provider-agnostic authentication ID. */
+    authenticationId?: string;
+    /** Authentication provider type. */
+    authenticationType?: string;
     /** Time at which organization was last updated. */
     updatedAt: Date;
     /** Time at which organization was created. */
