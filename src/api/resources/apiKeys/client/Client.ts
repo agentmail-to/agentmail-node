@@ -55,10 +55,8 @@ export class ApiKeysClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 "/v0/api-keys",
             ),
             method: "GET",
@@ -125,10 +123,8 @@ export class ApiKeysClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 "/v0/api-keys",
             ),
             method: "POST",
@@ -213,10 +209,8 @@ export class ApiKeysClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key, { omitUndefined: true }))}`,
             ),
             method: "DELETE",

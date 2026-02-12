@@ -55,10 +55,8 @@ export class DomainsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 "/v0/domains",
             ),
             method: "GET",
@@ -123,10 +121,8 @@ export class DomainsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}`,
             ),
             method: "GET",
@@ -199,10 +195,8 @@ export class DomainsClient {
         const _response = await core.fetcher<core.BinaryResponse>({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}/zone-file`,
             ),
             method: "GET",
@@ -281,10 +275,8 @@ export class DomainsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 "/v0/domains",
             ),
             method: "POST",
@@ -369,10 +361,8 @@ export class DomainsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
@@ -442,10 +432,8 @@ export class DomainsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}/verify`,
             ),
             method: "POST",

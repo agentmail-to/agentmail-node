@@ -40,10 +40,8 @@ export class WebsocketsClient {
         const socket = new core.ReconnectingWebSocket({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).websockets,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .websockets,
                 "/v0",
             ),
             protocols: [],

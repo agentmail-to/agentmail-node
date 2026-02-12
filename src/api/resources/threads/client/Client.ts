@@ -77,10 +77,8 @@ export class ThreadsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 "/v0/threads",
             ),
             method: "GET",
@@ -159,10 +157,8 @@ export class ThreadsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/threads/${core.url.encodePathParam(serializers.ThreadId.jsonOrThrow(thread_id, { omitUndefined: true }))}`,
             ),
             method: "GET",
@@ -244,10 +240,8 @@ export class ThreadsClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/threads/${core.url.encodePathParam(serializers.ThreadId.jsonOrThrow(thread_id, { omitUndefined: true }))}/attachments/${core.url.encodePathParam(serializers.AttachmentId.jsonOrThrow(attachment_id, { omitUndefined: true }))}`,
             ),
             method: "GET",

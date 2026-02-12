@@ -55,10 +55,8 @@ export class WebhooksClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 "/v0/webhooks",
             ),
             method: "GET",
@@ -123,10 +121,8 @@ export class WebhooksClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/webhooks/${core.url.encodePathParam(serializers.webhooks.WebhookId.jsonOrThrow(webhook_id, { omitUndefined: true }))}`,
             ),
             method: "GET",
@@ -209,10 +205,8 @@ export class WebhooksClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/webhooks/${core.url.encodePathParam(serializers.webhooks.WebhookId.jsonOrThrow(webhook_id, { omitUndefined: true }))}`,
             ),
             method: "PATCH",
@@ -311,10 +305,8 @@ export class WebhooksClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 "/v0/webhooks",
             ),
             method: "POST",
@@ -399,10 +391,8 @@ export class WebhooksClient {
         const _response = await core.fetcher({
             url: core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
-                    (
-                        (await core.Supplier.get(this._options.environment)) ??
-                        environments.AgentMailEnvironment.Production
-                    ).http,
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
                 `/v0/webhooks/${core.url.encodePathParam(serializers.webhooks.WebhookId.jsonOrThrow(webhook_id, { omitUndefined: true }))}`,
             ),
             method: "DELETE",

@@ -6,14 +6,14 @@ export interface AgentMailEnvironmentUrls {
 }
 
 export const AgentMailEnvironment = {
-    Production: {
+    Prod: {
         http: "https://api.agentmail.to",
         websockets: "wss://ws.agentmail.to",
     },
-    Development: {
-        http: "https://api.agentmail.dev",
-        websockets: "wss://ws.agentmail.dev",
+    ProdX402: {
+        http: "https://x402.api.agentmail.to",
+        websockets: "wss://x402.ws.agentmail.to",
     },
 } as const;
 
-export type AgentMailEnvironment = typeof AgentMailEnvironment.Production | typeof AgentMailEnvironment.Development;
+export type AgentMailEnvironment = typeof AgentMailEnvironment.Prod | typeof AgentMailEnvironment.ProdX402;
