@@ -11,7 +11,7 @@ export declare namespace WebsocketsClient {
     export type Options = BaseClientOptions;
 
     export interface ConnectArgs {
-        apiKey: string;
+        apiKey?: string;
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -30,7 +30,7 @@ export class WebsocketsClient {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
-    public async connect(args: WebsocketsClient.ConnectArgs): Promise<WebsocketsSocket> {
+    public async connect(args: WebsocketsClient.ConnectArgs = {}): Promise<WebsocketsSocket> {
         const { apiKey, queryParams, headers, debug, reconnectAttempts } = args;
         const _queryParams: Record<string, unknown> = {
             api_key: apiKey,
