@@ -1,6 +1,6 @@
 export * as AgentMail from "./api/index.js";
 export type { BaseClientOptions, BaseRequestOptions } from "./BaseClient.js";
-export { AgentMailClient } from "./Client.js";
+export { AgentMailClient } from "./wrapper/AgentMailClient.js";
 export { AgentMailEnvironment, type AgentMailEnvironmentUrls } from "./environments.js";
 export { AgentMailError, AgentMailTimeoutError } from "./errors/index.js";
 export * from "./exports.js";
