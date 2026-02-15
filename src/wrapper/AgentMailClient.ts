@@ -2,16 +2,16 @@ import { AgentMailClient as FernAgentMailClient } from "../Client.js";
 import type { BaseClientOptions, BaseRequestOptions } from "../BaseClient.js";
 import { WebsocketsClient } from "../api/resources/websockets/client/Client.js";
 import { X402WebsocketsClient } from "./X402WebsocketsClient.js";
-import { initX402, type X402Initialized } from "./x402.js";
 
 export declare namespace AgentMailClient {
     export interface Options extends BaseClientOptions {
         /**
-         * An x402Client instance for automatic payment handling on all HTTP and WebSocket calls.
+         * An x402Client instance for automatic payment handling on WebSocket connections.
+         * For HTTP, pass a wrapped fetch via the `fetch` option instead.
          *
          * @example
          * ```typescript
-         * import { x402Client } from "@x402/fetch";
+         * import { x402Client, wrapFetchWithPayment } from "@x402/fetch";
          * import { registerExactEvmScheme } from "@x402/evm/exact/client";
          * import { privateKeyToAccount } from "viem/accounts";
          *
@@ -20,6 +20,7 @@ export declare namespace AgentMailClient {
          *
          * const client = new AgentMailClient({
          *   environment: AgentMailEnvironment.ProdX402,
+         *   fetch: wrapFetchWithPayment(fetch, x402),
          *   x402,
          * });
          * ```
@@ -31,31 +32,19 @@ export declare namespace AgentMailClient {
 }
 
 export class AgentMailClient extends FernAgentMailClient {
-    private readonly _x402Init?: Promise<X402Initialized>;
+    private readonly _x402Client?: unknown;
 
     constructor(options: AgentMailClient.Options = {}) {
+        super(options);
         if (options.x402) {
-            const x402Init = initX402(options.x402);
-            let resolvedFetch: typeof fetch | undefined;
-
-            super({
-                ...options,
-                fetch: (async (input: RequestInfo | URL, init?: RequestInit) => {
-                    resolvedFetch ??= (await x402Init).fetch;
-                    return resolvedFetch(input, init);
-                }) as typeof fetch,
-            });
-
-            this._x402Init = x402Init;
-        } else {
-            super(options);
+            this._x402Client = options.x402;
         }
     }
 
     public get websockets(): WebsocketsClient {
         if (!this._websockets) {
-            this._websockets = this._x402Init
-                ? new X402WebsocketsClient(this._options, this._x402Init)
+            this._websockets = this._x402Client
+                ? new X402WebsocketsClient(this._options, this._x402Client)
                 : new WebsocketsClient(this._options);
         }
         return this._websockets;
