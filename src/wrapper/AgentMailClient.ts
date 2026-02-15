@@ -38,6 +38,7 @@ export class AgentMailClient extends FernAgentMailClient {
             const x402Client = options.x402;
 
             super({
+                apiKey: "",
                 ...options,
                 fetch: (async (input: RequestInfo | URL, init?: RequestInit) => {
                     if (!wrappedFetch) {
