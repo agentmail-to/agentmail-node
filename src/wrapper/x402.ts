@@ -55,6 +55,5 @@ export async function getPaymentHeaders(wsUrl: string, x402: X402Initialized): P
     const paymentRequired = x402.httpClient.getPaymentRequiredResponse(getHeader, body);
     const paymentPayload = await x402.payClient.createPaymentPayload(paymentRequired);
     const headers = x402.httpClient.encodePaymentSignatureHeader(paymentPayload);
-    console.log("[x402] Payment headers obtained:", Object.keys(headers));
     return headers;
 }

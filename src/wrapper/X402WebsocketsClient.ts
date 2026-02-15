@@ -22,14 +22,11 @@ export class X402WebsocketsClient extends WebsocketsClient {
             "/v0",
         );
 
-        console.log("[x402] Probing WS endpoint:", wsUrl);
         const paymentHeaders = await getPaymentHeaders(wsUrl, x402);
-        console.log("[x402] Connecting WS with payment headers");
 
         return super.connect({
             ...args,
             headers: { ...paymentHeaders, ...args.headers },
-            debug: true,
         });
     }
 }
