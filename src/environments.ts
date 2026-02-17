@@ -14,6 +14,13 @@ export const AgentMailEnvironment = {
         http: "https://x402.api.agentmail.to",
         websockets: "wss://x402.ws.agentmail.to",
     },
+    EuProd: {
+        http: "https://api.agentmail.eu",
+        websockets: "wss://ws.agentmail.eu",
+    },
 } as const;
 
-export type AgentMailEnvironment = typeof AgentMailEnvironment.Prod | typeof AgentMailEnvironment.ProdX402;
+export type AgentMailEnvironment =
+    | typeof AgentMailEnvironment.Prod
+    | typeof AgentMailEnvironment.ProdX402
+    | typeof AgentMailEnvironment.EuProd;
