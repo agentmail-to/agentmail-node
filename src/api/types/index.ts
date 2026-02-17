@@ -2,6 +2,7 @@ export * from "./After.js";
 export * from "./Ascending.js";
 export * from "./Before.js";
 export * from "./Count.js";
+export * from "./ErrorMessage.js";
 export * from "./ErrorName.js";
 export * from "./ErrorResponse.js";
 export * from "./IncludeSpam.js";
