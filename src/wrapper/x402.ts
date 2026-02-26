@@ -1,7 +1,7 @@
 import type { x402Client } from "@x402/fetch";
 import { probe402 } from "./probe402.js";
 
-export async function getPaymentHeaders(wsUrl: string, client: x402Client): Promise<Record<string, string>> {
+export async function getPaymentCredentials(wsUrl: string, client: x402Client): Promise<Record<string, string>> {
     const { x402HTTPClient } = await import("@x402/fetch");
     const httpClient = new x402HTTPClient(client);
 

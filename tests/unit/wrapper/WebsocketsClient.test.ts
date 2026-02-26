@@ -58,10 +58,10 @@ describe("WebsocketsClient wrapper", () => {
 
     describe("with x402", () => {
         const mockX402Client = {};
-        const mockPaymentHeaders = { "X-PAYMENT": "signed-payload" };
+        const mockCredentials = { "PAYMENT-SIGNATURE": "signed-payload" };
 
-        it("should call getPaymentHeaders and merge into connect args", async () => {
-            const spy = vi.spyOn(x402Helpers, "getPaymentHeaders").mockResolvedValue(mockPaymentHeaders);
+        it("should call getPaymentCredentials and pass as queryParams", async () => {
+            const spy = vi.spyOn(x402Helpers, "getPaymentCredentials").mockResolvedValue(mockCredentials);
 
             const client = new AgentMailClient({ x402: mockX402Client });
             await client.websockets.connect();
@@ -69,22 +69,24 @@ describe("WebsocketsClient wrapper", () => {
             expect(spy).toHaveBeenCalled();
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    headers: expect.objectContaining(mockPaymentHeaders),
+                    queryParams: expect.objectContaining(mockCredentials),
                 }),
             );
 
             spy.mockRestore();
         });
 
-        it("should let user headers override payment headers", async () => {
-            const spy = vi.spyOn(x402Helpers, "getPaymentHeaders").mockResolvedValue({ "X-PAYMENT": "from-x402" });
+        it("should let user queryParams override payment credentials", async () => {
+            const spy = vi
+                .spyOn(x402Helpers, "getPaymentCredentials")
+                .mockResolvedValue({ "PAYMENT-SIGNATURE": "from-x402" });
 
             const client = new AgentMailClient({ x402: mockX402Client });
-            await client.websockets.connect({ headers: { "X-PAYMENT": "user-override" } });
+            await client.websockets.connect({ queryParams: { "PAYMENT-SIGNATURE": "user-override" } });
 
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    headers: expect.objectContaining({ "X-PAYMENT": "user-override" }),
+                    queryParams: expect.objectContaining({ "PAYMENT-SIGNATURE": "user-override" }),
                 }),
             );
 
@@ -98,10 +100,10 @@ describe("WebsocketsClient wrapper", () => {
             transport: { setCredential: vi.fn() },
             createCredential: vi.fn(),
         };
-        const mockPaymentHeaders = { Authorization: "Payment signed-credential" };
+        const mockCredentials = { Authorization: "Payment signed-credential" };
 
-        it("should call getPaymentHeaders and merge into connect args", async () => {
-            const spy = vi.spyOn(mppHelpers, "getPaymentHeaders").mockResolvedValue(mockPaymentHeaders);
+        it("should call getPaymentCredentials and pass as queryParams", async () => {
+            const spy = vi.spyOn(mppHelpers, "getPaymentCredentials").mockResolvedValue(mockCredentials);
 
             const client = new AgentMailClient({ mpp: mockMppClient });
             await client.websockets.connect();
@@ -109,22 +111,22 @@ describe("WebsocketsClient wrapper", () => {
             expect(spy).toHaveBeenCalled();
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    headers: expect.objectContaining(mockPaymentHeaders),
+                    queryParams: expect.objectContaining(mockCredentials),
                 }),
             );
 
             spy.mockRestore();
         });
 
-        it("should let user headers override payment headers", async () => {
-            const spy = vi.spyOn(mppHelpers, "getPaymentHeaders").mockResolvedValue({ Authorization: "from-mpp" });
+        it("should let user queryParams override payment credentials", async () => {
+            const spy = vi.spyOn(mppHelpers, "getPaymentCredentials").mockResolvedValue({ Authorization: "from-mpp" });
 
             const client = new AgentMailClient({ mpp: mockMppClient });
-            await client.websockets.connect({ headers: { Authorization: "user-override" } });
+            await client.websockets.connect({ queryParams: { Authorization: "user-override" } });
 
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    headers: expect.objectContaining({ Authorization: "user-override" }),
+                    queryParams: expect.objectContaining({ Authorization: "user-override" }),
                 }),
             );
 
