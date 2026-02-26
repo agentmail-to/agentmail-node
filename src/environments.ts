@@ -14,6 +14,10 @@ export const AgentMailEnvironment = {
         http: "https://x402.api.agentmail.to",
         websockets: "wss://x402.ws.agentmail.to",
     },
+    ProdMpp: {
+        http: "https://mpp.api.agentmail.to",
+        websockets: "wss://mpp.ws.agentmail.to",
+    },
     EuProd: {
         http: "https://api.agentmail.eu",
         websockets: "wss://ws.agentmail.eu",
@@ -23,4 +27,5 @@ export const AgentMailEnvironment = {
 export type AgentMailEnvironment =
     | typeof AgentMailEnvironment.Prod
     | typeof AgentMailEnvironment.ProdX402
+    | typeof AgentMailEnvironment.ProdMpp
     | typeof AgentMailEnvironment.EuProd;
