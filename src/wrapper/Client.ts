@@ -1,6 +1,7 @@
 import { AgentMailClient as FernAgentMailClient } from "../Client.js";
 import { Supplier } from "../core/index.js";
 import { AgentMailEnvironment } from "../environments.js";
+import { WebsocketsClient } from "./WebsocketsClient.js";
 
 export type PaymentProtocol = "x402" | "mpp";
 
@@ -20,6 +21,12 @@ export declare namespace AgentMailClient {
 }
 
 export class AgentMailClient extends FernAgentMailClient {
+  private _wrappedWebsockets: WebsocketsClient | undefined;
+
+  public override get websockets(): WebsocketsClient {
+    return (this._wrappedWebsockets ??= new WebsocketsClient(this._options));
+  }
+
   constructor(options: AgentMailClient.Options = {}) {
     if (options.walletAddress) {
       const { walletAddress, protocol, ...rest } = options;
