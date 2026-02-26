@@ -1,7 +1,7 @@
 import type { Mppx } from "mppx/client";
 import { probe402 } from "./probe402.js";
 
-export async function getPaymentHeaders(wsUrl: string, mpp: Mppx.Mppx): Promise<Record<string, string>> {
+export async function getPaymentCredentials(wsUrl: string, mpp: Mppx.Mppx): Promise<Record<string, string>> {
     const response = await probe402(wsUrl);
 
     const credential = await mpp.createCredential(response);
