@@ -8,16 +8,16 @@ import { AgentMailClient as FernAgentMailClient } from "../Client.js";
 import { type GetPaymentCredentials, WebsocketsClient } from "./WebsocketsClient.js";
 
 import { getPaymentCredentials as getX402Credentials } from "./x402.js";
-import { getPaymentCredentials as getMppCredentials } from "./mpp.js";
+import { getPaymentCredentials as getMppCredentials } from "./mppx.js";
 
 type SharedOptions = Omit<FernAgentMailClient.Options, "apiKey">;
 
 export declare namespace AgentMailClient {
     export type Options = SharedOptions &
         (
-            | { x402: x402Client; mpp?: never; apiKey?: never }
-            | { mpp: Mppx.Mppx; x402?: never; apiKey?: never }
-            | { apiKey?: Supplier<string>; x402?: never; mpp?: never }
+            | { x402: x402Client; mppx?: never; apiKey?: never }
+            | { mppx: Mppx.Mppx; x402?: never; apiKey?: never }
+            | { apiKey?: Supplier<string>; x402?: never; mppx?: never }
         );
     export type RequestOptions = FernAgentMailClient.RequestOptions;
 }
@@ -54,13 +54,13 @@ export class AgentMailClient extends FernAgentMailClient {
             super(fernOptions);
 
             this._getPaymentCredentials = (wsUrl) => getX402Credentials(wsUrl, x402);
-        } else if (options.mpp) {
-            const { mpp, ...rest } = options;
+        } else if (options.mppx) {
+            const { mppx, ...rest } = options;
 
             const fernOptions = {
                 ...rest,
                 authProvider: new NoOpAuthProvider(),
-                fetch: mpp.fetch,
+                fetch: mppx.fetch,
             };
 
             if (!fernOptions.environment && !fernOptions.baseUrl) {
@@ -69,7 +69,7 @@ export class AgentMailClient extends FernAgentMailClient {
 
             super(fernOptions);
 
-            this._getPaymentCredentials = (wsUrl) => getMppCredentials(wsUrl, mpp);
+            this._getPaymentCredentials = (wsUrl) => getMppCredentials(wsUrl, mppx);
         } else {
             let fernOptions: FernAgentMailClient.Options = options;
 
