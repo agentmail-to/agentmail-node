@@ -60,10 +60,10 @@ describe("AgentMailClient environment selection", () => {
     });
   });
 
-  describe("with walletAddress", () => {
+  describe("with privateKey", () => {
     it("should select ProdX402 with x402 protocol", async () => {
       const client = new AgentMailClient({
-        walletAddress: "0xabc123",
+        privateKey: "0xabc123",
         protocol: "x402",
       });
       const env = await Supplier.get(client["_options"].environment);
@@ -72,16 +72,16 @@ describe("AgentMailClient environment selection", () => {
 
     it("should select ProdMpp with mpp protocol", async () => {
       const client = new AgentMailClient({
-        walletAddress: "0xabc123",
+        privateKey: "0xabc123",
         protocol: "mpp",
       });
       const env = await Supplier.get(client["_options"].environment);
       expect(env).toEqual(AgentMailEnvironment.ProdMpp);
     });
 
-    it("should pass walletAddress as apiKey to auth", async () => {
+    it("should pass privateKey as apiKey to auth", async () => {
       const client = new AgentMailClient({
-        walletAddress: "0xabc123",
+        privateKey: "0xabc123",
         protocol: "x402",
       });
       const apiKey = await Supplier.get(client["_options"].apiKey);
@@ -110,9 +110,9 @@ describe("AgentMailClient environment selection", () => {
       );
     });
 
-    it("should not override environment for walletAddress when explicitly set", async () => {
+    it("should not override environment for privateKey when explicitly set", async () => {
       const client = new AgentMailClient({
-        walletAddress: "0xabc123",
+        privateKey: "0xabc123",
         protocol: "mpp",
         environment: AgentMailEnvironment.ProdX402,
       });

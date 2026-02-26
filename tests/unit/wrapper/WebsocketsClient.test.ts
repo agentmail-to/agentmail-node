@@ -29,9 +29,9 @@ describe("WebsocketsClient wrapper", () => {
     expect(connectSpy).toHaveBeenCalledWith({ apiKey: "am_us_test123" });
   });
 
-  it("should auto-populate apiKey from walletAddress", async () => {
+  it("should auto-populate apiKey from privateKey", async () => {
     const client = new AgentMailClient({
-      walletAddress: "0xabc",
+      privateKey: "0xabc",
       protocol: "x402",
     });
     await client.websockets.connect();

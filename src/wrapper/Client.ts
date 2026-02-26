@@ -10,10 +10,10 @@ type SharedOptions = Omit<FernAgentMailClient.Options, "apiKey">;
 export declare namespace AgentMailClient {
   export type Options = SharedOptions &
     (
-      | { walletAddress: string; protocol: PaymentProtocol; apiKey?: never }
+      | { privateKey: string; protocol: PaymentProtocol; apiKey?: never }
       | {
           apiKey?: Supplier<string>;
-          walletAddress?: never;
+          privateKey?: never;
           protocol?: never;
         }
     );
@@ -28,11 +28,11 @@ export class AgentMailClient extends FernAgentMailClient {
   }
 
   constructor(options: AgentMailClient.Options = {}) {
-    if (options.walletAddress) {
-      const { walletAddress, protocol, ...rest } = options;
+    if (options.privateKey) {
+      const { privateKey, protocol, ...rest } = options;
       const fernOptions: FernAgentMailClient.Options = {
         ...rest,
-        apiKey: walletAddress,
+        apiKey: privateKey,
       };
       if (!fernOptions.environment && !fernOptions.baseUrl) {
         fernOptions.environment =
