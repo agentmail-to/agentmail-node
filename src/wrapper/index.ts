@@ -1,2 +1,2 @@
-export { AgentMailClient, type PaymentProtocol } from "./Client.js";
+export { AgentMailClient } from "./Client.js";
 export { WebsocketsClient } from "./WebsocketsClient.js";
