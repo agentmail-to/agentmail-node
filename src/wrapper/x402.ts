@@ -1,15 +1,11 @@
 import type { x402Client } from "@x402/fetch";
+import { probe402 } from "./probe402.js";
 
 export async function getPaymentHeaders(wsUrl: string, client: x402Client): Promise<Record<string, string>> {
     const { x402HTTPClient } = await import("@x402/fetch");
     const httpClient = new x402HTTPClient(client);
 
-    const httpUrl = wsUrl.replace(/^wss:\/\//, "https://").replace(/^ws:\/\//, "http://");
-
-    const response = await fetch(httpUrl);
-    if (response.status !== 402) {
-        throw new Error(`x402: expected 402 from ${httpUrl} but got ${response.status}`);
-    }
+    const response = await probe402(wsUrl);
 
     let body: unknown;
     try {

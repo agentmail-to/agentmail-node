@@ -1,23 +1,32 @@
 import type { x402Client } from "@x402/fetch";
-import { AgentMailClient as FernAgentMailClient } from "../Client.js";
+import type { Mppx } from "mppx/client";
+
 import { Supplier } from "../core/index.js";
 import { AgentMailEnvironment } from "../environments.js";
-import { WebsocketsClient } from "./WebsocketsClient.js";
+import { AgentMailClient as FernAgentMailClient } from "../Client.js";
+import { type GetPaymentHeaders, WebsocketsClient } from "./WebsocketsClient.js";
+
+import { getPaymentHeaders as getX402PaymentHeaders } from "./x402.js";
+import { getPaymentHeaders as getMppPaymentHeaders } from "./mpp.js";
 
 type SharedOptions = Omit<FernAgentMailClient.Options, "apiKey">;
 
 export declare namespace AgentMailClient {
     export type Options = SharedOptions &
-        ({ x402: x402Client; apiKey?: never } | { apiKey?: Supplier<string>; x402?: never });
+        (
+            | { x402: x402Client; mpp?: never; apiKey?: never }
+            | { mpp: Mppx.Mppx; x402?: never; apiKey?: never }
+            | { apiKey?: Supplier<string>; x402?: never; mpp?: never }
+        );
     export type RequestOptions = FernAgentMailClient.RequestOptions;
 }
 
 export class AgentMailClient extends FernAgentMailClient {
     protected declare _websockets: WebsocketsClient | undefined;
-    private readonly _x402Client: x402Client | undefined;
+    private readonly _getPaymentHeaders: GetPaymentHeaders | undefined;
 
     public override get websockets(): WebsocketsClient {
-        return (this._websockets ??= new WebsocketsClient(this._options, this._x402Client));
+        return (this._websockets ??= new WebsocketsClient(this._options, this._getPaymentHeaders));
     }
 
     constructor(options: AgentMailClient.Options = {}) {
@@ -29,8 +38,8 @@ export class AgentMailClient extends FernAgentMailClient {
                 ...rest,
                 fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
                     if (!wrappedFetch) {
-                        const { wrapFetchWithPayment } = await import("@x402/fetch");
-                        wrappedFetch = wrapFetchWithPayment(fetch, x402);
+                        const mod = await import("@x402/fetch");
+                        wrappedFetch = mod.wrapFetchWithPayment(fetch, x402);
                     }
                     return wrappedFetch(input, init);
                 },
@@ -42,7 +51,22 @@ export class AgentMailClient extends FernAgentMailClient {
 
             super(fernOptions);
 
-            this._x402Client = x402;
+            this._getPaymentHeaders = (wsUrl) => getX402PaymentHeaders(wsUrl, x402);
+        } else if (options.mpp) {
+            const { mpp, ...rest } = options;
+
+            const fernOptions: FernAgentMailClient.Options = {
+                ...rest,
+                fetch: mpp.fetch,
+            };
+
+            if (!fernOptions.environment && !fernOptions.baseUrl) {
+                fernOptions.environment = AgentMailEnvironment.ProdMpp;
+            }
+
+            super(fernOptions);
+
+            this._getPaymentHeaders = (wsUrl) => getMppPaymentHeaders(wsUrl, mpp);
         } else {
             let fernOptions: FernAgentMailClient.Options = options;
 
@@ -59,7 +83,7 @@ export class AgentMailClient extends FernAgentMailClient {
 
             super(fernOptions);
 
-            this._x402Client = undefined;
+            this._getPaymentHeaders = undefined;
         }
     }
 }

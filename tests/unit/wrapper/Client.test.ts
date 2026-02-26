@@ -102,6 +102,35 @@ describe("AgentMailClient environment selection", () => {
         });
     });
 
+    describe("with mpp", () => {
+        const mockMppFetch = vi.fn().mockResolvedValue(new Response());
+        const mockMppClient = {
+            fetch: mockMppFetch,
+            transport: { setCredential: vi.fn() },
+            createCredential: vi.fn(),
+        };
+
+        it("should derive ProdMpp environment", async () => {
+            const client = new AgentMailClient({ mpp: mockMppClient });
+            const env = await Supplier.get(client["_options"].environment);
+            expect(env).toEqual(AgentMailEnvironment.ProdMpp);
+        });
+
+        it("should not override explicitly set environment", async () => {
+            const client = new AgentMailClient({
+                mpp: mockMppClient,
+                environment: AgentMailEnvironment.EuProd,
+            });
+            const env = await Supplier.get(client["_options"].environment);
+            expect(env).toEqual(AgentMailEnvironment.EuProd);
+        });
+
+        it("should use mpp.fetch as the fetch implementation", () => {
+            const client = new AgentMailClient({ mpp: mockMppClient });
+            expect(client["_options"].fetch).toBe(mockMppFetch);
+        });
+    });
+
     describe("explicit overrides", () => {
         it("should not override explicitly set environment", async () => {
             const client = new AgentMailClient({

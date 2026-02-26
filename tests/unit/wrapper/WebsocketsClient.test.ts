@@ -2,6 +2,7 @@ import { AgentMailClient } from "../../../src/wrapper/Client";
 import { WebsocketsClient as FernWebsocketsClient } from "../../../src/api/resources/websockets/client/Client";
 import type { WebsocketsSocket } from "../../../src/api/resources/websockets/client/Socket";
 import * as x402Helpers from "../../../src/wrapper/x402";
+import * as mppHelpers from "../../../src/wrapper/mpp";
 
 function mockConnect() {
     return vi.spyOn(FernWebsocketsClient.prototype, "connect").mockResolvedValue({} as WebsocketsSocket);
@@ -57,45 +58,77 @@ describe("WebsocketsClient wrapper", () => {
 
     describe("with x402", () => {
         const mockX402Client = {};
-        const mockPaymentHeaders = {
-            "X-PAYMENT": "signed-payload",
-        };
+        const mockPaymentHeaders = { "X-PAYMENT": "signed-payload" };
 
         it("should call getPaymentHeaders and merge into connect args", async () => {
-            const headersSpy = vi.spyOn(x402Helpers, "getPaymentHeaders").mockResolvedValue(mockPaymentHeaders);
+            const spy = vi.spyOn(x402Helpers, "getPaymentHeaders").mockResolvedValue(mockPaymentHeaders);
 
             const client = new AgentMailClient({ x402: mockX402Client });
             await client.websockets.connect();
 
-            expect(headersSpy).toHaveBeenCalled();
+            expect(spy).toHaveBeenCalled();
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
                     headers: expect.objectContaining(mockPaymentHeaders),
                 }),
             );
 
-            headersSpy.mockRestore();
+            spy.mockRestore();
         });
 
         it("should let user headers override payment headers", async () => {
-            const headersSpy = vi
-                .spyOn(x402Helpers, "getPaymentHeaders")
-                .mockResolvedValue({ "X-PAYMENT": "from-x402" });
+            const spy = vi.spyOn(x402Helpers, "getPaymentHeaders").mockResolvedValue({ "X-PAYMENT": "from-x402" });
 
             const client = new AgentMailClient({ x402: mockX402Client });
-            await client.websockets.connect({
-                headers: { "X-PAYMENT": "user-override" },
-            });
+            await client.websockets.connect({ headers: { "X-PAYMENT": "user-override" } });
 
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
-                    headers: expect.objectContaining({
-                        "X-PAYMENT": "user-override",
-                    }),
+                    headers: expect.objectContaining({ "X-PAYMENT": "user-override" }),
                 }),
             );
 
-            headersSpy.mockRestore();
+            spy.mockRestore();
+        });
+    });
+
+    describe("with mpp", () => {
+        const mockMppClient = {
+            fetch: vi.fn(),
+            transport: { setCredential: vi.fn() },
+            createCredential: vi.fn(),
+        };
+        const mockPaymentHeaders = { Authorization: "Payment signed-credential" };
+
+        it("should call getPaymentHeaders and merge into connect args", async () => {
+            const spy = vi.spyOn(mppHelpers, "getPaymentHeaders").mockResolvedValue(mockPaymentHeaders);
+
+            const client = new AgentMailClient({ mpp: mockMppClient });
+            await client.websockets.connect();
+
+            expect(spy).toHaveBeenCalled();
+            expect(connectSpy).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    headers: expect.objectContaining(mockPaymentHeaders),
+                }),
+            );
+
+            spy.mockRestore();
+        });
+
+        it("should let user headers override payment headers", async () => {
+            const spy = vi.spyOn(mppHelpers, "getPaymentHeaders").mockResolvedValue({ Authorization: "from-mpp" });
+
+            const client = new AgentMailClient({ mpp: mockMppClient });
+            await client.websockets.connect({ headers: { Authorization: "user-override" } });
+
+            expect(connectSpy).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    headers: expect.objectContaining({ Authorization: "user-override" }),
+                }),
+            );
+
+            spy.mockRestore();
         });
     });
 });
