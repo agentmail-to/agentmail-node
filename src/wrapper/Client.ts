@@ -2,6 +2,7 @@ import type { x402Client } from "@x402/fetch";
 import type { Mppx } from "mppx/client";
 
 import { Supplier } from "../core/index.js";
+import { NoOpAuthProvider } from "../core/auth/NoOpAuthProvider.js";
 import { AgentMailEnvironment } from "../environments.js";
 import { AgentMailClient as FernAgentMailClient } from "../Client.js";
 import { type GetPaymentHeaders, WebsocketsClient } from "./WebsocketsClient.js";
@@ -34,8 +35,9 @@ export class AgentMailClient extends FernAgentMailClient {
             const { x402, ...rest } = options;
 
             let wrappedFetch: typeof fetch | undefined;
-            const fernOptions: FernAgentMailClient.Options = {
+            const fernOptions = {
                 ...rest,
+                authProvider: new NoOpAuthProvider(),
                 fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
                     if (!wrappedFetch) {
                         const mod = await import("@x402/fetch");
@@ -55,8 +57,9 @@ export class AgentMailClient extends FernAgentMailClient {
         } else if (options.mpp) {
             const { mpp, ...rest } = options;
 
-            const fernOptions: FernAgentMailClient.Options = {
+            const fernOptions = {
                 ...rest,
+                authProvider: new NoOpAuthProvider(),
                 fetch: mpp.fetch,
             };
 
