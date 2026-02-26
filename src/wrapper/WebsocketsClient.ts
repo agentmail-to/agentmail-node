@@ -1,6 +1,6 @@
 import type { x402Client } from "@x402/fetch";
 import { WebsocketsClient as FernWebsocketsClient } from "../api/resources/websockets/client/Client.js";
-import { WebsocketsSocket } from "../api/resources/websockets/client/Socket.js";
+import type { WebsocketsSocket } from "../api/resources/websockets/client/Socket.js";
 import * as core from "../core/index.js";
 import * as environments from "../environments.js";
 import { getPaymentHeaders } from "./x402.js";

@@ -24,7 +24,7 @@ export class AgentMailClient extends FernAgentMailClient {
         if (options.x402) {
             const { x402, ...rest } = options;
 
-            let wrappedFetch: typeof fetch;
+            let wrappedFetch: typeof fetch | undefined;
             const fernOptions: FernAgentMailClient.Options = {
                 ...rest,
                 fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
@@ -47,10 +47,13 @@ export class AgentMailClient extends FernAgentMailClient {
             let fernOptions: FernAgentMailClient.Options = options;
 
             if (!fernOptions.environment && !fernOptions.baseUrl) {
-                fernOptions.environment = async () => {
-                    const apiKey = (await Supplier.get(fernOptions.apiKey)) ?? process.env.AGENTMAIL_API_KEY;
-                    if (apiKey?.startsWith("am_eu_")) return AgentMailEnvironment.EuProd;
-                    return AgentMailEnvironment.Prod;
+                fernOptions = {
+                    ...fernOptions,
+                    environment: async () => {
+                        const apiKey = (await Supplier.get(fernOptions.apiKey)) ?? process.env.AGENTMAIL_API_KEY;
+                        if (apiKey?.startsWith("am_eu_")) return AgentMailEnvironment.EuProd;
+                        return AgentMailEnvironment.Prod;
+                    },
                 };
             }
 

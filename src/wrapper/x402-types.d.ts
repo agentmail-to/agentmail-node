@@ -1,7 +1,5 @@
 declare module "@x402/fetch" {
-    export class x402Client {
-        createPaymentPayload(paymentRequired: unknown): Promise<unknown>;
-    }
+    export class x402Client {}
 
     export class x402HTTPClient {
         constructor(client: x402Client);

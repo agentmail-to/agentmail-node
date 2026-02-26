@@ -61,7 +61,19 @@ describe("AgentMailClient environment selection", () => {
     });
 
     describe("with x402", () => {
-        const mockX402Client = { createPaymentPayload: vi.fn() };
+        const mockX402Client = {};
+        const mockWrappedFetch = vi.fn().mockResolvedValue(new Response());
+
+        beforeEach(() => {
+            vi.doMock("@x402/fetch", () => ({
+                wrapFetchWithPayment: vi.fn(() => mockWrappedFetch),
+            }));
+        });
+
+        afterEach(() => {
+            vi.doUnmock("@x402/fetch");
+            mockWrappedFetch.mockClear();
+        });
 
         it("should derive ProdX402 environment", async () => {
             const client = new AgentMailClient({ x402: mockX402Client });
@@ -78,9 +90,15 @@ describe("AgentMailClient environment selection", () => {
             expect(env).toEqual(AgentMailEnvironment.EuProd);
         });
 
-        it("should set a custom fetch implementation", () => {
+        it("should lazily wrap fetch with wrapFetchWithPayment", async () => {
             const client = new AgentMailClient({ x402: mockX402Client });
-            expect(client["_options"].fetch).toBeDefined();
+            const customFetch = client["_options"].fetch!;
+
+            await customFetch(new Request("https://example.com"));
+
+            const x402 = await vi.importMock<typeof import("@x402/fetch")>("@x402/fetch");
+            expect(x402.wrapFetchWithPayment).toHaveBeenCalledWith(fetch, mockX402Client);
+            expect(mockWrappedFetch).toHaveBeenCalled();
         });
     });
 
