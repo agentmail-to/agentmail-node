@@ -2,7 +2,7 @@ import { WebsocketsClient } from "../api/resources/websockets/client/Client.js";
 import type { WebsocketsSocket } from "../api/resources/websockets/client/Socket.js";
 import * as core from "../core/index.js";
 import * as environments from "../environments.js";
-import { getPaymentHeaders } from "./x402.js";
+import { getPaymentQueryParams } from "./x402.js";
 
 export class X402WebsocketsClient extends WebsocketsClient {
     private readonly _x402Client: unknown;
@@ -20,11 +20,11 @@ export class X402WebsocketsClient extends WebsocketsClient {
             "/v0",
         );
 
-        const paymentHeaders = await getPaymentHeaders(wsUrl, this._x402Client);
+        const paymentQueryParams = await getPaymentQueryParams(wsUrl, this._x402Client);
 
         return super.connect({
             ...args,
-            headers: { ...paymentHeaders, ...args.headers },
+            queryParams: { ...paymentQueryParams, ...args.queryParams },
         });
     }
 }

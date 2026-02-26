@@ -1,8 +1,11 @@
 /**
  * Probes a WebSocket endpoint over HTTP to get a 402 response,
- * then signs a payment and returns the headers needed for the WS handshake.
+ * then signs a payment and returns the payment-signature as a query parameter.
+ *
+ * Uses query params instead of headers because many WebSocket clients
+ * (including browser WebSocket) don't support custom headers on the upgrade request.
  */
-export async function getPaymentHeaders(wsUrl: string, x402Client: unknown): Promise<Record<string, string>> {
+export async function getPaymentQueryParams(wsUrl: string, x402Client: unknown): Promise<Record<string, string>> {
     let x402Fetch: typeof import("@x402/fetch");
     try {
         x402Fetch = await import("@x402/fetch");
@@ -33,5 +36,12 @@ export async function getPaymentHeaders(wsUrl: string, x402Client: unknown): Pro
     const getHeader = (name: string): string | null => response.headers.get(name);
     const paymentRequired = httpClient.getPaymentRequiredResponse(getHeader, body);
     const paymentPayload = await payClient.createPaymentPayload(paymentRequired);
-    return httpClient.encodePaymentSignatureHeader(paymentPayload);
+    const headers = httpClient.encodePaymentSignatureHeader(paymentPayload);
+
+    const paymentSignature = headers["PAYMENT-SIGNATURE"] ?? headers["payment-signature"];
+    if (!paymentSignature) {
+        throw new Error("x402: encodePaymentSignatureHeader did not return a payment-signature");
+    }
+
+    return { "payment-signature": paymentSignature };
 }
