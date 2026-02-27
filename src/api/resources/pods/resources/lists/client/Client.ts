@@ -4,73 +4,158 @@ import type { BaseClientOptions, BaseRequestOptions } from "../../../../../../Ba
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../../../BaseClient.js";
 import { mergeHeaders } from "../../../../../../core/headers.js";
 import * as core from "../../../../../../core/index.js";
-import { toJson } from "../../../../../../core/json.js";
 import * as environments from "../../../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../../../errors/index.js";
 import * as serializers from "../../../../../../serialization/index.js";
 import * as AgentMail from "../../../../../index.js";
 
-export declare namespace ThreadsClient {
+export declare namespace ListsClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class ThreadsClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<ThreadsClient.Options>;
+export class ListsClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<ListsClient.Options>;
 
-    constructor(options: ThreadsClient.Options = {}) {
+    constructor(options: ListsClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
-     * @param {AgentMail.inboxes.InboxId} inbox_id
-     * @param {AgentMail.inboxes.ListThreadsRequest} request
-     * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.Direction} direction
+     * @param {AgentMail.ListType} type
+     * @param {AgentMail.CreateListEntryRequest} request
+     * @param {ListsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
-     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.inboxes.threads.list("inbox_id")
+     *     await client.pods.lists.create("pod_id", "send", "allow", {
+     *         entry: "entry"
+     *     })
+     */
+    public create(
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        request: AgentMail.CreateListEntryRequest,
+        requestOptions?: ListsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.PodListEntry> {
+        return core.HttpResponsePromise.fromPromise(this.__create(pod_id, direction, type, request, requestOptions));
+    }
+
+    private async __create(
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        request: AgentMail.CreateListEntryRequest,
+        requestOptions?: ListsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.PodListEntry>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/lists/${core.url.encodePathParam(serializers.Direction.jsonOrThrow(direction, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ListType.jsonOrThrow(type, { omitUndefined: true }))}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.CreateListEntryRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.PodListEntry.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/pods/{pod_id}/lists/{direction}/{type}",
+        );
+    }
+
+    /**
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.Direction} direction
+     * @param {AgentMail.ListType} type
+     * @param {AgentMail.pods.ListListEntriesRequest} request
+     * @param {ListsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.pods.lists.list("pod_id", "send", "allow")
      */
     public list(
-        inbox_id: AgentMail.inboxes.InboxId,
-        request: AgentMail.inboxes.ListThreadsRequest = {},
-        requestOptions?: ThreadsClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListThreadsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__list(inbox_id, request, requestOptions));
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        request: AgentMail.pods.ListListEntriesRequest = {},
+        requestOptions?: ListsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.PodListListEntriesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__list(pod_id, direction, type, request, requestOptions));
     }
 
     private async __list(
-        inbox_id: AgentMail.inboxes.InboxId,
-        request: AgentMail.inboxes.ListThreadsRequest = {},
-        requestOptions?: ThreadsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListThreadsResponse>> {
-        const { limit, pageToken, labels, before, after, ascending, includeSpam, includeBlocked } = request;
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        request: AgentMail.pods.ListListEntriesRequest = {},
+        requestOptions?: ListsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.PodListListEntriesResponse>> {
+        const { limit, pageToken } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
             page_token: pageToken,
-            labels:
-                labels != null
-                    ? toJson(
-                          serializers.Labels.jsonOrThrow(labels, {
-                              unrecognizedObjectKeys: "strip",
-                              omitUndefined: true,
-                          }),
-                      )
-                    : undefined,
-            before:
-                before != null
-                    ? serializers.Before.jsonOrThrow(before, { unrecognizedObjectKeys: "strip", omitUndefined: true })
-                    : undefined,
-            after:
-                after != null
-                    ? serializers.After.jsonOrThrow(after, { unrecognizedObjectKeys: "strip", omitUndefined: true })
-                    : undefined,
-            ascending,
-            include_spam: includeSpam,
-            include_blocked: includeBlocked,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -83,7 +168,7 @@ export class ThreadsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/threads`,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/lists/${core.url.encodePathParam(serializers.Direction.jsonOrThrow(direction, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ListType.jsonOrThrow(type, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -96,7 +181,7 @@ export class ThreadsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.ListThreadsResponse.parseOrThrow(_response.body, {
+                data: serializers.PodListListEntriesResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -108,58 +193,50 @@ export class ThreadsClient {
         }
 
         if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
+            throw new errors.AgentMailError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
         }
 
         return handleNonStatusCodeError(
             _response.error,
             _response.rawResponse,
             "GET",
-            "/v0/inboxes/{inbox_id}/threads",
+            "/v0/pods/{pod_id}/lists/{direction}/{type}",
         );
     }
 
     /**
-     * @param {AgentMail.inboxes.InboxId} inbox_id
-     * @param {AgentMail.ThreadId} thread_id
-     * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.Direction} direction
+     * @param {AgentMail.ListType} type
+     * @param {string} entry - Email address or domain.
+     * @param {ListsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.inboxes.threads.get("inbox_id", "thread_id")
+     *     await client.pods.lists.get("pod_id", "send", "allow", "entry")
      */
     public get(
-        inbox_id: AgentMail.inboxes.InboxId,
-        thread_id: AgentMail.ThreadId,
-        requestOptions?: ThreadsClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.Thread> {
-        return core.HttpResponsePromise.fromPromise(this.__get(inbox_id, thread_id, requestOptions));
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        entry: string,
+        requestOptions?: ListsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.PodListEntry> {
+        return core.HttpResponsePromise.fromPromise(this.__get(pod_id, direction, type, entry, requestOptions));
     }
 
     private async __get(
-        inbox_id: AgentMail.inboxes.InboxId,
-        thread_id: AgentMail.ThreadId,
-        requestOptions?: ThreadsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.Thread>> {
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        entry: string,
+        requestOptions?: ListsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.PodListEntry>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -171,7 +248,7 @@ export class ThreadsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/threads/${core.url.encodePathParam(serializers.ThreadId.jsonOrThrow(thread_id, { omitUndefined: true }))}`,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/lists/${core.url.encodePathParam(serializers.Direction.jsonOrThrow(direction, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ListType.jsonOrThrow(type, { omitUndefined: true }))}/${core.url.encodePathParam(entry)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -184,7 +261,7 @@ export class ThreadsClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.Thread.parseOrThrow(_response.body, {
+                data: serializers.PodListEntry.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -221,125 +298,38 @@ export class ThreadsClient {
             _response.error,
             _response.rawResponse,
             "GET",
-            "/v0/inboxes/{inbox_id}/threads/{thread_id}",
+            "/v0/pods/{pod_id}/lists/{direction}/{type}/{entry}",
         );
     }
 
     /**
-     * @param {AgentMail.inboxes.InboxId} inbox_id
-     * @param {AgentMail.ThreadId} thread_id
-     * @param {AgentMail.AttachmentId} attachment_id
-     * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.Direction} direction
+     * @param {AgentMail.ListType} type
+     * @param {string} entry - Email address or domain.
+     * @param {ListsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_id")
-     */
-    public getAttachment(
-        inbox_id: AgentMail.inboxes.InboxId,
-        thread_id: AgentMail.ThreadId,
-        attachment_id: AgentMail.AttachmentId,
-        requestOptions?: ThreadsClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.AttachmentResponse> {
-        return core.HttpResponsePromise.fromPromise(
-            this.__getAttachment(inbox_id, thread_id, attachment_id, requestOptions),
-        );
-    }
-
-    private async __getAttachment(
-        inbox_id: AgentMail.inboxes.InboxId,
-        thread_id: AgentMail.ThreadId,
-        attachment_id: AgentMail.AttachmentId,
-        requestOptions?: ThreadsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.AttachmentResponse>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/threads/${core.url.encodePathParam(serializers.ThreadId.jsonOrThrow(thread_id, { omitUndefined: true }))}/attachments/${core.url.encodePathParam(serializers.AttachmentId.jsonOrThrow(attachment_id, { omitUndefined: true }))}`,
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.AttachmentResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/v0/inboxes/{inbox_id}/threads/{thread_id}/attachments/{attachment_id}",
-        );
-    }
-
-    /**
-     * @param {AgentMail.inboxes.InboxId} inbox_id
-     * @param {AgentMail.ThreadId} thread_id
-     * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.inboxes.threads.delete("inbox_id", "thread_id")
+     *     await client.pods.lists.delete("pod_id", "send", "allow", "entry")
      */
     public delete(
-        inbox_id: AgentMail.inboxes.InboxId,
-        thread_id: AgentMail.ThreadId,
-        requestOptions?: ThreadsClient.RequestOptions,
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        entry: string,
+        requestOptions?: ListsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__delete(inbox_id, thread_id, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__delete(pod_id, direction, type, entry, requestOptions));
     }
 
     private async __delete(
-        inbox_id: AgentMail.inboxes.InboxId,
-        thread_id: AgentMail.ThreadId,
-        requestOptions?: ThreadsClient.RequestOptions,
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        entry: string,
+        requestOptions?: ListsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -352,7 +342,7 @@ export class ThreadsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/threads/${core.url.encodePathParam(serializers.ThreadId.jsonOrThrow(thread_id, { omitUndefined: true }))}`,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/lists/${core.url.encodePathParam(serializers.Direction.jsonOrThrow(direction, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ListType.jsonOrThrow(type, { omitUndefined: true }))}/${core.url.encodePathParam(entry)}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -393,7 +383,7 @@ export class ThreadsClient {
             _response.error,
             _response.rawResponse,
             "DELETE",
-            "/v0/inboxes/{inbox_id}/threads/{thread_id}",
+            "/v0/pods/{pod_id}/lists/{direction}/{type}/{entry}",
         );
     }
 }

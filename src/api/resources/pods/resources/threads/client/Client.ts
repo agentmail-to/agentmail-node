@@ -47,7 +47,7 @@ export class ThreadsClient {
         request: AgentMail.pods.ListThreadsRequest = {},
         requestOptions?: ThreadsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListThreadsResponse>> {
-        const { limit, pageToken, labels, before, after, ascending, includeSpam } = request;
+        const { limit, pageToken, labels, before, after, ascending, includeSpam, includeBlocked } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
             page_token: pageToken,
@@ -70,6 +70,7 @@ export class ThreadsClient {
                     : undefined,
             ascending,
             include_spam: includeSpam,
+            include_blocked: includeBlocked,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

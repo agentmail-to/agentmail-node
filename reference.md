@@ -2589,6 +2589,269 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 </dl>
 </details>
 
+## Lists
+<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">create</a>(direction, type, { ...params }) -> AgentMail.ListEntry</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.lists.create("send", "allow", {
+    entry: "entry"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateListEntryRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">list</a>(direction, type, { ...params }) -> AgentMail.ListListEntriesResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.lists.list("send", "allow");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ListListEntriesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">get</a>(direction, type, entry) -> AgentMail.ListEntry</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.lists.get("send", "allow", "entry");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `string` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">delete</a>(direction, type, entry) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.lists.delete("send", "allow", "entry");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `string` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Metrics
 <details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListMetricsResponse</code></summary>
 <dl>
@@ -3271,6 +3534,301 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 <dd>
 
 **requestOptions:** `InboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pods Lists
+<details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">create</a>(pod_id, direction, type, { ...params }) -> AgentMail.PodListEntry</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.lists.create("pod_id", "send", "allow", {
+    entry: "entry"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateListEntryRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">list</a>(pod_id, direction, type, { ...params }) -> AgentMail.PodListListEntriesResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.lists.list("pod_id", "send", "allow");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.ListListEntriesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">get</a>(pod_id, direction, type, entry) -> AgentMail.PodListEntry</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.lists.get("pod_id", "send", "allow", "entry");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `string` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">delete</a>(pod_id, direction, type, entry) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.lists.delete("pod_id", "send", "allow", "entry");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**entry:** `string` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
     
 </dd>
 </dl>

@@ -12,6 +12,7 @@ import * as AgentMail from "../../../index.js";
 import { DomainsClient } from "../resources/domains/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { InboxesClient } from "../resources/inboxes/client/Client.js";
+import { ListsClient } from "../resources/lists/client/Client.js";
 import { ThreadsClient } from "../resources/threads/client/Client.js";
 
 export declare namespace PodsClient {
@@ -26,6 +27,7 @@ export class PodsClient {
     protected _threads: ThreadsClient | undefined;
     protected _drafts: DraftsClient | undefined;
     protected _domains: DomainsClient | undefined;
+    protected _lists: ListsClient | undefined;
 
     constructor(options: PodsClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -45,6 +47,10 @@ export class PodsClient {
 
     public get domains(): DomainsClient {
         return (this._domains ??= new DomainsClient(this._options));
+    }
+
+    public get lists(): ListsClient {
+        return (this._lists ??= new ListsClient(this._options));
     }
 
     /**

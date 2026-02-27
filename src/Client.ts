@@ -4,6 +4,7 @@ import { ApiKeysClient } from "./api/resources/apiKeys/client/Client.js";
 import { DomainsClient } from "./api/resources/domains/client/Client.js";
 import { DraftsClient } from "./api/resources/drafts/client/Client.js";
 import { InboxesClient } from "./api/resources/inboxes/client/Client.js";
+import { ListsClient } from "./api/resources/lists/client/Client.js";
 import { MetricsClient } from "./api/resources/metrics/client/Client.js";
 import { OrganizationsClient } from "./api/resources/organizations/client/Client.js";
 import { PodsClient } from "./api/resources/pods/client/Client.js";
@@ -27,6 +28,7 @@ export class AgentMailClient {
     protected _apiKeys: ApiKeysClient | undefined;
     protected _domains: DomainsClient | undefined;
     protected _drafts: DraftsClient | undefined;
+    protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
     protected _organizations: OrganizationsClient | undefined;
     protected _threads: ThreadsClient | undefined;
@@ -58,6 +60,10 @@ export class AgentMailClient {
 
     public get drafts(): DraftsClient {
         return (this._drafts ??= new DraftsClient(this._options));
+    }
+
+    public get lists(): ListsClient {
+        return (this._lists ??= new ListsClient(this._options));
     }
 
     public get metrics(): MetricsClient {

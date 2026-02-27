@@ -9,6 +9,8 @@ export * from "./drafts/types/index.js";
 export * as events from "./events/index.js";
 export * from "./events/types/index.js";
 export * as inboxes from "./inboxes/index.js";
+export * as lists from "./lists/index.js";
+export * from "./lists/types/index.js";
 export * as messages from "./messages/index.js";
 export * from "./messages/types/index.js";
 export * as metrics from "./metrics/index.js";
