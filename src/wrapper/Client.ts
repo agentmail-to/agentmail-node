@@ -39,8 +39,8 @@ export class AgentMailClient extends FernAgentMailClient {
                 authProvider: new NoOpAuthProvider(),
                 fetch: async (input: RequestInfo | URL, init?: RequestInit) => {
                     if (!wrappedFetch) {
-                        const mod = await import("@x402/fetch");
-                        wrappedFetch = mod.wrapFetchWithPayment(fetch, x402);
+                        const { wrapFetchWithPayment } = await import("@x402/fetch");
+                        wrappedFetch = wrapFetchWithPayment(fetch, x402);
                     }
                     return wrappedFetch(input, init);
                 },
