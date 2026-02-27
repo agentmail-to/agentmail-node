@@ -2,7 +2,7 @@ import { AgentMailClient } from "../../../src/wrapper/Client";
 import { WebsocketsClient as FernWebsocketsClient } from "../../../src/api/resources/websockets/client/Client";
 import type { WebsocketsSocket } from "../../../src/api/resources/websockets/client/Socket";
 import * as x402Helpers from "../../../src/wrapper/x402";
-import * as mppHelpers from "../../../src/wrapper/mpp";
+import * as mppHelpers from "../../../src/wrapper/mppx";
 
 function mockConnect() {
     return vi.spyOn(FernWebsocketsClient.prototype, "connect").mockResolvedValue({} as WebsocketsSocket);
@@ -94,7 +94,7 @@ describe("WebsocketsClient wrapper", () => {
         });
     });
 
-    describe("with mpp", () => {
+    describe("with mppx", () => {
         const mockMppClient = {
             fetch: vi.fn(),
             transport: { setCredential: vi.fn() },
@@ -105,7 +105,7 @@ describe("WebsocketsClient wrapper", () => {
         it("should call getPaymentCredentials and pass as queryParams", async () => {
             const spy = vi.spyOn(mppHelpers, "getPaymentCredentials").mockResolvedValue(mockCredentials);
 
-            const client = new AgentMailClient({ mpp: mockMppClient });
+            const client = new AgentMailClient({ mppx: mockMppClient });
             await client.websockets.connect();
 
             expect(spy).toHaveBeenCalled();
@@ -121,7 +121,7 @@ describe("WebsocketsClient wrapper", () => {
         it("should let user queryParams override payment credentials", async () => {
             const spy = vi.spyOn(mppHelpers, "getPaymentCredentials").mockResolvedValue({ Authorization: "from-mpp" });
 
-            const client = new AgentMailClient({ mpp: mockMppClient });
+            const client = new AgentMailClient({ mppx: mockMppClient });
             await client.websockets.connect({ queryParams: { Authorization: "user-override" } });
 
             expect(connectSpy).toHaveBeenCalledWith(

@@ -102,7 +102,7 @@ describe("AgentMailClient environment selection", () => {
         });
     });
 
-    describe("with mpp", () => {
+    describe("with mppx", () => {
         const mockMppFetch = vi.fn().mockResolvedValue(new Response());
         const mockMppClient = {
             fetch: mockMppFetch,
@@ -111,22 +111,22 @@ describe("AgentMailClient environment selection", () => {
         };
 
         it("should derive ProdMpp environment", async () => {
-            const client = new AgentMailClient({ mpp: mockMppClient });
+            const client = new AgentMailClient({ mppx: mockMppClient });
             const env = await Supplier.get(client["_options"].environment);
             expect(env).toEqual(AgentMailEnvironment.ProdMpp);
         });
 
         it("should not override explicitly set environment", async () => {
             const client = new AgentMailClient({
-                mpp: mockMppClient,
+                mppx: mockMppClient,
                 environment: AgentMailEnvironment.EuProd,
             });
             const env = await Supplier.get(client["_options"].environment);
             expect(env).toEqual(AgentMailEnvironment.EuProd);
         });
 
-        it("should use mpp.fetch as the fetch implementation", () => {
-            const client = new AgentMailClient({ mpp: mockMppClient });
+        it("should use mppx.fetch as the fetch implementation", () => {
+            const client = new AgentMailClient({ mppx: mockMppClient });
             expect(client["_options"].fetch).toBe(mockMppFetch);
         });
     });
