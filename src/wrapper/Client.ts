@@ -1,5 +1,4 @@
 import type { x402Client } from "@x402/fetch";
-import type { Mppx } from "mppx/client";
 
 import { Supplier } from "../core/index.js";
 import { NoOpAuthProvider } from "../core/auth/NoOpAuthProvider.js";
@@ -8,7 +7,7 @@ import { AgentMailClient as FernAgentMailClient } from "../Client.js";
 import { type GetPaymentCredentials, WebsocketsClient } from "./WebsocketsClient.js";
 
 import { getPaymentCredentials as getX402Credentials } from "./x402.js";
-import { getPaymentCredentials as getMppCredentials } from "./mppx.js";
+import { type MppxClient, getPaymentCredentials as getMppCredentials } from "./mppx.js";
 
 type SharedOptions = Omit<FernAgentMailClient.Options, "apiKey">;
 
@@ -16,7 +15,7 @@ export declare namespace AgentMailClient {
     export type Options = SharedOptions &
         (
             | { x402: x402Client; mppx?: never; apiKey?: never }
-            | { mppx: Mppx.Mppx; x402?: never; apiKey?: never }
+            | { mppx: MppxClient; x402?: never; apiKey?: never }
             | { apiKey?: Supplier<string>; x402?: never; mppx?: never }
         );
     export type RequestOptions = FernAgentMailClient.RequestOptions;
