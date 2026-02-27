@@ -3,7 +3,7 @@ import { probe402, wsToHttp } from "./util.js";
 export interface MppxClient {
     fetch: typeof globalThis.fetch;
     transport: {
-        setCredential(request: Request, credential: string): Request;
+        setCredential(request: Request, credential: string): RequestInit;
     };
     createCredential(response: Response): Promise<string>;
 }
@@ -15,7 +15,7 @@ export async function getPaymentCredentials(wsUrl: string, mppx: MppxClient): Pr
     const signed = mppx.transport.setCredential(new Request(wsToHttp(wsUrl)), credential);
 
     const headers: Record<string, string> = {};
-    signed.headers.forEach((value: string, key: string) => {
+    new Headers(signed.headers).forEach((value, key) => {
         headers[key] = value;
     });
     return headers;
