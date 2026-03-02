@@ -5,7 +5,9 @@ import * as x402Helpers from "../../../src/wrapper/x402";
 import * as mppHelpers from "../../../src/wrapper/mppx";
 
 function mockConnect() {
-    return vi.spyOn(FernWebsocketsClient.prototype, "connect").mockResolvedValue({} as WebsocketsSocket);
+    return vi
+        .spyOn(FernWebsocketsClient.prototype, "connect")
+        .mockResolvedValue({ waitForOpen: vi.fn().mockResolvedValue(undefined) } as unknown as WebsocketsSocket);
 }
 
 describe("WebsocketsClient wrapper", () => {

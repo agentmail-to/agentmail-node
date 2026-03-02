@@ -14,6 +14,8 @@ export class WebsocketsClient extends FernWebsocketsClient {
     }
 
     public override async connect(args: FernWebsocketsClient.ConnectArgs = {}): Promise<WebsocketsSocket> {
+        let connectArgs = args;
+
         if (this._getPaymentCredentials) {
             const wsUrl = core.url.join(
                 (await core.Supplier.get(this._options.baseUrl)) ??
@@ -22,17 +24,17 @@ export class WebsocketsClient extends FernWebsocketsClient {
                 "/v0",
             );
             const credentials = await this._getPaymentCredentials(wsUrl);
-            return super.connect({
+            connectArgs = {
                 ...args,
                 queryParams: { ...credentials, ...args.queryParams },
-            });
-        }
-
-        if (!args.apiKey) {
+            };
+        } else if (!args.apiKey) {
             const apiKey = (await core.Supplier.get(this._options.apiKey)) ?? process.env.AGENTMAIL_API_KEY;
-            return super.connect({ ...args, apiKey });
+            connectArgs = { ...args, apiKey };
         }
 
-        return super.connect(args);
+        const socket = await super.connect(connectArgs);
+        await socket.waitForOpen();
+        return socket;
     }
 }
