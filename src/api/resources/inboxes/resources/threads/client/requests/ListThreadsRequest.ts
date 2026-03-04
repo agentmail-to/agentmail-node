@@ -15,4 +15,5 @@ export interface ListThreadsRequest {
     ascending?: AgentMail.Ascending;
     includeSpam?: AgentMail.IncludeSpam;
     includeBlocked?: AgentMail.IncludeBlocked;
+    includeTrash?: AgentMail.IncludeTrash;
 }

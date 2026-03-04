@@ -3079,6 +3079,63 @@ await client.pods.domains.create("pod_id", {
 </dl>
 </details>
 
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">get</a>(pod_id, domain_id) -> AgentMail.Domain</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.domains.get("pod_id", "domain_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain_id:** `AgentMail.DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DomainsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">delete</a>(pod_id, domain_id) -> void</code></summary>
 <dl>
 <dd>
