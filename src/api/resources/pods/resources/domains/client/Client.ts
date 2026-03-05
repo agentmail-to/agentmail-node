@@ -46,10 +46,11 @@ export class DomainsClient {
         request: AgentMail.pods.ListDomainsRequest = {},
         requestOptions?: DomainsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListDomainsResponse>> {
-        const { limit, pageToken } = request;
+        const { limit, pageToken, ascending } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
             page_token: pageToken,
+            ascending,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

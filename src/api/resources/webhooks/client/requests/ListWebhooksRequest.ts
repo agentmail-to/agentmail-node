@@ -9,4 +9,5 @@ import type * as AgentMail from "../../../../index.js";
 export interface ListWebhooksRequest {
     limit?: AgentMail.Limit;
     pageToken?: AgentMail.PageToken;
+    ascending?: AgentMail.Ascending;
 }
