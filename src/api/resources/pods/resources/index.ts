@@ -1,3 +1,5 @@
+export * from "./apiKeys/client/requests/index.js";
+export * as apiKeys from "./apiKeys/index.js";
 export * from "./domains/client/requests/index.js";
 export * as domains from "./domains/index.js";
 export * from "./drafts/client/requests/index.js";

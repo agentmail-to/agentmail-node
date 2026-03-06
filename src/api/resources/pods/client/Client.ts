@@ -9,6 +9,7 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
+import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
 import { DomainsClient } from "../resources/domains/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { InboxesClient } from "../resources/inboxes/client/Client.js";
@@ -28,6 +29,7 @@ export class PodsClient {
     protected _drafts: DraftsClient | undefined;
     protected _domains: DomainsClient | undefined;
     protected _lists: ListsClient | undefined;
+    protected _apiKeys: ApiKeysClient | undefined;
 
     constructor(options: PodsClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -51,6 +53,10 @@ export class PodsClient {
 
     public get lists(): ListsClient {
         return (this._lists ??= new ListsClient(this._options));
+    }
+
+    public get apiKeys(): ApiKeysClient {
+        return (this._apiKeys ??= new ApiKeysClient(this._options));
     }
 
     /**

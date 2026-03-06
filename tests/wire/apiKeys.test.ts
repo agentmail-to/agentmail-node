@@ -21,6 +21,7 @@ describe("ApiKeysClient", () => {
                     api_key_id: "api_key_id",
                     prefix: "prefix",
                     name: "name",
+                    pod_id: "pod_id",
                     used_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
                 },
@@ -28,6 +29,7 @@ describe("ApiKeysClient", () => {
                     api_key_id: "api_key_id",
                     prefix: "prefix",
                     name: "name",
+                    pod_id: "pod_id",
                     used_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
                 },
@@ -44,6 +46,7 @@ describe("ApiKeysClient", () => {
                     apiKeyId: "api_key_id",
                     prefix: "prefix",
                     name: "name",
+                    podId: "pod_id",
                     usedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
@@ -51,6 +54,7 @@ describe("ApiKeysClient", () => {
                     apiKeyId: "api_key_id",
                     prefix: "prefix",
                     name: "name",
+                    podId: "pod_id",
                     usedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
@@ -71,6 +75,7 @@ describe("ApiKeysClient", () => {
             api_key: "api_key",
             prefix: "prefix",
             name: "name",
+            pod_id: "pod_id",
             created_at: "2024-01-15T09:30:00Z",
         };
         server
@@ -90,6 +95,7 @@ describe("ApiKeysClient", () => {
             apiKey: "api_key",
             prefix: "prefix",
             name: "name",
+            podId: "pod_id",
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
