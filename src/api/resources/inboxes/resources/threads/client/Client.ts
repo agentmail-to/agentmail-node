@@ -321,8 +321,11 @@ export class ThreadsClient {
     }
 
     /**
+     * Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.ThreadId} thread_id
+     * @param {AgentMail.inboxes.DeleteThreadRequest} request
      * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -333,16 +336,22 @@ export class ThreadsClient {
     public delete(
         inbox_id: AgentMail.inboxes.InboxId,
         thread_id: AgentMail.ThreadId,
+        request: AgentMail.inboxes.DeleteThreadRequest = {},
         requestOptions?: ThreadsClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__delete(inbox_id, thread_id, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__delete(inbox_id, thread_id, request, requestOptions));
     }
 
     private async __delete(
         inbox_id: AgentMail.inboxes.InboxId,
         thread_id: AgentMail.ThreadId,
+        request: AgentMail.inboxes.DeleteThreadRequest = {},
         requestOptions?: ThreadsClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
+        const { permanent } = request;
+        const _queryParams: Record<string, unknown> = {
+            permanent,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -358,7 +367,7 @@ export class ThreadsClient {
             ),
             method: "DELETE",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,

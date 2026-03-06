@@ -2532,9 +2532,23 @@ await client.inboxes.threads.getAttachment("inbox_id", "thread_id", "attachment_
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">delete</a>(inbox_id, thread_id) -> void</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">delete</a>(inbox_id, thread_id, { ...params }) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2570,6 +2584,14 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 <dd>
 
 **thread_id:** `AgentMail.ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.DeleteThreadRequest` 
     
 </dd>
 </dl>
