@@ -14,6 +14,7 @@ import { DomainsClient } from "../resources/domains/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { InboxesClient } from "../resources/inboxes/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
+import { MetricsClient } from "../resources/metrics/client/Client.js";
 import { ThreadsClient } from "../resources/threads/client/Client.js";
 
 export declare namespace PodsClient {
@@ -30,6 +31,7 @@ export class PodsClient {
     protected _domains: DomainsClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
+    protected _metrics: MetricsClient | undefined;
 
     constructor(options: PodsClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -57,6 +59,10 @@ export class PodsClient {
 
     public get apiKeys(): ApiKeysClient {
         return (this._apiKeys ??= new ApiKeysClient(this._options));
+    }
+
+    public get metrics(): MetricsClient {
+        return (this._metrics ??= new MetricsClient(this._options));
     }
 
     /**

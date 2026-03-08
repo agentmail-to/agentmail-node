@@ -4,9 +4,9 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const MetricTimestamp: core.serialization.Schema<serializers.MetricTimestamp.Raw, AgentMail.MetricTimestamp> =
-    core.serialization.date();
+export const MetricLimit: core.serialization.Schema<serializers.MetricLimit.Raw, AgentMail.MetricLimit> =
+    core.serialization.number();
 
-export declare namespace MetricTimestamp {
-    export type Raw = string;
+export declare namespace MetricLimit {
+    export type Raw = number;
 }

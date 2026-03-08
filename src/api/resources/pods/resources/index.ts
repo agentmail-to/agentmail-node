@@ -8,5 +8,7 @@ export * from "./inboxes/client/requests/index.js";
 export * as inboxes from "./inboxes/index.js";
 export * from "./lists/client/requests/index.js";
 export * as lists from "./lists/index.js";
+export * from "./metrics/client/requests/index.js";
+export * as metrics from "./metrics/index.js";
 export * from "./threads/client/requests/index.js";
 export * as threads from "./threads/index.js";

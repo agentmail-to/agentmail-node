@@ -3,6 +3,6 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * List of metric event types to filter by.
+ * List of metric event types to query.
  */
 export type MetricEventTypes = AgentMail.MetricEventType[];

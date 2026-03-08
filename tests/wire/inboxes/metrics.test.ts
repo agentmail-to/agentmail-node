@@ -5,7 +5,7 @@ import { AgentMailClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("MetricsClient", () => {
-    test("get (1)", async () => {
+    test("query (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             maxRetries: 0,
@@ -14,15 +14,10 @@ describe("MetricsClient", () => {
         });
 
         const rawResponseBody = {
-            message: {
-                sent: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                delivered: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                bounced: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                delayed: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                rejected: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                complained: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-                received: ["2024-01-15T09:30:00Z", "2024-01-15T09:30:00Z"],
-            },
+            "message.sent": [
+                { timestamp: "2024-01-15T09:30:00Z", count: 1 },
+                { timestamp: "2024-01-15T09:30:00Z", count: 1 },
+            ],
         };
         server
             .mockEndpoint()
@@ -32,49 +27,22 @@ describe("MetricsClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.inboxes.metrics.get("inbox_id", {
-            startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-            endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-        });
+        const response = await client.inboxes.metrics.query("inbox_id");
         expect(response).toEqual({
-            message: {
-                sent: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
-                delivered: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
-                bounced: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
-                delayed: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
-                rejected: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
-                complained: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
-                received: [new Date("2024-01-15T09:30:00.000Z"), new Date("2024-01-15T09:30:00.000Z")],
-            },
+            "message.sent": [
+                {
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    count: 1,
+                },
+                {
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    count: 1,
+                },
+            ],
         });
     });
 
-    test("get (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new AgentMailClient({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { http: server.baseUrl, websockets: server.baseUrl },
-        });
-
-        const rawResponseBody = { name: "name", message: "message" };
-        server
-            .mockEndpoint()
-            .get("/v0/inboxes/inbox_id/metrics")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.inboxes.metrics.get("inbox_id", {
-                startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-                endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-            });
-        }).rejects.toThrow(AgentMail.NotFoundError);
-    });
-
-    test("get (3)", async () => {
+    test("query (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             maxRetries: 0,
@@ -92,10 +60,7 @@ describe("MetricsClient", () => {
             .build();
 
         await expect(async () => {
-            return await client.inboxes.metrics.get("inbox_id", {
-                startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-                endTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-            });
+            return await client.inboxes.metrics.query("inbox_id");
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 });

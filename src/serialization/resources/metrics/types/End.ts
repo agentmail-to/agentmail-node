@@ -4,11 +4,8 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const MetricStartTimestamp: core.serialization.Schema<
-    serializers.MetricStartTimestamp.Raw,
-    AgentMail.MetricStartTimestamp
-> = core.serialization.date();
+export const End: core.serialization.Schema<serializers.End.Raw, AgentMail.End> = core.serialization.date();
 
-export declare namespace MetricStartTimestamp {
+export declare namespace End {
     export type Raw = string;
 }

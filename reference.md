@@ -2292,7 +2292,7 @@ await client.inboxes.messages.update("inbox_id", "message_id", {});
 </details>
 
 ## Inboxes Metrics
-<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">get</a>(inbox_id, { ...params }) -> AgentMail.ListMetricsResponse</code></summary>
+<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">query</a>(inbox_id, { ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2305,10 +2305,7 @@ await client.inboxes.messages.update("inbox_id", "message_id", {});
 <dd>
 
 ```typescript
-await client.inboxes.metrics.get("inbox_id", {
-    startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-    endTimestamp: new Date("2024-01-15T09:30:00.000Z")
-});
+await client.inboxes.metrics.query("inbox_id");
 
 ```
 </dd>
@@ -2332,7 +2329,7 @@ await client.inboxes.metrics.get("inbox_id", {
 <dl>
 <dd>
 
-**request:** `AgentMail.inboxes.ListInboxMetricsRequest` 
+**request:** `AgentMail.inboxes.QueryMetricsRequest` 
     
 </dd>
 </dl>
@@ -2875,7 +2872,7 @@ await client.lists.delete("send", "allow", "entry");
 </details>
 
 ## Metrics
-<details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListMetricsResponse</code></summary>
+<details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">query</a>({ ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -2888,10 +2885,7 @@ await client.lists.delete("send", "allow", "entry");
 <dd>
 
 ```typescript
-await client.metrics.list({
-    startTimestamp: new Date("2024-01-15T09:30:00.000Z"),
-    endTimestamp: new Date("2024-01-15T09:30:00.000Z")
-});
+await client.metrics.query();
 
 ```
 </dd>
@@ -2907,7 +2901,7 @@ await client.metrics.list({
 <dl>
 <dd>
 
-**request:** `AgentMail.ListMetricsRequest` 
+**request:** `AgentMail.QueryMetricsRequest` 
     
 </dd>
 </dl>
@@ -4082,6 +4076,64 @@ await client.pods.lists.delete("pod_id", "send", "allow", "entry");
 <dd>
 
 **requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pods Metrics
+<details><summary><code>client.pods.metrics.<a href="/src/api/resources/pods/resources/metrics/client/Client.ts">query</a>(pod_id, { ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.metrics.query("pod_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.QueryMetricsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetricsClient.RequestOptions` 
     
 </dd>
 </dl>
