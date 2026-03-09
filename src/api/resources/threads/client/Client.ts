@@ -298,4 +298,84 @@ export class ThreadsClient {
             "/v0/threads/{thread_id}/attachments/{attachment_id}",
         );
     }
+
+    /**
+     * Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+     *
+     * @param {AgentMail.ThreadId} thread_id
+     * @param {AgentMail.DeleteThreadRequest} request
+     * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.threads.delete("thread_id")
+     */
+    public delete(
+        thread_id: AgentMail.ThreadId,
+        request: AgentMail.DeleteThreadRequest = {},
+        requestOptions?: ThreadsClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(thread_id, request, requestOptions));
+    }
+
+    private async __delete(
+        thread_id: AgentMail.ThreadId,
+        request: AgentMail.DeleteThreadRequest = {},
+        requestOptions?: ThreadsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const { permanent } = request;
+        const _queryParams: Record<string, unknown> = {
+            permanent,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/threads/${core.url.encodePathParam(serializers.ThreadId.jsonOrThrow(thread_id, { omitUndefined: true }))}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/v0/threads/{thread_id}");
+    }
 }

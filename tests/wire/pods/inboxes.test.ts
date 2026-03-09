@@ -208,6 +208,69 @@ describe("InboxesClient", () => {
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
+    test("update (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { display_name: "display_name" };
+        const rawResponseBody = {
+            pod_id: "pod_id",
+            inbox_id: "inbox_id",
+            display_name: "display_name",
+            client_id: "client_id",
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+        };
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/inboxes/inbox_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.pods.inboxes.update("pod_id", "inbox_id", {
+            displayName: "display_name",
+        });
+        expect(response).toEqual({
+            podId: "pod_id",
+            inboxId: "inbox_id",
+            displayName: "display_name",
+            clientId: "client_id",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("update (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { display_name: "display_name" };
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/inboxes/inbox_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.inboxes.update("pod_id", "inbox_id", {
+                displayName: "display_name",
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
     test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({

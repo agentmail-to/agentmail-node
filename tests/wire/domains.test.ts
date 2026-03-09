@@ -230,6 +230,87 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
+    test("update (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            pod_id: "pod_id",
+            domain_id: "domain_id",
+            status: "NOT_STARTED",
+            feedback_enabled: true,
+            records: [
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
+            ],
+            client_id: "client_id",
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+        };
+        server
+            .mockEndpoint()
+            .patch("/v0/domains/domain_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.domains.update("domain_id", {});
+        expect(response).toEqual({
+            podId: "pod_id",
+            domainId: "domain_id",
+            status: "NOT_STARTED",
+            feedbackEnabled: true,
+            records: [
+                {
+                    type: "TXT",
+                    name: "name",
+                    value: "value",
+                    status: "MISSING",
+                    priority: 1,
+                },
+                {
+                    type: "TXT",
+                    name: "name",
+                    value: "value",
+                    status: "MISSING",
+                    priority: 1,
+                },
+            ],
+            clientId: "client_id",
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("update (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .patch("/v0/domains/domain_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.update("domain_id", {});
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
     test("delete (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({

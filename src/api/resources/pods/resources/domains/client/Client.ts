@@ -114,6 +114,167 @@ export class DomainsClient {
 
     /**
      * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.DomainId} domain_id
+     * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.pods.domains.get("pod_id", "domain_id")
+     */
+    public get(
+        pod_id: AgentMail.pods.PodId,
+        domain_id: AgentMail.DomainId,
+        requestOptions?: DomainsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.Domain> {
+        return core.HttpResponsePromise.fromPromise(this.__get(pod_id, domain_id, requestOptions));
+    }
+
+    private async __get(
+        pod_id: AgentMail.pods.PodId,
+        domain_id: AgentMail.DomainId,
+        requestOptions?: DomainsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.Domain>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Domain.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/pods/{pod_id}/domains/{domain_id}",
+        );
+    }
+
+    /**
+     * @throws {@link AgentMail.NotFoundError}
+     */
+    public getZoneFile(
+        pod_id: AgentMail.pods.PodId,
+        domain_id: AgentMail.DomainId,
+        requestOptions?: DomainsClient.RequestOptions,
+    ): core.HttpResponsePromise<core.BinaryResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getZoneFile(pod_id, domain_id, requestOptions));
+    }
+
+    private async __getZoneFile(
+        pod_id: AgentMail.pods.PodId,
+        domain_id: AgentMail.DomainId,
+        requestOptions?: DomainsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<core.BinaryResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher<core.BinaryResponse>({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}/zone-file`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            responseType: "binary-response",
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: _response.body, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/pods/{pod_id}/domains/{domain_id}/zone-file",
+        );
+    }
+
+    /**
+     * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.CreateDomainRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -207,24 +368,27 @@ export class DomainsClient {
     /**
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.DomainId} domain_id
+     * @param {AgentMail.UpdateDomainRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.pods.domains.get("pod_id", "domain_id")
+     *     await client.pods.domains.update("pod_id", "domain_id", {})
      */
-    public get(
+    public update(
         pod_id: AgentMail.pods.PodId,
         domain_id: AgentMail.DomainId,
+        request: AgentMail.UpdateDomainRequest,
         requestOptions?: DomainsClient.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.Domain> {
-        return core.HttpResponsePromise.fromPromise(this.__get(pod_id, domain_id, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__update(pod_id, domain_id, request, requestOptions));
     }
 
-    private async __get(
+    private async __update(
         pod_id: AgentMail.pods.PodId,
         domain_id: AgentMail.DomainId,
+        request: AgentMail.UpdateDomainRequest,
         requestOptions?: DomainsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.Domain>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -240,9 +404,15 @@ export class DomainsClient {
                         .http,
                 `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}`,
             ),
-            method: "GET",
+            method: "PATCH",
             headers: _headers,
+            contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.UpdateDomainRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
@@ -287,7 +457,7 @@ export class DomainsClient {
         return handleNonStatusCodeError(
             _response.error,
             _response.rawResponse,
-            "GET",
+            "PATCH",
             "/v0/pods/{pod_id}/domains/{domain_id}",
         );
     }
@@ -368,6 +538,85 @@ export class DomainsClient {
             _response.rawResponse,
             "DELETE",
             "/v0/pods/{pod_id}/domains/{domain_id}",
+        );
+    }
+
+    /**
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.DomainId} domain_id
+     * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.pods.domains.verify("pod_id", "domain_id")
+     */
+    public verify(
+        pod_id: AgentMail.pods.PodId,
+        domain_id: AgentMail.DomainId,
+        requestOptions?: DomainsClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__verify(pod_id, domain_id, requestOptions));
+    }
+
+    private async __verify(
+        pod_id: AgentMail.pods.PodId,
+        domain_id: AgentMail.DomainId,
+        requestOptions?: DomainsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/domains/${core.url.encodePathParam(serializers.DomainId.jsonOrThrow(domain_id, { omitUndefined: true }))}/verify`,
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/pods/{pod_id}/domains/{domain_id}/verify",
         );
     }
 }

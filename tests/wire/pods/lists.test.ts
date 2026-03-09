@@ -5,75 +5,6 @@ import { AgentMailClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("ListsClient", () => {
-    test("create (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new AgentMailClient({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { http: server.baseUrl, websockets: server.baseUrl },
-        });
-        const rawRequestBody = { entry: "entry" };
-        const rawResponseBody = {
-            pod_id: "pod_id",
-            inbox_id: "inbox_id",
-            entry: "entry",
-            organization_id: "organization_id",
-            reason: "reason",
-            direction: "send",
-            list_type: "allow",
-            entry_type: "email",
-            created_at: "2024-01-15T09:30:00Z",
-        };
-        server
-            .mockEndpoint()
-            .post("/v0/pods/pod_id/lists/send/allow")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.pods.lists.create("pod_id", "send", "allow", {
-            entry: "entry",
-        });
-        expect(response).toEqual({
-            podId: "pod_id",
-            inboxId: "inbox_id",
-            entry: "entry",
-            organizationId: "organization_id",
-            reason: "reason",
-            direction: "send",
-            listType: "allow",
-            entryType: "email",
-            createdAt: new Date("2024-01-15T09:30:00.000Z"),
-        });
-    });
-
-    test("create (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new AgentMailClient({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { http: server.baseUrl, websockets: server.baseUrl },
-        });
-        const rawRequestBody = { entry: "entry" };
-        const rawResponseBody = { name: "name", errors: { key: "value" } };
-        server
-            .mockEndpoint()
-            .post("/v0/pods/pod_id/lists/send/allow")
-            .jsonBody(rawRequestBody)
-            .respondWith()
-            .statusCode(400)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.pods.lists.create("pod_id", "send", "allow", {
-                entry: "entry",
-            });
-        }).rejects.toThrow(AgentMail.ValidationError);
-    });
-
     test("list", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
@@ -212,6 +143,75 @@ describe("ListsClient", () => {
         await expect(async () => {
             return await client.pods.lists.get("pod_id", "send", "allow", "entry");
         }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("create (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { entry: "entry" };
+        const rawResponseBody = {
+            pod_id: "pod_id",
+            inbox_id: "inbox_id",
+            entry: "entry",
+            organization_id: "organization_id",
+            reason: "reason",
+            direction: "send",
+            list_type: "allow",
+            entry_type: "email",
+            created_at: "2024-01-15T09:30:00Z",
+        };
+        server
+            .mockEndpoint()
+            .post("/v0/pods/pod_id/lists/send/allow")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.pods.lists.create("pod_id", "send", "allow", {
+            entry: "entry",
+        });
+        expect(response).toEqual({
+            podId: "pod_id",
+            inboxId: "inbox_id",
+            entry: "entry",
+            organizationId: "organization_id",
+            reason: "reason",
+            direction: "send",
+            listType: "allow",
+            entryType: "email",
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("create (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { entry: "entry" };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+        server
+            .mockEndpoint()
+            .post("/v0/pods/pod_id/lists/send/allow")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.lists.create("pod_id", "send", "allow", {
+                entry: "entry",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
     });
 
     test("delete (1)", async () => {

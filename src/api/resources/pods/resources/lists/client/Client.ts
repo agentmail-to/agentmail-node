@@ -27,108 +27,6 @@ export class ListsClient {
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.Direction} direction
      * @param {AgentMail.ListType} type
-     * @param {AgentMail.CreateListEntryRequest} request
-     * @param {ListsClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.ValidationError}
-     *
-     * @example
-     *     await client.pods.lists.create("pod_id", "send", "allow", {
-     *         entry: "entry"
-     *     })
-     */
-    public create(
-        pod_id: AgentMail.pods.PodId,
-        direction: AgentMail.Direction,
-        type: AgentMail.ListType,
-        request: AgentMail.CreateListEntryRequest,
-        requestOptions?: ListsClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.PodListEntry> {
-        return core.HttpResponsePromise.fromPromise(this.__create(pod_id, direction, type, request, requestOptions));
-    }
-
-    private async __create(
-        pod_id: AgentMail.pods.PodId,
-        direction: AgentMail.Direction,
-        type: AgentMail.ListType,
-        request: AgentMail.CreateListEntryRequest,
-        requestOptions?: ListsClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.PodListEntry>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/lists/${core.url.encodePathParam(serializers.Direction.jsonOrThrow(direction, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ListType.jsonOrThrow(type, { omitUndefined: true }))}`,
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: serializers.CreateListEntryRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.PodListEntry.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new AgentMail.ValidationError(
-                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/v0/pods/{pod_id}/lists/{direction}/{type}",
-        );
-    }
-
-    /**
-     * @param {AgentMail.pods.PodId} pod_id
-     * @param {AgentMail.Direction} direction
-     * @param {AgentMail.ListType} type
      * @param {AgentMail.pods.ListListEntriesRequest} request
      * @param {ListsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -299,6 +197,108 @@ export class ListsClient {
             _response.rawResponse,
             "GET",
             "/v0/pods/{pod_id}/lists/{direction}/{type}/{entry}",
+        );
+    }
+
+    /**
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.Direction} direction
+     * @param {AgentMail.ListType} type
+     * @param {AgentMail.CreateListEntryRequest} request
+     * @param {ListsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     *
+     * @example
+     *     await client.pods.lists.create("pod_id", "send", "allow", {
+     *         entry: "entry"
+     *     })
+     */
+    public create(
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        request: AgentMail.CreateListEntryRequest,
+        requestOptions?: ListsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.PodListEntry> {
+        return core.HttpResponsePromise.fromPromise(this.__create(pod_id, direction, type, request, requestOptions));
+    }
+
+    private async __create(
+        pod_id: AgentMail.pods.PodId,
+        direction: AgentMail.Direction,
+        type: AgentMail.ListType,
+        request: AgentMail.CreateListEntryRequest,
+        requestOptions?: ListsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.PodListEntry>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/lists/${core.url.encodePathParam(serializers.Direction.jsonOrThrow(direction, { omitUndefined: true }))}/${core.url.encodePathParam(serializers.ListType.jsonOrThrow(type, { omitUndefined: true }))}`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.CreateListEntryRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.PodListEntry.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/pods/{pod_id}/lists/{direction}/{type}",
         );
     }
 

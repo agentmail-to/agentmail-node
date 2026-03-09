@@ -25,16 +25,24 @@ export declare namespace PodsClient {
 
 export class PodsClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<PodsClient.Options>;
+    protected _apiKeys: ApiKeysClient | undefined;
+    protected _domains: DomainsClient | undefined;
     protected _inboxes: InboxesClient | undefined;
     protected _threads: ThreadsClient | undefined;
     protected _drafts: DraftsClient | undefined;
-    protected _domains: DomainsClient | undefined;
     protected _lists: ListsClient | undefined;
-    protected _apiKeys: ApiKeysClient | undefined;
     protected _metrics: MetricsClient | undefined;
 
     constructor(options: PodsClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
+    }
+
+    public get apiKeys(): ApiKeysClient {
+        return (this._apiKeys ??= new ApiKeysClient(this._options));
+    }
+
+    public get domains(): DomainsClient {
+        return (this._domains ??= new DomainsClient(this._options));
     }
 
     public get inboxes(): InboxesClient {
@@ -49,16 +57,8 @@ export class PodsClient {
         return (this._drafts ??= new DraftsClient(this._options));
     }
 
-    public get domains(): DomainsClient {
-        return (this._domains ??= new DomainsClient(this._options));
-    }
-
     public get lists(): ListsClient {
         return (this._lists ??= new ListsClient(this._options));
-    }
-
-    public get apiKeys(): ApiKeysClient {
-        return (this._apiKeys ??= new ApiKeysClient(this._options));
     }
 
     public get metrics(): MetricsClient {

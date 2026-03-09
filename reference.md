@@ -551,6 +551,58 @@ await client.webhooks.get("webhook_id");
 </dl>
 </details>
 
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">create</a>({ ...params }) -> AgentMail.Webhook</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.webhooks.create({
+    url: "url",
+    eventTypes: ["message.received", "message.received"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">update</a>(webhook_id, { ...params }) -> AgentMail.Webhook</code></summary>
 <dl>
 <dd>
@@ -589,58 +641,6 @@ await client.webhooks.update("webhook_id", {});
 <dd>
 
 **request:** `AgentMail.UpdateWebhookRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `WebhooksClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">create</a>({ ...params }) -> AgentMail.Webhook</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.webhooks.create({
-    url: "url",
-    eventTypes: ["message.received", "message.received"]
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreateWebhookRequest` 
     
 </dd>
 </dl>
@@ -1040,6 +1040,63 @@ await client.domains.create({
 <dd>
 
 **request:** `AgentMail.CreateDomainRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DomainsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">update</a>(domain_id, { ...params }) -> AgentMail.Domain</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.domains.update("domain_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**domain_id:** `AgentMail.DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateDomainRequest` 
     
 </dd>
 </dl>
@@ -1615,6 +1672,63 @@ await client.inboxes.drafts.update("inbox_id", "draft_id", {});
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">delete</a>(inbox_id, draft_id) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.drafts.delete("inbox_id", "draft_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**draft_id:** `AgentMail.DraftId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DraftsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">send</a>(inbox_id, draft_id, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
@@ -1661,63 +1775,6 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 <dd>
 
 **request:** `AgentMail.UpdateMessageRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `DraftsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">delete</a>(inbox_id, draft_id) -> void</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inboxes.drafts.delete("inbox_id", "draft_id");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `AgentMail.InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**draft_id:** `AgentMail.DraftId` 
     
 </dd>
 </dl>
@@ -1917,7 +1974,7 @@ await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachmen
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getRaw</a>(inbox_id, message_id) -> core.BinaryResponse</code></summary>
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getRaw</a>(inbox_id, message_id) -> AgentMail.RawMessageResponse</code></summary>
 <dl>
 <dd>
 
@@ -1955,6 +2012,71 @@ await client.inboxes.messages.getRaw("inbox_id", "message_id");
 <dd>
 
 **message_id:** `AgentMail.MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">update</a>(inbox_id, message_id, { ...params }) -> AgentMail.Message</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.update("inbox_id", "message_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `AgentMail.MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateMessageRequest` 
     
 </dd>
 </dl>
@@ -2207,71 +2329,6 @@ await client.inboxes.messages.forward("inbox_id", "message_id", {});
 <dd>
 
 **request:** `AgentMail.SendMessageRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `MessagesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">update</a>(inbox_id, message_id, { ...params }) -> AgentMail.Message</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inboxes.messages.update("inbox_id", "message_id", {});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `AgentMail.InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**message_id:** `AgentMail.MessageId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.UpdateMessageRequest` 
     
 </dd>
 </dl>
@@ -2609,73 +2666,6 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 </details>
 
 ## Lists
-<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">create</a>(direction, type, { ...params }) -> AgentMail.ListEntry</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.lists.create("send", "allow", {
-    entry: "entry"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**direction:** `AgentMail.Direction` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `AgentMail.ListType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreateListEntryRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ListsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">list</a>(direction, type, { ...params }) -> AgentMail.ListListEntriesResponse</code></summary>
 <dl>
 <dd>
@@ -2787,6 +2777,73 @@ await client.lists.get("send", "allow", "entry");
 <dd>
 
 **entry:** `string` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">create</a>(direction, type, { ...params }) -> AgentMail.ListEntry</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.lists.create("send", "allow", {
+    entry: "entry"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateListEntryRequest` 
     
 </dd>
 </dl>
@@ -2978,6 +3035,63 @@ await client.organizations.get();
 </details>
 
 ## Pods ApiKeys
+<details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListApiKeysResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.apiKeys.list("pod_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.ListApiKeysRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">create</a>(pod_id, { ...params }) -> AgentMail.CreateApiKeyResponse</code></summary>
 <dl>
 <dd>
@@ -3018,63 +3132,6 @@ await client.pods.apiKeys.create("pod_id", {
 <dd>
 
 **request:** `AgentMail.CreateApiKeyRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListApiKeysResponse</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.pods.apiKeys.list("pod_id");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pod_id:** `AgentMail.PodId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.pods.ListApiKeysRequest` 
     
 </dd>
 </dl>
@@ -3209,6 +3266,120 @@ await client.pods.domains.list("pod_id");
 </dl>
 </details>
 
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">get</a>(pod_id, domain_id) -> AgentMail.Domain</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.domains.get("pod_id", "domain_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain_id:** `AgentMail.DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DomainsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">getZoneFile</a>(pod_id, domain_id) -> core.BinaryResponse</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.domains.getZoneFile("pod_id", "domain_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain_id:** `AgentMail.DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DomainsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">create</a>(pod_id, { ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
@@ -3269,7 +3440,7 @@ await client.pods.domains.create("pod_id", {
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">get</a>(pod_id, domain_id) -> AgentMail.Domain</code></summary>
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">update</a>(pod_id, domain_id, { ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
 
@@ -3282,7 +3453,72 @@ await client.pods.domains.create("pod_id", {
 <dd>
 
 ```typescript
-await client.pods.domains.get("pod_id", "domain_id");
+await client.pods.domains.update("pod_id", "domain_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**domain_id:** `AgentMail.DomainId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateDomainRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `DomainsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">delete</a>(pod_id, domain_id) -> void</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.domains.delete("pod_id", "domain_id");
 
 ```
 </dd>
@@ -3326,7 +3562,7 @@ await client.pods.domains.get("pod_id", "domain_id");
 </dl>
 </details>
 
-<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">delete</a>(pod_id, domain_id) -> void</code></summary>
+<details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">verify</a>(pod_id, domain_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -3339,7 +3575,7 @@ await client.pods.domains.get("pod_id", "domain_id");
 <dd>
 
 ```typescript
-await client.pods.domains.delete("pod_id", "domain_id");
+await client.pods.domains.verify("pod_id", "domain_id");
 
 ```
 </dd>
@@ -3735,6 +3971,73 @@ await client.pods.inboxes.create("pod_id", {});
 </dl>
 </details>
 
+<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">update</a>(pod_id, inbox_id, { ...params }) -> AgentMail.Inbox</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.inboxes.update("pod_id", "inbox_id", {
+    displayName: "display_name"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateInboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">delete</a>(pod_id, inbox_id) -> void</code></summary>
 <dl>
 <dd>
@@ -3793,81 +4096,6 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 </details>
 
 ## Pods Lists
-<details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">create</a>(pod_id, direction, type, { ...params }) -> AgentMail.PodListEntry</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.pods.lists.create("pod_id", "send", "allow", {
-    entry: "entry"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**pod_id:** `AgentMail.PodId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**direction:** `AgentMail.Direction` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**type:** `AgentMail.ListType` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreateListEntryRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ListsClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
 <details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">list</a>(pod_id, direction, type, { ...params }) -> AgentMail.PodListListEntriesResponse</code></summary>
 <dl>
 <dd>
@@ -3995,6 +4223,81 @@ await client.pods.lists.get("pod_id", "send", "allow", "entry");
 <dd>
 
 **entry:** `string` — Email address or domain.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ListsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">create</a>(pod_id, direction, type, { ...params }) -> AgentMail.PodListEntry</code></summary>
+<dl>
+<dd>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.lists.create("pod_id", "send", "allow", {
+    entry: "entry"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**direction:** `AgentMail.Direction` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**type:** `AgentMail.ListType` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateListEntryRequest` 
     
 </dd>
 </dl>
@@ -4325,6 +4628,85 @@ await client.pods.threads.getAttachment("pod_id", "thread_id", "attachment_id");
 </dl>
 </details>
 
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">delete</a>(pod_id, thread_id, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.threads.delete("pod_id", "thread_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**thread_id:** `AgentMail.ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.DeleteThreadRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ThreadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Threads
 <details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
@@ -4462,6 +4844,77 @@ await client.threads.getAttachment("thread_id", "attachment_id");
 <dd>
 
 **attachment_id:** `AgentMail.AttachmentId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ThreadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">delete</a>(thread_id, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.delete("thread_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**thread_id:** `AgentMail.ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.DeleteThreadRequest` 
     
 </dd>
 </dl>

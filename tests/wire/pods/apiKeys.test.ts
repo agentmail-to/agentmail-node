@@ -5,6 +5,91 @@ import { AgentMailClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("ApiKeysClient", () => {
+    test("list (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            count: 1,
+            next_page_token: "next_page_token",
+            api_keys: [
+                {
+                    api_key_id: "api_key_id",
+                    prefix: "prefix",
+                    name: "name",
+                    pod_id: "pod_id",
+                    used_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    api_key_id: "api_key_id",
+                    prefix: "prefix",
+                    name: "name",
+                    pod_id: "pod_id",
+                    used_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        };
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/api-keys")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.pods.apiKeys.list("pod_id");
+        expect(response).toEqual({
+            count: 1,
+            nextPageToken: "next_page_token",
+            apiKeys: [
+                {
+                    apiKeyId: "api_key_id",
+                    prefix: "prefix",
+                    name: "name",
+                    podId: "pod_id",
+                    usedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+                {
+                    apiKeyId: "api_key_id",
+                    prefix: "prefix",
+                    name: "name",
+                    podId: "pod_id",
+                    usedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+            ],
+        });
+    });
+
+    test("list (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/api-keys")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.apiKeys.list("pod_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
     test("create (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
@@ -91,91 +176,6 @@ describe("ApiKeysClient", () => {
                 name: "name",
             });
         }).rejects.toThrow(AgentMail.ValidationError);
-    });
-
-    test("list (1)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new AgentMailClient({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { http: server.baseUrl, websockets: server.baseUrl },
-        });
-
-        const rawResponseBody = {
-            count: 1,
-            next_page_token: "next_page_token",
-            api_keys: [
-                {
-                    api_key_id: "api_key_id",
-                    prefix: "prefix",
-                    name: "name",
-                    pod_id: "pod_id",
-                    used_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
-                },
-                {
-                    api_key_id: "api_key_id",
-                    prefix: "prefix",
-                    name: "name",
-                    pod_id: "pod_id",
-                    used_at: "2024-01-15T09:30:00Z",
-                    created_at: "2024-01-15T09:30:00Z",
-                },
-            ],
-        };
-        server
-            .mockEndpoint()
-            .get("/v0/pods/pod_id/api-keys")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        const response = await client.pods.apiKeys.list("pod_id");
-        expect(response).toEqual({
-            count: 1,
-            nextPageToken: "next_page_token",
-            apiKeys: [
-                {
-                    apiKeyId: "api_key_id",
-                    prefix: "prefix",
-                    name: "name",
-                    podId: "pod_id",
-                    usedAt: new Date("2024-01-15T09:30:00.000Z"),
-                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
-                },
-                {
-                    apiKeyId: "api_key_id",
-                    prefix: "prefix",
-                    name: "name",
-                    podId: "pod_id",
-                    usedAt: new Date("2024-01-15T09:30:00.000Z"),
-                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
-                },
-            ],
-        });
-    });
-
-    test("list (2)", async () => {
-        const server = mockServerPool.createServer();
-        const client = new AgentMailClient({
-            maxRetries: 0,
-            apiKey: "test",
-            environment: { http: server.baseUrl, websockets: server.baseUrl },
-        });
-
-        const rawResponseBody = { name: "name", message: "message" };
-        server
-            .mockEndpoint()
-            .get("/v0/pods/pod_id/api-keys")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
-
-        await expect(async () => {
-            return await client.pods.apiKeys.list("pod_id");
-        }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
     test("delete (1)", async () => {
