@@ -20,7 +20,6 @@ describe("DraftsClient", () => {
             drafts: [
                 {
                     inbox_id: "inbox_id",
-                    thread_id: "thread_id",
                     draft_id: "draft_id",
                     labels: ["labels", "labels"],
                     to: ["to", "to"],
@@ -52,7 +51,6 @@ describe("DraftsClient", () => {
                 },
                 {
                     inbox_id: "inbox_id",
-                    thread_id: "thread_id",
                     draft_id: "draft_id",
                     labels: ["labels", "labels"],
                     to: ["to", "to"],
@@ -100,7 +98,6 @@ describe("DraftsClient", () => {
             drafts: [
                 {
                     inboxId: "inbox_id",
-                    threadId: "thread_id",
                     draftId: "draft_id",
                     labels: ["labels", "labels"],
                     to: ["to", "to"],
@@ -132,7 +129,6 @@ describe("DraftsClient", () => {
                 },
                 {
                     inboxId: "inbox_id",
-                    threadId: "thread_id",
                     draftId: "draft_id",
                     labels: ["labels", "labels"],
                     to: ["to", "to"],
@@ -198,7 +194,6 @@ describe("DraftsClient", () => {
 
         const rawResponseBody = {
             inbox_id: "inbox_id",
-            thread_id: "thread_id",
             draft_id: "draft_id",
             client_id: "client_id",
             labels: ["labels", "labels"],
@@ -246,7 +241,6 @@ describe("DraftsClient", () => {
         const response = await client.pods.drafts.get("pod_id", "draft_id");
         expect(response).toEqual({
             inboxId: "inbox_id",
-            threadId: "thread_id",
             draftId: "draft_id",
             clientId: "client_id",
             labels: ["labels", "labels"],

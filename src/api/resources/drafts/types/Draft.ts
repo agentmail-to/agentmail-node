@@ -4,7 +4,6 @@ import type * as AgentMail from "../../../index.js";
 
 export interface Draft {
     inboxId: AgentMail.inboxes.InboxId;
-    threadId: AgentMail.ThreadId;
     draftId: AgentMail.DraftId;
     clientId?: AgentMail.DraftClientId;
     labels: AgentMail.DraftLabels;

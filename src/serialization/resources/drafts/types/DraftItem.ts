@@ -4,7 +4,6 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
-import { ThreadId } from "../../threads/types/ThreadId.js";
 import { DraftAttachments } from "./DraftAttachments.js";
 import { DraftBcc } from "./DraftBcc.js";
 import { DraftCc } from "./DraftCc.js";
@@ -20,7 +19,6 @@ import { DraftUpdatedAt } from "./DraftUpdatedAt.js";
 export const DraftItem: core.serialization.ObjectSchema<serializers.DraftItem.Raw, AgentMail.DraftItem> =
     core.serialization.object({
         inboxId: core.serialization.property("inbox_id", InboxId),
-        threadId: core.serialization.property("thread_id", ThreadId),
         draftId: core.serialization.property("draft_id", DraftId),
         labels: DraftLabels,
         to: DraftTo.optional(),
@@ -37,7 +35,6 @@ export const DraftItem: core.serialization.ObjectSchema<serializers.DraftItem.Ra
 export declare namespace DraftItem {
     export interface Raw {
         inbox_id: InboxId.Raw;
-        thread_id: ThreadId.Raw;
         draft_id: DraftId.Raw;
         labels: DraftLabels.Raw;
         to?: DraftTo.Raw | null;

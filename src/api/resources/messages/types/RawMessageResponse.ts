@@ -3,14 +3,14 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Signed URL to download the raw .eml file. Uses CloudFront signing, same as attachments.
+ * S3 presigned URL to download the raw .eml file.
  */
 export interface RawMessageResponse {
     /** ID of the message. */
     messageId: AgentMail.MessageId;
     /** Size of the raw message in bytes. */
     size: AgentMail.MessageSize;
-    /** Pre-signed CloudFront URL to download the raw message. Expires at expires_at. */
+    /** S3 presigned URL to download the raw message. Expires at expires_at. */
     downloadUrl: string;
     /** Time at which the download URL expires. */
     expiresAt: Date;
