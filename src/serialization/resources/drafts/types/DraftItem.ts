@@ -8,6 +8,7 @@ import { DraftAttachments } from "./DraftAttachments.js";
 import { DraftBcc } from "./DraftBcc.js";
 import { DraftCc } from "./DraftCc.js";
 import { DraftId } from "./DraftId.js";
+import { DraftInReplyTo } from "./DraftInReplyTo.js";
 import { DraftLabels } from "./DraftLabels.js";
 import { DraftPreview } from "./DraftPreview.js";
 import { DraftSendAt } from "./DraftSendAt.js";
@@ -27,6 +28,7 @@ export const DraftItem: core.serialization.ObjectSchema<serializers.DraftItem.Ra
         subject: DraftSubject.optional(),
         preview: DraftPreview.optional(),
         attachments: DraftAttachments.optional(),
+        inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
         sendStatus: core.serialization.property("send_status", DraftSendStatus.optional()),
         sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
         updatedAt: core.serialization.property("updated_at", DraftUpdatedAt),
@@ -43,6 +45,7 @@ export declare namespace DraftItem {
         subject?: DraftSubject.Raw | null;
         preview?: DraftPreview.Raw | null;
         attachments?: DraftAttachments.Raw | null;
+        in_reply_to?: DraftInReplyTo.Raw | null;
         send_status?: DraftSendStatus.Raw | null;
         send_at?: DraftSendAt.Raw | null;
         updated_at: DraftUpdatedAt.Raw;
