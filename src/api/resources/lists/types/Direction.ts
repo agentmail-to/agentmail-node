@@ -4,5 +4,6 @@
 export const Direction = {
     Send: "send",
     Receive: "receive",
+    Reply: "reply",
 } as const;
 export type Direction = (typeof Direction)[keyof typeof Direction];

@@ -5,8 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const Direction: core.serialization.Schema<serializers.Direction.Raw, AgentMail.Direction> =
-    core.serialization.enum_(["send", "receive"]);
+    core.serialization.enum_(["send", "receive", "reply"]);
 
 export declare namespace Direction {
-    export type Raw = "send" | "receive";
+    export type Raw = "send" | "receive" | "reply";
 }
