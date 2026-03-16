@@ -99,6 +99,7 @@ describe("WebsocketsClient wrapper", () => {
     describe("with mppx", () => {
         const mockMppClient = {
             fetch: vi.fn(),
+            rawFetch: vi.fn(),
             transport: { setCredential: vi.fn() },
             createCredential: vi.fn(),
         };
