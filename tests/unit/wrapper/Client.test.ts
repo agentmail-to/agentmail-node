@@ -106,6 +106,7 @@ describe("AgentMailClient environment selection", () => {
         const mockMppFetch = vi.fn().mockResolvedValue(new Response());
         const mockMppClient = {
             fetch: mockMppFetch,
+            rawFetch: vi.fn().mockResolvedValue(new Response()),
             transport: { setCredential: vi.fn() },
             createCredential: vi.fn(),
         };
