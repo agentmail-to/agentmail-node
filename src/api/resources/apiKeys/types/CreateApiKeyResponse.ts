@@ -10,5 +10,7 @@ export interface CreateApiKeyResponse {
     name: AgentMail.Name;
     /** Pod ID the api key is scoped to. */
     podId?: string;
+    /** Inbox ID the api key is scoped to. */
+    inboxId?: string;
     createdAt: AgentMail.CreatedAt;
 }

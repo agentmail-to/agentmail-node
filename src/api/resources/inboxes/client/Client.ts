@@ -9,6 +9,7 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
+import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
 import { MessagesClient } from "../resources/messages/client/Client.js";
@@ -28,6 +29,7 @@ export class InboxesClient {
     protected _drafts: DraftsClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
+    protected _apiKeys: ApiKeysClient | undefined;
 
     constructor(options: InboxesClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -51,6 +53,10 @@ export class InboxesClient {
 
     public get metrics(): MetricsClient {
         return (this._metrics ??= new MetricsClient(this._options));
+    }
+
+    public get apiKeys(): ApiKeysClient {
+        return (this._apiKeys ??= new ApiKeysClient(this._options));
     }
 
     /**

@@ -22,6 +22,7 @@ describe("ApiKeysClient", () => {
                     prefix: "prefix",
                     name: "name",
                     pod_id: "pod_id",
+                    inbox_id: "inbox_id",
                     used_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
                 },
@@ -30,6 +31,7 @@ describe("ApiKeysClient", () => {
                     prefix: "prefix",
                     name: "name",
                     pod_id: "pod_id",
+                    inbox_id: "inbox_id",
                     used_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
                 },
@@ -53,6 +55,7 @@ describe("ApiKeysClient", () => {
                     prefix: "prefix",
                     name: "name",
                     podId: "pod_id",
+                    inboxId: "inbox_id",
                     usedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
@@ -61,6 +64,7 @@ describe("ApiKeysClient", () => {
                     prefix: "prefix",
                     name: "name",
                     podId: "pod_id",
+                    inboxId: "inbox_id",
                     usedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
@@ -104,6 +108,7 @@ describe("ApiKeysClient", () => {
             prefix: "prefix",
             name: "name",
             pod_id: "pod_id",
+            inbox_id: "inbox_id",
             created_at: "2024-01-15T09:30:00Z",
         };
         server
@@ -124,6 +129,7 @@ describe("ApiKeysClient", () => {
             prefix: "prefix",
             name: "name",
             podId: "pod_id",
+            inboxId: "inbox_id",
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });

@@ -17,6 +17,7 @@ export const CreateApiKeyResponse: core.serialization.ObjectSchema<
     prefix: Prefix,
     name: Name,
     podId: core.serialization.property("pod_id", core.serialization.string().optional()),
+    inboxId: core.serialization.property("inbox_id", core.serialization.string().optional()),
     createdAt: core.serialization.property("created_at", CreatedAt),
 });
 
@@ -27,6 +28,7 @@ export declare namespace CreateApiKeyResponse {
         prefix: Prefix.Raw;
         name: Name.Raw;
         pod_id?: string | null;
+        inbox_id?: string | null;
         created_at: CreatedAt.Raw;
     }
 }

@@ -8,6 +8,8 @@ export interface ApiKey {
     name: AgentMail.Name;
     /** Pod ID the api key is scoped to. If set, the key can only access resources within this pod. */
     podId?: string;
+    /** Inbox ID the api key is scoped to. If set, the key can only access resources within this inbox. */
+    inboxId?: string;
     /** Time at which api key was last used. */
     usedAt?: Date;
     createdAt: AgentMail.CreatedAt;

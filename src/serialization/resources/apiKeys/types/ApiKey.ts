@@ -14,6 +14,7 @@ export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, Age
         prefix: Prefix,
         name: Name,
         podId: core.serialization.property("pod_id", core.serialization.string().optional()),
+        inboxId: core.serialization.property("inbox_id", core.serialization.string().optional()),
         usedAt: core.serialization.property("used_at", core.serialization.date().optional()),
         createdAt: core.serialization.property("created_at", CreatedAt),
     });
@@ -24,6 +25,7 @@ export declare namespace ApiKey {
         prefix: Prefix.Raw;
         name: Name.Raw;
         pod_id?: string | null;
+        inbox_id?: string | null;
         used_at?: string | null;
         created_at: CreatedAt.Raw;
     }
