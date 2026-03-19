@@ -810,7 +810,7 @@ await client.apiKeys.create({
 </dl>
 </details>
 
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">delete</a>(api_key) -> void</code></summary>
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">delete</a>(api_key_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -823,7 +823,7 @@ await client.apiKeys.create({
 <dd>
 
 ```typescript
-await client.apiKeys.delete("api_key");
+await client.apiKeys.delete("api_key_id");
 
 ```
 </dd>
@@ -839,7 +839,7 @@ await client.apiKeys.delete("api_key");
 <dl>
 <dd>
 
-**api_key:** `AgentMail.ApiKeyId` 
+**api_key_id:** `AgentMail.ApiKeyId` 
     
 </dd>
 </dl>
@@ -1487,7 +1487,7 @@ await client.inboxes.apiKeys.create("inbox_id", {
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.apiKeys.<a href="/src/api/resources/inboxes/resources/apiKeys/client/Client.ts">delete</a>(inbox_id, api_key) -> void</code></summary>
+<details><summary><code>client.inboxes.apiKeys.<a href="/src/api/resources/inboxes/resources/apiKeys/client/Client.ts">delete</a>(inbox_id, api_key_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -1500,7 +1500,7 @@ await client.inboxes.apiKeys.create("inbox_id", {
 <dd>
 
 ```typescript
-await client.inboxes.apiKeys.delete("inbox_id", "api_key");
+await client.inboxes.apiKeys.delete("inbox_id", "api_key_id");
 
 ```
 </dd>
@@ -1524,7 +1524,7 @@ await client.inboxes.apiKeys.delete("inbox_id", "api_key");
 <dl>
 <dd>
 
-**api_key:** `AgentMail.ApiKeyId` 
+**api_key_id:** `AgentMail.ApiKeyId` 
     
 </dd>
 </dl>
@@ -3620,7 +3620,7 @@ await client.pods.apiKeys.create("pod_id", {
 </dl>
 </details>
 
-<details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">delete</a>(pod_id, api_key) -> void</code></summary>
+<details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">delete</a>(pod_id, api_key_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -3633,7 +3633,7 @@ await client.pods.apiKeys.create("pod_id", {
 <dd>
 
 ```typescript
-await client.pods.apiKeys.delete("pod_id", "api_key");
+await client.pods.apiKeys.delete("pod_id", "api_key_id");
 
 ```
 </dd>
@@ -3657,7 +3657,7 @@ await client.pods.apiKeys.delete("pod_id", "api_key");
 <dl>
 <dd>
 
-**api_key:** `AgentMail.ApiKeyId` 
+**api_key_id:** `AgentMail.ApiKeyId` 
     
 </dd>
 </dl>

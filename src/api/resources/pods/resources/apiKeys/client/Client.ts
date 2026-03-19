@@ -216,25 +216,25 @@ export class ApiKeysClient {
 
     /**
      * @param {AgentMail.pods.PodId} pod_id
-     * @param {AgentMail.ApiKeyId} api_key
+     * @param {AgentMail.ApiKeyId} api_key_id
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.pods.apiKeys.delete("pod_id", "api_key")
+     *     await client.pods.apiKeys.delete("pod_id", "api_key_id")
      */
     public delete(
         pod_id: AgentMail.pods.PodId,
-        api_key: AgentMail.ApiKeyId,
+        api_key_id: AgentMail.ApiKeyId,
         requestOptions?: ApiKeysClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__delete(pod_id, api_key, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__delete(pod_id, api_key_id, requestOptions));
     }
 
     private async __delete(
         pod_id: AgentMail.pods.PodId,
-        api_key: AgentMail.ApiKeyId,
+        api_key_id: AgentMail.ApiKeyId,
         requestOptions?: ApiKeysClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -248,7 +248,7 @@ export class ApiKeysClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key, { omitUndefined: true }))}`,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key_id, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -289,7 +289,7 @@ export class ApiKeysClient {
             _response.error,
             _response.rawResponse,
             "DELETE",
-            "/v0/pods/{pod_id}/api-keys/{api_key}",
+            "/v0/pods/{pod_id}/api-keys/{api_key_id}",
         );
     }
 }

@@ -6,15 +6,17 @@ import type * as serializers from "../../../index.js";
 import { PodId } from "../../pods/types/PodId.js";
 import { ClientId } from "./ClientId.js";
 import { DomainId } from "./DomainId.js";
+import { DomainName } from "./DomainName.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
+import { Status } from "./Status.js";
 import { VerificationRecord } from "./VerificationRecord.js";
-import { VerificationStatus } from "./VerificationStatus.js";
 
 export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, AgentMail.Domain> =
     core.serialization.object({
         podId: core.serialization.property("pod_id", PodId.optional()),
         domainId: core.serialization.property("domain_id", DomainId),
-        status: VerificationStatus,
+        domain: DomainName,
+        status: Status,
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
         records: core.serialization.list(VerificationRecord),
         clientId: core.serialization.property("client_id", ClientId.optional()),
@@ -26,7 +28,8 @@ export declare namespace Domain {
     export interface Raw {
         pod_id?: PodId.Raw | null;
         domain_id: DomainId.Raw;
-        status: VerificationStatus.Raw;
+        domain: DomainName.Raw;
+        status: Status.Raw;
         feedback_enabled: FeedbackEnabled.Raw;
         records: VerificationRecord.Raw[];
         client_id?: ClientId.Raw | null;

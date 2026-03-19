@@ -21,6 +21,7 @@ describe("InboxesClient", () => {
                 {
                     pod_id: "pod_id",
                     inbox_id: "inbox_id",
+                    email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
@@ -29,6 +30,7 @@ describe("InboxesClient", () => {
                 {
                     pod_id: "pod_id",
                     inbox_id: "inbox_id",
+                    email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
@@ -47,6 +49,7 @@ describe("InboxesClient", () => {
                 {
                     podId: "pod_id",
                     inboxId: "inbox_id",
+                    email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -55,6 +58,7 @@ describe("InboxesClient", () => {
                 {
                     podId: "pod_id",
                     inboxId: "inbox_id",
+                    email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -75,6 +79,7 @@ describe("InboxesClient", () => {
         const rawResponseBody = {
             pod_id: "pod_id",
             inbox_id: "inbox_id",
+            email: "email",
             display_name: "display_name",
             client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
@@ -92,6 +97,7 @@ describe("InboxesClient", () => {
         expect(response).toEqual({
             podId: "pod_id",
             inboxId: "inbox_id",
+            email: "email",
             displayName: "display_name",
             clientId: "client_id",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -132,6 +138,7 @@ describe("InboxesClient", () => {
         const rawResponseBody = {
             pod_id: "pod_id",
             inbox_id: "inbox_id",
+            email: "email",
             display_name: "display_name",
             client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
@@ -143,6 +150,7 @@ describe("InboxesClient", () => {
         expect(response).toEqual({
             podId: "pod_id",
             inboxId: "inbox_id",
+            email: "email",
             displayName: "display_name",
             clientId: "client_id",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -177,6 +185,7 @@ describe("InboxesClient", () => {
         const rawResponseBody = {
             pod_id: "pod_id",
             inbox_id: "inbox_id",
+            email: "email",
             display_name: "display_name",
             client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
@@ -197,6 +206,7 @@ describe("InboxesClient", () => {
         expect(response).toEqual({
             podId: "pod_id",
             inboxId: "inbox_id",
+            email: "email",
             displayName: "display_name",
             clientId: "client_id",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),

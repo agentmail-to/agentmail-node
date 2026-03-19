@@ -5,6 +5,7 @@ import type * as AgentMail from "../../../index.js";
 export interface Inbox {
     podId: AgentMail.pods.PodId;
     inboxId: AgentMail.inboxes.InboxId;
+    email: AgentMail.inboxes.Email;
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;
     /** Time at which inbox was last updated. */

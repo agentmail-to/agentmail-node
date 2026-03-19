@@ -226,25 +226,25 @@ export class ApiKeysClient {
 
     /**
      * @param {AgentMail.inboxes.InboxId} inbox_id
-     * @param {AgentMail.ApiKeyId} api_key
+     * @param {AgentMail.ApiKeyId} api_key_id
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.inboxes.apiKeys.delete("inbox_id", "api_key")
+     *     await client.inboxes.apiKeys.delete("inbox_id", "api_key_id")
      */
     public delete(
         inbox_id: AgentMail.inboxes.InboxId,
-        api_key: AgentMail.ApiKeyId,
+        api_key_id: AgentMail.ApiKeyId,
         requestOptions?: ApiKeysClient.RequestOptions,
     ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__delete(inbox_id, api_key, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__delete(inbox_id, api_key_id, requestOptions));
     }
 
     private async __delete(
         inbox_id: AgentMail.inboxes.InboxId,
-        api_key: AgentMail.ApiKeyId,
+        api_key_id: AgentMail.ApiKeyId,
         requestOptions?: ApiKeysClient.RequestOptions,
     ): Promise<core.WithRawResponse<void>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -258,7 +258,7 @@ export class ApiKeysClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key, { omitUndefined: true }))}`,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key_id, { omitUndefined: true }))}`,
             ),
             method: "DELETE",
             headers: _headers,
@@ -299,7 +299,7 @@ export class ApiKeysClient {
             _response.error,
             _response.rawResponse,
             "DELETE",
-            "/v0/inboxes/{inbox_id}/api-keys/{api_key}",
+            "/v0/inboxes/{inbox_id}/api-keys/{api_key_id}",
         );
     }
 }

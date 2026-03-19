@@ -5,8 +5,8 @@ import type * as AgentMail from "../../../index.js";
 export interface Domain {
     podId?: AgentMail.pods.PodId;
     domainId: AgentMail.DomainId;
-    /** The verification status of the domain. */
-    status: AgentMail.VerificationStatus;
+    domain: AgentMail.DomainName;
+    status: AgentMail.Status;
     feedbackEnabled: AgentMail.FeedbackEnabled;
     /** A list of DNS records required to verify the domain. */
     records: AgentMail.VerificationRecord[];

@@ -21,6 +21,8 @@ describe("DomainsClient", () => {
                 {
                     pod_id: "pod_id",
                     domain_id: "domain_id",
+                    domain: "domain",
+                    status: "NOT_STARTED",
                     feedback_enabled: true,
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
@@ -29,6 +31,8 @@ describe("DomainsClient", () => {
                 {
                     pod_id: "pod_id",
                     domain_id: "domain_id",
+                    domain: "domain",
+                    status: "NOT_STARTED",
                     feedback_enabled: true,
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
@@ -47,6 +51,8 @@ describe("DomainsClient", () => {
                 {
                     podId: "pod_id",
                     domainId: "domain_id",
+                    domain: "domain",
+                    status: "NOT_STARTED",
                     feedbackEnabled: true,
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -55,6 +61,8 @@ describe("DomainsClient", () => {
                 {
                     podId: "pod_id",
                     domainId: "domain_id",
+                    domain: "domain",
+                    status: "NOT_STARTED",
                     feedbackEnabled: true,
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -75,6 +83,7 @@ describe("DomainsClient", () => {
         const rawResponseBody = {
             pod_id: "pod_id",
             domain_id: "domain_id",
+            domain: "domain",
             status: "NOT_STARTED",
             feedback_enabled: true,
             records: [
@@ -97,6 +106,7 @@ describe("DomainsClient", () => {
         expect(response).toEqual({
             podId: "pod_id",
             domainId: "domain_id",
+            domain: "domain",
             status: "NOT_STARTED",
             feedbackEnabled: true,
             records: [
@@ -154,6 +164,7 @@ describe("DomainsClient", () => {
         const rawResponseBody = {
             pod_id: "pod_id",
             domain_id: "domain_id",
+            domain: "domain",
             status: "NOT_STARTED",
             feedback_enabled: true,
             records: [
@@ -180,6 +191,7 @@ describe("DomainsClient", () => {
         expect(response).toEqual({
             podId: "pod_id",
             domainId: "domain_id",
+            domain: "domain",
             status: "NOT_STARTED",
             feedbackEnabled: true,
             records: [
@@ -241,6 +253,7 @@ describe("DomainsClient", () => {
         const rawResponseBody = {
             pod_id: "pod_id",
             domain_id: "domain_id",
+            domain: "domain",
             status: "NOT_STARTED",
             feedback_enabled: true,
             records: [
@@ -264,6 +277,7 @@ describe("DomainsClient", () => {
         expect(response).toEqual({
             podId: "pod_id",
             domainId: "domain_id",
+            domain: "domain",
             status: "NOT_STARTED",
             feedbackEnabled: true,
             records: [

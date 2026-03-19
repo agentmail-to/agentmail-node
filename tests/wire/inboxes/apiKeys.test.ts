@@ -192,9 +192,9 @@ describe("ApiKeysClient", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
 
-        server.mockEndpoint().delete("/v0/inboxes/inbox_id/api-keys/api_key").respondWith().statusCode(200).build();
+        server.mockEndpoint().delete("/v0/inboxes/inbox_id/api-keys/api_key_id").respondWith().statusCode(200).build();
 
-        const response = await client.inboxes.apiKeys.delete("inbox_id", "api_key");
+        const response = await client.inboxes.apiKeys.delete("inbox_id", "api_key_id");
         expect(response).toEqual(undefined);
     });
 
@@ -209,14 +209,14 @@ describe("ApiKeysClient", () => {
         const rawResponseBody = { name: "name", message: "message" };
         server
             .mockEndpoint()
-            .delete("/v0/inboxes/inbox_id/api-keys/api_key")
+            .delete("/v0/inboxes/inbox_id/api-keys/api_key_id")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.inboxes.apiKeys.delete("inbox_id", "api_key");
+            return await client.inboxes.apiKeys.delete("inbox_id", "api_key_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 });
