@@ -1,5 +1,6 @@
 export * from "./ApiKey.js";
 export * from "./ApiKeyId.js";
+export * from "./ApiKeyPermissions.js";
 export * from "./CreateApiKeyRequest.js";
 export * from "./CreateApiKeyResponse.js";
 export * from "./CreatedAt.js";

@@ -12,5 +12,6 @@ export interface CreateApiKeyResponse {
     podId?: string;
     /** Inbox ID the api key is scoped to. */
     inboxId?: string;
+    permissions?: AgentMail.ApiKeyPermissions;
     createdAt: AgentMail.CreatedAt;
 }

@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
 import { Name } from "./Name.js";
 
 export const CreateApiKeyRequest: core.serialization.ObjectSchema<
@@ -10,10 +11,12 @@ export const CreateApiKeyRequest: core.serialization.ObjectSchema<
     AgentMail.CreateApiKeyRequest
 > = core.serialization.object({
     name: Name,
+    permissions: ApiKeyPermissions.optional(),
 });
 
 export declare namespace CreateApiKeyRequest {
     export interface Raw {
         name: Name.Raw;
+        permissions?: ApiKeyPermissions.Raw | null;
     }
 }

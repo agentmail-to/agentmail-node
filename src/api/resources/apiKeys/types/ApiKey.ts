@@ -12,5 +12,6 @@ export interface ApiKey {
     inboxId?: string;
     /** Time at which api key was last used. */
     usedAt?: Date;
+    permissions?: AgentMail.ApiKeyPermissions;
     createdAt: AgentMail.CreatedAt;
 }

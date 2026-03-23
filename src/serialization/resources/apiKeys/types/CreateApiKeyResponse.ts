@@ -4,6 +4,7 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ApiKeyId } from "./ApiKeyId.js";
+import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
 import { CreatedAt } from "./CreatedAt.js";
 import { Name } from "./Name.js";
 import { Prefix } from "./Prefix.js";
@@ -18,6 +19,7 @@ export const CreateApiKeyResponse: core.serialization.ObjectSchema<
     name: Name,
     podId: core.serialization.property("pod_id", core.serialization.string().optional()),
     inboxId: core.serialization.property("inbox_id", core.serialization.string().optional()),
+    permissions: ApiKeyPermissions.optional(),
     createdAt: core.serialization.property("created_at", CreatedAt),
 });
 
@@ -29,6 +31,7 @@ export declare namespace CreateApiKeyResponse {
         name: Name.Raw;
         pod_id?: string | null;
         inbox_id?: string | null;
+        permissions?: ApiKeyPermissions.Raw | null;
         created_at: CreatedAt.Raw;
     }
 }
