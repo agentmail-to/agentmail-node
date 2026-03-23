@@ -8,79 +8,79 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     serializers.ApiKeyPermissions.Raw,
     AgentMail.ApiKeyPermissions
 > = core.serialization.object({
-    readInbox: core.serialization.property("read_inbox", core.serialization.boolean().optional()),
-    createInbox: core.serialization.property("create_inbox", core.serialization.boolean().optional()),
-    updateInbox: core.serialization.property("update_inbox", core.serialization.boolean().optional()),
-    deleteInbox: core.serialization.property("delete_inbox", core.serialization.boolean().optional()),
-    readThread: core.serialization.property("read_thread", core.serialization.boolean().optional()),
-    deleteThread: core.serialization.property("delete_thread", core.serialization.boolean().optional()),
-    readMessage: core.serialization.property("read_message", core.serialization.boolean().optional()),
-    sendMessage: core.serialization.property("send_message", core.serialization.boolean().optional()),
-    updateMessage: core.serialization.property("update_message", core.serialization.boolean().optional()),
-    readSpam: core.serialization.property("read_spam", core.serialization.boolean().optional()),
-    readBlocked: core.serialization.property("read_blocked", core.serialization.boolean().optional()),
-    readTrash: core.serialization.property("read_trash", core.serialization.boolean().optional()),
-    readDraft: core.serialization.property("read_draft", core.serialization.boolean().optional()),
-    createDraft: core.serialization.property("create_draft", core.serialization.boolean().optional()),
-    updateDraft: core.serialization.property("update_draft", core.serialization.boolean().optional()),
-    deleteDraft: core.serialization.property("delete_draft", core.serialization.boolean().optional()),
-    sendDraft: core.serialization.property("send_draft", core.serialization.boolean().optional()),
-    readWebhook: core.serialization.property("read_webhook", core.serialization.boolean().optional()),
-    createWebhook: core.serialization.property("create_webhook", core.serialization.boolean().optional()),
-    updateWebhook: core.serialization.property("update_webhook", core.serialization.boolean().optional()),
-    deleteWebhook: core.serialization.property("delete_webhook", core.serialization.boolean().optional()),
-    readDomain: core.serialization.property("read_domain", core.serialization.boolean().optional()),
-    createDomain: core.serialization.property("create_domain", core.serialization.boolean().optional()),
-    updateDomain: core.serialization.property("update_domain", core.serialization.boolean().optional()),
-    deleteDomain: core.serialization.property("delete_domain", core.serialization.boolean().optional()),
-    readListEntry: core.serialization.property("read_list_entry", core.serialization.boolean().optional()),
-    createListEntry: core.serialization.property("create_list_entry", core.serialization.boolean().optional()),
-    deleteListEntry: core.serialization.property("delete_list_entry", core.serialization.boolean().optional()),
-    readMetrics: core.serialization.property("read_metrics", core.serialization.boolean().optional()),
-    readApiKey: core.serialization.property("read_api_key", core.serialization.boolean().optional()),
-    createApiKey: core.serialization.property("create_api_key", core.serialization.boolean().optional()),
-    deleteApiKey: core.serialization.property("delete_api_key", core.serialization.boolean().optional()),
-    readPod: core.serialization.property("read_pod", core.serialization.boolean().optional()),
-    createPod: core.serialization.property("create_pod", core.serialization.boolean().optional()),
-    deletePod: core.serialization.property("delete_pod", core.serialization.boolean().optional()),
+    inboxRead: core.serialization.property("inbox_read", core.serialization.boolean().optional()),
+    inboxCreate: core.serialization.property("inbox_create", core.serialization.boolean().optional()),
+    inboxUpdate: core.serialization.property("inbox_update", core.serialization.boolean().optional()),
+    inboxDelete: core.serialization.property("inbox_delete", core.serialization.boolean().optional()),
+    threadRead: core.serialization.property("thread_read", core.serialization.boolean().optional()),
+    threadDelete: core.serialization.property("thread_delete", core.serialization.boolean().optional()),
+    messageRead: core.serialization.property("message_read", core.serialization.boolean().optional()),
+    messageSend: core.serialization.property("message_send", core.serialization.boolean().optional()),
+    messageUpdate: core.serialization.property("message_update", core.serialization.boolean().optional()),
+    labelSpamRead: core.serialization.property("label_spam_read", core.serialization.boolean().optional()),
+    labelBlockedRead: core.serialization.property("label_blocked_read", core.serialization.boolean().optional()),
+    labelTrashRead: core.serialization.property("label_trash_read", core.serialization.boolean().optional()),
+    draftRead: core.serialization.property("draft_read", core.serialization.boolean().optional()),
+    draftCreate: core.serialization.property("draft_create", core.serialization.boolean().optional()),
+    draftUpdate: core.serialization.property("draft_update", core.serialization.boolean().optional()),
+    draftDelete: core.serialization.property("draft_delete", core.serialization.boolean().optional()),
+    draftSend: core.serialization.property("draft_send", core.serialization.boolean().optional()),
+    webhookRead: core.serialization.property("webhook_read", core.serialization.boolean().optional()),
+    webhookCreate: core.serialization.property("webhook_create", core.serialization.boolean().optional()),
+    webhookUpdate: core.serialization.property("webhook_update", core.serialization.boolean().optional()),
+    webhookDelete: core.serialization.property("webhook_delete", core.serialization.boolean().optional()),
+    domainRead: core.serialization.property("domain_read", core.serialization.boolean().optional()),
+    domainCreate: core.serialization.property("domain_create", core.serialization.boolean().optional()),
+    domainUpdate: core.serialization.property("domain_update", core.serialization.boolean().optional()),
+    domainDelete: core.serialization.property("domain_delete", core.serialization.boolean().optional()),
+    listEntryRead: core.serialization.property("list_entry_read", core.serialization.boolean().optional()),
+    listEntryCreate: core.serialization.property("list_entry_create", core.serialization.boolean().optional()),
+    listEntryDelete: core.serialization.property("list_entry_delete", core.serialization.boolean().optional()),
+    metricsRead: core.serialization.property("metrics_read", core.serialization.boolean().optional()),
+    apiKeyRead: core.serialization.property("api_key_read", core.serialization.boolean().optional()),
+    apiKeyCreate: core.serialization.property("api_key_create", core.serialization.boolean().optional()),
+    apiKeyDelete: core.serialization.property("api_key_delete", core.serialization.boolean().optional()),
+    podRead: core.serialization.property("pod_read", core.serialization.boolean().optional()),
+    podCreate: core.serialization.property("pod_create", core.serialization.boolean().optional()),
+    podDelete: core.serialization.property("pod_delete", core.serialization.boolean().optional()),
 });
 
 export declare namespace ApiKeyPermissions {
     export interface Raw {
-        read_inbox?: boolean | null;
-        create_inbox?: boolean | null;
-        update_inbox?: boolean | null;
-        delete_inbox?: boolean | null;
-        read_thread?: boolean | null;
-        delete_thread?: boolean | null;
-        read_message?: boolean | null;
-        send_message?: boolean | null;
-        update_message?: boolean | null;
-        read_spam?: boolean | null;
-        read_blocked?: boolean | null;
-        read_trash?: boolean | null;
-        read_draft?: boolean | null;
-        create_draft?: boolean | null;
-        update_draft?: boolean | null;
-        delete_draft?: boolean | null;
-        send_draft?: boolean | null;
-        read_webhook?: boolean | null;
-        create_webhook?: boolean | null;
-        update_webhook?: boolean | null;
-        delete_webhook?: boolean | null;
-        read_domain?: boolean | null;
-        create_domain?: boolean | null;
-        update_domain?: boolean | null;
-        delete_domain?: boolean | null;
-        read_list_entry?: boolean | null;
-        create_list_entry?: boolean | null;
-        delete_list_entry?: boolean | null;
-        read_metrics?: boolean | null;
-        read_api_key?: boolean | null;
-        create_api_key?: boolean | null;
-        delete_api_key?: boolean | null;
-        read_pod?: boolean | null;
-        create_pod?: boolean | null;
-        delete_pod?: boolean | null;
+        inbox_read?: boolean | null;
+        inbox_create?: boolean | null;
+        inbox_update?: boolean | null;
+        inbox_delete?: boolean | null;
+        thread_read?: boolean | null;
+        thread_delete?: boolean | null;
+        message_read?: boolean | null;
+        message_send?: boolean | null;
+        message_update?: boolean | null;
+        label_spam_read?: boolean | null;
+        label_blocked_read?: boolean | null;
+        label_trash_read?: boolean | null;
+        draft_read?: boolean | null;
+        draft_create?: boolean | null;
+        draft_update?: boolean | null;
+        draft_delete?: boolean | null;
+        draft_send?: boolean | null;
+        webhook_read?: boolean | null;
+        webhook_create?: boolean | null;
+        webhook_update?: boolean | null;
+        webhook_delete?: boolean | null;
+        domain_read?: boolean | null;
+        domain_create?: boolean | null;
+        domain_update?: boolean | null;
+        domain_delete?: boolean | null;
+        list_entry_read?: boolean | null;
+        list_entry_create?: boolean | null;
+        list_entry_delete?: boolean | null;
+        metrics_read?: boolean | null;
+        api_key_read?: boolean | null;
+        api_key_create?: boolean | null;
+        api_key_delete?: boolean | null;
+        pod_read?: boolean | null;
+        pod_create?: boolean | null;
+        pod_delete?: boolean | null;
     }
 }

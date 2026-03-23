@@ -5,73 +5,73 @@
  */
 export interface ApiKeyPermissions {
     /** Read inbox details. */
-    readInbox?: boolean;
+    inboxRead?: boolean;
     /** Create new inboxes. */
-    createInbox?: boolean;
+    inboxCreate?: boolean;
     /** Update inbox settings. */
-    updateInbox?: boolean;
+    inboxUpdate?: boolean;
     /** Delete inboxes. */
-    deleteInbox?: boolean;
+    inboxDelete?: boolean;
     /** Read threads. */
-    readThread?: boolean;
+    threadRead?: boolean;
     /** Delete threads. */
-    deleteThread?: boolean;
+    threadDelete?: boolean;
     /** Read messages. */
-    readMessage?: boolean;
+    messageRead?: boolean;
     /** Send messages. */
-    sendMessage?: boolean;
+    messageSend?: boolean;
     /** Update message labels. */
-    updateMessage?: boolean;
+    messageUpdate?: boolean;
     /** Access messages labeled spam. */
-    readSpam?: boolean;
+    labelSpamRead?: boolean;
     /** Access messages labeled blocked. */
-    readBlocked?: boolean;
+    labelBlockedRead?: boolean;
     /** Access messages labeled trash. */
-    readTrash?: boolean;
+    labelTrashRead?: boolean;
     /** Read drafts. */
-    readDraft?: boolean;
+    draftRead?: boolean;
     /** Create drafts. */
-    createDraft?: boolean;
+    draftCreate?: boolean;
     /** Update drafts. */
-    updateDraft?: boolean;
+    draftUpdate?: boolean;
     /** Delete drafts. */
-    deleteDraft?: boolean;
+    draftDelete?: boolean;
     /** Send drafts. */
-    sendDraft?: boolean;
+    draftSend?: boolean;
     /** Read webhook configurations. */
-    readWebhook?: boolean;
+    webhookRead?: boolean;
     /** Create webhooks. */
-    createWebhook?: boolean;
+    webhookCreate?: boolean;
     /** Update webhooks. */
-    updateWebhook?: boolean;
+    webhookUpdate?: boolean;
     /** Delete webhooks. */
-    deleteWebhook?: boolean;
+    webhookDelete?: boolean;
     /** Read domain details. */
-    readDomain?: boolean;
+    domainRead?: boolean;
     /** Create domains. */
-    createDomain?: boolean;
+    domainCreate?: boolean;
     /** Update domains. */
-    updateDomain?: boolean;
+    domainUpdate?: boolean;
     /** Delete domains. */
-    deleteDomain?: boolean;
+    domainDelete?: boolean;
     /** Read list entries. */
-    readListEntry?: boolean;
+    listEntryRead?: boolean;
     /** Create list entries. */
-    createListEntry?: boolean;
+    listEntryCreate?: boolean;
     /** Delete list entries. */
-    deleteListEntry?: boolean;
+    listEntryDelete?: boolean;
     /** Read metrics. */
-    readMetrics?: boolean;
+    metricsRead?: boolean;
     /** Read API keys. */
-    readApiKey?: boolean;
+    apiKeyRead?: boolean;
     /** Create API keys. */
-    createApiKey?: boolean;
+    apiKeyCreate?: boolean;
     /** Delete API keys. */
-    deleteApiKey?: boolean;
+    apiKeyDelete?: boolean;
     /** Read pods. */
-    readPod?: boolean;
+    podRead?: boolean;
     /** Create pods. */
-    createPod?: boolean;
+    podCreate?: boolean;
     /** Delete pods. */
-    deletePod?: boolean;
+    podDelete?: boolean;
 }
