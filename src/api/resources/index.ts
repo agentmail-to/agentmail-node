@@ -1,3 +1,5 @@
+export * as agent from "./agent/index.js";
+export * from "./agent/types/index.js";
 export * from "./apiKeys/client/requests/index.js";
 export * as apiKeys from "./apiKeys/index.js";
 export * from "./apiKeys/types/index.js";

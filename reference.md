@@ -709,6 +709,146 @@ await client.webhooks.delete("webhook_id");
 </dl>
 </details>
 
+## Agent
+<details><summary><code>client.agent.<a href="/src/api/resources/agent/client/Client.ts">signUp</a>({ ...params }) -> AgentMail.AgentSignupResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a new agent organization with an inbox and API key. A 6-digit OTP is sent to the human's email for verification.
+
+This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
+
+The returned API key has limited permissions until the organization is verified via the verify endpoint.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.agent.signUp({
+    humanEmail: "human_email",
+    username: "username"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.AgentSignupRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AgentClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.agent.<a href="/src/api/resources/agent/client/Client.ts">verify</a>({ ...params }) -> AgentMail.AgentVerifyResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Verify an agent organization using the 6-digit OTP sent to the human's email during sign-up.
+
+On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
+
+The OTP expires after 24 hours and allows a maximum of 10 attempts.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.agent.verify({
+    otpCode: "otp_code"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.AgentVerifyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AgentClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## ApiKeys
 <details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListApiKeysResponse</code></summary>
 <dl>
