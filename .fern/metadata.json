@@ -1,7 +1,7 @@
 {
-    "cliVersion": "4.3.0",
+    "cliVersion": "4.48.1",
     "generatorName": "fernapi/fern-typescript-node-sdk",
-    "generatorVersion": "3.46.2",
+    "generatorVersion": "3.60.0",
     "generatorConfig": {
         "namespaceExport": "AgentMail",
         "noSerdeLayer": false,
@@ -31,5 +31,6 @@
             }
         }
     },
-    "sdkVersion": "0.4.14"
+    "originGitCommit": "4bfe1d419beb1931c56d02e32ba7a3e02c2162ab",
+    "sdkVersion": "0.4.15"
 }

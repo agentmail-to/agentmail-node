@@ -14,6 +14,7 @@ describe("AgentClient", () => {
         });
         const rawRequestBody = { human_email: "human_email", username: "username" };
         const rawResponseBody = { organization_id: "organization_id", inbox_id: "inbox_id", api_key: "api_key" };
+
         server
             .mockEndpoint()
             .post("/v0/agent/sign-up")
@@ -43,6 +44,7 @@ describe("AgentClient", () => {
         });
         const rawRequestBody = { human_email: "human_email", username: "username" };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/agent/sign-up")
@@ -69,6 +71,7 @@ describe("AgentClient", () => {
         });
         const rawRequestBody = { otp_code: "otp_code" };
         const rawResponseBody = { verified: true };
+
         server
             .mockEndpoint()
             .post("/v0/agent/verify")

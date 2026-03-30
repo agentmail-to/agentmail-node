@@ -5,4 +5,4 @@ import type * as AgentMail from "../../../index.js";
 /**
  * Metrics grouped by event type.
  */
-export type QueryMetricsResponse = Record<AgentMail.MetricEventType, AgentMail.MetricBucket[] | undefined>;
+export type QueryMetricsResponse = Partial<Record<AgentMail.MetricEventType, AgentMail.MetricBucket[]>>;

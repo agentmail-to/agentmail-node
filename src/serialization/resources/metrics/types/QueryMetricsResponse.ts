@@ -9,7 +9,7 @@ import { MetricEventType } from "./MetricEventType.js";
 export const QueryMetricsResponse: core.serialization.Schema<
     serializers.QueryMetricsResponse.Raw,
     AgentMail.QueryMetricsResponse
-> = core.serialization.record(MetricEventType, core.serialization.list(MetricBucket).optional());
+> = core.serialization.partialRecord(MetricEventType, core.serialization.list(MetricBucket).optional());
 
 export declare namespace QueryMetricsResponse {
     export type Raw = Record<MetricEventType.Raw, MetricBucket.Raw[] | null | undefined>;

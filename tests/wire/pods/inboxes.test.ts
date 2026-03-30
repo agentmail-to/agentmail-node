@@ -38,6 +38,7 @@ describe("InboxesClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/inboxes")
@@ -83,6 +84,7 @@ describe("InboxesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/inboxes")
@@ -113,6 +115,7 @@ describe("InboxesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/inboxes/inbox_id")
@@ -142,6 +145,7 @@ describe("InboxesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/inboxes/inbox_id")
@@ -172,6 +176,7 @@ describe("InboxesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .post("/v0/pods/pod_id/inboxes")
@@ -202,6 +207,7 @@ describe("InboxesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/pods/pod_id/inboxes")
@@ -233,6 +239,7 @@ describe("InboxesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .patch("/v0/pods/pod_id/inboxes/inbox_id")
@@ -265,6 +272,7 @@ describe("InboxesClient", () => {
         });
         const rawRequestBody = { display_name: "display_name" };
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/pods/pod_id/inboxes/inbox_id")
@@ -304,6 +312,7 @@ describe("InboxesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/pods/pod_id/inboxes/inbox_id")

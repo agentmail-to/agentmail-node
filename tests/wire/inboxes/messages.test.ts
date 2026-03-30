@@ -94,6 +94,7 @@ describe("MessagesClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages")
@@ -199,6 +200,7 @@ describe("MessagesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages")
@@ -262,6 +264,7 @@ describe("MessagesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages/message_id")
@@ -326,6 +329,7 @@ describe("MessagesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages/message_id")
@@ -357,6 +361,7 @@ describe("MessagesClient", () => {
             download_url: "download_url",
             expires_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages/message_id/attachments/attachment_id")
@@ -387,6 +392,7 @@ describe("MessagesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages/message_id/attachments/attachment_id")
@@ -414,6 +420,7 @@ describe("MessagesClient", () => {
             download_url: "download_url",
             expires_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages/message_id/raw")
@@ -440,6 +447,7 @@ describe("MessagesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/messages/message_id/raw")
@@ -462,6 +470,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message_id: "message_id", labels: ["labels", "labels"] };
+
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id/messages/message_id")
@@ -487,6 +496,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id/messages/message_id")
@@ -510,6 +520,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id/messages/message_id")
@@ -533,6 +544,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message_id: "message_id", thread_id: "thread_id" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/send")
@@ -558,6 +570,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/send")
@@ -581,6 +594,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/send")
@@ -604,6 +618,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/send")
@@ -627,6 +642,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message_id: "message_id", thread_id: "thread_id" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply")
@@ -652,6 +668,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply")
@@ -675,6 +692,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply")
@@ -698,6 +716,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply")
@@ -721,6 +740,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message_id: "message_id", thread_id: "thread_id" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply-all")
@@ -746,6 +766,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply-all")
@@ -769,6 +790,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply-all")
@@ -792,6 +814,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/reply-all")
@@ -815,6 +838,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message_id: "message_id", thread_id: "thread_id" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/forward")
@@ -840,6 +864,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/forward")
@@ -863,6 +888,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/forward")
@@ -886,6 +912,7 @@ describe("MessagesClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/messages/message_id/forward")

@@ -38,6 +38,7 @@ describe("InboxesClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/v0/inboxes").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.inboxes.list();
@@ -85,6 +86,7 @@ describe("InboxesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id")
@@ -114,6 +116,7 @@ describe("InboxesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id")
@@ -144,6 +147,7 @@ describe("InboxesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server.mockEndpoint().post("/v0/inboxes").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.inboxes.create(undefined);
@@ -167,6 +171,7 @@ describe("InboxesClient", () => {
         });
 
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server.mockEndpoint().post("/v0/inboxes").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
@@ -191,6 +196,7 @@ describe("InboxesClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id")
@@ -223,6 +229,7 @@ describe("InboxesClient", () => {
         });
         const rawRequestBody = { display_name: "display_name" };
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id")
@@ -262,6 +269,7 @@ describe("InboxesClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/inboxes/inbox_id")

@@ -19,6 +19,7 @@ describe("MetricsClient", () => {
                 { timestamp: "2024-01-15T09:30:00Z", count: 1 },
             ],
         };
+
         server.mockEndpoint().get("/v0/metrics").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.metrics.query();
@@ -45,6 +46,7 @@ describe("MetricsClient", () => {
         });
 
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server.mockEndpoint().get("/v0/metrics").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
 
         await expect(async () => {

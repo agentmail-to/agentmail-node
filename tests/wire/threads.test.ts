@@ -90,6 +90,7 @@ describe("ThreadsClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/v0/threads").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.threads.list();
@@ -181,6 +182,7 @@ describe("ThreadsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server.mockEndpoint().get("/v0/threads").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
@@ -317,6 +319,7 @@ describe("ThreadsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/threads/thread_id")
@@ -462,6 +465,7 @@ describe("ThreadsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/threads/thread_id")
@@ -493,6 +497,7 @@ describe("ThreadsClient", () => {
             download_url: "download_url",
             expires_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/threads/thread_id/attachments/attachment_id")
@@ -523,6 +528,7 @@ describe("ThreadsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/threads/thread_id/attachments/attachment_id")
@@ -545,6 +551,7 @@ describe("ThreadsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { thread_id: "thread_id", labels: ["labels", "labels"] };
+
         server
             .mockEndpoint()
             .patch("/v0/threads/thread_id")
@@ -570,6 +577,7 @@ describe("ThreadsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .patch("/v0/threads/thread_id")
@@ -593,6 +601,7 @@ describe("ThreadsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/threads/thread_id")
@@ -616,6 +625,7 @@ describe("ThreadsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/threads/thread_id")
@@ -653,6 +663,7 @@ describe("ThreadsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/threads/thread_id")

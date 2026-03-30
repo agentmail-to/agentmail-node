@@ -84,6 +84,7 @@ describe("DraftsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/drafts")
@@ -175,6 +176,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/drafts")
@@ -234,6 +236,7 @@ describe("DraftsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/drafts/draft_id")
@@ -292,6 +295,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/drafts/draft_id")
@@ -323,6 +327,7 @@ describe("DraftsClient", () => {
             download_url: "download_url",
             expires_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/drafts/draft_id/attachments/attachment_id")
@@ -353,6 +358,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/drafts/draft_id/attachments/attachment_id")

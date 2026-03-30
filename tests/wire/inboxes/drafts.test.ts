@@ -84,6 +84,7 @@ describe("DraftsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/drafts")
@@ -175,6 +176,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/drafts")
@@ -234,6 +236,7 @@ describe("DraftsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/drafts/draft_id")
@@ -292,6 +295,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/drafts/draft_id")
@@ -323,6 +327,7 @@ describe("DraftsClient", () => {
             download_url: "download_url",
             expires_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/drafts/draft_id/attachments/attachment_id")
@@ -353,6 +358,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/inboxes/inbox_id/drafts/draft_id/attachments/attachment_id")
@@ -412,6 +418,7 @@ describe("DraftsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/drafts")
@@ -471,6 +478,7 @@ describe("DraftsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/drafts")
@@ -531,6 +539,7 @@ describe("DraftsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id/drafts/draft_id")
@@ -590,6 +599,7 @@ describe("DraftsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id/drafts/draft_id")
@@ -627,6 +637,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/inboxes/inbox_id/drafts/draft_id")
@@ -649,6 +660,7 @@ describe("DraftsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { message_id: "message_id", thread_id: "thread_id" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/drafts/draft_id/send")
@@ -674,6 +686,7 @@ describe("DraftsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/drafts/draft_id/send")
@@ -697,6 +710,7 @@ describe("DraftsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/drafts/draft_id/send")
@@ -720,6 +734,7 @@ describe("DraftsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/inboxes/inbox_id/drafts/draft_id/send")

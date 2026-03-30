@@ -34,6 +34,7 @@ describe("PodsClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/v0/pods").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.pods.list();
@@ -75,6 +76,7 @@ describe("PodsClient", () => {
             created_at: "2024-01-15T09:30:00Z",
             client_id: "client_id",
         };
+
         server.mockEndpoint().get("/v0/pods/pod_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.pods.get("pod_id");
@@ -96,6 +98,7 @@ describe("PodsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server.mockEndpoint().get("/v0/pods/pod_id").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
@@ -118,6 +121,7 @@ describe("PodsClient", () => {
             created_at: "2024-01-15T09:30:00Z",
             client_id: "client_id",
         };
+
         server
             .mockEndpoint()
             .post("/v0/pods")
@@ -146,6 +150,7 @@ describe("PodsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/pods")
@@ -183,6 +188,7 @@ describe("PodsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server.mockEndpoint().delete("/v0/pods/pod_id").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {

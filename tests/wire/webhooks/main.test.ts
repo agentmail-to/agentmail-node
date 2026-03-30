@@ -44,6 +44,7 @@ describe("WebhooksClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/v0/webhooks").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.webhooks.list();
@@ -100,6 +101,7 @@ describe("WebhooksClient", () => {
             created_at: "2024-01-15T09:30:00Z",
             client_id: "client_id",
         };
+
         server
             .mockEndpoint()
             .get("/v0/webhooks/webhook_id")
@@ -132,6 +134,7 @@ describe("WebhooksClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/webhooks/webhook_id")
@@ -165,6 +168,7 @@ describe("WebhooksClient", () => {
             created_at: "2024-01-15T09:30:00Z",
             client_id: "client_id",
         };
+
         server
             .mockEndpoint()
             .post("/v0/webhooks")
@@ -201,6 +205,7 @@ describe("WebhooksClient", () => {
         });
         const rawRequestBody = { url: "url", event_types: ["message.received", "message.received"] };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/webhooks")
@@ -238,6 +243,7 @@ describe("WebhooksClient", () => {
             created_at: "2024-01-15T09:30:00Z",
             client_id: "client_id",
         };
+
         server
             .mockEndpoint()
             .patch("/v0/webhooks/webhook_id")
@@ -271,6 +277,7 @@ describe("WebhooksClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/webhooks/webhook_id")
@@ -294,6 +301,7 @@ describe("WebhooksClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .patch("/v0/webhooks/webhook_id")
@@ -331,6 +339,7 @@ describe("WebhooksClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/webhooks/webhook_id")

@@ -19,6 +19,7 @@ describe("MetricsClient", () => {
                 { timestamp: "2024-01-15T09:30:00Z", count: 1 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/metrics")
@@ -51,6 +52,7 @@ describe("MetricsClient", () => {
         });
 
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/metrics")

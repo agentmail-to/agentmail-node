@@ -84,6 +84,7 @@ describe("DraftsClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/v0/drafts").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.drafts.list();
@@ -169,6 +170,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server.mockEndpoint().get("/v0/drafts").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
@@ -222,6 +224,7 @@ describe("DraftsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/drafts/draft_id")
@@ -280,6 +283,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/drafts/draft_id")
@@ -311,6 +315,7 @@ describe("DraftsClient", () => {
             download_url: "download_url",
             expires_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/drafts/draft_id/attachments/attachment_id")
@@ -341,6 +346,7 @@ describe("DraftsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/drafts/draft_id/attachments/attachment_id")

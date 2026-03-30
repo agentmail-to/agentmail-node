@@ -111,6 +111,7 @@ describe("ApiKeysClient", () => {
                 },
             ],
         };
+
         server.mockEndpoint().get("/v0/api-keys").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.apiKeys.list();
@@ -268,6 +269,7 @@ describe("ApiKeysClient", () => {
             },
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .post("/v0/api-keys")
@@ -337,6 +339,7 @@ describe("ApiKeysClient", () => {
         });
         const rawRequestBody = { name: "name" };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/api-keys")
@@ -376,6 +379,7 @@ describe("ApiKeysClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/api-keys/api_key_id")

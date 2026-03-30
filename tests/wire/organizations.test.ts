@@ -26,6 +26,7 @@ describe("OrganizationsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server.mockEndpoint().get("/v0/organizations").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
         const response = await client.organizations.get();

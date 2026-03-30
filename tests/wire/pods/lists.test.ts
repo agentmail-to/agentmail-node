@@ -42,6 +42,7 @@ describe("ListsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/lists/send/allow")
@@ -101,6 +102,7 @@ describe("ListsClient", () => {
             entry_type: "email",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/lists/send/allow/entry")
@@ -132,6 +134,7 @@ describe("ListsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/lists/send/allow/entry")
@@ -164,6 +167,7 @@ describe("ListsClient", () => {
             entry_type: "email",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .post("/v0/pods/pod_id/lists/send/allow")
@@ -198,6 +202,7 @@ describe("ListsClient", () => {
         });
         const rawRequestBody = { entry: "entry" };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/pods/pod_id/lists/send/allow")
@@ -237,6 +242,7 @@ describe("ListsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/pods/pod_id/lists/send/allow/entry")

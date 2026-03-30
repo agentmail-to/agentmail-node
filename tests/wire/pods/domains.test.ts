@@ -40,6 +40,7 @@ describe("DomainsClient", () => {
                 },
             ],
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/domains")
@@ -87,6 +88,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/domains")
@@ -122,6 +124,7 @@ describe("DomainsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/domains/domain_id")
@@ -168,6 +171,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .get("/v0/pods/pod_id/domains/domain_id")
@@ -203,6 +207,7 @@ describe("DomainsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .post("/v0/pods/pod_id/domains")
@@ -253,6 +258,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = { domain: "domain", feedback_enabled: true };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
+
         server
             .mockEndpoint()
             .post("/v0/pods/pod_id/domains")
@@ -292,6 +298,7 @@ describe("DomainsClient", () => {
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
+
         server
             .mockEndpoint()
             .patch("/v0/pods/pod_id/domains/domain_id")
@@ -339,6 +346,7 @@ describe("DomainsClient", () => {
         });
         const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .patch("/v0/pods/pod_id/domains/domain_id")
@@ -376,6 +384,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .delete("/v0/pods/pod_id/domains/domain_id")
@@ -412,6 +421,7 @@ describe("DomainsClient", () => {
         });
 
         const rawResponseBody = { name: "name", message: "message" };
+
         server
             .mockEndpoint()
             .post("/v0/pods/pod_id/domains/domain_id/verify")

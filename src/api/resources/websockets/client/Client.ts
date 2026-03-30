@@ -12,6 +12,8 @@ export declare namespace WebsocketsClient {
 
     export interface ConnectArgs {
         apiKey?: string;
+        /** WebSocket subprotocols to use for the connection. */
+        protocols?: string | string[];
         /** Additional query parameters to send with the websocket connect request. */
         queryParams?: Record<string, unknown>;
         /** Arbitrary headers to send with the websocket connect request. */
@@ -20,6 +22,10 @@ export declare namespace WebsocketsClient {
         debug?: boolean;
         /** Number of reconnect attempts. Defaults to 30. */
         reconnectAttempts?: number;
+        /** The timeout for establishing the WebSocket connection in seconds. */
+        connectionTimeoutInSeconds?: number;
+        /** A signal to abort the WebSocket connection. */
+        abortSignal?: AbortSignal;
     }
 }
 
@@ -31,7 +37,16 @@ export class WebsocketsClient {
     }
 
     public async connect(args: WebsocketsClient.ConnectArgs = {}): Promise<WebsocketsSocket> {
-        const { apiKey, queryParams, headers, debug, reconnectAttempts } = args;
+        const {
+            apiKey,
+            protocols,
+            queryParams,
+            headers,
+            debug,
+            reconnectAttempts,
+            connectionTimeoutInSeconds,
+            abortSignal,
+        } = args;
         const _queryParams: Record<string, unknown> = {
             api_key: apiKey,
         };
@@ -44,10 +59,15 @@ export class WebsocketsClient {
                         .websockets,
                 "/v0",
             ),
-            protocols: [],
+            protocols: protocols ?? [],
             queryParameters: { ..._queryParams, ...queryParams },
             headers: _headers,
-            options: { debug: debug ?? false, maxRetries: reconnectAttempts ?? 30 },
+            options: {
+                debug: debug ?? false,
+                maxRetries: reconnectAttempts ?? 30,
+                connectionTimeout: connectionTimeoutInSeconds != null ? connectionTimeoutInSeconds * 1000 : undefined,
+            },
+            abortSignal: abortSignal,
         });
         return new WebsocketsSocket({ socket });
     }
