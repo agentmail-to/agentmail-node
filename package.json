@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.4.13",
+    "version": "0.4.14",
     "private": false,
     "repository": {
         "type": "git",
@@ -80,5 +80,23 @@
     "engines": {
         "node": ">=18.0.0"
     },
-    "sideEffects": false
+    "sideEffects": false,
+    "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
+    "keywords": [
+        "email",
+        "ai",
+        "agent",
+        "inbox",
+        "api",
+        "email-api",
+        "ai-agent",
+        "llm",
+        "langchain",
+        "crewai",
+        "autonomous-agent",
+        "agentmail"
+    ],
+    "homepage": "https://agentmail.to",
+    "license": "MIT",
+    "author": "AgentMail <support@agentmail.cc>"
 }

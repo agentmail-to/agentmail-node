@@ -425,7 +425,7 @@ export class MessagesClient {
         message_id: AgentMail.MessageId,
         request: AgentMail.UpdateMessageRequest,
         requestOptions?: MessagesClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.Message> {
+    ): core.HttpResponsePromise<AgentMail.UpdateMessageResponse> {
         return core.HttpResponsePromise.fromPromise(this.__update(inbox_id, message_id, request, requestOptions));
     }
 
@@ -434,7 +434,7 @@ export class MessagesClient {
         message_id: AgentMail.MessageId,
         request: AgentMail.UpdateMessageRequest,
         requestOptions?: MessagesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.Message>> {
+    ): Promise<core.WithRawResponse<AgentMail.UpdateMessageResponse>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -465,7 +465,7 @@ export class MessagesClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.Message.parseOrThrow(_response.body, {
+                data: serializers.UpdateMessageResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

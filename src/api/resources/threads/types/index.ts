@@ -16,3 +16,5 @@ export * from "./ThreadSize.js";
 export * from "./ThreadSubject.js";
 export * from "./ThreadTimestamp.js";
 export * from "./ThreadUpdatedAt.js";
+export * from "./UpdateThreadRequest.js";
+export * from "./UpdateThreadResponse.js";

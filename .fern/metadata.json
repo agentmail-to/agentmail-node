@@ -8,10 +8,28 @@
         "skipResponseValidation": true,
         "shouldGenerateWebsocketClients": true,
         "packageJson": {
+            "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
+            "keywords": [
+                "email",
+                "ai",
+                "agent",
+                "inbox",
+                "api",
+                "email-api",
+                "ai-agent",
+                "llm",
+                "langchain",
+                "crewai",
+                "autonomous-agent",
+                "agentmail"
+            ],
+            "homepage": "https://agentmail.to",
+            "license": "MIT",
+            "author": "AgentMail <support@agentmail.cc>",
             "scripts": {
                 "build": "npm run build:cjs && npm run build:esm && node -e \"const https=require('https'),fs=require('fs');const download=(f)=>new Promise((res,rej)=>https.get('https://docs.agentmail.to/'+f,r=>r.pipe(fs.createWriteStream('dist/'+f)).on('finish',res).on('error',rej)));Promise.all(['llms.txt','llms-full.txt'].map(download)).catch(e=>{console.error(e);process.exit(1)});\""
             }
         }
     },
-    "sdkVersion": "0.4.13"
+    "sdkVersion": "0.4.14"
 }

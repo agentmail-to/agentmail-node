@@ -461,48 +461,7 @@ describe("MessagesClient", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
         const rawRequestBody = {};
-        const rawResponseBody = {
-            inbox_id: "inbox_id",
-            thread_id: "thread_id",
-            message_id: "message_id",
-            labels: ["labels", "labels"],
-            timestamp: "2024-01-15T09:30:00Z",
-            from: "from",
-            reply_to: ["reply_to", "reply_to"],
-            to: ["to", "to"],
-            cc: ["cc", "cc"],
-            bcc: ["bcc", "bcc"],
-            subject: "subject",
-            preview: "preview",
-            text: "text",
-            html: "html",
-            extracted_text: "extracted_text",
-            extracted_html: "extracted_html",
-            attachments: [
-                {
-                    attachment_id: "attachment_id",
-                    filename: "filename",
-                    size: 1,
-                    content_type: "content_type",
-                    content_disposition: "inline",
-                    content_id: "content_id",
-                },
-                {
-                    attachment_id: "attachment_id",
-                    filename: "filename",
-                    size: 1,
-                    content_type: "content_type",
-                    content_disposition: "inline",
-                    content_id: "content_id",
-                },
-            ],
-            in_reply_to: "in_reply_to",
-            references: ["references", "references"],
-            headers: { headers: "headers" },
-            size: 1,
-            updated_at: "2024-01-15T09:30:00Z",
-            created_at: "2024-01-15T09:30:00Z",
-        };
+        const rawResponseBody = { message_id: "message_id", labels: ["labels", "labels"] };
         server
             .mockEndpoint()
             .patch("/v0/inboxes/inbox_id/messages/message_id")
@@ -514,48 +473,8 @@ describe("MessagesClient", () => {
 
         const response = await client.inboxes.messages.update("inbox_id", "message_id", {});
         expect(response).toEqual({
-            inboxId: "inbox_id",
-            threadId: "thread_id",
             messageId: "message_id",
             labels: ["labels", "labels"],
-            timestamp: new Date("2024-01-15T09:30:00.000Z"),
-            from: "from",
-            replyTo: ["reply_to", "reply_to"],
-            to: ["to", "to"],
-            cc: ["cc", "cc"],
-            bcc: ["bcc", "bcc"],
-            subject: "subject",
-            preview: "preview",
-            text: "text",
-            html: "html",
-            extractedText: "extracted_text",
-            extractedHtml: "extracted_html",
-            attachments: [
-                {
-                    attachmentId: "attachment_id",
-                    filename: "filename",
-                    size: 1,
-                    contentType: "content_type",
-                    contentDisposition: "inline",
-                    contentId: "content_id",
-                },
-                {
-                    attachmentId: "attachment_id",
-                    filename: "filename",
-                    size: 1,
-                    contentType: "content_type",
-                    contentDisposition: "inline",
-                    contentId: "content_id",
-                },
-            ],
-            inReplyTo: "in_reply_to",
-            references: ["references", "references"],
-            headers: {
-                headers: "headers",
-            },
-            size: 1,
-            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
-            createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 
