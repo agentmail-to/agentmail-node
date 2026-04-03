@@ -3,6 +3,6 @@
 import type * as AgentMail from "../../../index.js";
 
 export interface CreateApiKeyRequest {
-    name: AgentMail.Name;
+    name?: AgentMail.Name;
     permissions?: AgentMail.ApiKeyPermissions;
 }

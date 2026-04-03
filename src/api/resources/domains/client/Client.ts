@@ -24,6 +24,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail domains list
+     * ```
+     *
      * @param {AgentMail.ListDomainsRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -94,6 +99,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail domains retrieve --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.DomainId} domain_id
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -174,6 +184,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail domains get-zone-file --domain-id <domain_id>
+     * ```
+     *
      * @throws {@link AgentMail.NotFoundError}
      */
     public getZoneFile(
@@ -245,6 +260,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail domains create --domain example.com
+     * ```
+     *
      * @param {AgentMail.CreateDomainRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -334,6 +354,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail domains update --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.DomainId} domain_id
      * @param {AgentMail.UpdateDomainRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -423,6 +448,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail domains delete --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.DomainId} domain_id
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -494,6 +524,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail domains verify --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.DomainId} domain_id
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

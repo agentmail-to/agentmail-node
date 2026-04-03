@@ -33,5 +33,6 @@ export * from "./SendMessageReplyTo.js";
 export * from "./SendMessageRequest.js";
 export * from "./SendMessageResponse.js";
 export * from "./SendMessageTo.js";
+export * from "./UpdateMessageLabels.js";
 export * from "./UpdateMessageRequest.js";
 export * from "./UpdateMessageResponse.js";

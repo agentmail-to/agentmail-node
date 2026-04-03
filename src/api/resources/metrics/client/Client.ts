@@ -25,6 +25,11 @@ export class MetricsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail metrics list
+     * ```
+     *
      * @param {AgentMail.QueryMetricsRequest} request
      * @param {MetricsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

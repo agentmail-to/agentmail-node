@@ -24,6 +24,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail api-keys list
+     * ```
+     *
      * @param {AgentMail.ListApiKeysRequest} request
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -94,15 +99,18 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail api-keys create --name "My Key"
+     * ```
+     *
      * @param {AgentMail.CreateApiKeyRequest} request
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.apiKeys.create({
-     *         name: "name"
-     *     })
+     *     await client.apiKeys.create({})
      */
     public create(
         request: AgentMail.CreateApiKeyRequest,
@@ -182,6 +190,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail api-keys delete --api-key-id <api_key_id>
+     * ```
+     *
      * @param {AgentMail.ApiKeyId} api_key_id
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
      *

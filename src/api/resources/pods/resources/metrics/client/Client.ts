@@ -25,6 +25,11 @@ export class MetricsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:metrics query --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.pods.QueryMetricsRequest} request
      * @param {MetricsClient.RequestOptions} requestOptions - Request-specific configuration.

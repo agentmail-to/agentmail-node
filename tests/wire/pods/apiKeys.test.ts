@@ -251,7 +251,7 @@ describe("ApiKeysClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { name: "name" };
+        const rawRequestBody = {};
         const rawResponseBody = {
             api_key_id: "api_key_id",
             api_key: "api_key",
@@ -308,9 +308,7 @@ describe("ApiKeysClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.pods.apiKeys.create("pod_id", {
-            name: "name",
-        });
+        const response = await client.pods.apiKeys.create("pod_id", {});
         expect(response).toEqual({
             apiKeyId: "api_key_id",
             apiKey: "api_key",
@@ -366,7 +364,7 @@ describe("ApiKeysClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { name: "name" };
+        const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
 
         server
@@ -379,9 +377,7 @@ describe("ApiKeysClient", () => {
             .build();
 
         await expect(async () => {
-            return await client.pods.apiKeys.create("pod_id", {
-                name: "name",
-            });
+            return await client.pods.apiKeys.create("pod_id", {});
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
@@ -392,7 +388,7 @@ describe("ApiKeysClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { name: "name" };
+        const rawRequestBody = {};
         const rawResponseBody = { name: "name", errors: { key: "value" } };
 
         server
@@ -405,9 +401,7 @@ describe("ApiKeysClient", () => {
             .build();
 
         await expect(async () => {
-            return await client.pods.apiKeys.create("pod_id", {
-                name: "name",
-            });
+            return await client.pods.apiKeys.create("pod_id", {});
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 

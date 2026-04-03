@@ -10,13 +10,13 @@ export const CreateApiKeyRequest: core.serialization.ObjectSchema<
     serializers.CreateApiKeyRequest.Raw,
     AgentMail.CreateApiKeyRequest
 > = core.serialization.object({
-    name: Name,
+    name: Name.optional(),
     permissions: ApiKeyPermissions.optional(),
 });
 
 export declare namespace CreateApiKeyRequest {
     export interface Raw {
-        name: Name.Raw;
+        name?: Name.Raw | null;
         permissions?: ApiKeyPermissions.Raw | null;
     }
 }

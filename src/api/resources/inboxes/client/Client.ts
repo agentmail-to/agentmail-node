@@ -60,6 +60,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes list
+     * ```
+     *
      * @param {AgentMail.inboxes.ListInboxesRequest} request
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -130,6 +135,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes retrieve --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -210,6 +220,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes create --display-name "My Agent" --username myagent --domain agentmail.to
+     * ```
+     *
      * @param {AgentMail.inboxes.CreateInboxRequest} request
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -296,6 +311,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.UpdateInboxRequest} request
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -387,6 +407,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes delete --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *

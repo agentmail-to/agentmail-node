@@ -24,6 +24,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:domains list --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.pods.ListDomainsRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -113,6 +118,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:domains retrieve --pod-id <pod_id> --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.DomainId} domain_id
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -201,6 +211,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+     * ```
+     *
      * @throws {@link AgentMail.NotFoundError}
      */
     public getZoneFile(
@@ -274,6 +289,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:domains create --pod-id <pod_id> --domain example.com
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.CreateDomainRequest} request
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -366,6 +386,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.DomainId} domain_id
      * @param {AgentMail.UpdateDomainRequest} request
@@ -463,6 +488,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.DomainId} domain_id
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -542,6 +572,11 @@ export class DomainsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.DomainId} domain_id
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.

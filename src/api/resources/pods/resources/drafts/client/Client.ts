@@ -25,6 +25,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:drafts list --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.pods.ListDraftsRequest} request
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -131,6 +136,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:drafts retrieve --pod-id <pod_id> --draft-id <draft_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.DraftId} draft_id
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -219,6 +229,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.DraftId} draft_id
      * @param {AgentMail.AttachmentId} attachment_id

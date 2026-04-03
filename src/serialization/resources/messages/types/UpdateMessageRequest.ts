@@ -3,24 +3,19 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { UpdateMessageLabels } from "./UpdateMessageLabels.js";
 
 export const UpdateMessageRequest: core.serialization.ObjectSchema<
     serializers.UpdateMessageRequest.Raw,
     AgentMail.UpdateMessageRequest
 > = core.serialization.object({
-    addLabels: core.serialization.property(
-        "add_labels",
-        core.serialization.list(core.serialization.string()).optional(),
-    ),
-    removeLabels: core.serialization.property(
-        "remove_labels",
-        core.serialization.list(core.serialization.string()).optional(),
-    ),
+    addLabels: core.serialization.property("add_labels", UpdateMessageLabels.optional()),
+    removeLabels: core.serialization.property("remove_labels", UpdateMessageLabels.optional()),
 });
 
 export declare namespace UpdateMessageRequest {
     export interface Raw {
-        add_labels?: string[] | null;
-        remove_labels?: string[] | null;
+        add_labels?: UpdateMessageLabels.Raw | null;
+        remove_labels?: UpdateMessageLabels.Raw | null;
     }
 }

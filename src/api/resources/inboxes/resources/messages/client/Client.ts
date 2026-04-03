@@ -25,6 +25,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages list --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.ListMessagesRequest} request
      * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -140,6 +145,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages retrieve --inbox-id <inbox_id> --message-id <message_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
      * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -228,6 +238,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
      * @param {AgentMail.AttachmentId} attachment_id
@@ -321,6 +336,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
      * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -409,6 +429,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
      * @param {AgentMail.UpdateMessageRequest} request
@@ -518,6 +543,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.SendMessageRequest} request
      * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -636,6 +666,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
      * @param {AgentMail.ReplyToMessageRequest} request
@@ -757,6 +792,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
      * @param {AgentMail.ReplyAllMessageRequest} request
@@ -878,6 +918,11 @@ export class MessagesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.MessageId} message_id
      * @param {AgentMail.SendMessageRequest} request

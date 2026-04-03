@@ -25,6 +25,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail drafts list
+     * ```
+     *
      * @param {AgentMail.ListDraftsRequest} request
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -128,6 +133,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail drafts retrieve --draft-id <draft_id>
+     * ```
+     *
      * @param {AgentMail.DraftId} draft_id
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -208,6 +218,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>
+     * ```
+     *
      * @param {AgentMail.DraftId} draft_id
      * @param {AgentMail.AttachmentId} attachment_id
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.

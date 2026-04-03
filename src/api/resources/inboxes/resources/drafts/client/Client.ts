@@ -25,6 +25,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:drafts list --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.ListDraftsRequest} request
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -131,6 +136,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:drafts retrieve --inbox-id <inbox_id> --draft-id <draft_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.DraftId} draft_id
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -219,6 +229,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.DraftId} draft_id
      * @param {AgentMail.AttachmentId} attachment_id
@@ -312,6 +327,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.CreateDraftRequest} request
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -406,6 +426,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.DraftId} draft_id
      * @param {AgentMail.UpdateDraftRequest} request
@@ -503,6 +528,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.DraftId} draft_id
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -582,6 +612,11 @@ export class DraftsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.DraftId} draft_id
      * @param {AgentMail.UpdateMessageRequest} request

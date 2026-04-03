@@ -24,6 +24,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:inboxes list --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.pods.ListInboxesRequest} request
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -113,6 +118,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:inboxes retrieve --pod-id <pod_id> --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -201,6 +211,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.inboxes.CreateInboxRequest} request
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -290,6 +305,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.UpdateInboxRequest} request
@@ -389,6 +409,11 @@ export class InboxesClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.

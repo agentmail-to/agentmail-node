@@ -4,6 +4,23 @@
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -52,6 +69,23 @@ await client.inboxes.list();
 <details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">get</a>(inbox_id) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes retrieve --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -102,6 +136,23 @@ await client.inboxes.get("inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes create --display-name "My Agent" --username myagent --domain agentmail.to
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -150,6 +201,23 @@ await client.inboxes.create(undefined);
 <details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">update</a>(inbox_id, { ...params }) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -210,6 +278,23 @@ await client.inboxes.update("inbox_id", {
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes delete --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -260,6 +345,23 @@ await client.inboxes.delete("inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -308,6 +410,23 @@ await client.pods.list();
 <details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">get</a>(pod_id) -> AgentMail.Pod</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods retrieve --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -358,6 +477,23 @@ await client.pods.get("pod_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods create --client-id my-pod
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -406,6 +542,23 @@ await client.pods.create({});
 <details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">delete</a>(pod_id) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods delete --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -457,6 +610,23 @@ await client.pods.delete("pod_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -506,6 +676,23 @@ await client.webhooks.list();
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks retrieve --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -554,6 +741,23 @@ await client.webhooks.get("webhook_id");
 <details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">create</a>({ ...params }) -> AgentMail.Webhook</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks create --url https://example.com/webhook --event-type message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -606,6 +810,23 @@ await client.webhooks.create({
 <details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">update</a>(webhook_id, { ...params }) -> AgentMail.Webhook</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -663,6 +884,23 @@ await client.webhooks.update("webhook_id", {});
 <details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">delete</a>(webhook_id) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail webhooks delete --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -722,11 +960,18 @@ await client.webhooks.delete("webhook_id");
 <dl>
 <dd>
 
-Create a new agent organization with an inbox and API key. A 6-digit OTP is sent to the human's email for verification.
+Create a new agent organization with an inbox and API key. This endpoint is for signing up for the first time. If you've already signed up, you're all set — just use your existing API key.
+
+A 6-digit OTP is sent to the human's email for verification.
 
 This endpoint is idempotent. Calling it again with the same `human_email` will rotate the API key and resend the OTP if expired.
 
 The returned API key has limited permissions until the organization is verified via the verify endpoint.
+
+**CLI:**
+```bash
+agentmail agent sign-up --human-email user@example.com --username my-agent
+```
 </dd>
 </dl>
 </dd>
@@ -797,6 +1042,11 @@ Verify an agent organization using the 6-digit OTP sent to the human's email dur
 On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
 The OTP expires after 24 hours and allows a maximum of 10 attempts.
+
+**CLI:**
+```bash
+agentmail agent verify --otp-code 123456
+```
 </dd>
 </dl>
 </dd>
@@ -854,6 +1104,23 @@ await client.agent.verify({
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail api-keys list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -903,6 +1170,23 @@ await client.apiKeys.list();
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail api-keys create --name "My Key"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -912,9 +1196,7 @@ await client.apiKeys.list();
 <dd>
 
 ```typescript
-await client.apiKeys.create({
-    name: "name"
-});
+await client.apiKeys.create({});
 
 ```
 </dd>
@@ -953,6 +1235,23 @@ await client.apiKeys.create({
 <details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">delete</a>(api_key_id) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail api-keys delete --api-key-id <api_key_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1004,6 +1303,23 @@ await client.apiKeys.delete("api_key_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1052,6 +1368,23 @@ await client.domains.list();
 <details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">get</a>(domain_id) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains retrieve --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1102,6 +1435,23 @@ await client.domains.get("domain_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains get-zone-file --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1150,6 +1500,23 @@ await client.domains.getZoneFile("domain_id");
 <details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">create</a>({ ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains create --domain example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1202,6 +1569,23 @@ await client.domains.create({
 <details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">update</a>(domain_id, { ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains update --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1260,6 +1644,23 @@ await client.domains.update("domain_id", {});
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains delete --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1308,6 +1709,23 @@ await client.domains.delete("domain_id");
 <details><summary><code>client.domains.<a href="/src/api/resources/domains/client/Client.ts">verify</a>(domain_id) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail domains verify --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1359,6 +1777,23 @@ await client.domains.verify("domain_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail drafts list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1408,6 +1843,23 @@ await client.drafts.list();
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail drafts retrieve --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1456,6 +1908,23 @@ await client.drafts.get("draft_id");
 <details><summary><code>client.drafts.<a href="/src/api/resources/drafts/client/Client.ts">getAttachment</a>(draft_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail drafts get-attachment --draft-id <draft_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1515,6 +1984,23 @@ await client.drafts.getAttachment("draft_id", "attachment_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:api-keys list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1572,6 +2058,23 @@ await client.inboxes.apiKeys.list("inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1581,9 +2084,7 @@ await client.inboxes.apiKeys.list("inbox_id");
 <dd>
 
 ```typescript
-await client.inboxes.apiKeys.create("inbox_id", {
-    name: "name"
-});
+await client.inboxes.apiKeys.create("inbox_id", {});
 
 ```
 </dd>
@@ -1630,6 +2131,23 @@ await client.inboxes.apiKeys.create("inbox_id", {
 <details><summary><code>client.inboxes.apiKeys.<a href="/src/api/resources/inboxes/resources/apiKeys/client/Client.ts">delete</a>(inbox_id, api_key_id) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1689,6 +2207,23 @@ await client.inboxes.apiKeys.delete("inbox_id", "api_key_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1746,6 +2281,23 @@ await client.inboxes.drafts.list("inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts retrieve --inbox-id <inbox_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1802,6 +2354,23 @@ await client.inboxes.drafts.get("inbox_id", "draft_id");
 <details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">getAttachment</a>(inbox_id, draft_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts get-attachment --inbox-id <inbox_id> --draft-id <draft_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1868,6 +2437,23 @@ await client.inboxes.drafts.getAttachment("inbox_id", "draft_id", "attachment_id
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -1924,6 +2510,23 @@ await client.inboxes.drafts.create("inbox_id", {});
 <details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">update</a>(inbox_id, draft_id, { ...params }) -> AgentMail.Draft</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -1990,6 +2593,23 @@ await client.inboxes.drafts.update("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts delete --inbox-id <inbox_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2046,6 +2666,23 @@ await client.inboxes.drafts.delete("inbox_id", "draft_id");
 <details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">send</a>(inbox_id, draft_id, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:drafts send --inbox-id <inbox_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2112,6 +2749,23 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 <details><summary><code>client.inboxes.lists.<a href="/src/api/resources/inboxes/resources/lists/client/Client.ts">list</a>(inbox_id, direction, type, { ...params }) -> AgentMail.PodListListEntriesResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2186,6 +2840,23 @@ await client.inboxes.lists.list("inbox_id", "send", "allow");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists retrieve --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2258,6 +2929,23 @@ await client.inboxes.lists.get("inbox_id", "send", "allow", "entry");
 <details><summary><code>client.inboxes.lists.<a href="/src/api/resources/inboxes/resources/lists/client/Client.ts">create</a>(inbox_id, direction, type, { ...params }) -> AgentMail.PodListEntry</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2334,6 +3022,23 @@ await client.inboxes.lists.create("inbox_id", "send", "allow", {
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2408,6 +3113,23 @@ await client.inboxes.lists.delete("inbox_id", "send", "allow", "entry");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2465,6 +3187,23 @@ await client.inboxes.messages.list("inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages retrieve --inbox-id <inbox_id> --message-id <message_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2521,6 +3260,23 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getAttachment</a>(inbox_id, message_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2587,6 +3343,23 @@ await client.inboxes.messages.getAttachment("inbox_id", "message_id", "attachmen
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2643,6 +3416,23 @@ await client.inboxes.messages.getRaw("inbox_id", "message_id");
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">update</a>(inbox_id, message_id, { ...params }) -> AgentMail.UpdateMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2709,6 +3499,23 @@ await client.inboxes.messages.update("inbox_id", "message_id", {});
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2765,6 +3572,23 @@ await client.inboxes.messages.send("inbox_id", {});
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">reply</a>(inbox_id, message_id, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2831,6 +3655,23 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {});
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -2895,6 +3736,23 @@ await client.inboxes.messages.replyAll("inbox_id", "message_id", {});
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">forward</a>(inbox_id, message_id, { ...params }) -> AgentMail.SendMessageResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -2962,6 +3820,23 @@ await client.inboxes.messages.forward("inbox_id", "message_id", {});
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:metrics query --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3020,6 +3895,23 @@ await client.inboxes.metrics.query("inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:threads list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3077,6 +3969,23 @@ await client.inboxes.threads.list("inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:threads retrieve --inbox-id <inbox_id> --thread-id <thread_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3133,6 +4042,23 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 <details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">getAttachment</a>(inbox_id, thread_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3287,6 +4213,11 @@ await client.inboxes.threads.update("inbox_id", "thread_id", {});
 <dd>
 
 Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+**CLI:**
+```bash
+agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+```
 </dd>
 </dl>
 </dd>
@@ -3358,6 +4289,23 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists list --direction <direction> --type <type>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3423,6 +4371,23 @@ await client.lists.list("send", "allow");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists retrieve --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3487,6 +4452,23 @@ await client.lists.get("send", "allow", "entry");
 <details><summary><code>client.lists.<a href="/src/api/resources/lists/client/Client.ts">create</a>(direction, type, { ...params }) -> AgentMail.ListEntry</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists create --direction <direction> --type <type> --entry user@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3555,6 +4537,23 @@ await client.lists.create("send", "allow", {
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail lists delete --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3620,6 +4619,23 @@ await client.lists.delete("send", "allow", "entry");
 <details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">query</a>({ ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail metrics list
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3727,6 +4743,23 @@ await client.organizations.get();
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:api-keys list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3784,6 +4817,23 @@ await client.pods.apiKeys.list("pod_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3793,9 +4843,7 @@ await client.pods.apiKeys.list("pod_id");
 <dd>
 
 ```typescript
-await client.pods.apiKeys.create("pod_id", {
-    name: "name"
-});
+await client.pods.apiKeys.create("pod_id", {});
 
 ```
 </dd>
@@ -3842,6 +4890,23 @@ await client.pods.apiKeys.create("pod_id", {
 <details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">delete</a>(pod_id, api_key_id) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -3901,6 +4966,23 @@ await client.pods.apiKeys.delete("pod_id", "api_key_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -3957,6 +5039,23 @@ await client.pods.domains.list("pod_id");
 <details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">get</a>(pod_id, domain_id) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains retrieve --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4015,6 +5114,23 @@ await client.pods.domains.get("pod_id", "domain_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4071,6 +5187,23 @@ await client.pods.domains.getZoneFile("pod_id", "domain_id");
 <details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">create</a>(pod_id, { ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains create --pod-id <pod_id> --domain example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4131,6 +5264,23 @@ await client.pods.domains.create("pod_id", {
 <details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">update</a>(pod_id, domain_id, { ...params }) -> AgentMail.Domain</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4197,6 +5347,23 @@ await client.pods.domains.update("pod_id", "domain_id", {});
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4253,6 +5420,23 @@ await client.pods.domains.delete("pod_id", "domain_id");
 <details><summary><code>client.pods.domains.<a href="/src/api/resources/pods/resources/domains/client/Client.ts">verify</a>(pod_id, domain_id) -> void</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4312,6 +5496,23 @@ await client.pods.domains.verify("pod_id", "domain_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:drafts list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4369,6 +5570,23 @@ await client.pods.drafts.list("pod_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:drafts retrieve --pod-id <pod_id> --draft-id <draft_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4425,6 +5643,23 @@ await client.pods.drafts.get("pod_id", "draft_id");
 <details><summary><code>client.pods.drafts.<a href="/src/api/resources/pods/resources/drafts/client/Client.ts">getAttachment</a>(pod_id, draft_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:drafts get-attachment --pod-id <pod_id> --draft-id <draft_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4492,6 +5727,23 @@ await client.pods.drafts.getAttachment("pod_id", "draft_id", "attachment_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4548,6 +5800,23 @@ await client.pods.inboxes.list("pod_id");
 <details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">get</a>(pod_id, inbox_id) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes retrieve --pod-id <pod_id> --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4606,6 +5875,23 @@ await client.pods.inboxes.get("pod_id", "inbox_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4662,6 +5948,23 @@ await client.pods.inboxes.create("pod_id", {});
 <details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">update</a>(pod_id, inbox_id, { ...params }) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4730,6 +6033,23 @@ await client.pods.inboxes.update("pod_id", "inbox_id", {
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4787,6 +6107,23 @@ await client.pods.inboxes.delete("pod_id", "inbox_id");
 <details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">list</a>(pod_id, direction, type, { ...params }) -> AgentMail.PodListListEntriesResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists list --pod-id <pod_id> --direction <direction> --type <type>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -4861,6 +6198,23 @@ await client.pods.lists.list("pod_id", "send", "allow");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists retrieve --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -4933,6 +6287,23 @@ await client.pods.lists.get("pod_id", "send", "allow", "entry");
 <details><summary><code>client.pods.lists.<a href="/src/api/resources/pods/resources/lists/client/Client.ts">create</a>(pod_id, direction, type, { ...params }) -> AgentMail.PodListEntry</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists create --pod-id <pod_id> --direction <direction> --type <type> --entry user@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5009,6 +6380,23 @@ await client.pods.lists.create("pod_id", "send", "allow", {
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:lists delete --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5083,6 +6471,23 @@ await client.pods.lists.delete("pod_id", "send", "allow", "entry");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:metrics query --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5141,6 +6546,23 @@ await client.pods.metrics.query("pod_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:threads list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5198,6 +6620,23 @@ await client.pods.threads.list("pod_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:threads retrieve --pod-id <pod_id> --thread-id <thread_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5254,6 +6693,23 @@ await client.pods.threads.get("pod_id", "thread_id");
 <details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">getAttachment</a>(pod_id, thread_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5408,6 +6864,11 @@ await client.pods.threads.update("pod_id", "thread_id", {});
 <dd>
 
 Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+**CLI:**
+```bash
+agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+```
 </dd>
 </dl>
 </dd>
@@ -5479,6 +6940,23 @@ await client.pods.threads.delete("pod_id", "thread_id");
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail threads list
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5528,6 +7006,23 @@ await client.threads.list();
 <dl>
 <dd>
 
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail threads retrieve --thread-id <thread_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
 #### 🔌 Usage
 
 <dl>
@@ -5576,6 +7071,23 @@ await client.threads.get("thread_id");
 <details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">getAttachment</a>(thread_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail threads retrieve-attachment --thread-id <thread_id> --attachment-id <attachment_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
 
 #### 🔌 Usage
 
@@ -5714,6 +7226,11 @@ await client.threads.update("thread_id", {});
 <dd>
 
 Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+
+**CLI:**
+```bash
+agentmail threads delete --thread-id <thread_id>
+```
 </dd>
 </dl>
 </dd>

@@ -24,6 +24,11 @@ export class WebhooksClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail webhooks list
+     * ```
+     *
      * @param {AgentMail.webhooks.ListWebhooksRequest} request
      * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -94,6 +99,11 @@ export class WebhooksClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail webhooks retrieve --webhook-id <webhook_id>
+     * ```
+     *
      * @param {AgentMail.webhooks.WebhookId} webhook_id
      * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -174,6 +184,11 @@ export class WebhooksClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail webhooks create --url https://example.com/webhook --event-type message.received
+     * ```
+     *
      * @param {AgentMail.webhooks.CreateWebhookRequest} request
      * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -263,6 +278,11 @@ export class WebhooksClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.webhooks.WebhookId} webhook_id
      * @param {AgentMail.webhooks.UpdateWebhookRequest} request
      * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -364,6 +384,11 @@ export class WebhooksClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail webhooks delete --webhook-id <webhook_id>
+     * ```
+     *
      * @param {AgentMail.webhooks.WebhookId} webhook_id
      * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
      *

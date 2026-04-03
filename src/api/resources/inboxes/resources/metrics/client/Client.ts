@@ -25,6 +25,11 @@ export class MetricsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:metrics query --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.QueryMetricsRequest} request
      * @param {MetricsClient.RequestOptions} requestOptions - Request-specific configuration.

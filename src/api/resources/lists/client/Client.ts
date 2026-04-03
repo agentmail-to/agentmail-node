@@ -24,6 +24,11 @@ export class ListsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail lists list --direction <direction> --type <type>
+     * ```
+     *
      * @param {AgentMail.Direction} direction
      * @param {AgentMail.ListType} type
      * @param {AgentMail.ListListEntriesRequest} request
@@ -99,6 +104,11 @@ export class ListsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail lists retrieve --direction <direction> --type <type> --entry <entry>
+     * ```
+     *
      * @param {AgentMail.Direction} direction
      * @param {AgentMail.ListType} type
      * @param {string} entry - Email address or domain.
@@ -190,6 +200,11 @@ export class ListsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail lists create --direction <direction> --type <type> --entry user@example.com
+     * ```
+     *
      * @param {AgentMail.Direction} direction
      * @param {AgentMail.ListType} type
      * @param {AgentMail.CreateListEntryRequest} request
@@ -284,6 +299,11 @@ export class ListsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail lists delete --direction <direction> --type <type> --entry <entry>
+     * ```
+     *
      * @param {AgentMail.Direction} direction
      * @param {AgentMail.ListType} type
      * @param {string} entry - Email address or domain.

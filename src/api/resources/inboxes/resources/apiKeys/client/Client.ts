@@ -24,6 +24,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:api-keys list --inbox-id <inbox_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.ListApiKeysRequest} request
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -117,6 +122,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:api-keys create --inbox-id <inbox_id> --name "My Key"
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.CreateApiKeyRequest} request
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -125,9 +135,7 @@ export class ApiKeysClient {
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.inboxes.apiKeys.create("inbox_id", {
-     *         name: "name"
-     *     })
+     *     await client.inboxes.apiKeys.create("inbox_id", {})
      */
     public create(
         inbox_id: AgentMail.inboxes.InboxId,
@@ -225,6 +233,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:api-keys delete --inbox-id <inbox_id> --api-key-id <api_key_id>
+     * ```
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.ApiKeyId} api_key_id
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.

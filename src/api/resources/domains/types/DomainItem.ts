@@ -6,7 +6,6 @@ export interface DomainItem {
     podId?: AgentMail.pods.PodId;
     domainId: AgentMail.DomainId;
     domain: AgentMail.DomainName;
-    status: AgentMail.Status;
     feedbackEnabled: AgentMail.FeedbackEnabled;
     clientId?: AgentMail.ClientId;
     /** Time at which the domain was last updated. */

@@ -66,6 +66,11 @@ export class PodsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods list
+     * ```
+     *
      * @param {AgentMail.pods.ListPodsRequest} request
      * @param {PodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -136,6 +141,11 @@ export class PodsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods retrieve --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {PodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -216,6 +226,11 @@ export class PodsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods create --client-id my-pod
+     * ```
+     *
      * @param {AgentMail.pods.CreatePodRequest} request
      * @param {PodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -302,6 +317,11 @@ export class PodsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods delete --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {PodsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

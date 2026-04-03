@@ -24,6 +24,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:api-keys list --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.pods.ListApiKeysRequest} request
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -112,6 +117,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.CreateApiKeyRequest} request
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -120,9 +130,7 @@ export class ApiKeysClient {
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.pods.apiKeys.create("pod_id", {
-     *         name: "name"
-     *     })
+     *     await client.pods.apiKeys.create("pod_id", {})
      */
     public create(
         pod_id: AgentMail.pods.PodId,
@@ -215,6 +223,11 @@ export class ApiKeysClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.ApiKeyId} api_key_id
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.

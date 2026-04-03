@@ -25,6 +25,11 @@ export class ThreadsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:threads list --pod-id <pod_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.pods.ListThreadsRequest} request
      * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -135,6 +140,11 @@ export class ThreadsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:threads retrieve --pod-id <pod_id> --thread-id <thread_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.ThreadId} thread_id
      * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -223,6 +233,11 @@ export class ThreadsClient {
     }
 
     /**
+     * **CLI:**
+     * ```bash
+     * agentmail pods:threads get-attachment --pod-id <pod_id> --thread-id <thread_id> --attachment-id <attachment_id>
+     * ```
+     *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.ThreadId} thread_id
      * @param {AgentMail.AttachmentId} attachment_id
@@ -440,6 +455,11 @@ export class ThreadsClient {
 
     /**
      * Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail pods:threads delete --pod-id <pod_id> --thread-id <thread_id>
+     * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.ThreadId} thread_id
