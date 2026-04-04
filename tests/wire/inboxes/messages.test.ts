@@ -535,6 +535,43 @@ describe("MessagesClient", () => {
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
+    test("delete (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server.mockEndpoint().delete("/v0/inboxes/inbox_id/messages/message_id").respondWith().statusCode(200).build();
+
+        const response = await client.inboxes.messages.delete("inbox_id", "message_id");
+        expect(response).toEqual(undefined);
+    });
+
+    test("delete (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/v0/inboxes/inbox_id/messages/message_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.delete("inbox_id", "message_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
     test("send (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({

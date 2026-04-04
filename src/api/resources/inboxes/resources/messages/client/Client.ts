@@ -543,6 +543,92 @@ export class MessagesClient {
     }
 
     /**
+     * Permanently deletes a message.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+     * ```
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.messages.delete("inbox_id", "message_id")
+     */
+    public delete(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__delete(inbox_id, message_id, requestOptions));
+    }
+
+    private async __delete(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/${core.url.encodePathParam(serializers.MessageId.jsonOrThrow(message_id, { omitUndefined: true }))}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "DELETE",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}",
+        );
+    }
+
+    /**
      * **CLI:**
      * ```bash
      * agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
