@@ -7,7 +7,9 @@ import { DomainVerifiedEvent } from "../../../events/types/DomainVerifiedEvent.j
 import { MessageBouncedEvent } from "../../../events/types/MessageBouncedEvent.js";
 import { MessageComplainedEvent } from "../../../events/types/MessageComplainedEvent.js";
 import { MessageDeliveredEvent } from "../../../events/types/MessageDeliveredEvent.js";
+import { MessageReceivedBlockedEvent } from "../../../events/types/MessageReceivedBlockedEvent.js";
 import { MessageReceivedEvent } from "../../../events/types/MessageReceivedEvent.js";
+import { MessageReceivedSpamEvent } from "../../../events/types/MessageReceivedSpamEvent.js";
 import { MessageRejectedEvent } from "../../../events/types/MessageRejectedEvent.js";
 import { MessageSentEvent } from "../../../events/types/MessageSentEvent.js";
 import { Error_ } from "../../types/Error_.js";
@@ -17,6 +19,8 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     serializers.WebsocketsSocketResponse.Raw,
     | AgentMail.Subscribed
     | AgentMail.MessageReceivedEvent
+    | AgentMail.MessageReceivedSpamEvent
+    | AgentMail.MessageReceivedBlockedEvent
     | AgentMail.MessageSentEvent
     | AgentMail.MessageDeliveredEvent
     | AgentMail.MessageBouncedEvent
@@ -27,6 +31,8 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     Subscribed,
     MessageReceivedEvent,
+    MessageReceivedSpamEvent,
+    MessageReceivedBlockedEvent,
     MessageSentEvent,
     MessageDeliveredEvent,
     MessageBouncedEvent,
@@ -40,6 +46,8 @@ export declare namespace WebsocketsSocketResponse {
     export type Raw =
         | Subscribed.Raw
         | MessageReceivedEvent.Raw
+        | MessageReceivedSpamEvent.Raw
+        | MessageReceivedBlockedEvent.Raw
         | MessageSentEvent.Raw
         | MessageDeliveredEvent.Raw
         | MessageBouncedEvent.Raw

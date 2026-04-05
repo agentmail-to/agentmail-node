@@ -7,6 +7,8 @@ import type * as serializers from "../../../index.js";
 export const EventType: core.serialization.Schema<serializers.EventType.Raw, AgentMail.EventType> =
     core.serialization.enum_([
         "message.received",
+        "message.received.spam",
+        "message.received.blocked",
         "message.sent",
         "message.delivered",
         "message.bounced",
@@ -18,6 +20,8 @@ export const EventType: core.serialization.Schema<serializers.EventType.Raw, Age
 export declare namespace EventType {
     export type Raw =
         | "message.received"
+        | "message.received.spam"
+        | "message.received.blocked"
         | "message.sent"
         | "message.delivered"
         | "message.bounced"
