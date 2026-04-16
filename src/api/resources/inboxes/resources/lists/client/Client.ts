@@ -114,7 +114,7 @@ export class ListsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:lists retrieve --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+     * agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

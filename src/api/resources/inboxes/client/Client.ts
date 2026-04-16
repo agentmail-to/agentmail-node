@@ -11,6 +11,7 @@ import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
 import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
+import { EventsClient } from "../resources/events/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
 import { MessagesClient } from "../resources/messages/client/Client.js";
 import { MetricsClient } from "../resources/metrics/client/Client.js";
@@ -29,6 +30,7 @@ export class InboxesClient {
     protected _drafts: DraftsClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
+    protected _events: EventsClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
 
     constructor(options: InboxesClient.Options = {}) {
@@ -53,6 +55,10 @@ export class InboxesClient {
 
     public get metrics(): MetricsClient {
         return (this._metrics ??= new MetricsClient(this._options));
+    }
+
+    public get events(): EventsClient {
+        return (this._events ??= new EventsClient(this._options));
     }
 
     public get apiKeys(): ApiKeysClient {
@@ -137,7 +143,7 @@ export class InboxesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes retrieve --inbox-id <inbox_id>
+     * agentmail inboxes get --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

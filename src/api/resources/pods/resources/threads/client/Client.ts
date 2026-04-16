@@ -142,7 +142,7 @@ export class ThreadsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:threads retrieve --pod-id <pod_id> --thread-id <thread_id>
+     * agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

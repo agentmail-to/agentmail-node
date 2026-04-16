@@ -10,6 +10,8 @@ export * as drafts from "./drafts/index.js";
 export * from "./drafts/types/index.js";
 export * as events from "./events/index.js";
 export * from "./events/types/index.js";
+export * as inboxEvents from "./inboxEvents/index.js";
+export * from "./inboxEvents/types/index.js";
 export * as inboxes from "./inboxes/index.js";
 export * as lists from "./lists/index.js";
 export * from "./lists/types/index.js";

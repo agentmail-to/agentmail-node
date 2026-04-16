@@ -143,7 +143,7 @@ export class PodsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods retrieve --pod-id <pod_id>
+     * agentmail pods get --pod-id <pod_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

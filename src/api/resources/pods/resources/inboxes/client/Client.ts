@@ -120,7 +120,7 @@ export class InboxesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:inboxes retrieve --pod-id <pod_id> --inbox-id <inbox_id>
+     * agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

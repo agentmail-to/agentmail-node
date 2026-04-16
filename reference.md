@@ -80,7 +80,7 @@ await client.inboxes.list();
 
 **CLI:**
 ```bash
-agentmail inboxes retrieve --inbox-id <inbox_id>
+agentmail inboxes get --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -421,7 +421,7 @@ await client.pods.list();
 
 **CLI:**
 ```bash
-agentmail pods retrieve --pod-id <pod_id>
+agentmail pods get --pod-id <pod_id>
 ```
 </dd>
 </dl>
@@ -686,7 +686,7 @@ await client.webhooks.list();
 
 **CLI:**
 ```bash
-agentmail webhooks retrieve --webhook-id <webhook_id>
+agentmail webhooks get --webhook-id <webhook_id>
 ```
 </dd>
 </dl>
@@ -1379,7 +1379,7 @@ await client.domains.list();
 
 **CLI:**
 ```bash
-agentmail domains retrieve --domain-id <domain_id>
+agentmail domains get --domain-id <domain_id>
 ```
 </dd>
 </dl>
@@ -1853,7 +1853,7 @@ await client.drafts.list();
 
 **CLI:**
 ```bash
-agentmail drafts retrieve --draft-id <draft_id>
+agentmail drafts get --draft-id <draft_id>
 ```
 </dd>
 </dl>
@@ -2291,7 +2291,7 @@ await client.inboxes.drafts.list("inbox_id");
 
 **CLI:**
 ```bash
-agentmail inboxes:drafts retrieve --inbox-id <inbox_id> --draft-id <draft_id>
+agentmail inboxes:drafts get --inbox-id <inbox_id> --draft-id <draft_id>
 ```
 </dd>
 </dl>
@@ -2745,6 +2745,83 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 </dl>
 </details>
 
+## Inboxes Events
+<details><summary><code>client.inboxes.events.<a href="/src/api/resources/inboxes/resources/events/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListInboxEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List label change events for an inbox. Returns events in reverse chronological order by default. Use for IMAP UID projection or audit logging.
+
+**CLI:**
+```bash
+agentmail inboxes:events list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.events.list("inbox_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.ListInboxEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `EventsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Lists
 <details><summary><code>client.inboxes.lists.<a href="/src/api/resources/inboxes/resources/lists/client/Client.ts">list</a>(inbox_id, direction, type, { ...params }) -> AgentMail.PodListListEntriesResponse</code></summary>
 <dl>
@@ -2850,7 +2927,7 @@ await client.inboxes.lists.list("inbox_id", "send", "allow");
 
 **CLI:**
 ```bash
-agentmail inboxes:lists retrieve --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
 ```
 </dd>
 </dl>
@@ -3197,7 +3274,7 @@ await client.inboxes.messages.list("inbox_id");
 
 **CLI:**
 ```bash
-agentmail inboxes:messages retrieve --inbox-id <inbox_id> --message-id <message_id>
+agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
 ```
 </dd>
 </dl>
@@ -4055,7 +4132,7 @@ await client.inboxes.threads.list("inbox_id");
 
 **CLI:**
 ```bash
-agentmail inboxes:threads retrieve --inbox-id <inbox_id> --thread-id <thread_id>
+agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
 ```
 </dd>
 </dl>
@@ -4457,7 +4534,7 @@ await client.lists.list("send", "allow");
 
 **CLI:**
 ```bash
-agentmail lists retrieve --direction <direction> --type <type> --entry <entry>
+agentmail lists get --direction <direction> --type <type> --entry <entry>
 ```
 </dd>
 </dl>
@@ -4771,7 +4848,12 @@ await client.metrics.query();
 <dl>
 <dd>
 
-Get the current organization.
+Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).
+
+**CLI:**
+```bash
+agentmail organizations get
+```
 </dd>
 </dl>
 </dd>
@@ -5126,7 +5208,7 @@ await client.pods.domains.list("pod_id");
 
 **CLI:**
 ```bash
-agentmail pods:domains retrieve --pod-id <pod_id> --domain-id <domain_id>
+agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
 ```
 </dd>
 </dl>
@@ -5656,7 +5738,7 @@ await client.pods.drafts.list("pod_id");
 
 **CLI:**
 ```bash
-agentmail pods:drafts retrieve --pod-id <pod_id> --draft-id <draft_id>
+agentmail pods:drafts get --pod-id <pod_id> --draft-id <draft_id>
 ```
 </dd>
 </dl>
@@ -5887,7 +5969,7 @@ await client.pods.inboxes.list("pod_id");
 
 **CLI:**
 ```bash
-agentmail pods:inboxes retrieve --pod-id <pod_id> --inbox-id <inbox_id>
+agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
 ```
 </dd>
 </dl>
@@ -6284,7 +6366,7 @@ await client.pods.lists.list("pod_id", "send", "allow");
 
 **CLI:**
 ```bash
-agentmail pods:lists retrieve --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
 ```
 </dd>
 </dl>
@@ -6706,7 +6788,7 @@ await client.pods.threads.list("pod_id");
 
 **CLI:**
 ```bash
-agentmail pods:threads retrieve --pod-id <pod_id> --thread-id <thread_id>
+agentmail pods:threads get --pod-id <pod_id> --thread-id <thread_id>
 ```
 </dd>
 </dl>
@@ -7092,7 +7174,7 @@ await client.threads.list();
 
 **CLI:**
 ```bash
-agentmail threads retrieve --thread-id <thread_id>
+agentmail threads get --thread-id <thread_id>
 ```
 </dd>
 </dl>
@@ -7158,7 +7240,7 @@ await client.threads.get("thread_id");
 
 **CLI:**
 ```bash
-agentmail threads retrieve-attachment --thread-id <thread_id> --attachment-id <attachment_id>
+agentmail threads get-attachment --thread-id <thread_id> --attachment-id <attachment_id>
 ```
 </dd>
 </dl>

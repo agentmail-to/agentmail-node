@@ -114,7 +114,7 @@ export class ListsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:lists retrieve --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
+     * agentmail pods:lists get --pod-id <pod_id> --direction <direction> --type <type> --entry <entry>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

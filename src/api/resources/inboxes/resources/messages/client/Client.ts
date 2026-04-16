@@ -147,7 +147,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages retrieve --inbox-id <inbox_id> --message-id <message_id>
+     * agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

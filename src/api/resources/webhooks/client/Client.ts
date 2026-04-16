@@ -101,7 +101,7 @@ export class WebhooksClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail webhooks retrieve --webhook-id <webhook_id>
+     * agentmail webhooks get --webhook-id <webhook_id>
      * ```
      *
      * @param {AgentMail.webhooks.WebhookId} webhook_id

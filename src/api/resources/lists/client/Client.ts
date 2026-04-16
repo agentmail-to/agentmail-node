@@ -106,7 +106,7 @@ export class ListsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail lists retrieve --direction <direction> --type <type> --entry <entry>
+     * agentmail lists get --direction <direction> --type <type> --entry <entry>
      * ```
      *
      * @param {AgentMail.Direction} direction

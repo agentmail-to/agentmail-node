@@ -24,7 +24,12 @@ export class OrganizationsClient {
     }
 
     /**
-     * Get the current organization.
+     * Returns the organization for the authenticated API key (usage limits, counts, and billing metadata).
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail organizations get
+     * ```
      *
      * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
      *

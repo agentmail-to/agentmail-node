@@ -135,7 +135,7 @@ export class DraftsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail drafts retrieve --draft-id <draft_id>
+     * agentmail drafts get --draft-id <draft_id>
      * ```
      *
      * @param {AgentMail.DraftId} draft_id

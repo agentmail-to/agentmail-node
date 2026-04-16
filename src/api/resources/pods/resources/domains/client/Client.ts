@@ -120,7 +120,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains retrieve --pod-id <pod_id> --domain-id <domain_id>
+     * agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

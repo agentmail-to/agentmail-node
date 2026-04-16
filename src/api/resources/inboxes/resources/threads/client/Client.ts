@@ -147,7 +147,7 @@ export class ThreadsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:threads retrieve --inbox-id <inbox_id> --thread-id <thread_id>
+     * agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

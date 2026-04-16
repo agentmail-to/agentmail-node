@@ -101,7 +101,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail domains retrieve --domain-id <domain_id>
+     * agentmail domains get --domain-id <domain_id>
      * ```
      *
      * @param {AgentMail.DomainId} domain_id

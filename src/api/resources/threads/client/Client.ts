@@ -139,7 +139,7 @@ export class ThreadsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail threads retrieve --thread-id <thread_id>
+     * agentmail threads get --thread-id <thread_id>
      * ```
      *
      * @param {AgentMail.ThreadId} thread_id
@@ -224,7 +224,7 @@ export class ThreadsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail threads retrieve-attachment --thread-id <thread_id> --attachment-id <attachment_id>
+     * agentmail threads get-attachment --thread-id <thread_id> --attachment-id <attachment_id>
      * ```
      *
      * @param {AgentMail.ThreadId} thread_id
