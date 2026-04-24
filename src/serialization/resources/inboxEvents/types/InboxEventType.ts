@@ -5,8 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const InboxEventType: core.serialization.Schema<serializers.InboxEventType.Raw, AgentMail.InboxEventType> =
-    core.serialization.enum_(["label_added", "label_removed"]);
+    core.serialization.enum_(["label.added", "label.removed"]);
 
 export declare namespace InboxEventType {
-    export type Raw = "label_added" | "label_removed";
+    export type Raw = "label.added" | "label.removed";
 }
