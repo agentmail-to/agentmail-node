@@ -14,8 +14,6 @@ export declare namespace WebsocketsSocket {
     export type Response =
         | AgentMail.Subscribed
         | AgentMail.MessageReceivedEvent
-        | AgentMail.MessageReceivedSpamEvent
-        | AgentMail.MessageReceivedBlockedEvent
         | AgentMail.MessageSentEvent
         | AgentMail.MessageDeliveredEvent
         | AgentMail.MessageBouncedEvent

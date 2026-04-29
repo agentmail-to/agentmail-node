@@ -6,13 +6,14 @@ import type * as serializers from "../../../index.js";
 import { Message } from "../../messages/types/Message.js";
 import { ThreadItem } from "../../threads/types/ThreadItem.js";
 import { EventId } from "./EventId.js";
+import { MessageReceivedEventType } from "./MessageReceivedEventType.js";
 
 export const MessageReceivedEvent: core.serialization.ObjectSchema<
     serializers.MessageReceivedEvent.Raw,
     AgentMail.MessageReceivedEvent
 > = core.serialization.object({
     type: core.serialization.stringLiteral("event"),
-    eventType: core.serialization.property("event_type", core.serialization.stringLiteral("message.received")),
+    eventType: core.serialization.property("event_type", MessageReceivedEventType),
     eventId: core.serialization.property("event_id", EventId),
     message: Message,
     thread: ThreadItem,
@@ -21,7 +22,7 @@ export const MessageReceivedEvent: core.serialization.ObjectSchema<
 export declare namespace MessageReceivedEvent {
     export interface Raw {
         type: "event";
-        event_type: "message.received";
+        event_type: MessageReceivedEventType.Raw;
         event_id: EventId.Raw;
         message: Message.Raw;
         thread: ThreadItem.Raw;

@@ -2,9 +2,12 @@
 
 import type * as AgentMail from "../../../index.js";
 
+/**
+ * A message was received. Spam, blocked, and unauthenticated received-message events use the same payload shape with different `event_type` values.
+ */
 export interface MessageReceivedEvent {
     type: "event";
-    eventType: "message.received";
+    eventType: AgentMail.MessageReceivedEventType;
     eventId: AgentMail.EventId;
     message: AgentMail.Message;
     thread: AgentMail.ThreadItem;
