@@ -8,6 +8,7 @@ export * from "./ErrorResponse.js";
 export * from "./IncludeBlocked.js";
 export * from "./IncludeSpam.js";
 export * from "./IncludeTrash.js";
+export * from "./IncludeUnauthenticated.js";
 export * from "./Labels.js";
 export * from "./Limit.js";
 export * from "./OrganizationId.js";
