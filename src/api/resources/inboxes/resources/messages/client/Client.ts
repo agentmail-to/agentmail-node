@@ -249,6 +249,111 @@ export class MessagesClient {
     }
 
     /**
+     * Fetch metadata for up to 500 messages in one request. Missing or
+     * restricted IDs are silently omitted; compare `count` against `limit`
+     * to detect misses.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+     * ```
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.BatchGetMessagesRequest} request
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     *
+     * @example
+     *     await client.inboxes.messages.batchGet("inbox_id", {
+     *         messageIds: ["message_ids", "message_ids"]
+     *     })
+     */
+    public batchGet(
+        inbox_id: AgentMail.inboxes.InboxId,
+        request: AgentMail.BatchGetMessagesRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.BatchGetMessagesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__batchGet(inbox_id, request, requestOptions));
+    }
+
+    private async __batchGet(
+        inbox_id: AgentMail.inboxes.InboxId,
+        request: AgentMail.BatchGetMessagesRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.BatchGetMessagesResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/batch-get`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.BatchGetMessagesRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.BatchGetMessagesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/batch-get",
+        );
+    }
+
+    /**
      * **CLI:**
      * ```bash
      * agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>

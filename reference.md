@@ -3334,6 +3334,86 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">batchGet</a>(inbox_id, { ...params }) -> AgentMail.BatchGetMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Fetch metadata for up to 500 messages in one request. Missing or
+restricted IDs are silently omitted; compare `count` against `limit`
+to detect misses.
+
+**CLI:**
+```bash
+agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.batchGet("inbox_id", {
+    messageIds: ["message_ids", "message_ids"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.BatchGetMessagesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getAttachment</a>(inbox_id, message_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>

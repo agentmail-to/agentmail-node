@@ -1,4 +1,7 @@
 export * from "./Addresses.js";
+export * from "./BatchGetMessagesMessageIds.js";
+export * from "./BatchGetMessagesRequest.js";
+export * from "./BatchGetMessagesResponse.js";
 export * from "./ListMessagesResponse.js";
 export * from "./Message.js";
 export * from "./MessageAttachments.js";

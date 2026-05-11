@@ -343,6 +343,239 @@ describe("MessagesClient", () => {
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
+    test("batchGet (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { message_ids: ["message_ids", "message_ids"] };
+        const rawResponseBody = {
+            limit: 1,
+            count: 1,
+            messages: [
+                {
+                    inbox_id: "inbox_id",
+                    thread_id: "thread_id",
+                    message_id: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: "2024-01-15T09:30:00Z",
+                    from: "from",
+                    reply_to: ["reply_to", "reply_to"],
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    text: "text",
+                    html: "html",
+                    extracted_text: "extracted_text",
+                    extracted_html: "extracted_html",
+                    attachments: [
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                    ],
+                    in_reply_to: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: { headers: "headers" },
+                    size: 1,
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    inbox_id: "inbox_id",
+                    thread_id: "thread_id",
+                    message_id: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: "2024-01-15T09:30:00Z",
+                    from: "from",
+                    reply_to: ["reply_to", "reply_to"],
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    text: "text",
+                    html: "html",
+                    extracted_text: "extracted_text",
+                    extracted_html: "extracted_html",
+                    attachments: [
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                    ],
+                    in_reply_to: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: { headers: "headers" },
+                    size: 1,
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/batch-get")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.messages.batchGet("inbox_id", {
+            messageIds: ["message_ids", "message_ids"],
+        });
+        expect(response).toEqual({
+            limit: 1,
+            count: 1,
+            messages: [
+                {
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    messageId: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    from: "from",
+                    replyTo: ["reply_to", "reply_to"],
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    text: "text",
+                    html: "html",
+                    extractedText: "extracted_text",
+                    extractedHtml: "extracted_html",
+                    attachments: [
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                    ],
+                    inReplyTo: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: {
+                        headers: "headers",
+                    },
+                    size: 1,
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+                {
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    messageId: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    from: "from",
+                    replyTo: ["reply_to", "reply_to"],
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    text: "text",
+                    html: "html",
+                    extractedText: "extracted_text",
+                    extractedHtml: "extracted_html",
+                    attachments: [
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                    ],
+                    inReplyTo: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: {
+                        headers: "headers",
+                    },
+                    size: 1,
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+            ],
+        });
+    });
+
+    test("batchGet (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { message_ids: ["message_ids", "message_ids"] };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/batch-get")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.batchGet("inbox_id", {
+                messageIds: ["message_ids", "message_ids"],
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
     test("getAttachment (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
