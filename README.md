@@ -1,9 +1,21 @@
-# Agentmail TypeScript Library
+# AgentMail Node.js / TypeScript SDK
 
+[![npm version](https://img.shields.io/npm/v/agentmail)](https://www.npmjs.com/package/agentmail)
+[![npm downloads](https://img.shields.io/npm/dw/agentmail)](https://www.npmjs.com/package/agentmail)
+[![License: MIT](https://img.shields.io/badge/License-MIT-blue.svg)](https://opensource.org/licenses/MIT)
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fagentmail-to%2Fagentmail-node)
-[![npm shield](https://img.shields.io/npm/v/agentmail)](https://www.npmjs.com/package/agentmail)
 
-The Agentmail TypeScript library provides convenient access to the Agentmail APIs from TypeScript.
+The official Node.js / TypeScript SDK for [AgentMail](https://agentmail.to) — the email inbox API built for AI agents.
+
+Unlike traditional email APIs (SendGrid, Resend, Amazon SES) that only handle sending, AgentMail provides **two-way email**: your agents get real inboxes that can send, receive, reply, and manage threaded conversations autonomously.
+
+### What can you build?
+
+- **Customer support agents** that read incoming emails and draft contextual replies
+- **Sales outreach agents** that send personalized emails and handle responses
+- **Scheduling agents** that coordinate meetings through email threads
+- **Document processing agents** that receive, parse, and respond to email submissions
+- **Multi-agent workflows** where agents communicate with humans (and each other) via email
 
 ## Table of Contents
 
@@ -25,6 +37,8 @@ The Agentmail TypeScript library provides convenient access to the Agentmail API
   - [Logging](#logging)
   - [Custom Fetch](#custom-fetch)
   - [Runtime Compatibility](#runtime-compatibility)
+- [Related Packages](#related-packages)
+- [Links](#links)
 - [Contributing](#contributing)
 
 ## Installation
@@ -678,6 +692,22 @@ The SDK works in the following runtimes:
 - Bun 1.0+
 - React Native
 
+
+## Related Packages
+
+| Package | Description |
+|---------|-------------|
+| [`agentmail-toolkit`](https://github.com/agentmail-to/agentmail-toolkit) | Agent framework integrations (OpenAI Agents SDK, Vercel AI SDK, MCP) |
+| [`agentmail-mcp`](https://www.npmjs.com/package/agentmail-mcp) | MCP server — give Claude, Cursor, or any MCP client email capabilities |
+| [`langchain-agentmail`](https://pypi.org/project/langchain-agentmail/) | LangChain tools integration |
+| [`agentmail` (PyPI)](https://pypi.org/project/agentmail/) | Python SDK |
+
+## Links
+
+- [Documentation](https://docs.agentmail.to)
+- [API Reference](https://docs.agentmail.to/api-reference)
+- [Examples](https://github.com/agentmail-to/agentmail-examples)
+- [AgentMail Website](https://agentmail.to)
 
 ## Contributing
 
