@@ -10,11 +10,15 @@ export const AgentSignupRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     humanEmail: core.serialization.property("human_email", core.serialization.string()),
     username: core.serialization.string(),
+    source: core.serialization.string().optional(),
+    referrer: core.serialization.string().optional(),
 });
 
 export declare namespace AgentSignupRequest {
     export interface Raw {
         human_email: string;
         username: string;
+        source?: string | null;
+        referrer?: string | null;
     }
 }

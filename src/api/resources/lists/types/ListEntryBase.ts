@@ -13,4 +13,6 @@ export interface ListEntryBase {
     entryType: AgentMail.EntryType;
     /** Time at which entry was created. */
     createdAt: Date;
+    /** Whether the entry is read-only and cannot be deleted via the API. */
+    readOnly?: boolean;
 }

@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { EventTypes } from "../../events/types/EventTypes.js";
 import { InboxIds } from "../../events/types/InboxIds.js";
 import { PodIds } from "../../events/types/PodIds.js";
 
@@ -14,6 +15,7 @@ export const UpdateWebhookRequest: core.serialization.ObjectSchema<
     removeInboxIds: core.serialization.property("remove_inbox_ids", InboxIds.optional()),
     addPodIds: core.serialization.property("add_pod_ids", PodIds.optional()),
     removePodIds: core.serialization.property("remove_pod_ids", PodIds.optional()),
+    eventTypes: core.serialization.property("event_types", EventTypes.optional()),
 });
 
 export declare namespace UpdateWebhookRequest {
@@ -22,5 +24,6 @@ export declare namespace UpdateWebhookRequest {
         remove_inbox_ids?: InboxIds.Raw | null;
         add_pod_ids?: PodIds.Raw | null;
         remove_pod_ids?: PodIds.Raw | null;
+        event_types?: EventTypes.Raw | null;
     }
 }

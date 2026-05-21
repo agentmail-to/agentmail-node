@@ -819,6 +819,9 @@ await client.webhooks.create({
 <dl>
 <dd>
 
+Update inbox or pod subscriptions, or replace the webhook's `event_types` in full when you pass a
+non-empty `event_types` array (see request field docs). Inbox and pod changes use add/remove lists.
+
 **CLI:**
 ```bash
 agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>

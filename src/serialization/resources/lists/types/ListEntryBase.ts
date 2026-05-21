@@ -17,6 +17,7 @@ export const ListEntryBase: core.serialization.ObjectSchema<serializers.ListEntr
         listType: core.serialization.property("list_type", ListType),
         entryType: core.serialization.property("entry_type", EntryType),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
+        readOnly: core.serialization.property("read_only", core.serialization.boolean().optional()),
     });
 
 export declare namespace ListEntryBase {
@@ -28,5 +29,6 @@ export declare namespace ListEntryBase {
         list_type: ListType.Raw;
         entry_type: EntryType.Raw;
         created_at: string;
+        read_only?: boolean | null;
     }
 }

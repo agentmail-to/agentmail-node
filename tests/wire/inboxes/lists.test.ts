@@ -28,6 +28,7 @@ describe("ListsClient", () => {
                     list_type: "allow",
                     entry_type: "email",
                     created_at: "2024-01-15T09:30:00Z",
+                    read_only: true,
                 },
                 {
                     pod_id: "pod_id",
@@ -39,6 +40,7 @@ describe("ListsClient", () => {
                     list_type: "allow",
                     entry_type: "email",
                     created_at: "2024-01-15T09:30:00Z",
+                    read_only: true,
                 },
             ],
         };
@@ -67,6 +69,7 @@ describe("ListsClient", () => {
                     listType: "allow",
                     entryType: "email",
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    readOnly: true,
                 },
                 {
                     podId: "pod_id",
@@ -78,6 +81,7 @@ describe("ListsClient", () => {
                     listType: "allow",
                     entryType: "email",
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    readOnly: true,
                 },
             ],
         });
@@ -101,6 +105,7 @@ describe("ListsClient", () => {
             list_type: "allow",
             entry_type: "email",
             created_at: "2024-01-15T09:30:00Z",
+            read_only: true,
         };
 
         server
@@ -122,6 +127,7 @@ describe("ListsClient", () => {
             listType: "allow",
             entryType: "email",
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            readOnly: true,
         });
     });
 
@@ -166,6 +172,7 @@ describe("ListsClient", () => {
             list_type: "allow",
             entry_type: "email",
             created_at: "2024-01-15T09:30:00Z",
+            read_only: true,
         };
 
         server
@@ -190,6 +197,7 @@ describe("ListsClient", () => {
             listType: "allow",
             entryType: "email",
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            readOnly: true,
         });
     });
 
