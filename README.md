@@ -5,6 +5,28 @@
 
 The Agentmail TypeScript library provides convenient access to the Agentmail APIs from TypeScript.
 
+
+## Quick Start
+
+### Installation
+
+```bash
+npm install agentmail
+```
+
+### Basic Usage
+
+```typescript
+import { AgentmailClient } from 'agentmail';
+
+const client = new AgentmailClient({ apiKey: 'your-api-key' });
+const response = await client.sendMessage({
+  to: 'recipient@example.com',
+  content: 'Hello!'
+});
+console.log(response);
+```
+
 ## Table of Contents
 
 - [Installation](#installation)
