@@ -1,31 +1,26 @@
 # Agentmail TypeScript Library
 
+
+## Quick Start
+
+Install with:
+```bash
+pip install agentmail-node
+```
+
+Or clone and run:
+```bash
+git clone https://github.com/agentmail-to/agentmail-node.git
+cd agentmail-node
+python setup.py install
+```
+
+
 [![fern shield](https://img.shields.io/badge/%F0%9F%8C%BF-Built%20with%20Fern-brightgreen)](https://buildwithfern.com?utm_source=github&utm_medium=github&utm_campaign=readme&utm_source=https%3A%2F%2Fgithub.com%2Fagentmail-to%2Fagentmail-node)
 [![npm shield](https://img.shields.io/npm/v/agentmail)](https://www.npmjs.com/package/agentmail)
 
 The Agentmail TypeScript library provides convenient access to the Agentmail APIs from TypeScript.
 
-
-## Quick Start
-
-### Installation
-
-```bash
-npm install agentmail
-```
-
-### Basic Usage
-
-```typescript
-import { AgentmailClient } from 'agentmail';
-
-const client = new AgentmailClient({ apiKey: 'your-api-key' });
-const response = await client.sendMessage({
-  to: 'recipient@example.com',
-  content: 'Hello!'
-});
-console.log(response);
-```
 
 ## Table of Contents
 
