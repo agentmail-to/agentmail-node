@@ -9,4 +9,6 @@ export interface CreateInboxRequest {
     domain?: string;
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;
+    /** Custom metadata to attach to the inbox. */
+    metadata?: AgentMail.inboxes.Metadata;
 }

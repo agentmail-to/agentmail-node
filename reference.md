@@ -228,9 +228,7 @@ agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
 <dd>
 
 ```typescript
-await client.inboxes.update("inbox_id", {
-    displayName: "display_name"
-});
+await client.inboxes.update("inbox_id", {});
 
 ```
 </dd>
@@ -1044,7 +1042,7 @@ Verify an agent organization using the 6-digit OTP sent to the human's email dur
 
 On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
 
-The OTP expires after 24 hours and allows a maximum of 10 attempts.
+The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
 
 **CLI:**
 ```bash
@@ -6216,9 +6214,7 @@ agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
 <dd>
 
 ```typescript
-await client.pods.inboxes.update("pod_id", "inbox_id", {
-    displayName: "display_name"
-});
+await client.pods.inboxes.update("pod_id", "inbox_id", {});
 
 ```
 </dd>

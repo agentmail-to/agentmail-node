@@ -4,16 +4,19 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { DisplayName } from "./DisplayName.js";
+import { Metadata } from "./Metadata.js";
 
 export const UpdateInboxRequest: core.serialization.ObjectSchema<
     serializers.inboxes.UpdateInboxRequest.Raw,
     AgentMail.inboxes.UpdateInboxRequest
 > = core.serialization.object({
-    displayName: core.serialization.property("display_name", DisplayName),
+    displayName: core.serialization.property("display_name", DisplayName.optional()),
+    metadata: Metadata.optional(),
 });
 
 export declare namespace UpdateInboxRequest {
     export interface Raw {
-        display_name: DisplayName.Raw;
+        display_name?: DisplayName.Raw | null;
+        metadata?: Metadata.Raw | null;
     }
 }

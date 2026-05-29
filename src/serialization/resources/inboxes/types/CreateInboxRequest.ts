@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ClientId } from "./ClientId.js";
 import { DisplayName } from "./DisplayName.js";
+import { Metadata } from "./Metadata.js";
 
 export const CreateInboxRequest: core.serialization.ObjectSchema<
     serializers.inboxes.CreateInboxRequest.Raw,
@@ -14,6 +15,7 @@ export const CreateInboxRequest: core.serialization.ObjectSchema<
     domain: core.serialization.string().optional(),
     displayName: core.serialization.property("display_name", DisplayName.optional()),
     clientId: core.serialization.property("client_id", ClientId.optional()),
+    metadata: Metadata.optional(),
 });
 
 export declare namespace CreateInboxRequest {
@@ -22,5 +24,6 @@ export declare namespace CreateInboxRequest {
         domain?: string | null;
         display_name?: DisplayName.Raw | null;
         client_id?: ClientId.Raw | null;
+        metadata?: Metadata.Raw | null;
     }
 }

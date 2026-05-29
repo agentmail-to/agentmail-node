@@ -327,11 +327,10 @@ export class InboxesClient {
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.inboxes.update("inbox_id", {
-     *         displayName: "display_name"
-     *     })
+     *     await client.inboxes.update("inbox_id", {})
      */
     public update(
         inbox_id: AgentMail.inboxes.InboxId,
@@ -392,6 +391,17 @@ export class InboxesClient {
                 case 404:
                     throw new AgentMail.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

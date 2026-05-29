@@ -8,6 +8,8 @@ export interface Inbox {
     email: AgentMail.inboxes.Email;
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;
+    /** Custom metadata attached to the inbox. */
+    metadata?: AgentMail.inboxes.Metadata;
     /** Time at which inbox was last updated. */
     updatedAt: Date;
     /** Time at which inbox was created. */

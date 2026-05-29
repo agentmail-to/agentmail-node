@@ -318,9 +318,7 @@ export class InboxesClient {
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.pods.inboxes.update("pod_id", "inbox_id", {
-     *         displayName: "display_name"
-     *     })
+     *     await client.pods.inboxes.update("pod_id", "inbox_id", {})
      */
     public update(
         pod_id: AgentMail.pods.PodId,

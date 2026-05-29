@@ -24,6 +24,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
+                    metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
                 },
@@ -33,6 +34,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
+                    metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
                 },
@@ -59,6 +61,9 @@ describe("InboxesClient", () => {
                     email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
+                    metadata: {
+                        metadata: "metadata",
+                    },
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
@@ -68,6 +73,9 @@ describe("InboxesClient", () => {
                     email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
+                    metadata: {
+                        metadata: "metadata",
+                    },
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
@@ -112,6 +120,7 @@ describe("InboxesClient", () => {
             email: "email",
             display_name: "display_name",
             client_id: "client_id",
+            metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -131,6 +140,9 @@ describe("InboxesClient", () => {
             email: "email",
             displayName: "display_name",
             clientId: "client_id",
+            metadata: {
+                metadata: "metadata",
+            },
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
@@ -173,6 +185,7 @@ describe("InboxesClient", () => {
             email: "email",
             display_name: "display_name",
             client_id: "client_id",
+            metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -193,6 +206,9 @@ describe("InboxesClient", () => {
             email: "email",
             displayName: "display_name",
             clientId: "client_id",
+            metadata: {
+                metadata: "metadata",
+            },
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
@@ -229,13 +245,14 @@ describe("InboxesClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { display_name: "display_name" };
+        const rawRequestBody = {};
         const rawResponseBody = {
             pod_id: "pod_id",
             inbox_id: "inbox_id",
             email: "email",
             display_name: "display_name",
             client_id: "client_id",
+            metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -249,15 +266,16 @@ describe("InboxesClient", () => {
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.pods.inboxes.update("pod_id", "inbox_id", {
-            displayName: "display_name",
-        });
+        const response = await client.pods.inboxes.update("pod_id", "inbox_id", {});
         expect(response).toEqual({
             podId: "pod_id",
             inboxId: "inbox_id",
             email: "email",
             displayName: "display_name",
             clientId: "client_id",
+            metadata: {
+                metadata: "metadata",
+            },
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
@@ -270,7 +288,7 @@ describe("InboxesClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { display_name: "display_name" };
+        const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
 
         server
@@ -283,9 +301,7 @@ describe("InboxesClient", () => {
             .build();
 
         await expect(async () => {
-            return await client.pods.inboxes.update("pod_id", "inbox_id", {
-                displayName: "display_name",
-            });
+            return await client.pods.inboxes.update("pod_id", "inbox_id", {});
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 

@@ -125,7 +125,7 @@ export class AgentClient {
      *
      * On success, the organization is upgraded from `agent_unverified` to `agent_verified`, the send allowlist is removed, and free plan entitlements are applied.
      *
-     * The OTP expires after 24 hours and allows a maximum of 10 attempts.
+     * The OTP expires after 24 hours and allows a maximum of 10 attempts. If you run into any difficulties receiving the OTP code, you can also create an account on [console.agentmail.to](https://console.agentmail.to) using the human email address you provided to verify your account.
      *
      * **CLI:**
      * ```bash
