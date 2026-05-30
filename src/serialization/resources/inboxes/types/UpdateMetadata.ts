@@ -8,7 +8,7 @@ import { MetadataValue } from "./MetadataValue.js";
 export const UpdateMetadata: core.serialization.Schema<
     serializers.inboxes.UpdateMetadata.Raw,
     AgentMail.inboxes.UpdateMetadata
-> = core.serialization.record(core.serialization.string(), MetadataValue);
+> = core.serialization.record(core.serialization.string(), MetadataValue.nullable());
 
 export declare namespace UpdateMetadata {
     export type Raw = Record<string, MetadataValue.Raw | null>;
