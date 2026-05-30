@@ -8,3 +8,4 @@ export * from "./ListInboxesResponse.js";
 export * from "./Metadata.js";
 export * from "./MetadataValue.js";
 export * from "./UpdateInboxRequest.js";
+export * from "./UpdateMetadata.js";

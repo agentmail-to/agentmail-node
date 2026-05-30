@@ -8,7 +8,7 @@ export interface UpdateInboxRequest {
      * Metadata to merge into the inbox's existing metadata. Keys you include
      * are added or overwritten; keys you omit are left unchanged. To remove a
      * single key, send it with a null value. To clear all metadata, send
-     * `metadata` as null. Provide at least one of `display_name` or `metadata`.
+     * `metadata` as null.
      */
-    metadata?: AgentMail.inboxes.Metadata;
+    metadata?: AgentMail.inboxes.UpdateMetadata;
 }

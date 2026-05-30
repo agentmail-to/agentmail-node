@@ -4,6 +4,7 @@ import type * as AgentMail from "../../../index.js";
 
 /**
  * Custom key-value pairs attached to the inbox. Up to 256 keys. Keys and
- * string values are each limited to 256 characters.
+ * string values are each limited to 256 characters. When updating metadata,
+ * send a key with a null value to remove that key.
  */
 export type Metadata = Record<string, AgentMail.inboxes.MetadataValue>;
