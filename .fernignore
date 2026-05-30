@@ -2,3 +2,4 @@
 src/wrapper
 src/index.ts
 tests/unit/wrapper
+src/serialization/resources/inboxes/types/UpdateMetadata.ts
