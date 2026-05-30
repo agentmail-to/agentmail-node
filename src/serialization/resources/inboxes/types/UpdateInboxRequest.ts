@@ -11,12 +11,12 @@ export const UpdateInboxRequest: core.serialization.ObjectSchema<
     AgentMail.inboxes.UpdateInboxRequest
 > = core.serialization.object({
     displayName: core.serialization.property("display_name", DisplayName.optional()),
-    metadata: UpdateMetadata.optional(),
+    metadata: UpdateMetadata.optionalNullable(),
 });
 
 export declare namespace UpdateInboxRequest {
     export interface Raw {
         display_name?: DisplayName.Raw | null;
-        metadata?: UpdateMetadata.Raw | null;
+        metadata?: (UpdateMetadata.Raw | null | undefined) | null;
     }
 }

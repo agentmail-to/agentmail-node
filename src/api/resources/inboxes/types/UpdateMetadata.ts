@@ -8,4 +8,4 @@ import type * as AgentMail from "../../../index.js";
  * removes it. Up to 256 keys; keys and string values are each limited to
  * 256 characters.
  */
-export type UpdateMetadata = Record<string, AgentMail.inboxes.MetadataValue>;
+export type UpdateMetadata = Record<string, AgentMail.inboxes.MetadataValue | null>;
