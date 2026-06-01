@@ -4,6 +4,8 @@ export * as apiKeys from "./apiKeys/index.js";
 export * from "./apiKeys/types/index.js";
 export * as attachments from "./attachments/index.js";
 export * from "./attachments/types/index.js";
+export * as auth from "./auth/index.js";
+export * from "./auth/types/index.js";
 export * as domains from "./domains/index.js";
 export * from "./domains/types/index.js";
 export * as drafts from "./drafts/index.js";

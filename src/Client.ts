@@ -2,6 +2,7 @@
 
 import { AgentClient } from "./api/resources/agent/client/Client.js";
 import { ApiKeysClient } from "./api/resources/apiKeys/client/Client.js";
+import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { DomainsClient } from "./api/resources/domains/client/Client.js";
 import { DraftsClient } from "./api/resources/drafts/client/Client.js";
 import { InboxesClient } from "./api/resources/inboxes/client/Client.js";
@@ -30,6 +31,7 @@ export class AgentMailClient {
     protected _webhooks: WebhooksClient | undefined;
     protected _agent: AgentClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
+    protected _auth: AuthClient | undefined;
     protected _domains: DomainsClient | undefined;
     protected _drafts: DraftsClient | undefined;
     protected _lists: ListsClient | undefined;
@@ -60,6 +62,10 @@ export class AgentMailClient {
 
     public get apiKeys(): ApiKeysClient {
         return (this._apiKeys ??= new ApiKeysClient(this._options));
+    }
+
+    public get auth(): AuthClient {
+        return (this._auth ??= new AuthClient(this._options));
     }
 
     public get domains(): DomainsClient {
