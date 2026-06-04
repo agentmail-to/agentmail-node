@@ -3260,6 +3260,12 @@ await client.inboxes.lists.delete("inbox_id", "send", "allow", "entry");
 <dl>
 <dd>
 
+Lists messages in the inbox, most recent first. Pass `from`, `to`, or
+`subject` to filter by substring. Filtered requests are served by
+search, which caps `limit` at 100. For relevance-ranked full-text
+search across sender, recipients, subject, and message body, use
+`Search Messages`.
+
 **CLI:**
 ```bash
 agentmail inboxes:messages list --inbox-id <inbox_id>
@@ -3303,6 +3309,82 @@ await client.inboxes.messages.list("inbox_id");
 <dd>
 
 **request:** `AgentMail.inboxes.ListMessagesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">search</a>(inbox_id, { ...params }) -> AgentMail.SearchMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across messages in the inbox, ranked by relevance. The
+query is matched against the sender, recipients, and subject (substring)
+and the message body (tokenized full text). Spam, trash, blocked, and
+unauthenticated messages are always excluded. `limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.search("inbox_id", {
+    q: "q"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.SearchMessagesRequest` 
     
 </dd>
 </dl>
@@ -4198,6 +4280,11 @@ await client.inboxes.metrics.query("inbox_id");
 <dl>
 <dd>
 
+Lists threads in the inbox, most recent first. Pass `senders`,
+`recipients`, or `subject` to filter by substring. Filtered requests are
+served by search, which caps `limit` at 100. For relevance-ranked
+full-text search, use `Search Threads`.
+
 **CLI:**
 ```bash
 agentmail inboxes:threads list --inbox-id <inbox_id>
@@ -4241,6 +4328,82 @@ await client.inboxes.threads.list("inbox_id");
 <dd>
 
 **request:** `AgentMail.inboxes.ListThreadsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ThreadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">search</a>(inbox_id, { ...params }) -> AgentMail.SearchThreadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across threads in the inbox, ranked by relevance. The
+query is matched against senders, recipients, and subject (substring)
+and the message body (tokenized full text). Spam, trash, blocked, and
+unauthenticated threads are always excluded. `limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.threads.search("inbox_id", {
+    q: "q"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.SearchThreadsRequest` 
     
 </dd>
 </dl>
@@ -6852,6 +7015,11 @@ await client.pods.metrics.query("pod_id");
 <dl>
 <dd>
 
+Lists threads in the pod, most recent first. Pass `senders`,
+`recipients`, or `subject` to filter by substring. Filtered requests are
+served by search, which caps `limit` at 100. For relevance-ranked
+full-text search, use `Search Threads`.
+
 **CLI:**
 ```bash
 agentmail pods:threads list --pod-id <pod_id>
@@ -6895,6 +7063,82 @@ await client.pods.threads.list("pod_id");
 <dd>
 
 **request:** `AgentMail.pods.ListThreadsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ThreadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">search</a>(pod_id, { ...params }) -> AgentMail.SearchThreadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across threads in the pod, ranked by relevance. The
+query is matched against senders, recipients, and subject (substring)
+and the message body (tokenized full text). Spam, trash, blocked, and
+unauthenticated threads are always excluded. `limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.threads.search("pod_id", {
+    q: "q"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.SearchThreadsRequest` 
     
 </dd>
 </dl>
@@ -7246,6 +7490,12 @@ await client.pods.threads.delete("pod_id", "thread_id");
 <dl>
 <dd>
 
+Lists threads, most recent first. Pass `senders`, `recipients`, or
+`subject` to filter by substring. Filtered requests are served by
+search, which caps `limit` at 100. For relevance-ranked full-text
+search across senders, recipients, subject, and message body, use
+`Search Threads`.
+
 **CLI:**
 ```bash
 agentmail threads list
@@ -7281,6 +7531,75 @@ await client.threads.list();
 <dd>
 
 **request:** `AgentMail.ListThreadsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ThreadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">search</a>({ ...params }) -> AgentMail.SearchThreadsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Full-text search across threads in the organization, ranked by
+relevance. The query is matched against senders, recipients, and
+subject (substring) and the message body (tokenized full text). Spam,
+trash, blocked, and unauthenticated threads are always excluded.
+`limit` cannot exceed 100.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.threads.search({
+    q: "q"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.SearchThreadsRequest` 
     
 </dd>
 </dl>

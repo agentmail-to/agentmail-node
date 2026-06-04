@@ -25,6 +25,11 @@ export class ThreadsClient {
     }
 
     /**
+     * Lists threads in the inbox, most recent first. Pass `senders`,
+     * `recipients`, or `subject` to filter by substring. Filtered requests are
+     * served by search, which caps `limit` at 100. For relevance-ranked
+     * full-text search, use `Search Threads`.
+     *
      * **CLI:**
      * ```bash
      * agentmail inboxes:threads list --inbox-id <inbox_id>
@@ -63,6 +68,9 @@ export class ThreadsClient {
             includeBlocked,
             includeUnauthenticated,
             includeTrash,
+            senders,
+            recipients,
+            subject,
         } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -89,6 +97,9 @@ export class ThreadsClient {
             include_blocked: includeBlocked,
             include_unauthenticated: includeUnauthenticated,
             include_trash: includeTrash,
+            senders: senders != null ? toJson(senders) : undefined,
+            recipients: recipients != null ? toJson(recipients) : undefined,
+            subject: subject != null ? toJson(subject) : undefined,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -152,6 +163,127 @@ export class ThreadsClient {
             _response.rawResponse,
             "GET",
             "/v0/inboxes/{inbox_id}/threads",
+        );
+    }
+
+    /**
+     * Full-text search across threads in the inbox, ranked by relevance. The
+     * query is matched against senders, recipients, and subject (substring)
+     * and the message body (tokenized full text). Spam, trash, blocked, and
+     * unauthenticated threads are always excluded. `limit` cannot exceed 100.
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.inboxes.SearchThreadsRequest} request
+     * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.threads.search("inbox_id", {
+     *         q: "q"
+     *     })
+     */
+    public search(
+        inbox_id: AgentMail.inboxes.InboxId,
+        request: AgentMail.inboxes.SearchThreadsRequest,
+        requestOptions?: ThreadsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.SearchThreadsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__search(inbox_id, request, requestOptions));
+    }
+
+    private async __search(
+        inbox_id: AgentMail.inboxes.InboxId,
+        request: AgentMail.inboxes.SearchThreadsRequest,
+        requestOptions?: ThreadsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.SearchThreadsResponse>> {
+        const { q, limit, pageToken, before, after } = request;
+        const _queryParams: Record<string, unknown> = {
+            q,
+            limit,
+            page_token: pageToken,
+            before:
+                before != null
+                    ? serializers.Before.jsonOrThrow(before, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+            after:
+                after != null
+                    ? serializers.After.jsonOrThrow(after, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/threads/search`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.SearchThreadsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/inboxes/{inbox_id}/threads/search",
         );
     }
 

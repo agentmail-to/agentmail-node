@@ -17,4 +17,10 @@ export interface ListThreadsRequest {
     includeBlocked?: AgentMail.IncludeBlocked;
     includeUnauthenticated?: AgentMail.IncludeUnauthenticated;
     includeTrash?: AgentMail.IncludeTrash;
+    /** Filter to threads whose senders contain this value (substring match). Repeatable; all values must match. */
+    senders?: string[];
+    /** Filter to threads whose recipients contain this value (substring match). Repeatable; all values must match. */
+    recipients?: string[];
+    /** Filter to threads whose subject contains this value (substring match). Repeatable; all values must match. */
+    subject?: string[];
 }

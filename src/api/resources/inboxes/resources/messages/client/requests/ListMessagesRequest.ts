@@ -17,4 +17,10 @@ export interface ListMessagesRequest {
     includeBlocked?: AgentMail.IncludeBlocked;
     includeUnauthenticated?: AgentMail.IncludeUnauthenticated;
     includeTrash?: AgentMail.IncludeTrash;
+    /** Filter to messages whose sender contains this value (substring match). Repeatable; all values must match. */
+    from?: string[];
+    /** Filter to messages whose recipients (to, cc, or bcc) contain this value (substring match). Repeatable; all values must match. */
+    to?: string[];
+    /** Filter to messages whose subject contains this value (substring match). Repeatable; all values must match. */
+    subject?: string[];
 }

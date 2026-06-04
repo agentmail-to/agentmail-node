@@ -214,6 +214,268 @@ describe("MessagesClient", () => {
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
+    test("search (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            count: 1,
+            limit: 1,
+            next_page_token: "next_page_token",
+            messages: [
+                {
+                    highlights: {
+                        from: ["from", "from"],
+                        recipients: ["recipients", "recipients"],
+                        subject: ["subject", "subject"],
+                        text: ["text", "text"],
+                    },
+                    inbox_id: "inbox_id",
+                    thread_id: "thread_id",
+                    message_id: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: "2024-01-15T09:30:00Z",
+                    from: "from",
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    attachments: [
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                    ],
+                    in_reply_to: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: { headers: "headers" },
+                    size: 1,
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    highlights: {
+                        from: ["from", "from"],
+                        recipients: ["recipients", "recipients"],
+                        subject: ["subject", "subject"],
+                        text: ["text", "text"],
+                    },
+                    inbox_id: "inbox_id",
+                    thread_id: "thread_id",
+                    message_id: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: "2024-01-15T09:30:00Z",
+                    from: "from",
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    attachments: [
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                        {
+                            attachment_id: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            content_type: "content_type",
+                            content_disposition: "inline",
+                            content_id: "content_id",
+                        },
+                    ],
+                    in_reply_to: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: { headers: "headers" },
+                    size: 1,
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/messages/search")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.messages.search("inbox_id", {
+            q: "q",
+        });
+        expect(response).toEqual({
+            count: 1,
+            limit: 1,
+            nextPageToken: "next_page_token",
+            messages: [
+                {
+                    highlights: {
+                        from: ["from", "from"],
+                        recipients: ["recipients", "recipients"],
+                        subject: ["subject", "subject"],
+                        text: ["text", "text"],
+                    },
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    messageId: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    from: "from",
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    attachments: [
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                    ],
+                    inReplyTo: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: {
+                        headers: "headers",
+                    },
+                    size: 1,
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+                {
+                    highlights: {
+                        from: ["from", "from"],
+                        recipients: ["recipients", "recipients"],
+                        subject: ["subject", "subject"],
+                        text: ["text", "text"],
+                    },
+                    inboxId: "inbox_id",
+                    threadId: "thread_id",
+                    messageId: "message_id",
+                    labels: ["labels", "labels"],
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    from: "from",
+                    to: ["to", "to"],
+                    cc: ["cc", "cc"],
+                    bcc: ["bcc", "bcc"],
+                    subject: "subject",
+                    preview: "preview",
+                    attachments: [
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                        {
+                            attachmentId: "attachment_id",
+                            filename: "filename",
+                            size: 1,
+                            contentType: "content_type",
+                            contentDisposition: "inline",
+                            contentId: "content_id",
+                        },
+                    ],
+                    inReplyTo: "in_reply_to",
+                    references: ["references", "references"],
+                    headers: {
+                        headers: "headers",
+                    },
+                    size: 1,
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+            ],
+        });
+    });
+
+    test("search (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/messages/search")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.search("inbox_id", {
+                q: "q",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("search (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/messages/search")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.search("inbox_id", {
+                q: "q",
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
     test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({

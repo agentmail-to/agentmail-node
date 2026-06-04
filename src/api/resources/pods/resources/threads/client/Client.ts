@@ -25,6 +25,11 @@ export class ThreadsClient {
     }
 
     /**
+     * Lists threads in the pod, most recent first. Pass `senders`,
+     * `recipients`, or `subject` to filter by substring. Filtered requests are
+     * served by search, which caps `limit` at 100. For relevance-ranked
+     * full-text search, use `Search Threads`.
+     *
      * **CLI:**
      * ```bash
      * agentmail pods:threads list --pod-id <pod_id>
@@ -63,6 +68,9 @@ export class ThreadsClient {
             includeBlocked,
             includeUnauthenticated,
             includeTrash,
+            senders,
+            recipients,
+            subject,
         } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -89,6 +97,9 @@ export class ThreadsClient {
             include_blocked: includeBlocked,
             include_unauthenticated: includeUnauthenticated,
             include_trash: includeTrash,
+            senders: senders != null ? toJson(senders) : undefined,
+            recipients: recipients != null ? toJson(recipients) : undefined,
+            subject: subject != null ? toJson(subject) : undefined,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -148,6 +159,127 @@ export class ThreadsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/pods/{pod_id}/threads");
+    }
+
+    /**
+     * Full-text search across threads in the pod, ranked by relevance. The
+     * query is matched against senders, recipients, and subject (substring)
+     * and the message body (tokenized full text). Spam, trash, blocked, and
+     * unauthenticated threads are always excluded. `limit` cannot exceed 100.
+     *
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.pods.SearchThreadsRequest} request
+     * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.pods.threads.search("pod_id", {
+     *         q: "q"
+     *     })
+     */
+    public search(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.SearchThreadsRequest,
+        requestOptions?: ThreadsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.SearchThreadsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__search(pod_id, request, requestOptions));
+    }
+
+    private async __search(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.SearchThreadsRequest,
+        requestOptions?: ThreadsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.SearchThreadsResponse>> {
+        const { q, limit, pageToken, before, after } = request;
+        const _queryParams: Record<string, unknown> = {
+            q,
+            limit,
+            page_token: pageToken,
+            before:
+                before != null
+                    ? serializers.Before.jsonOrThrow(before, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+            after:
+                after != null
+                    ? serializers.After.jsonOrThrow(after, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/threads/search`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.SearchThreadsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/pods/{pod_id}/threads/search",
+        );
     }
 
     /**

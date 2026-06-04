@@ -13,4 +13,5 @@ export * from "./Labels.js";
 export * from "./Limit.js";
 export * from "./OrganizationId.js";
 export * from "./PageToken.js";
+export * from "./Query.js";
 export * from "./ValidationErrorResponse.js";

@@ -1,4 +1,7 @@
 export * from "./ListThreadsResponse.js";
+export * from "./SearchThreadHighlights.js";
+export * from "./SearchThreadItem.js";
+export * from "./SearchThreadsResponse.js";
 export * from "./Thread.js";
 export * from "./ThreadAttachments.js";
 export * from "./ThreadCreatedAt.js";
