@@ -23,6 +23,7 @@ describe("DomainsClient", () => {
                     domain_id: "domain_id",
                     domain: "domain",
                     feedback_enabled: true,
+                    subdomains_enabled: true,
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -32,6 +33,7 @@ describe("DomainsClient", () => {
                     domain_id: "domain_id",
                     domain: "domain",
                     feedback_enabled: true,
+                    subdomains_enabled: true,
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -52,6 +54,7 @@ describe("DomainsClient", () => {
                     domainId: "domain_id",
                     domain: "domain",
                     feedbackEnabled: true,
+                    subdomainsEnabled: true,
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -61,6 +64,7 @@ describe("DomainsClient", () => {
                     domainId: "domain_id",
                     domain: "domain",
                     feedbackEnabled: true,
+                    subdomainsEnabled: true,
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -83,6 +87,7 @@ describe("DomainsClient", () => {
             domain: "domain",
             status: "NOT_STARTED",
             feedback_enabled: true,
+            subdomains_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
@@ -107,6 +112,7 @@ describe("DomainsClient", () => {
             domain: "domain",
             status: "NOT_STARTED",
             feedbackEnabled: true,
+            subdomainsEnabled: true,
             records: [
                 {
                     type: "TXT",
@@ -159,13 +165,14 @@ describe("DomainsClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { domain: "domain", feedback_enabled: true };
+        const rawRequestBody = { domain: "domain" };
         const rawResponseBody = {
             pod_id: "pod_id",
             domain_id: "domain_id",
             domain: "domain",
             status: "NOT_STARTED",
             feedback_enabled: true,
+            subdomains_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
@@ -186,7 +193,6 @@ describe("DomainsClient", () => {
 
         const response = await client.domains.create({
             domain: "domain",
-            feedbackEnabled: true,
         });
         expect(response).toEqual({
             podId: "pod_id",
@@ -194,6 +200,7 @@ describe("DomainsClient", () => {
             domain: "domain",
             status: "NOT_STARTED",
             feedbackEnabled: true,
+            subdomainsEnabled: true,
             records: [
                 {
                     type: "TXT",
@@ -223,7 +230,7 @@ describe("DomainsClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { domain: "domain", feedback_enabled: true };
+        const rawRequestBody = { domain: "domain" };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
 
         server
@@ -238,7 +245,6 @@ describe("DomainsClient", () => {
         await expect(async () => {
             return await client.domains.create({
                 domain: "domain",
-                feedbackEnabled: true,
             });
         }).rejects.toThrow(AgentMail.ValidationError);
     });
@@ -257,6 +263,7 @@ describe("DomainsClient", () => {
             domain: "domain",
             status: "NOT_STARTED",
             feedback_enabled: true,
+            subdomains_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
@@ -282,6 +289,7 @@ describe("DomainsClient", () => {
             domain: "domain",
             status: "NOT_STARTED",
             feedbackEnabled: true,
+            subdomainsEnabled: true,
             records: [
                 {
                     type: "TXT",

@@ -5,7 +5,11 @@ import type * as AgentMail from "../../../index.js";
 export interface CreateInboxRequest {
     /** Username of address. Randomly generated if not specified. */
     username?: string;
-    /** Domain of address. Must be verified domain. Defaults to `agentmail.to`. */
+    /**
+     * Domain of address. Must be a verified domain, or any subdomain of a
+     * verified domain that has subdomains enabled (e.g., `bot.example.com`).
+     * Defaults to `agentmail.to`.
+     */
     domain?: string;
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;

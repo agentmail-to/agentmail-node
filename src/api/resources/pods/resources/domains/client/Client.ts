@@ -302,8 +302,7 @@ export class DomainsClient {
      *
      * @example
      *     await client.pods.domains.create("pod_id", {
-     *         domain: "domain",
-     *         feedbackEnabled: true
+     *         domain: "domain"
      *     })
      */
     public create(

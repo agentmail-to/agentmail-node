@@ -1590,8 +1590,7 @@ agentmail domains create --domain example.com
 
 ```typescript
 await client.domains.create({
-    domain: "domain",
-    feedbackEnabled: true
+    domain: "domain"
 });
 
 ```
@@ -5678,8 +5677,7 @@ agentmail pods:domains create --pod-id <pod_id> --domain example.com
 
 ```typescript
 await client.pods.domains.create("pod_id", {
-    domain: "domain",
-    feedbackEnabled: true
+    domain: "domain"
 });
 
 ```

@@ -8,7 +8,11 @@ export interface Domain {
     domain: AgentMail.DomainName;
     status: AgentMail.Status;
     feedbackEnabled: AgentMail.FeedbackEnabled;
-    /** A list of DNS records required to verify the domain. */
+    subdomainsEnabled: AgentMail.SubdomainsEnabled;
+    /**
+     * A list of DNS records required to verify the domain. Includes a
+     * wildcard MX record (`*.<domain>`) when `subdomains_enabled` is true.
+     */
     records: AgentMail.VerificationRecord[];
     clientId?: AgentMail.ClientId;
     /** Time at which the domain was last updated. */

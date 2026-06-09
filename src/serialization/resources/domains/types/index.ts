@@ -9,6 +9,7 @@ export * from "./ListDomainsResponse.js";
 export * from "./RecordStatus.js";
 export * from "./RecordType.js";
 export * from "./Status.js";
+export * from "./SubdomainsEnabled.js";
 export * from "./UpdateDomainRequest.js";
 export * from "./VerificationRecord.js";
 export * from "./VerificationStatus.js";

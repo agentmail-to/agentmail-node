@@ -272,8 +272,7 @@ export class DomainsClient {
      *
      * @example
      *     await client.domains.create({
-     *         domain: "domain",
-     *         feedbackEnabled: true
+     *         domain: "domain"
      *     })
      */
     public create(

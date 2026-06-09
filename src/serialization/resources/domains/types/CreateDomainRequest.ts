@@ -5,18 +5,21 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { DomainName } from "./DomainName.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
+import { SubdomainsEnabled } from "./SubdomainsEnabled.js";
 
 export const CreateDomainRequest: core.serialization.ObjectSchema<
     serializers.CreateDomainRequest.Raw,
     AgentMail.CreateDomainRequest
 > = core.serialization.object({
     domain: DomainName,
-    feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
+    feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled.optional()),
+    subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled.optional()),
 });
 
 export declare namespace CreateDomainRequest {
     export interface Raw {
         domain: DomainName.Raw;
-        feedback_enabled: FeedbackEnabled.Raw;
+        feedback_enabled?: FeedbackEnabled.Raw | null;
+        subdomains_enabled?: SubdomainsEnabled.Raw | null;
     }
 }

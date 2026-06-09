@@ -4,16 +4,19 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
+import { SubdomainsEnabled } from "./SubdomainsEnabled.js";
 
 export const UpdateDomainRequest: core.serialization.ObjectSchema<
     serializers.UpdateDomainRequest.Raw,
     AgentMail.UpdateDomainRequest
 > = core.serialization.object({
     feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled.optional()),
+    subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled.optional()),
 });
 
 export declare namespace UpdateDomainRequest {
     export interface Raw {
         feedback_enabled?: FeedbackEnabled.Raw | null;
+        subdomains_enabled?: SubdomainsEnabled.Raw | null;
     }
 }

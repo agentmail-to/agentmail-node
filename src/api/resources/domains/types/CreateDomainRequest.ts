@@ -4,5 +4,6 @@ import type * as AgentMail from "../../../index.js";
 
 export interface CreateDomainRequest {
     domain: AgentMail.DomainName;
-    feedbackEnabled: AgentMail.FeedbackEnabled;
+    feedbackEnabled?: AgentMail.FeedbackEnabled;
+    subdomainsEnabled?: AgentMail.SubdomainsEnabled;
 }

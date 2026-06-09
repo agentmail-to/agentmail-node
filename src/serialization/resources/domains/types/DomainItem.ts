@@ -8,6 +8,7 @@ import { ClientId } from "./ClientId.js";
 import { DomainId } from "./DomainId.js";
 import { DomainName } from "./DomainName.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
+import { SubdomainsEnabled } from "./SubdomainsEnabled.js";
 
 export const DomainItem: core.serialization.ObjectSchema<serializers.DomainItem.Raw, AgentMail.DomainItem> =
     core.serialization.object({
@@ -15,6 +16,7 @@ export const DomainItem: core.serialization.ObjectSchema<serializers.DomainItem.
         domainId: core.serialization.property("domain_id", DomainId),
         domain: DomainName,
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
+        subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled),
         clientId: core.serialization.property("client_id", ClientId.optional()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
@@ -26,6 +28,7 @@ export declare namespace DomainItem {
         domain_id: DomainId.Raw;
         domain: DomainName.Raw;
         feedback_enabled: FeedbackEnabled.Raw;
+        subdomains_enabled: SubdomainsEnabled.Raw;
         client_id?: ClientId.Raw | null;
         updated_at: string;
         created_at: string;
