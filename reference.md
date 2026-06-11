@@ -3557,6 +3557,89 @@ await client.inboxes.messages.batchGet("inbox_id", {
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">batchUpdate</a>(inbox_id, { ...params }) -> AgentMail.BatchUpdateMessagesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Apply one label change to up to 50 messages in a single request. The
+same add_labels and remove_labels apply to every message id, and at
+least one of them must be provided. The update is atomic: either all
+resolved messages are updated or none are. Missing or restricted ids
+are silently excluded; compare `count` against `limit` to detect
+exclusions.
+
+**CLI:**
+```bash
+agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.batchUpdate("inbox_id", {
+    messageIds: ["message_ids", "message_ids"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.BatchUpdateMessagesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">getAttachment</a>(inbox_id, message_id, attachment_id) -> AgentMail.AttachmentResponse</code></summary>
 <dl>
 <dd>
