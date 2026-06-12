@@ -6,7 +6,7 @@ import type * as AgentMail from "../../../../../../index.js";
  * @example
  *     {}
  */
-export interface QueryMetricsRequest {
+export interface QueryEventsRequest {
     eventTypes?: AgentMail.MetricEventTypes;
     start?: AgentMail.Start;
     end?: AgentMail.End;

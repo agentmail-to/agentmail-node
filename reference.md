@@ -4275,7 +4275,7 @@ await client.inboxes.messages.forward("inbox_id", "message_id", {});
 </details>
 
 ## Inboxes Metrics
-<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">query</a>(inbox_id, { ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
+<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">queryEvents</a>(inbox_id, { ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -4286,6 +4286,12 @@ await client.inboxes.messages.forward("inbox_id", "message_id", {});
 
 <dl>
 <dd>
+
+Counts of email events (sent, delivered, bounced, etc.) over time for
+the inbox. Defaults to the last 24 hours; `start` must be within the
+last 90 days, and a future `end` is clamped to now. Omit `period` for
+individual event counts, or set it to sum counts into buckets of that
+many seconds.
 
 **CLI:**
 ```bash
@@ -4305,7 +4311,7 @@ agentmail inboxes:metrics query --inbox-id <inbox_id>
 <dd>
 
 ```typescript
-await client.inboxes.metrics.query("inbox_id");
+await client.inboxes.metrics.queryEvents("inbox_id");
 
 ```
 </dd>
@@ -4329,7 +4335,84 @@ await client.inboxes.metrics.query("inbox_id");
 <dl>
 <dd>
 
-**request:** `AgentMail.inboxes.QueryMetricsRequest` 
+**request:** `AgentMail.inboxes.QueryEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetricsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">queryUsage</a>(inbox_id, { ...params }) -> AgentMail.QueryUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cumulative usage series for the inbox. Each point is the running total
+of the usage type at that timestamp, not the change within the bucket.
+Inbox-scoped queries carry `storage_bytes`, `message_count`, and
+`thread_count`; requested types that don't apply to the scope are
+ignored. Defaults to the last 24 hours; `start` must be within the
+last 90 days, and a future `end` is clamped to now. The range divided
+by `period` must not exceed 1000 buckets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.metrics.queryUsage("inbox_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.QueryUsageRequest` 
     
 </dd>
 </dl>
@@ -5156,7 +5239,7 @@ await client.lists.delete("send", "allow", "entry");
 </details>
 
 ## Metrics
-<details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">query</a>({ ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
+<details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">queryEvents</a>({ ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -5167,6 +5250,12 @@ await client.lists.delete("send", "allow", "entry");
 
 <dl>
 <dd>
+
+Counts of email events (sent, delivered, bounced, etc.) over time for
+the organization. Defaults to the last 24 hours; `start` must be within
+the last 90 days, and a future `end` is clamped to now. Omit `period`
+for individual event counts, or set it to sum counts into buckets of
+that many seconds.
 
 **CLI:**
 ```bash
@@ -5186,7 +5275,7 @@ agentmail metrics list
 <dd>
 
 ```typescript
-await client.metrics.query();
+await client.metrics.queryEvents();
 
 ```
 </dd>
@@ -5202,7 +5291,74 @@ await client.metrics.query();
 <dl>
 <dd>
 
-**request:** `AgentMail.QueryMetricsRequest` 
+**request:** `AgentMail.QueryEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetricsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">queryUsage</a>({ ...params }) -> AgentMail.QueryUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cumulative usage series for the organization. Each point is the running
+total of the usage type at that timestamp, not the change within the
+bucket. Defaults to the last 24 hours; `start` must be within the last
+90 days, and a future `end` is clamped to now. The range divided by
+`period` must not exceed 1000 buckets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.metrics.queryUsage();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.QueryUsageRequest` 
     
 </dd>
 </dl>
@@ -7009,7 +7165,7 @@ await client.pods.lists.delete("pod_id", "send", "allow", "entry");
 </details>
 
 ## Pods Metrics
-<details><summary><code>client.pods.metrics.<a href="/src/api/resources/pods/resources/metrics/client/Client.ts">query</a>(pod_id, { ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
+<details><summary><code>client.pods.metrics.<a href="/src/api/resources/pods/resources/metrics/client/Client.ts">queryEvents</a>(pod_id, { ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
 <dl>
 <dd>
 
@@ -7020,6 +7176,12 @@ await client.pods.lists.delete("pod_id", "send", "allow", "entry");
 
 <dl>
 <dd>
+
+Counts of email events (sent, delivered, bounced, etc.) over time for
+the pod. Defaults to the last 24 hours; `start` must be within the last
+90 days, and a future `end` is clamped to now. Omit `period` for
+individual event counts, or set it to sum counts into buckets of that
+many seconds.
 
 **CLI:**
 ```bash
@@ -7039,7 +7201,7 @@ agentmail pods:metrics query --pod-id <pod_id>
 <dd>
 
 ```typescript
-await client.pods.metrics.query("pod_id");
+await client.pods.metrics.queryEvents("pod_id");
 
 ```
 </dd>
@@ -7063,7 +7225,84 @@ await client.pods.metrics.query("pod_id");
 <dl>
 <dd>
 
-**request:** `AgentMail.pods.QueryMetricsRequest` 
+**request:** `AgentMail.pods.QueryEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetricsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.metrics.<a href="/src/api/resources/pods/resources/metrics/client/Client.ts">queryUsage</a>(pod_id, { ...params }) -> AgentMail.QueryUsageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Cumulative usage series for the pod. Each point is the running total of
+the usage type at that timestamp, not the change within the bucket.
+Pod-scoped queries carry every usage type except `pod_count`; requested
+types that don't apply to the scope are ignored. Defaults to the last
+24 hours; `start` must be within the last 90 days, and a future `end`
+is clamped to now. The range divided by `period` must not exceed 1000
+buckets.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.metrics.queryUsage("pod_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.QueryUsageRequest` 
     
 </dd>
 </dl>

@@ -5,7 +5,7 @@ import { AgentMailClient } from "../../../src/Client";
 import { mockServerPool } from "../../mock-server/MockServerPool";
 
 describe("MetricsClient", () => {
-    test("query (1)", async () => {
+    test("queryEvents (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             maxRetries: 0,
@@ -14,7 +14,7 @@ describe("MetricsClient", () => {
         });
 
         const rawResponseBody = {
-            "message.sent": [
+            "message.received": [
                 { timestamp: "2024-01-15T09:30:00Z", count: 1 },
                 { timestamp: "2024-01-15T09:30:00Z", count: 1 },
             ],
@@ -22,15 +22,15 @@ describe("MetricsClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/inboxes/inbox_id/metrics")
+            .get("/v0/inboxes/inbox_id/metrics/events")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.inboxes.metrics.query("inbox_id");
+        const response = await client.inboxes.metrics.queryEvents("inbox_id");
         expect(response).toEqual({
-            "message.sent": [
+            "message.received": [
                 {
                     timestamp: new Date("2024-01-15T09:30:00.000Z"),
                     count: 1,
@@ -43,7 +43,7 @@ describe("MetricsClient", () => {
         });
     });
 
-    test("query (2)", async () => {
+    test("queryEvents (2)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
             maxRetries: 0,
@@ -55,14 +55,75 @@ describe("MetricsClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/inboxes/inbox_id/metrics")
+            .get("/v0/inboxes/inbox_id/metrics/events")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.inboxes.metrics.query("inbox_id");
+            return await client.inboxes.metrics.queryEvents("inbox_id");
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("queryUsage (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            storage_bytes: [
+                { timestamp: "2024-01-15T09:30:00Z", value: 1000000 },
+                { timestamp: "2024-01-15T09:30:00Z", value: 1000000 },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/metrics/usage")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.metrics.queryUsage("inbox_id");
+        expect(response).toEqual({
+            storage_bytes: [
+                {
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    value: 1000000,
+                },
+                {
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    value: 1000000,
+                },
+            ],
+        });
+    });
+
+    test("queryUsage (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .get("/v0/inboxes/inbox_id/metrics/usage")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.metrics.queryUsage("inbox_id");
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 });

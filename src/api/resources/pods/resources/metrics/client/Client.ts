@@ -25,31 +25,37 @@ export class MetricsClient {
     }
 
     /**
+     * Counts of email events (sent, delivered, bounced, etc.) over time for
+     * the pod. Defaults to the last 24 hours; `start` must be within the last
+     * 90 days, and a future `end` is clamped to now. Omit `period` for
+     * individual event counts, or set it to sum counts into buckets of that
+     * many seconds.
+     *
      * **CLI:**
      * ```bash
      * agentmail pods:metrics query --pod-id <pod_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
-     * @param {AgentMail.pods.QueryMetricsRequest} request
+     * @param {AgentMail.pods.QueryEventsRequest} request
      * @param {MetricsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.pods.metrics.query("pod_id")
+     *     await client.pods.metrics.queryEvents("pod_id")
      */
-    public query(
+    public queryEvents(
         pod_id: AgentMail.pods.PodId,
-        request: AgentMail.pods.QueryMetricsRequest = {},
+        request: AgentMail.pods.QueryEventsRequest = {},
         requestOptions?: MetricsClient.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.QueryMetricsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__query(pod_id, request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__queryEvents(pod_id, request, requestOptions));
     }
 
-    private async __query(
+    private async __queryEvents(
         pod_id: AgentMail.pods.PodId,
-        request: AgentMail.pods.QueryMetricsRequest = {},
+        request: AgentMail.pods.QueryEventsRequest = {},
         requestOptions?: MetricsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.QueryMetricsResponse>> {
         const { eventTypes, start, end, period, limit, descending } = request;
@@ -86,7 +92,7 @@ export class MetricsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/metrics`,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/metrics/events`,
             ),
             method: "GET",
             headers: _headers,
@@ -132,6 +138,130 @@ export class MetricsClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/pods/{pod_id}/metrics");
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/pods/{pod_id}/metrics/events",
+        );
+    }
+
+    /**
+     * Cumulative usage series for the pod. Each point is the running total of
+     * the usage type at that timestamp, not the change within the bucket.
+     * Pod-scoped queries carry every usage type except `pod_count`; requested
+     * types that don't apply to the scope are ignored. Defaults to the last
+     * 24 hours; `start` must be within the last 90 days, and a future `end`
+     * is clamped to now. The range divided by `period` must not exceed 1000
+     * buckets.
+     *
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.pods.QueryUsageRequest} request
+     * @param {MetricsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     *
+     * @example
+     *     await client.pods.metrics.queryUsage("pod_id")
+     */
+    public queryUsage(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.QueryUsageRequest = {},
+        requestOptions?: MetricsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.QueryUsageResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__queryUsage(pod_id, request, requestOptions));
+    }
+
+    private async __queryUsage(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.QueryUsageRequest = {},
+        requestOptions?: MetricsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.QueryUsageResponse>> {
+        const { usageTypes, start, end, period, limit, descending } = request;
+        const _queryParams: Record<string, unknown> = {
+            usage_types:
+                usageTypes != null
+                    ? toJson(
+                          serializers.UsageTypes.jsonOrThrow(usageTypes, {
+                              unrecognizedObjectKeys: "strip",
+                              omitUndefined: true,
+                          }),
+                      )
+                    : undefined,
+            start:
+                start != null
+                    ? serializers.Start.jsonOrThrow(start, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+            end:
+                end != null
+                    ? serializers.End.jsonOrThrow(end, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+            period,
+            limit,
+            descending,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/metrics/usage`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.QueryUsageResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/pods/{pod_id}/metrics/usage",
+        );
     }
 }

@@ -2,12 +2,15 @@
 
 /** Type of metric event. */
 export const MetricEventType = {
+    MessageReceived: "message.received",
+    MessageReceivedSpam: "message.received.spam",
+    MessageReceivedBlocked: "message.received.blocked",
+    MessageReceivedUnauthenticated: "message.received.unauthenticated",
     MessageSent: "message.sent",
     MessageDelivered: "message.delivered",
     MessageBounced: "message.bounced",
-    MessageDelayed: "message.delayed",
-    MessageRejected: "message.rejected",
     MessageComplained: "message.complained",
-    MessageReceived: "message.received",
+    MessageRejected: "message.rejected",
+    DomainVerified: "domain.verified",
 } as const;
 export type MetricEventType = (typeof MetricEventType)[keyof typeof MetricEventType];

@@ -4,8 +4,8 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const Period: core.serialization.Schema<serializers.Period.Raw, AgentMail.Period> = core.serialization.string();
+export const Period: core.serialization.Schema<serializers.Period.Raw, AgentMail.Period> = core.serialization.number();
 
 export declare namespace Period {
-    export type Raw = string;
+    export type Raw = number;
 }

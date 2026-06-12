@@ -6,22 +6,28 @@ import type * as serializers from "../../../index.js";
 
 export const MetricEventType: core.serialization.Schema<serializers.MetricEventType.Raw, AgentMail.MetricEventType> =
     core.serialization.enum_([
+        "message.received",
+        "message.received.spam",
+        "message.received.blocked",
+        "message.received.unauthenticated",
         "message.sent",
         "message.delivered",
         "message.bounced",
-        "message.delayed",
-        "message.rejected",
         "message.complained",
-        "message.received",
+        "message.rejected",
+        "domain.verified",
     ]);
 
 export declare namespace MetricEventType {
     export type Raw =
+        | "message.received"
+        | "message.received.spam"
+        | "message.received.blocked"
+        | "message.received.unauthenticated"
         | "message.sent"
         | "message.delivered"
         | "message.bounced"
-        | "message.delayed"
-        | "message.rejected"
         | "message.complained"
-        | "message.received";
+        | "message.rejected"
+        | "domain.verified";
 }

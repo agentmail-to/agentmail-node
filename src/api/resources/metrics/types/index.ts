@@ -6,4 +6,8 @@ export * from "./MetricEventTypes.js";
 export * from "./MetricLimit.js";
 export * from "./Period.js";
 export * from "./QueryMetricsResponse.js";
+export * from "./QueryUsageResponse.js";
 export * from "./Start.js";
+export * from "./UsagePoint.js";
+export * from "./UsageType.js";
+export * from "./UsageTypes.js";
