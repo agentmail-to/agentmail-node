@@ -12,3 +12,5 @@ export * from "./metrics/client/requests/index.js";
 export * as metrics from "./metrics/index.js";
 export * from "./threads/client/requests/index.js";
 export * as threads from "./threads/index.js";
+export * from "./webhooks/client/requests/index.js";
+export * as webhooks from "./webhooks/index.js";

@@ -3,27 +3,22 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { EventTypes } from "../../events/types/EventTypes.js";
-import { InboxIds } from "../../events/types/InboxIds.js";
 import { PodIds } from "../../events/types/PodIds.js";
+import { UpdatePodWebhookRequest } from "./UpdatePodWebhookRequest.js";
 
 export const UpdateWebhookRequest: core.serialization.ObjectSchema<
     serializers.webhooks.UpdateWebhookRequest.Raw,
     AgentMail.webhooks.UpdateWebhookRequest
-> = core.serialization.object({
-    addInboxIds: core.serialization.property("add_inbox_ids", InboxIds.optional()),
-    removeInboxIds: core.serialization.property("remove_inbox_ids", InboxIds.optional()),
-    addPodIds: core.serialization.property("add_pod_ids", PodIds.optional()),
-    removePodIds: core.serialization.property("remove_pod_ids", PodIds.optional()),
-    eventTypes: core.serialization.property("event_types", EventTypes.optional()),
-});
+> = core.serialization
+    .object({
+        addPodIds: core.serialization.property("add_pod_ids", PodIds.optional()),
+        removePodIds: core.serialization.property("remove_pod_ids", PodIds.optional()),
+    })
+    .extend(UpdatePodWebhookRequest);
 
 export declare namespace UpdateWebhookRequest {
-    export interface Raw {
-        add_inbox_ids?: InboxIds.Raw | null;
-        remove_inbox_ids?: InboxIds.Raw | null;
+    export interface Raw extends UpdatePodWebhookRequest.Raw {
         add_pod_ids?: PodIds.Raw | null;
         remove_pod_ids?: PodIds.Raw | null;
-        event_types?: EventTypes.Raw | null;
     }
 }

@@ -4274,6 +4274,264 @@ await client.inboxes.messages.forward("inbox_id", "message_id", {});
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">draftReply</a>(inbox_id, message_id, { ...params }) -> AgentMail.Draft</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a draft that replies to a message instead of sending it. The
+recipients, subject, and threading are derived from the source message.
+Send it later with `Send Draft`.
+
+**CLI:**
+```bash
+agentmail inboxes:messages draft-reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.draftReply("inbox_id", "message_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `AgentMail.MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateDraftReplyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">draftReplyAll</a>(inbox_id, message_id, { ...params }) -> AgentMail.Draft</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a draft that replies to every recipient of a message instead of
+sending it. Recipients, subject, and threading are derived from the
+source message. Send it later with `Send Draft`.
+
+**CLI:**
+```bash
+agentmail inboxes:messages draft-reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.draftReplyAll("inbox_id", "message_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `AgentMail.MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateDraftReplyAllRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">draftForward</a>(inbox_id, message_id, { ...params }) -> AgentMail.Draft</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a draft that forwards a message instead of sending it. The subject
+and threading are derived from the source message, whose body and
+attachments are merged in at send time. Send it later with `Send Draft`.
+
+**CLI:**
+```bash
+agentmail inboxes:messages draft-forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.draftForward("inbox_id", "message_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `AgentMail.MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateDraftForwardRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Metrics
 <details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">queryEvents</a>(inbox_id, { ...params }) -> AgentMail.QueryMetricsResponse</code></summary>
 <dl>
@@ -4896,6 +5154,390 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 <dd>
 
 **requestOptions:** `ThreadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Inboxes Webhooks
+<details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListWebhooksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:webhooks list --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.list("inbox_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.InboxListWebhooksRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">get</a>(inbox_id, webhook_id) -> AgentMail.Webhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:webhooks get --inbox-id <inbox_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.get("inbox_id", "webhook_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">create</a>(inbox_id, { ...params }) -> AgentMail.Webhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a webhook scoped to this inbox.
+
+**CLI:**
+```bash
+agentmail inboxes:webhooks create --inbox-id <inbox_id> --url https://example.com/webhook --event-type message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.create("inbox_id", {
+    url: "url",
+    eventTypes: ["message.received", "message.received"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateInboxWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">update</a>(inbox_id, webhook_id, { ...params }) -> AgentMail.Webhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:webhooks update --inbox-id <inbox_id> --webhook-id <webhook_id> --event-type message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.update("inbox_id", "webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateInboxWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">delete</a>(inbox_id, webhook_id) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes:webhooks delete --inbox-id <inbox_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.delete("inbox_id", "webhook_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -7786,6 +8428,390 @@ await client.pods.threads.delete("pod_id", "thread_id");
 <dd>
 
 **requestOptions:** `ThreadsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pods Webhooks
+<details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">list</a>(pod_id, { ...params }) -> AgentMail.ListWebhooksResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:webhooks list --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.list("pod_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.PodListWebhooksRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">get</a>(pod_id, webhook_id) -> AgentMail.Webhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.get("pod_id", "webhook_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">create</a>(pod_id, { ...params }) -> AgentMail.Webhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Create a webhook scoped to this pod.
+
+**CLI:**
+```bash
+agentmail pods:webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-type message.received
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.create("pod_id", {
+    url: "url",
+    eventTypes: ["message.received", "message.received"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreatePodWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">update</a>(pod_id, webhook_id, { ...params }) -> AgentMail.Webhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.update("pod_id", "webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdatePodWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">delete</a>(pod_id, webhook_id) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods:webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.delete("pod_id", "webhook_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
     
 </dd>
 </dl>

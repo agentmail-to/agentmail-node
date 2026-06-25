@@ -8,6 +8,7 @@ import { DraftAttachments } from "./DraftAttachments.js";
 import { DraftBcc } from "./DraftBcc.js";
 import { DraftCc } from "./DraftCc.js";
 import { DraftClientId } from "./DraftClientId.js";
+import { DraftForwardOf } from "./DraftForwardOf.js";
 import { DraftHtml } from "./DraftHtml.js";
 import { DraftId } from "./DraftId.js";
 import { DraftInReplyTo } from "./DraftInReplyTo.js";
@@ -37,6 +38,7 @@ export const Draft: core.serialization.ObjectSchema<serializers.Draft.Raw, Agent
         html: DraftHtml.optional(),
         attachments: DraftAttachments.optional(),
         inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
+        forwardOf: core.serialization.property("forward_of", DraftForwardOf.optional()),
         references: core.serialization.list(core.serialization.string()).optional(),
         sendStatus: core.serialization.property("send_status", DraftSendStatus.optional()),
         sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
@@ -61,6 +63,7 @@ export declare namespace Draft {
         html?: DraftHtml.Raw | null;
         attachments?: DraftAttachments.Raw | null;
         in_reply_to?: DraftInReplyTo.Raw | null;
+        forward_of?: DraftForwardOf.Raw | null;
         references?: string[] | null;
         send_status?: DraftSendStatus.Raw | null;
         send_at?: DraftSendAt.Raw | null;

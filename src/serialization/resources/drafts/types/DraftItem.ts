@@ -7,6 +7,7 @@ import { InboxId } from "../../inboxes/types/InboxId.js";
 import { DraftAttachments } from "./DraftAttachments.js";
 import { DraftBcc } from "./DraftBcc.js";
 import { DraftCc } from "./DraftCc.js";
+import { DraftForwardOf } from "./DraftForwardOf.js";
 import { DraftId } from "./DraftId.js";
 import { DraftInReplyTo } from "./DraftInReplyTo.js";
 import { DraftLabels } from "./DraftLabels.js";
@@ -29,6 +30,7 @@ export const DraftItem: core.serialization.ObjectSchema<serializers.DraftItem.Ra
         preview: DraftPreview.optional(),
         attachments: DraftAttachments.optional(),
         inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
+        forwardOf: core.serialization.property("forward_of", DraftForwardOf.optional()),
         sendStatus: core.serialization.property("send_status", DraftSendStatus.optional()),
         sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
         updatedAt: core.serialization.property("updated_at", DraftUpdatedAt),
@@ -46,6 +48,7 @@ export declare namespace DraftItem {
         preview?: DraftPreview.Raw | null;
         attachments?: DraftAttachments.Raw | null;
         in_reply_to?: DraftInReplyTo.Raw | null;
+        forward_of?: DraftForwardOf.Raw | null;
         send_status?: DraftSendStatus.Raw | null;
         send_at?: DraftSendAt.Raw | null;
         updated_at: DraftUpdatedAt.Raw;

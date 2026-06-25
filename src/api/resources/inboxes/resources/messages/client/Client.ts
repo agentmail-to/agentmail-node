@@ -1485,4 +1485,360 @@ export class MessagesClient {
             "/v0/inboxes/{inbox_id}/messages/{message_id}/forward",
         );
     }
+
+    /**
+     * Create a draft that replies to a message instead of sending it. The
+     * recipients, subject, and threading are derived from the source message.
+     * Send it later with `Send Draft`.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages draft-reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+     * ```
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
+     * @param {AgentMail.CreateDraftReplyRequest} request
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.messages.draftReply("inbox_id", "message_id", {})
+     */
+    public draftReply(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateDraftReplyRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.Draft> {
+        return core.HttpResponsePromise.fromPromise(this.__draftReply(inbox_id, message_id, request, requestOptions));
+    }
+
+    private async __draftReply(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateDraftReplyRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.Draft>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/${core.url.encodePathParam(serializers.MessageId.jsonOrThrow(message_id, { omitUndefined: true }))}/draft-reply`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.CreateDraftReplyRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Draft.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/draft-reply",
+        );
+    }
+
+    /**
+     * Create a draft that replies to every recipient of a message instead of
+     * sending it. Recipients, subject, and threading are derived from the
+     * source message. Send it later with `Send Draft`.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages draft-reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+     * ```
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
+     * @param {AgentMail.CreateDraftReplyAllRequest} request
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.messages.draftReplyAll("inbox_id", "message_id", {})
+     */
+    public draftReplyAll(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateDraftReplyAllRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.Draft> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__draftReplyAll(inbox_id, message_id, request, requestOptions),
+        );
+    }
+
+    private async __draftReplyAll(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateDraftReplyAllRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.Draft>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/${core.url.encodePathParam(serializers.MessageId.jsonOrThrow(message_id, { omitUndefined: true }))}/draft-reply-all`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.CreateDraftReplyAllRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Draft.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/draft-reply-all",
+        );
+    }
+
+    /**
+     * Create a draft that forwards a message instead of sending it. The subject
+     * and threading are derived from the source message, whose body and
+     * attachments are merged in at send time. Send it later with `Send Draft`.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes:messages draft-forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+     * ```
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
+     * @param {AgentMail.CreateDraftForwardRequest} request
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.messages.draftForward("inbox_id", "message_id", {})
+     */
+    public draftForward(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateDraftForwardRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.Draft> {
+        return core.HttpResponsePromise.fromPromise(this.__draftForward(inbox_id, message_id, request, requestOptions));
+    }
+
+    private async __draftForward(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateDraftForwardRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.Draft>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/${core.url.encodePathParam(serializers.MessageId.jsonOrThrow(message_id, { omitUndefined: true }))}/draft-forward`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.CreateDraftForwardRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Draft.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/draft-forward",
+        );
+    }
 }

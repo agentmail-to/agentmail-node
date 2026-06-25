@@ -13,6 +13,7 @@ export interface DraftItem {
     preview?: AgentMail.DraftPreview;
     attachments?: AgentMail.DraftAttachments;
     inReplyTo?: AgentMail.DraftInReplyTo;
+    forwardOf?: AgentMail.DraftForwardOf;
     sendStatus?: AgentMail.DraftSendStatus;
     sendAt?: AgentMail.DraftSendAt;
     updatedAt: AgentMail.DraftUpdatedAt;

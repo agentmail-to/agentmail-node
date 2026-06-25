@@ -1529,4 +1529,445 @@ describe("MessagesClient", () => {
             return await client.inboxes.messages.forward("inbox_id", "message_id", {});
         }).rejects.toThrow(AgentMail.MessageRejectedError);
     });
+
+    test("draft-reply (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            inbox_id: "inbox_id",
+            draft_id: "draft_id",
+            client_id: "client_id",
+            labels: ["labels", "labels"],
+            reply_to: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    content_type: "content_type",
+                    content_disposition: "inline",
+                    content_id: "content_id",
+                },
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    content_type: "content_type",
+                    content_disposition: "inline",
+                    content_id: "content_id",
+                },
+            ],
+            in_reply_to: "in_reply_to",
+            forward_of: "forward_of",
+            references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-reply")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.messages.draftReply("inbox_id", "message_id", {});
+        expect(response).toEqual({
+            inboxId: "inbox_id",
+            draftId: "draft_id",
+            clientId: "client_id",
+            labels: ["labels", "labels"],
+            replyTo: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    contentType: "content_type",
+                    contentDisposition: "inline",
+                    contentId: "content_id",
+                },
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    contentType: "content_type",
+                    contentDisposition: "inline",
+                    contentId: "content_id",
+                },
+            ],
+            inReplyTo: "in_reply_to",
+            forwardOf: "forward_of",
+            references: ["references", "references"],
+            sendStatus: "scheduled",
+            sendAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("draft-reply (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-reply")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.draftReply("inbox_id", "message_id", {});
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("draft-reply (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-reply")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.draftReply("inbox_id", "message_id", {});
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("draft-reply-all (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            inbox_id: "inbox_id",
+            draft_id: "draft_id",
+            client_id: "client_id",
+            labels: ["labels", "labels"],
+            reply_to: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    content_type: "content_type",
+                    content_disposition: "inline",
+                    content_id: "content_id",
+                },
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    content_type: "content_type",
+                    content_disposition: "inline",
+                    content_id: "content_id",
+                },
+            ],
+            in_reply_to: "in_reply_to",
+            forward_of: "forward_of",
+            references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-reply-all")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.messages.draftReplyAll("inbox_id", "message_id", {});
+        expect(response).toEqual({
+            inboxId: "inbox_id",
+            draftId: "draft_id",
+            clientId: "client_id",
+            labels: ["labels", "labels"],
+            replyTo: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    contentType: "content_type",
+                    contentDisposition: "inline",
+                    contentId: "content_id",
+                },
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    contentType: "content_type",
+                    contentDisposition: "inline",
+                    contentId: "content_id",
+                },
+            ],
+            inReplyTo: "in_reply_to",
+            forwardOf: "forward_of",
+            references: ["references", "references"],
+            sendStatus: "scheduled",
+            sendAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("draft-reply-all (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-reply-all")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.draftReplyAll("inbox_id", "message_id", {});
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("draft-reply-all (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-reply-all")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.draftReplyAll("inbox_id", "message_id", {});
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("draft-forward (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            inbox_id: "inbox_id",
+            draft_id: "draft_id",
+            client_id: "client_id",
+            labels: ["labels", "labels"],
+            reply_to: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    content_type: "content_type",
+                    content_disposition: "inline",
+                    content_id: "content_id",
+                },
+                {
+                    attachment_id: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    content_type: "content_type",
+                    content_disposition: "inline",
+                    content_id: "content_id",
+                },
+            ],
+            in_reply_to: "in_reply_to",
+            forward_of: "forward_of",
+            references: ["references", "references"],
+            send_status: "scheduled",
+            send_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-forward")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.messages.draftForward("inbox_id", "message_id", {});
+        expect(response).toEqual({
+            inboxId: "inbox_id",
+            draftId: "draft_id",
+            clientId: "client_id",
+            labels: ["labels", "labels"],
+            replyTo: ["reply_to", "reply_to"],
+            to: ["to", "to"],
+            cc: ["cc", "cc"],
+            bcc: ["bcc", "bcc"],
+            subject: "subject",
+            preview: "preview",
+            text: "text",
+            html: "html",
+            attachments: [
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    contentType: "content_type",
+                    contentDisposition: "inline",
+                    contentId: "content_id",
+                },
+                {
+                    attachmentId: "attachment_id",
+                    filename: "filename",
+                    size: 1,
+                    contentType: "content_type",
+                    contentDisposition: "inline",
+                    contentId: "content_id",
+                },
+            ],
+            inReplyTo: "in_reply_to",
+            forwardOf: "forward_of",
+            references: ["references", "references"],
+            sendStatus: "scheduled",
+            sendAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("draft-forward (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-forward")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.draftForward("inbox_id", "message_id", {});
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("draft-forward (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/draft-forward")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.draftForward("inbox_id", "message_id", {});
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
 });

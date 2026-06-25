@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.5.12",
+    "version": "0.5.13",
     "private": false,
     "repository": {
         "type": "git",
@@ -198,6 +198,17 @@
             },
             "default": "./dist/cjs/api/resources/inboxes/resources/threads/exports.js"
         },
+        "./inboxes/webhooks": {
+            "import": {
+                "types": "./dist/esm/api/resources/inboxes/resources/webhooks/exports.d.mts",
+                "default": "./dist/esm/api/resources/inboxes/resources/webhooks/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inboxes/resources/webhooks/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inboxes/resources/webhooks/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inboxes/resources/webhooks/exports.js"
+        },
         "./lists": {
             "import": {
                 "types": "./dist/esm/api/resources/lists/exports.d.mts",
@@ -307,6 +318,17 @@
                 "default": "./dist/cjs/api/resources/pods/resources/threads/exports.js"
             },
             "default": "./dist/cjs/api/resources/pods/resources/threads/exports.js"
+        },
+        "./pods/webhooks": {
+            "import": {
+                "types": "./dist/esm/api/resources/pods/resources/webhooks/exports.d.mts",
+                "default": "./dist/esm/api/resources/pods/resources/webhooks/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/pods/resources/webhooks/exports.d.ts",
+                "default": "./dist/cjs/api/resources/pods/resources/webhooks/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/pods/resources/webhooks/exports.js"
         },
         "./threads": {
             "import": {

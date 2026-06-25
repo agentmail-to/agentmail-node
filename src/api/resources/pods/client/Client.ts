@@ -16,6 +16,7 @@ import { InboxesClient } from "../resources/inboxes/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
 import { MetricsClient } from "../resources/metrics/client/Client.js";
 import { ThreadsClient } from "../resources/threads/client/Client.js";
+import { WebhooksClient } from "../resources/webhooks/client/Client.js";
 
 export declare namespace PodsClient {
     export type Options = BaseClientOptions;
@@ -28,6 +29,7 @@ export class PodsClient {
     protected _inboxes: InboxesClient | undefined;
     protected _threads: ThreadsClient | undefined;
     protected _drafts: DraftsClient | undefined;
+    protected _webhooks: WebhooksClient | undefined;
     protected _domains: DomainsClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
@@ -47,6 +49,10 @@ export class PodsClient {
 
     public get drafts(): DraftsClient {
         return (this._drafts ??= new DraftsClient(this._options));
+    }
+
+    public get webhooks(): WebhooksClient {
+        return (this._webhooks ??= new WebhooksClient(this._options));
     }
 
     public get domains(): DomainsClient {

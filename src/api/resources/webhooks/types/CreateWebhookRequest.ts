@@ -2,15 +2,6 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface CreateWebhookRequest {
-    url: AgentMail.webhooks.Url;
-    /**
-     * Full list of event types this webhook should receive. At least one type is required. Send every type you
-     * want in this array (not incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
-     * for spam, blocked, and unauthenticated events and required permissions.
-     */
-    eventTypes: AgentMail.EventTypes;
+export interface CreateWebhookRequest extends AgentMail.webhooks.CreatePodWebhookRequest {
     podIds?: AgentMail.PodIds;
-    inboxIds?: AgentMail.InboxIds;
-    clientId?: AgentMail.webhooks.ClientId;
 }
