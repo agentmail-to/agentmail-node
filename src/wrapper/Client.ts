@@ -7,6 +7,7 @@ import { AgentMailClient as FernAgentMailClient } from "../Client.js";
 import { type GetPaymentCredentials, WebsocketsClient } from "./WebsocketsClient.js";
 
 import { getPaymentCredentials as getX402Credentials } from "./x402.js";
+import { InboxesClient } from "./idempotency.js";
 import { type MppxClient, getPaymentCredentials as getMppCredentials } from "./mppx.js";
 
 type SharedOptions = Omit<FernAgentMailClient.Options, "apiKey">;
@@ -23,10 +24,20 @@ export declare namespace AgentMailClient {
 
 export class AgentMailClient extends FernAgentMailClient {
     protected declare _websockets: WebsocketsClient | undefined;
+    protected declare _inboxes: InboxesClient | undefined;
     private readonly _getPaymentCredentials: GetPaymentCredentials | undefined;
 
     public override get websockets(): WebsocketsClient {
         return (this._websockets ??= new WebsocketsClient(this._options, this._getPaymentCredentials));
+    }
+
+    /**
+     * Returns an InboxesClient whose `messages` / `drafts` clients auto-mint a
+     * fresh UUID4 `Idempotency-Key` for send / reply / replyAll / forward when
+     * the caller does not supply one (see src/wrapper/idempotency.ts).
+     */
+    public override get inboxes(): InboxesClient {
+        return (this._inboxes ??= new InboxesClient(this._options));
     }
 
     constructor(options: AgentMailClient.Options = {}) {
