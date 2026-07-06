@@ -2794,7 +2794,7 @@ await client.inboxes.drafts.send("inbox_id", "draft_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `DraftsClient.RequestOptions` 
+**requestOptions:** `DraftsClient.IdempotentRequestOptions` 
     
 </dd>
 </dl>
@@ -4016,7 +4016,7 @@ await client.inboxes.messages.send("inbox_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `MessagesClient.RequestOptions` 
+**requestOptions:** `MessagesClient.IdempotentRequestOptions` 
     
 </dd>
 </dl>
@@ -4098,7 +4098,7 @@ await client.inboxes.messages.reply("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `MessagesClient.RequestOptions` 
+**requestOptions:** `MessagesClient.IdempotentRequestOptions` 
     
 </dd>
 </dl>
@@ -4180,7 +4180,7 @@ await client.inboxes.messages.replyAll("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `MessagesClient.RequestOptions` 
+**requestOptions:** `MessagesClient.IdempotentRequestOptions` 
     
 </dd>
 </dl>
@@ -4262,7 +4262,7 @@ await client.inboxes.messages.forward("inbox_id", "message_id", {});
 <dl>
 <dd>
 
-**requestOptions:** `MessagesClient.RequestOptions` 
+**requestOptions:** `MessagesClient.IdempotentRequestOptions` 
     
 </dd>
 </dl>

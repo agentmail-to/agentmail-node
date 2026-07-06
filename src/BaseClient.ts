@@ -34,6 +34,10 @@ export interface BaseRequestOptions {
     headers?: Record<string, string | core.Supplier<string | null | undefined> | null | undefined>;
 }
 
+export interface BaseIdempotentRequestOptions {
+    idempotencyKey?: string | undefined;
+}
+
 export type NormalizedClientOptions<T extends BaseClientOptions = BaseClientOptions> = T & {
     logging: core.logging.Logger;
     authProvider?: core.AuthProvider;
@@ -51,8 +55,8 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         {
             "X-Fern-Language": "JavaScript",
             "X-Fern-SDK-Name": "agentmail",
-            "X-Fern-SDK-Version": "0.5.13",
-            "User-Agent": "agentmail/0.5.13",
+            "X-Fern-SDK-Version": "0.5.14",
+            "User-Agent": "agentmail/0.5.14",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },
