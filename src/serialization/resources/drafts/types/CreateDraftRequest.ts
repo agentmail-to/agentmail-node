@@ -7,9 +7,11 @@ import { SendAttachment } from "../../attachments/types/SendAttachment.js";
 import { DraftBcc } from "./DraftBcc.js";
 import { DraftCc } from "./DraftCc.js";
 import { DraftClientId } from "./DraftClientId.js";
+import { DraftForwardOf } from "./DraftForwardOf.js";
 import { DraftHtml } from "./DraftHtml.js";
 import { DraftInReplyTo } from "./DraftInReplyTo.js";
 import { DraftLabels } from "./DraftLabels.js";
+import { DraftReplyAll } from "./DraftReplyAll.js";
 import { DraftReplyTo } from "./DraftReplyTo.js";
 import { DraftSendAt } from "./DraftSendAt.js";
 import { DraftSubject } from "./DraftSubject.js";
@@ -30,6 +32,8 @@ export const CreateDraftRequest: core.serialization.ObjectSchema<
     html: DraftHtml.optional(),
     attachments: core.serialization.list(SendAttachment).optional(),
     inReplyTo: core.serialization.property("in_reply_to", DraftInReplyTo.optional()),
+    forwardOf: core.serialization.property("forward_of", DraftForwardOf.optional()),
+    replyAll: core.serialization.property("reply_all", DraftReplyAll.optional()),
     sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
     clientId: core.serialization.property("client_id", DraftClientId.optional()),
 });
@@ -46,6 +50,8 @@ export declare namespace CreateDraftRequest {
         html?: DraftHtml.Raw | null;
         attachments?: SendAttachment.Raw[] | null;
         in_reply_to?: DraftInReplyTo.Raw | null;
+        forward_of?: DraftForwardOf.Raw | null;
+        reply_all?: DraftReplyAll.Raw | null;
         send_at?: DraftSendAt.Raw | null;
         client_id?: DraftClientId.Raw | null;
     }

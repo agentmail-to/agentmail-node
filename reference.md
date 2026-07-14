@@ -2506,6 +2506,12 @@ await client.inboxes.drafts.getAttachment("inbox_id", "draft_id", "attachment_id
 <dl>
 <dd>
 
+Create a draft. Supply `in_reply_to` to create a reply draft (with
+`reply_all` to address the whole thread), whose recipients, subject, and
+threading are derived from the referenced message, or `forward_of` to
+create a forward draft, which derives the subject, threading, and
+forwarded content from the source but keeps recipients caller-supplied.
+
 **CLI:**
 ```bash
 agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
@@ -2579,6 +2585,10 @@ await client.inboxes.drafts.create("inbox_id", {});
 
 <dl>
 <dd>
+
+Edit fields on an existing draft. Passing `null` clears a field (or `[]`
+for a recipient field); `send_at: null` un-schedules a scheduled draft.
+A draft that is already being sent cannot be edited.
 
 **CLI:**
 ```bash
@@ -4263,264 +4273,6 @@ await client.inboxes.messages.forward("inbox_id", "message_id", {});
 <dd>
 
 **requestOptions:** `MessagesClient.IdempotentRequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">draftReply</a>(inbox_id, message_id, { ...params }) -> AgentMail.Draft</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a draft that replies to a message instead of sending it. The
-recipients, subject, and threading are derived from the source message.
-Send it later with `Send Draft`.
-
-**CLI:**
-```bash
-agentmail inboxes:messages draft-reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inboxes.messages.draftReply("inbox_id", "message_id", {});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `AgentMail.InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**message_id:** `AgentMail.MessageId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreateDraftReplyRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `MessagesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">draftReplyAll</a>(inbox_id, message_id, { ...params }) -> AgentMail.Draft</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a draft that replies to every recipient of a message instead of
-sending it. Recipients, subject, and threading are derived from the
-source message. Send it later with `Send Draft`.
-
-**CLI:**
-```bash
-agentmail inboxes:messages draft-reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inboxes.messages.draftReplyAll("inbox_id", "message_id", {});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `AgentMail.InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**message_id:** `AgentMail.MessageId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreateDraftReplyAllRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `MessagesClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">draftForward</a>(inbox_id, message_id, { ...params }) -> AgentMail.Draft</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Create a draft that forwards a message instead of sending it. The subject
-and threading are derived from the source message, whose body and
-attachments are merged in at send time. Send it later with `Send Draft`.
-
-**CLI:**
-```bash
-agentmail inboxes:messages draft-forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inboxes.messages.draftForward("inbox_id", "message_id", {});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `AgentMail.InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**message_id:** `AgentMail.MessageId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreateDraftForwardRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `MessagesClient.RequestOptions` 
     
 </dd>
 </dl>

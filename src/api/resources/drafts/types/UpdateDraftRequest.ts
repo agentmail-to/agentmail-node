@@ -2,13 +2,27 @@
 
 import type * as AgentMail from "../../../index.js";
 
+/**
+ * Edit fields on an existing draft. A draft's kind (plain, reply, or forward)
+ * is fixed at creation and cannot be changed here. Omitting a field leaves it
+ * unchanged; passing `null` (or `[]` for a recipient field) clears it. Pass
+ * `send_at` to schedule or reschedule the draft, or `null` to un-schedule it.
+ */
 export interface UpdateDraftRequest {
-    replyTo?: AgentMail.DraftReplyTo;
-    to?: AgentMail.DraftTo;
-    cc?: AgentMail.DraftCc;
-    bcc?: AgentMail.DraftBcc;
-    subject?: AgentMail.DraftSubject;
-    text?: AgentMail.DraftText;
-    html?: AgentMail.DraftHtml;
-    sendAt?: AgentMail.DraftSendAt;
+    replyTo?: AgentMail.DraftReplyTo | null;
+    to?: AgentMail.DraftTo | null;
+    cc?: AgentMail.DraftCc | null;
+    bcc?: AgentMail.DraftBcc | null;
+    subject?: AgentMail.DraftSubject | null;
+    text?: AgentMail.DraftText | null;
+    html?: AgentMail.DraftHtml | null;
+    /** Attachments to add to the draft. */
+    addAttachments?: AgentMail.SendAttachment[];
+    /** IDs of attachments to remove from the draft. */
+    removeAttachments?: AgentMail.AttachmentId[];
+    /** Label or labels to add to the draft. */
+    addLabels?: AgentMail.DraftLabels;
+    /** Label or labels to remove from the draft. */
+    removeLabels?: AgentMail.DraftLabels;
+    sendAt?: AgentMail.DraftSendAt | null;
 }

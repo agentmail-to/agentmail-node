@@ -3,18 +3,27 @@
 import type * as AgentMail from "../../api/index.js";
 import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
+import { ErrorCode } from "./ErrorCode.js";
+import { ErrorDocs } from "./ErrorDocs.js";
+import { ErrorFix } from "./ErrorFix.js";
 import { ErrorMessage } from "./ErrorMessage.js";
 import { ErrorName } from "./ErrorName.js";
 
 export const ErrorResponse: core.serialization.ObjectSchema<serializers.ErrorResponse.Raw, AgentMail.ErrorResponse> =
     core.serialization.object({
         name: ErrorName,
+        code: ErrorCode.optional(),
         message: ErrorMessage,
+        fix: ErrorFix.optional(),
+        docs: ErrorDocs.optional(),
     });
 
 export declare namespace ErrorResponse {
     export interface Raw {
         name: ErrorName.Raw;
+        code?: ErrorCode.Raw | null;
         message: ErrorMessage.Raw;
+        fix?: ErrorFix.Raw | null;
+        docs?: ErrorDocs.Raw | null;
     }
 }

@@ -3,6 +3,10 @@
 import type * as AgentMail from "../../api/index.js";
 import * as core from "../../core/index.js";
 import type * as serializers from "../index.js";
+import { ErrorCode } from "./ErrorCode.js";
+import { ErrorDocs } from "./ErrorDocs.js";
+import { ErrorFix } from "./ErrorFix.js";
+import { ErrorMessage } from "./ErrorMessage.js";
 import { ErrorName } from "./ErrorName.js";
 
 export const ValidationErrorResponse: core.serialization.ObjectSchema<
@@ -10,12 +14,20 @@ export const ValidationErrorResponse: core.serialization.ObjectSchema<
     AgentMail.ValidationErrorResponse
 > = core.serialization.object({
     name: ErrorName,
+    code: ErrorCode.optional(),
+    message: ErrorMessage.optional(),
     errors: core.serialization.unknown(),
+    fix: ErrorFix.optional(),
+    docs: ErrorDocs.optional(),
 });
 
 export declare namespace ValidationErrorResponse {
     export interface Raw {
         name: ErrorName.Raw;
+        code?: ErrorCode.Raw | null;
+        message?: ErrorMessage.Raw | null;
         errors?: unknown;
+        fix?: ErrorFix.Raw | null;
+        docs?: ErrorDocs.Raw | null;
     }
 }

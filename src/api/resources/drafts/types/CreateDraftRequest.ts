@@ -2,6 +2,21 @@
 
 import type * as AgentMail from "../../../index.js";
 
+/**
+ * Body for creating a draft. Supports plain, reply, reply-all, and forward
+ * drafts:
+ *
+ * - **Plain draft:** supply `to`, `subject`, `text`, etc.
+ * - **Reply:** set `in_reply_to` to a message ID. Recipients, subject, and
+ *   threading are derived from that message. Set `reply_all` to address the
+ *   whole thread (you then cannot also pass `to`, `cc`, or `bcc`).
+ * - **Forward:** set `forward_of` to a message ID. The subject and threading
+ *   are derived from the source message, whose body and attachments are
+ *   merged in at send time.
+ *
+ * `in_reply_to` and `forward_of` are mutually exclusive, and reading the
+ * referenced message requires `message_read` permission.
+ */
 export interface CreateDraftRequest {
     labels?: AgentMail.DraftLabels;
     replyTo?: AgentMail.DraftReplyTo;
@@ -14,6 +29,8 @@ export interface CreateDraftRequest {
     /** Attachments to include in draft. */
     attachments?: AgentMail.SendAttachment[];
     inReplyTo?: AgentMail.DraftInReplyTo;
+    forwardOf?: AgentMail.DraftForwardOf;
+    replyAll?: AgentMail.DraftReplyAll;
     sendAt?: AgentMail.DraftSendAt;
     clientId?: AgentMail.DraftClientId;
 }

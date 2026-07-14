@@ -3,9 +3,12 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AttachmentId } from "../../attachments/types/AttachmentId.js";
+import { SendAttachment } from "../../attachments/types/SendAttachment.js";
 import { DraftBcc } from "./DraftBcc.js";
 import { DraftCc } from "./DraftCc.js";
 import { DraftHtml } from "./DraftHtml.js";
+import { DraftLabels } from "./DraftLabels.js";
 import { DraftReplyTo } from "./DraftReplyTo.js";
 import { DraftSendAt } from "./DraftSendAt.js";
 import { DraftSubject } from "./DraftSubject.js";
@@ -16,25 +19,36 @@ export const UpdateDraftRequest: core.serialization.ObjectSchema<
     serializers.UpdateDraftRequest.Raw,
     AgentMail.UpdateDraftRequest
 > = core.serialization.object({
-    replyTo: core.serialization.property("reply_to", DraftReplyTo.optional()),
-    to: DraftTo.optional(),
-    cc: DraftCc.optional(),
-    bcc: DraftBcc.optional(),
-    subject: DraftSubject.optional(),
-    text: DraftText.optional(),
-    html: DraftHtml.optional(),
-    sendAt: core.serialization.property("send_at", DraftSendAt.optional()),
+    replyTo: core.serialization.property("reply_to", DraftReplyTo.optionalNullable()),
+    to: DraftTo.optionalNullable(),
+    cc: DraftCc.optionalNullable(),
+    bcc: DraftBcc.optionalNullable(),
+    subject: DraftSubject.optionalNullable(),
+    text: DraftText.optionalNullable(),
+    html: DraftHtml.optionalNullable(),
+    addAttachments: core.serialization.property("add_attachments", core.serialization.list(SendAttachment).optional()),
+    removeAttachments: core.serialization.property(
+        "remove_attachments",
+        core.serialization.list(AttachmentId).optional(),
+    ),
+    addLabels: core.serialization.property("add_labels", DraftLabels.optional()),
+    removeLabels: core.serialization.property("remove_labels", DraftLabels.optional()),
+    sendAt: core.serialization.property("send_at", DraftSendAt.optionalNullable()),
 });
 
 export declare namespace UpdateDraftRequest {
     export interface Raw {
-        reply_to?: DraftReplyTo.Raw | null;
-        to?: DraftTo.Raw | null;
-        cc?: DraftCc.Raw | null;
-        bcc?: DraftBcc.Raw | null;
-        subject?: DraftSubject.Raw | null;
-        text?: DraftText.Raw | null;
-        html?: DraftHtml.Raw | null;
-        send_at?: DraftSendAt.Raw | null;
+        reply_to?: (DraftReplyTo.Raw | null | undefined) | null;
+        to?: (DraftTo.Raw | null | undefined) | null;
+        cc?: (DraftCc.Raw | null | undefined) | null;
+        bcc?: (DraftBcc.Raw | null | undefined) | null;
+        subject?: (DraftSubject.Raw | null | undefined) | null;
+        text?: (DraftText.Raw | null | undefined) | null;
+        html?: (DraftHtml.Raw | null | undefined) | null;
+        add_attachments?: SendAttachment.Raw[] | null;
+        remove_attachments?: AttachmentId.Raw[] | null;
+        add_labels?: DraftLabels.Raw | null;
+        remove_labels?: DraftLabels.Raw | null;
+        send_at?: (DraftSendAt.Raw | null | undefined) | null;
     }
 }

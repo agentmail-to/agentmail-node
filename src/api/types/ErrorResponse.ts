@@ -4,5 +4,8 @@ import type * as AgentMail from "../index.js";
 
 export interface ErrorResponse {
     name: AgentMail.ErrorName;
+    code?: AgentMail.ErrorCode;
     message: AgentMail.ErrorMessage;
+    fix?: AgentMail.ErrorFix;
+    docs?: AgentMail.ErrorDocs;
 }

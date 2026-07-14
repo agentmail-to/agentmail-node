@@ -4,6 +4,10 @@ import type * as AgentMail from "../index.js";
 
 export interface ValidationErrorResponse {
     name: AgentMail.ErrorName;
-    /** Validation errors. */
+    code?: AgentMail.ErrorCode;
+    message?: AgentMail.ErrorMessage;
+    /** Validation errors. Each entry has a path and a message identifying the invalid field. */
     errors?: unknown;
+    fix?: AgentMail.ErrorFix;
+    docs?: AgentMail.ErrorDocs;
 }

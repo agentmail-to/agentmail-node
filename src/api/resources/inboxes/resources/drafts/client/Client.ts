@@ -333,6 +333,12 @@ export class DraftsClient {
     }
 
     /**
+     * Create a draft. Supply `in_reply_to` to create a reply draft (with
+     * `reply_all` to address the whole thread), whose recipients, subject, and
+     * threading are derived from the referenced message, or `forward_of` to
+     * create a forward draft, which derives the subject, threading, and
+     * forwarded content from the source but keeps recipients caller-supplied.
+     *
      * **CLI:**
      * ```bash
      * agentmail inboxes:drafts create --inbox-id <inbox_id> --to recipient@example.com --subject "Draft subject" --text "Draft body"
@@ -342,6 +348,7 @@ export class DraftsClient {
      * @param {AgentMail.CreateDraftRequest} request
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link AgentMail.ValidationError}
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
@@ -403,6 +410,17 @@ export class DraftsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new AgentMail.NotFoundError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
@@ -432,6 +450,10 @@ export class DraftsClient {
     }
 
     /**
+     * Edit fields on an existing draft. Passing `null` clears a field (or `[]`
+     * for a recipient field); `send_at: null` un-schedules a scheduled draft.
+     * A draft that is already being sent cannot be edited.
+     *
      * **CLI:**
      * ```bash
      * agentmail inboxes:drafts update --inbox-id <inbox_id> --draft-id <draft_id> --subject "Updated subject"
@@ -442,7 +464,9 @@ export class DraftsClient {
      * @param {AgentMail.UpdateDraftRequest} request
      * @param {DraftsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
+     * @throws {@link AgentMail.ValidationError}
      * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ConflictError}
      *
      * @example
      *     await client.inboxes.drafts.update("inbox_id", "draft_id", {})
@@ -505,8 +529,30 @@ export class DraftsClient {
 
         if (_response.error.reason === "status-code") {
             switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
                 case 404:
                     throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,

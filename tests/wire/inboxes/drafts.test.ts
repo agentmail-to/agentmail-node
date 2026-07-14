@@ -485,6 +485,30 @@ describe("DraftsClient", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
         const rawRequestBody = {};
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/drafts")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.drafts.create("inbox_id", {});
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
 
         server
@@ -608,6 +632,30 @@ describe("DraftsClient", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
         const rawRequestBody = {};
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/inboxes/inbox_id/drafts/draft_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.drafts.update("inbox_id", "draft_id", {});
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("update (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
         const rawResponseBody = { name: "name", message: "message" };
 
         server
@@ -622,6 +670,30 @@ describe("DraftsClient", () => {
         await expect(async () => {
             return await client.inboxes.drafts.update("inbox_id", "draft_id", {});
         }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("update (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/inboxes/inbox_id/drafts/draft_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.drafts.update("inbox_id", "draft_id", {});
+        }).rejects.toThrow(AgentMail.ConflictError);
     });
 
     test("delete (1)", async () => {
