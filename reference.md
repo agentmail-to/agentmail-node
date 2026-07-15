@@ -4833,7 +4833,7 @@ await client.inboxes.threads.update("inbox_id", "thread_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">delete</a>(inbox_id, thread_id, { ...params }) -> void</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">delete</a>(inbox_id, thread_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -4845,7 +4845,7 @@ await client.inboxes.threads.update("inbox_id", "thread_id", {});
 <dl>
 <dd>
 
-Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
@@ -4890,14 +4890,6 @@ await client.inboxes.threads.delete("inbox_id", "thread_id");
 <dd>
 
 **thread_id:** `AgentMail.ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.inboxes.DeleteThreadRequest` 
     
 </dd>
 </dl>
@@ -8107,7 +8099,7 @@ await client.pods.threads.update("pod_id", "thread_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">delete</a>(pod_id, thread_id, { ...params }) -> void</code></summary>
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">delete</a>(pod_id, thread_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -8119,7 +8111,7 @@ await client.pods.threads.update("pod_id", "thread_id", {});
 <dl>
 <dd>
 
-Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
@@ -8164,14 +8156,6 @@ await client.pods.threads.delete("pod_id", "thread_id");
 <dd>
 
 **thread_id:** `AgentMail.ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.pods.DeleteThreadRequest` 
     
 </dd>
 </dl>
@@ -8928,7 +8912,7 @@ await client.threads.update("thread_id", {});
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">delete</a>(thread_id, { ...params }) -> void</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">delete</a>(thread_id) -> void</code></summary>
 <dl>
 <dd>
 
@@ -8940,7 +8924,7 @@ await client.threads.update("thread_id", {});
 <dl>
 <dd>
 
-Moves the thread to trash by adding a trash label to all messages. If the thread is already in trash, it will be permanently deleted. Use `permanent=true` to force permanent deletion.
+Permanently deletes a thread and all of its messages.
 
 **CLI:**
 ```bash
@@ -8977,14 +8961,6 @@ await client.threads.delete("thread_id");
 <dd>
 
 **thread_id:** `AgentMail.ThreadId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.DeleteThreadRequest` 
     
 </dd>
 </dl>
