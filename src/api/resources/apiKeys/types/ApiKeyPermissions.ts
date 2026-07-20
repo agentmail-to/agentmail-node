@@ -66,6 +66,8 @@ export interface ApiKeyPermissions {
     apiKeyRead?: boolean;
     /** Create API keys. */
     apiKeyCreate?: boolean;
+    /** Update API keys. */
+    apiKeyUpdate?: boolean;
     /** Delete API keys. */
     apiKeyDelete?: boolean;
     /** Read pods. */

@@ -1299,6 +1299,356 @@ await client.apiKeys.delete("api_key_id");
 </dl>
 </details>
 
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">listPublicKeys</a>({ ...params }) -> AgentMail.ListPublicKeysResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List only public-key credentials visible to the bearer caller's scope.
+Bearer credentials are never returned, even though both credential types
+share storage and pagination indexes. Requires `api_key_read`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.listPublicKeys();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ListPublicKeysRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">createPublicKey</a>({ ...params }) -> AgentMail.PublicKeyCredential</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Register a public P-256 JWK using an existing AgentMail bearer API key
+with `api_key_create`. Re-registering the same JWK creates a new
+credential ID; it does not replace or recover an earlier credential.
+The private key must never be sent to AgentMail.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.createPublicKey({
+    publicKey: {
+        kty: "EC",
+        crv: "P-256",
+        x: "blackcurrant...............................",
+        y: "blackcurrant..............................."
+    }
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreatePublicKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">updatePublicKeyName</a>(api_key_id, { ...params }) -> AgentMail.PublicKeyCredential</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rename the credential. All security-relevant fields are immutable.
+Requires `api_key_update`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.updatePublicKeyName("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+    name: "x"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**api_key_id:** `string` — Public-key credential ID returned by registration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdatePublicKeyNameRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">revokePublicKey</a>(api_key_id) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Permanently revoke one public-key credential. This hard-deletes the
+credential; repeating the request returns not found. Requires
+`api_key_delete`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.revokePublicKey("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**api_key_id:** `string` — Public-key credential ID returned by registration.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">revokeAllAgentIdSignInKeys</a>({ ...params }) -> AgentMail.RevokeAllAgentIdSignInKeysResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Invalidate every current public-key credential in the caller's
+organization by advancing its AgentID key generation. The caller must be
+organization-scoped and either have `api_key_delete` or, for a verified
+self-serve agent organization, use an unrestricted unmanaged bearer
+credential. No request body is accepted.
+
+`Idempotency-Key` is required and must be a UUID. Reusing the same UUID
+returns the original permanent receipt without advancing the generation
+again. A new UUID performs a new generation advance.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.revokeAllAgentIdSignInKeys({
+    idempotencyKey: "Idempotency-Key"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.RevokeAllAgentIdSignInKeysRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Auth
 <details><summary><code>client.auth.<a href="/src/api/resources/auth/client/Client.ts">me</a>() -> AgentMail.Identity</code></summary>
 <dl>

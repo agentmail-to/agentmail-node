@@ -56,6 +56,7 @@ describe("ApiKeysClient", () => {
                         metrics_read: true,
                         api_key_read: true,
                         api_key_create: true,
+                        api_key_update: true,
                         api_key_delete: true,
                         pod_read: true,
                         pod_create: true,
@@ -102,6 +103,7 @@ describe("ApiKeysClient", () => {
                         metrics_read: true,
                         api_key_read: true,
                         api_key_create: true,
+                        api_key_update: true,
                         api_key_delete: true,
                         pod_read: true,
                         pod_create: true,
@@ -158,6 +160,7 @@ describe("ApiKeysClient", () => {
                         metricsRead: true,
                         apiKeyRead: true,
                         apiKeyCreate: true,
+                        apiKeyUpdate: true,
                         apiKeyDelete: true,
                         podRead: true,
                         podCreate: true,
@@ -204,6 +207,7 @@ describe("ApiKeysClient", () => {
                         metricsRead: true,
                         apiKeyRead: true,
                         apiKeyCreate: true,
+                        apiKeyUpdate: true,
                         apiKeyDelete: true,
                         podRead: true,
                         podCreate: true,
@@ -262,6 +266,7 @@ describe("ApiKeysClient", () => {
                 metrics_read: true,
                 api_key_read: true,
                 api_key_create: true,
+                api_key_update: true,
                 api_key_delete: true,
                 pod_read: true,
                 pod_create: true,
@@ -319,6 +324,7 @@ describe("ApiKeysClient", () => {
                 metricsRead: true,
                 apiKeyRead: true,
                 apiKeyCreate: true,
+                apiKeyUpdate: true,
                 apiKeyDelete: true,
                 podRead: true,
                 podCreate: true,
@@ -387,5 +393,506 @@ describe("ApiKeysClient", () => {
         await expect(async () => {
             return await client.apiKeys.delete("api_key_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("listPublicKeys", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            count: 1,
+            next_page_token: "next_page_token",
+            public_keys: [
+                {
+                    api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    type: "public_key",
+                    name: "name",
+                    public_key: {
+                        jwk: {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "blackcurrant...............................",
+                            y: "blackcurrant...............................",
+                        },
+                        fingerprint: "blackcurrant...............................",
+                    },
+                    scope: { type: "organization" },
+                    expires_at: "2024-01-15T09:30:00Z",
+                    revoked_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    type: "public_key",
+                    name: "name",
+                    public_key: {
+                        jwk: {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "blackcurrant...............................",
+                            y: "blackcurrant...............................",
+                        },
+                        fingerprint: "blackcurrant...............................",
+                    },
+                    scope: { type: "organization" },
+                    expires_at: "2024-01-15T09:30:00Z",
+                    revoked_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/api-keys/public-keys")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.apiKeys.listPublicKeys();
+        expect(response).toEqual({
+            count: 1,
+            nextPageToken: "next_page_token",
+            publicKeys: [
+                {
+                    apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    type: "public_key",
+                    name: "name",
+                    publicKey: {
+                        jwk: {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "blackcurrant...............................",
+                            y: "blackcurrant...............................",
+                        },
+                        fingerprint: "blackcurrant...............................",
+                    },
+                    scope: {
+                        type: "organization",
+                    },
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+                    revokedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+                {
+                    apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    type: "public_key",
+                    name: "name",
+                    publicKey: {
+                        jwk: {
+                            kty: "EC",
+                            crv: "P-256",
+                            x: "blackcurrant...............................",
+                            y: "blackcurrant...............................",
+                        },
+                        fingerprint: "blackcurrant...............................",
+                    },
+                    scope: {
+                        type: "organization",
+                    },
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+                    revokedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+            ],
+        });
+    });
+
+    test("createPublicKey (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            public_key: {
+                kty: "EC",
+                crv: "P-256",
+                x: "blackcurrant...............................",
+                y: "blackcurrant...............................",
+            },
+        };
+        const rawResponseBody = {
+            api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            type: "public_key",
+            name: "name",
+            public_key: {
+                jwk: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+                fingerprint: "blackcurrant...............................",
+            },
+            scope: { type: "organization" },
+            expires_at: "2024-01-15T09:30:00Z",
+            revoked_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/api-keys/public-keys")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.apiKeys.createPublicKey({
+            publicKey: {
+                kty: "EC",
+                crv: "P-256",
+                x: "blackcurrant...............................",
+                y: "blackcurrant...............................",
+            },
+        });
+        expect(response).toEqual({
+            apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            type: "public_key",
+            name: "name",
+            publicKey: {
+                jwk: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+                fingerprint: "blackcurrant...............................",
+            },
+            scope: {
+                type: "organization",
+            },
+            expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+            revokedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("createPublicKey (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            public_key: {
+                kty: "EC",
+                crv: "P-256",
+                x: "blackcurrant...............................",
+                y: "blackcurrant...............................",
+            },
+        };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/api-keys/public-keys")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.createPublicKey({
+                publicKey: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("createPublicKey (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {
+            public_key: {
+                kty: "EC",
+                crv: "P-256",
+                x: "blackcurrant...............................",
+                y: "blackcurrant...............................",
+            },
+        };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/api-keys/public-keys")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.createPublicKey({
+                publicKey: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+            });
+        }).rejects.toThrow(AgentMail.ConflictError);
+    });
+
+    test("updatePublicKeyName (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { name: "x" };
+        const rawResponseBody = {
+            api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            type: "public_key",
+            name: "name",
+            public_key: {
+                jwk: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+                fingerprint: "blackcurrant...............................",
+            },
+            scope: { type: "organization" },
+            expires_at: "2024-01-15T09:30:00Z",
+            revoked_at: "2024-01-15T09:30:00Z",
+            created_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/api-keys/public-keys/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.apiKeys.updatePublicKeyName("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+            name: "x",
+        });
+        expect(response).toEqual({
+            apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            type: "public_key",
+            name: "name",
+            publicKey: {
+                jwk: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+                fingerprint: "blackcurrant...............................",
+            },
+            scope: {
+                type: "organization",
+            },
+            expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+            revokedAt: new Date("2024-01-15T09:30:00.000Z"),
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("updatePublicKeyName (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { name: "x" };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/api-keys/public-keys/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.updatePublicKeyName("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+                name: "x",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("updatePublicKeyName (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { name: "x" };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/api-keys/public-keys/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.updatePublicKeyName("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
+                name: "x",
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("revokePublicKey (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server
+            .mockEndpoint()
+            .delete("/v0/api-keys/public-keys/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.apiKeys.revokePublicKey("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        expect(response).toEqual(undefined);
+    });
+
+    test("revokePublicKey (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/v0/api-keys/public-keys/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.revokePublicKey("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("revokeAllAgentIdSignInKeys (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { previous_generation: 1, current_generation: 1, revoked_at: "2024-01-15T09:30:00Z" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/api-keys/public-keys/agentid-sign-in/revoke-all")
+            .header("Idempotency-Key", "Idempotency-Key")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.apiKeys.revokeAllAgentIdSignInKeys({
+            idempotencyKey: "Idempotency-Key",
+        });
+        expect(response).toEqual({
+            previousGeneration: 1,
+            currentGeneration: 1,
+            revokedAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("revokeAllAgentIdSignInKeys (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/api-keys/public-keys/agentid-sign-in/revoke-all")
+            .header("Idempotency-Key", "Idempotency-Key")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.revokeAllAgentIdSignInKeys({
+                idempotencyKey: "Idempotency-Key",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("revokeAllAgentIdSignInKeys (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/api-keys/public-keys/agentid-sign-in/revoke-all")
+            .header("Idempotency-Key", "Idempotency-Key")
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.revokeAllAgentIdSignInKeys({
+                idempotencyKey: "Idempotency-Key",
+            });
+        }).rejects.toThrow(AgentMail.ConflictError);
     });
 });
