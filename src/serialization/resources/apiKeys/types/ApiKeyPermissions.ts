@@ -12,13 +12,16 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     inboxCreate: core.serialization.property("inbox_create", core.serialization.boolean().optional()),
     inboxUpdate: core.serialization.property("inbox_update", core.serialization.boolean().optional()),
     inboxDelete: core.serialization.property("inbox_delete", core.serialization.boolean().optional()),
-    threadRead: core.serialization.property("thread_read", core.serialization.boolean().optional()),
-    threadDelete: core.serialization.property("thread_delete", core.serialization.boolean().optional()),
     messageRead: core.serialization.property("message_read", core.serialization.boolean().optional()),
     messageSend: core.serialization.property("message_send", core.serialization.boolean().optional()),
     messageUpdate: core.serialization.property("message_update", core.serialization.boolean().optional()),
+    messageDelete: core.serialization.property("message_delete", core.serialization.boolean().optional()),
     labelSpamRead: core.serialization.property("label_spam_read", core.serialization.boolean().optional()),
     labelBlockedRead: core.serialization.property("label_blocked_read", core.serialization.boolean().optional()),
+    labelUnauthenticatedRead: core.serialization.property(
+        "label_unauthenticated_read",
+        core.serialization.boolean().optional(),
+    ),
     labelTrashRead: core.serialization.property("label_trash_read", core.serialization.boolean().optional()),
     draftRead: core.serialization.property("draft_read", core.serialization.boolean().optional()),
     draftCreate: core.serialization.property("draft_create", core.serialization.boolean().optional()),
@@ -52,13 +55,13 @@ export declare namespace ApiKeyPermissions {
         inbox_create?: boolean | null;
         inbox_update?: boolean | null;
         inbox_delete?: boolean | null;
-        thread_read?: boolean | null;
-        thread_delete?: boolean | null;
         message_read?: boolean | null;
         message_send?: boolean | null;
         message_update?: boolean | null;
+        message_delete?: boolean | null;
         label_spam_read?: boolean | null;
         label_blocked_read?: boolean | null;
+        label_unauthenticated_read?: boolean | null;
         label_trash_read?: boolean | null;
         draft_read?: boolean | null;
         draft_create?: boolean | null;

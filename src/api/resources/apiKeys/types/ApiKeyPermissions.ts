@@ -12,20 +12,20 @@ export interface ApiKeyPermissions {
     inboxUpdate?: boolean;
     /** Delete inboxes. */
     inboxDelete?: boolean;
-    /** Read threads. */
-    threadRead?: boolean;
-    /** Delete threads. */
-    threadDelete?: boolean;
-    /** Read messages. */
+    /** Read messages. Also required to read threads. */
     messageRead?: boolean;
     /** Send messages. */
     messageSend?: boolean;
-    /** Update message labels. */
+    /** Update message labels. Also required to update threads. */
     messageUpdate?: boolean;
+    /** Delete messages. Also required to delete threads. */
+    messageDelete?: boolean;
     /** Access messages labeled spam. */
     labelSpamRead?: boolean;
     /** Access messages labeled blocked. */
     labelBlockedRead?: boolean;
+    /** Access messages labeled unauthenticated. */
+    labelUnauthenticatedRead?: boolean;
     /** Access messages labeled trash. */
     labelTrashRead?: boolean;
     /** Read drafts. */
