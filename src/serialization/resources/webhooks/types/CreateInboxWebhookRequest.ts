@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { ClientId } from "./ClientId.js";
 import { CreateWebhookEventTypes } from "./CreateWebhookEventTypes.js";
 import { Url } from "./Url.js";
+import { WebhookHeaders } from "./WebhookHeaders.js";
 
 export const CreateInboxWebhookRequest: core.serialization.ObjectSchema<
     serializers.webhooks.CreateInboxWebhookRequest.Raw,
@@ -14,6 +15,7 @@ export const CreateInboxWebhookRequest: core.serialization.ObjectSchema<
     url: Url,
     eventTypes: core.serialization.property("event_types", CreateWebhookEventTypes),
     clientId: core.serialization.property("client_id", ClientId.optional()),
+    headers: WebhookHeaders.optional(),
 });
 
 export declare namespace CreateInboxWebhookRequest {
@@ -21,5 +23,6 @@ export declare namespace CreateInboxWebhookRequest {
         url: Url.Raw;
         event_types: CreateWebhookEventTypes.Raw;
         client_id?: ClientId.Raw | null;
+        headers?: WebhookHeaders.Raw | null;
     }
 }

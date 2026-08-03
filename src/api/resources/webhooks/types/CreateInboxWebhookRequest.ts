@@ -10,4 +10,5 @@ export interface CreateInboxWebhookRequest {
     url: AgentMail.webhooks.Url;
     eventTypes: AgentMail.webhooks.CreateWebhookEventTypes;
     clientId?: AgentMail.webhooks.ClientId;
+    headers?: AgentMail.webhooks.WebhookHeaders;
 }

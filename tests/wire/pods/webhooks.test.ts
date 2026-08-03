@@ -154,6 +154,53 @@ describe("WebhooksClient", () => {
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
+    test("getHeaders (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { header_names: ["header_names", "header_names"] };
+
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/webhooks/webhook_id/headers")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.pods.webhooks.getHeaders("pod_id", "webhook_id");
+        expect(response).toEqual({
+            headerNames: ["header_names", "header_names"],
+        });
+    });
+
+    test("getHeaders (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/webhooks/webhook_id/headers")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.webhooks.getHeaders("pod_id", "webhook_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
     test("create (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
@@ -319,6 +366,75 @@ describe("WebhooksClient", () => {
 
         await expect(async () => {
             return await client.pods.webhooks.update("pod_id", "webhook_id", {});
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("updateHeaders (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/webhooks/webhook_id/headers")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.pods.webhooks.updateHeaders("pod_id", "webhook_id", {});
+        expect(response).toEqual(undefined);
+    });
+
+    test("updateHeaders (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/webhooks/webhook_id/headers")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.webhooks.updateHeaders("pod_id", "webhook_id", {});
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("updateHeaders (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/webhooks/webhook_id/headers")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.webhooks.updateHeaders("pod_id", "webhook_id", {});
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 

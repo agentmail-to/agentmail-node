@@ -184,6 +184,94 @@ export class WebhooksClient {
     }
 
     /**
+     * List the names of custom HTTP headers included with deliveries to this webhook. Header values are
+     * write-only and are never returned.
+     *
+     * @param {AgentMail.webhooks.WebhookId} webhook_id
+     * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.webhooks.getHeaders("webhook_id")
+     */
+    public getHeaders(
+        webhook_id: AgentMail.webhooks.WebhookId,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.webhooks.WebhookHeaderNamesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__getHeaders(webhook_id, requestOptions));
+    }
+
+    private async __getHeaders(
+        webhook_id: AgentMail.webhooks.WebhookId,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.webhooks.WebhookHeaderNamesResponse>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/webhooks/${core.url.encodePathParam(serializers.webhooks.WebhookId.jsonOrThrow(webhook_id, { omitUndefined: true }))}/headers`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.webhooks.WebhookHeaderNamesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/webhooks/{webhook_id}/headers",
+        );
+    }
+
+    /**
      * **CLI:**
      * ```bash
      * agentmail webhooks create --url https://example.com/webhook --event-type message.received
@@ -384,6 +472,106 @@ export class WebhooksClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/v0/webhooks/{webhook_id}");
+    }
+
+    /**
+     * Atomically set, replace, or remove custom HTTP headers included with deliveries to this webhook.
+     * Header values remain write-only.
+     *
+     * @param {AgentMail.webhooks.WebhookId} webhook_id
+     * @param {AgentMail.webhooks.UpdateWebhookHeadersRequest} request
+     * @param {WebhooksClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ValidationError}
+     *
+     * @example
+     *     await client.webhooks.updateHeaders("webhook_id", {})
+     */
+    public updateHeaders(
+        webhook_id: AgentMail.webhooks.WebhookId,
+        request: AgentMail.webhooks.UpdateWebhookHeadersRequest,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__updateHeaders(webhook_id, request, requestOptions));
+    }
+
+    private async __updateHeaders(
+        webhook_id: AgentMail.webhooks.WebhookId,
+        request: AgentMail.webhooks.UpdateWebhookHeadersRequest,
+        requestOptions?: WebhooksClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/webhooks/${core.url.encodePathParam(serializers.webhooks.WebhookId.jsonOrThrow(webhook_id, { omitUndefined: true }))}/headers`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.webhooks.UpdateWebhookHeadersRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "PATCH",
+            "/v0/webhooks/{webhook_id}/headers",
+        );
     }
 
     /**

@@ -736,6 +736,70 @@ await client.webhooks.get("webhook_id");
 </dl>
 </details>
 
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">getHeaders</a>(webhook_id) -> AgentMail.WebhookHeaderNamesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the names of custom HTTP headers included with deliveries to this webhook. Header values are
+write-only and are never returned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.webhooks.getHeaders("webhook_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">create</a>({ ...params }) -> AgentMail.Webhook</code></summary>
 <dl>
 <dd>
@@ -863,6 +927,78 @@ await client.webhooks.update("webhook_id", {});
 <dd>
 
 **request:** `AgentMail.UpdateWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.<a href="/src/api/resources/webhooks/client/Client.ts">updateHeaders</a>(webhook_id, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Atomically set, replace, or remove custom HTTP headers included with deliveries to this webhook.
+Header values remain write-only.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.webhooks.updateHeaders("webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateWebhookHeadersRequest` 
     
 </dd>
 </dl>
@@ -5408,6 +5544,78 @@ await client.inboxes.webhooks.get("inbox_id", "webhook_id");
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">getHeaders</a>(inbox_id, webhook_id) -> AgentMail.WebhookHeaderNamesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the names of custom HTTP headers included with deliveries to this inbox-scoped webhook.
+Header values are write-only and are never returned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.getHeaders("inbox_id", "webhook_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">create</a>(inbox_id, { ...params }) -> AgentMail.Webhook</code></summary>
 <dl>
 <dd>
@@ -5550,6 +5758,86 @@ await client.inboxes.webhooks.update("inbox_id", "webhook_id", {});
 <dd>
 
 **request:** `AgentMail.UpdateInboxWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.webhooks.<a href="/src/api/resources/inboxes/resources/webhooks/client/Client.ts">updateHeaders</a>(inbox_id, webhook_id, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Atomically set, replace, or remove custom HTTP headers included with deliveries to this
+inbox-scoped webhook. Header values remain write-only.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.updateHeaders("inbox_id", "webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateWebhookHeadersRequest` 
     
 </dd>
 </dl>
@@ -8674,6 +8962,78 @@ await client.pods.webhooks.get("pod_id", "webhook_id");
 </dl>
 </details>
 
+<details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">getHeaders</a>(pod_id, webhook_id) -> AgentMail.WebhookHeaderNamesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+List the names of custom HTTP headers included with deliveries to this pod-scoped webhook.
+Header values are write-only and are never returned.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.getHeaders("pod_id", "webhook_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">create</a>(pod_id, { ...params }) -> AgentMail.Webhook</code></summary>
 <dl>
 <dd>
@@ -8816,6 +9176,86 @@ await client.pods.webhooks.update("pod_id", "webhook_id", {});
 <dd>
 
 **request:** `AgentMail.UpdatePodWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `WebhooksClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.webhooks.<a href="/src/api/resources/pods/resources/webhooks/client/Client.ts">updateHeaders</a>(pod_id, webhook_id, { ...params }) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Atomically set, replace, or remove custom HTTP headers included with deliveries to this
+pod-scoped webhook. Header values remain write-only.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.updateHeaders("pod_id", "webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateWebhookHeadersRequest` 
     
 </dd>
 </dl>
