@@ -9,6 +9,7 @@ import { MessageText } from "./MessageText.js";
 import { SendMessageAttachments } from "./SendMessageAttachments.js";
 import { SendMessageHeaders } from "./SendMessageHeaders.js";
 import { SendMessageReplyTo } from "./SendMessageReplyTo.js";
+import { TrackOpens } from "./TrackOpens.js";
 
 export const ReplyAllMessageRequest: core.serialization.ObjectSchema<
     serializers.ReplyAllMessageRequest.Raw,
@@ -20,6 +21,7 @@ export const ReplyAllMessageRequest: core.serialization.ObjectSchema<
     html: MessageHtml.optional(),
     attachments: SendMessageAttachments.optional(),
     headers: SendMessageHeaders.optional(),
+    trackOpens: core.serialization.property("track_opens", TrackOpens.optional()),
 });
 
 export declare namespace ReplyAllMessageRequest {
@@ -30,5 +32,6 @@ export declare namespace ReplyAllMessageRequest {
         html?: MessageHtml.Raw | null;
         attachments?: SendMessageAttachments.Raw | null;
         headers?: SendMessageHeaders.Raw | null;
+        track_opens?: TrackOpens.Raw | null;
     }
 }

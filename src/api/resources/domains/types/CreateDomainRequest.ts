@@ -6,4 +6,5 @@ export interface CreateDomainRequest {
     domain: AgentMail.DomainName;
     feedbackEnabled?: AgentMail.FeedbackEnabled;
     subdomainsEnabled?: AgentMail.SubdomainsEnabled;
+    trackingEnabled?: AgentMail.TrackingEnabled;
 }

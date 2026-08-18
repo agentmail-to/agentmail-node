@@ -13,4 +13,5 @@ export interface SendMessageRequest {
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.SendMessageAttachments;
     headers?: AgentMail.SendMessageHeaders;
+    trackOpens?: AgentMail.TrackOpens;
 }

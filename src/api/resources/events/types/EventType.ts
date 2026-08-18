@@ -10,6 +10,7 @@ export const EventType = {
     MessageBounced: "message.bounced",
     MessageComplained: "message.complained",
     MessageRejected: "message.rejected",
+    MessageOpened: "message.opened",
     DomainVerified: "domain.verified",
 } as const;
 export type EventType = (typeof EventType)[keyof typeof EventType];

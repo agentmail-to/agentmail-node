@@ -10,6 +10,7 @@ import { DomainName } from "./DomainName.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
 import { Status } from "./Status.js";
 import { SubdomainsEnabled } from "./SubdomainsEnabled.js";
+import { TrackingEnabled } from "./TrackingEnabled.js";
 import { VerificationRecord } from "./VerificationRecord.js";
 
 export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, AgentMail.Domain> =
@@ -20,6 +21,7 @@ export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, Age
         status: Status,
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
         subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled),
+        trackingEnabled: core.serialization.property("tracking_enabled", TrackingEnabled),
         records: core.serialization.list(VerificationRecord),
         clientId: core.serialization.property("client_id", ClientId.optional()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
@@ -34,6 +36,7 @@ export declare namespace Domain {
         status: Status.Raw;
         feedback_enabled: FeedbackEnabled.Raw;
         subdomains_enabled: SubdomainsEnabled.Raw;
+        tracking_enabled: TrackingEnabled.Raw;
         records: VerificationRecord.Raw[];
         client_id?: ClientId.Raw | null;
         updated_at: string;

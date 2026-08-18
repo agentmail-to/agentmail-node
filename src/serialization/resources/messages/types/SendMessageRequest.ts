@@ -13,6 +13,7 @@ import { SendMessageCc } from "./SendMessageCc.js";
 import { SendMessageHeaders } from "./SendMessageHeaders.js";
 import { SendMessageReplyTo } from "./SendMessageReplyTo.js";
 import { SendMessageTo } from "./SendMessageTo.js";
+import { TrackOpens } from "./TrackOpens.js";
 
 export const SendMessageRequest: core.serialization.ObjectSchema<
     serializers.SendMessageRequest.Raw,
@@ -28,6 +29,7 @@ export const SendMessageRequest: core.serialization.ObjectSchema<
     html: MessageHtml.optional(),
     attachments: SendMessageAttachments.optional(),
     headers: SendMessageHeaders.optional(),
+    trackOpens: core.serialization.property("track_opens", TrackOpens.optional()),
 });
 
 export declare namespace SendMessageRequest {
@@ -42,5 +44,6 @@ export declare namespace SendMessageRequest {
         html?: MessageHtml.Raw | null;
         attachments?: SendMessageAttachments.Raw | null;
         headers?: SendMessageHeaders.Raw | null;
+        track_opens?: TrackOpens.Raw | null;
     }
 }

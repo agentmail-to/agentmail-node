@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
 import { SubdomainsEnabled } from "./SubdomainsEnabled.js";
+import { TrackingEnabled } from "./TrackingEnabled.js";
 
 export const UpdateDomainRequest: core.serialization.ObjectSchema<
     serializers.UpdateDomainRequest.Raw,
@@ -12,11 +13,13 @@ export const UpdateDomainRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled.optional()),
     subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled.optional()),
+    trackingEnabled: core.serialization.property("tracking_enabled", TrackingEnabled.optional()),
 });
 
 export declare namespace UpdateDomainRequest {
     export interface Raw {
         feedback_enabled?: FeedbackEnabled.Raw | null;
         subdomains_enabled?: SubdomainsEnabled.Raw | null;
+        tracking_enabled?: TrackingEnabled.Raw | null;
     }
 }

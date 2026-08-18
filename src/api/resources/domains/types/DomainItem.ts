@@ -8,6 +8,7 @@ export interface DomainItem {
     domain: AgentMail.DomainName;
     feedbackEnabled: AgentMail.FeedbackEnabled;
     subdomainsEnabled: AgentMail.SubdomainsEnabled;
+    trackingEnabled: AgentMail.TrackingEnabled;
     clientId?: AgentMail.ClientId;
     /** Time at which the domain was last updated. */
     updatedAt: Date;

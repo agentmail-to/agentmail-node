@@ -1,11 +1,12 @@
 {
     "name": "agentmail",
-    "version": "0.5.19",
+    "version": "0.5.20",
     "private": false,
     "repository": {
         "type": "git",
         "url": "git+https://github.com/agentmail-to/agentmail-node.git"
     },
+    "license": "MIT",
     "type": "commonjs",
     "main": "./dist/cjs/index.js",
     "module": "./dist/esm/index.mjs",
@@ -377,16 +378,23 @@
     "dependencies": {
         "ws": "^8.20.0"
     },
+    "peerDependencies": {
+        "@x402/fetch": "^2"
+    },
+    "peerDependenciesMeta": {
+        "@x402/fetch": {
+            "optional": true
+        }
+    },
     "devDependencies": {
-        "@biomejs/biome": "2.4.9",
-        "@types/node": "^18.19.70",
-        "@types/ws": "^8.18.1",
-        "msw": "2.11.2",
+        "webpack": "^5.105.4",
         "ts-loader": "^9.5.4",
-        "typescript": "~5.9.3",
-        "vite": "^8.2.1",
+        "@types/ws": "^8.18.1",
         "vitest": "^4.1.1",
-        "webpack": "^5.105.4"
+        "msw": "2.11.2",
+        "@types/node": "^18.19.70",
+        "typescript": "~5.9.3",
+        "@biomejs/biome": "2.4.9"
     },
     "browser": {
         "fs": false,
@@ -416,12 +424,5 @@
         "agentmail"
     ],
     "homepage": "https://agentmail.to",
-    "license": "MIT",
-    "author": "AgentMail <support@agentmail.cc>",
-    "pnpm": {
-        "overrides": {
-            "postcss": ">=8.5.23",
-            "fast-uri": ">=3.1.5"
-        }
-    }
+    "author": "AgentMail <support@agentmail.cc>"
 }

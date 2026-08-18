@@ -7,6 +7,7 @@ import { DomainVerifiedEvent } from "../../../events/types/DomainVerifiedEvent.j
 import { MessageBouncedEvent } from "../../../events/types/MessageBouncedEvent.js";
 import { MessageComplainedEvent } from "../../../events/types/MessageComplainedEvent.js";
 import { MessageDeliveredEvent } from "../../../events/types/MessageDeliveredEvent.js";
+import { MessageOpenedEvent } from "../../../events/types/MessageOpenedEvent.js";
 import { MessageReceivedEvent } from "../../../events/types/MessageReceivedEvent.js";
 import { MessageRejectedEvent } from "../../../events/types/MessageRejectedEvent.js";
 import { MessageSentEvent } from "../../../events/types/MessageSentEvent.js";
@@ -22,6 +23,7 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     | AgentMail.MessageBouncedEvent
     | AgentMail.MessageComplainedEvent
     | AgentMail.MessageRejectedEvent
+    | AgentMail.MessageOpenedEvent
     | AgentMail.DomainVerifiedEvent
     | AgentMail.Error_
 > = core.serialization.undiscriminatedUnion([
@@ -32,6 +34,7 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     MessageBouncedEvent,
     MessageComplainedEvent,
     MessageRejectedEvent,
+    MessageOpenedEvent,
     DomainVerifiedEvent,
     Error_,
 ]);
@@ -45,6 +48,7 @@ export declare namespace WebsocketsSocketResponse {
         | MessageBouncedEvent.Raw
         | MessageComplainedEvent.Raw
         | MessageRejectedEvent.Raw
+        | MessageOpenedEvent.Raw
         | DomainVerifiedEvent.Raw
         | Error_.Raw;
 }

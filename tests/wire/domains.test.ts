@@ -24,6 +24,7 @@ describe("DomainsClient", () => {
                     domain: "domain",
                     feedback_enabled: true,
                     subdomains_enabled: true,
+                    tracking_enabled: true,
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -34,6 +35,7 @@ describe("DomainsClient", () => {
                     domain: "domain",
                     feedback_enabled: true,
                     subdomains_enabled: true,
+                    tracking_enabled: true,
                     client_id: "client_id",
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -55,6 +57,7 @@ describe("DomainsClient", () => {
                     domain: "domain",
                     feedbackEnabled: true,
                     subdomainsEnabled: true,
+                    trackingEnabled: true,
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -65,6 +68,7 @@ describe("DomainsClient", () => {
                     domain: "domain",
                     feedbackEnabled: true,
                     subdomainsEnabled: true,
+                    trackingEnabled: true,
                     clientId: "client_id",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -88,6 +92,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             feedback_enabled: true,
             subdomains_enabled: true,
+            tracking_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
@@ -113,6 +118,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             feedbackEnabled: true,
             subdomainsEnabled: true,
+            trackingEnabled: true,
             records: [
                 {
                     type: "TXT",
@@ -173,6 +179,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             feedback_enabled: true,
             subdomains_enabled: true,
+            tracking_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
@@ -201,6 +208,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             feedbackEnabled: true,
             subdomainsEnabled: true,
+            trackingEnabled: true,
             records: [
                 {
                     type: "TXT",
@@ -264,6 +272,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             feedback_enabled: true,
             subdomains_enabled: true,
+            tracking_enabled: true,
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
@@ -290,6 +299,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             feedbackEnabled: true,
             subdomainsEnabled: true,
+            trackingEnabled: true,
             records: [
                 {
                     type: "TXT",

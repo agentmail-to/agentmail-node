@@ -9,4 +9,5 @@ export interface ReplyAllMessageRequest {
     html?: AgentMail.MessageHtml;
     attachments?: AgentMail.SendMessageAttachments;
     headers?: AgentMail.SendMessageHeaders;
+    trackOpens?: AgentMail.TrackOpens;
 }

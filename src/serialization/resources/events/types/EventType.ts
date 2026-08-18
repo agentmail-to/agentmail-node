@@ -15,6 +15,7 @@ export const EventType: core.serialization.Schema<serializers.EventType.Raw, Age
         "message.bounced",
         "message.complained",
         "message.rejected",
+        "message.opened",
         "domain.verified",
     ]);
 
@@ -29,5 +30,6 @@ export declare namespace EventType {
         | "message.bounced"
         | "message.complained"
         | "message.rejected"
+        | "message.opened"
         | "domain.verified";
 }

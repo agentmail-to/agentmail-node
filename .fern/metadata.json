@@ -7,6 +7,14 @@
         "noSerdeLayer": false,
         "skipResponseValidation": true,
         "shouldGenerateWebsocketClients": true,
+        "extraPeerDependencies": {
+            "@x402/fetch": "^2"
+        },
+        "extraPeerDependenciesMeta": {
+            "@x402/fetch": {
+                "optional": true
+            }
+        },
         "packageJson": {
             "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
             "keywords": [
@@ -31,6 +39,6 @@
             }
         }
     },
-    "originGitCommit": "f0cad6fc336c858bd21a3a6af10421a2c5fec17f",
-    "sdkVersion": "0.5.19"
+    "originGitCommit": "cb2f6270774285333944a11536f8f67a3a9877fb",
+    "sdkVersion": "0.5.20"
 }

@@ -55,8 +55,8 @@ export function normalizeClientOptions<T extends BaseClientOptions = BaseClientO
         {
             "X-Fern-Language": "JavaScript",
             "X-Fern-SDK-Name": "agentmail",
-            "X-Fern-SDK-Version": "0.5.19",
-            "User-Agent": "agentmail/0.5.19",
+            "X-Fern-SDK-Version": "0.5.20",
+            "User-Agent": "agentmail/0.5.20",
             "X-Fern-Runtime": core.RUNTIME.type,
             "X-Fern-Runtime-Version": core.RUNTIME.version,
         },
