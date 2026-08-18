@@ -378,14 +378,15 @@
         "ws": "^8.20.0"
     },
     "devDependencies": {
-        "webpack": "^5.105.4",
-        "ts-loader": "^9.5.4",
-        "@types/ws": "^8.18.1",
-        "vitest": "^4.1.1",
-        "msw": "2.11.2",
+        "@biomejs/biome": "2.4.9",
         "@types/node": "^18.19.70",
+        "@types/ws": "^8.18.1",
+        "msw": "2.11.2",
+        "ts-loader": "^9.5.4",
         "typescript": "~5.9.3",
-        "@biomejs/biome": "2.4.9"
+        "vite": "^8.2.1",
+        "vitest": "^4.1.1",
+        "webpack": "^5.105.4"
     },
     "browser": {
         "fs": false,
@@ -416,5 +417,11 @@
     ],
     "homepage": "https://agentmail.to",
     "license": "MIT",
-    "author": "AgentMail <support@agentmail.cc>"
+    "author": "AgentMail <support@agentmail.cc>",
+    "pnpm": {
+        "overrides": {
+            "postcss": ">=8.5.23",
+            "fast-uri": ">=3.1.5"
+        }
+    }
 }
