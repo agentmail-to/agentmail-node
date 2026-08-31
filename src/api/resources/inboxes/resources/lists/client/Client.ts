@@ -26,7 +26,7 @@ export class ListsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:lists list --inbox-id <inbox_id> --direction <direction> --type <type>
+     * agentmail inboxes lists list --inbox-id <inbox_id> --direction <direction> --type <type>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -114,7 +114,7 @@ export class ListsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+     * agentmail inboxes lists get --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -213,7 +213,7 @@ export class ListsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
+     * agentmail inboxes lists create --inbox-id <inbox_id> --direction <direction> --type <type> --entry user@example.com
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -320,7 +320,7 @@ export class ListsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
+     * agentmail inboxes lists delete --inbox-id <inbox_id> --direction <direction> --type <type> --entry <entry>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

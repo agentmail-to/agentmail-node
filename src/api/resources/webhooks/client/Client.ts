@@ -274,7 +274,7 @@ export class WebhooksClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail webhooks create --url https://example.com/webhook --event-type message.received
+     * agentmail webhooks create --url https://example.com/webhook --event-types message.received
      * ```
      *
      * @param {AgentMail.webhooks.CreateWebhookRequest} request
@@ -371,7 +371,7 @@ export class WebhooksClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail webhooks update --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+     * agentmail webhooks update --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
      * ```
      *
      * @param {AgentMail.webhooks.WebhookId} webhook_id

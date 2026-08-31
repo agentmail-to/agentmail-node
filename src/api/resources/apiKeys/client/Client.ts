@@ -750,4 +750,496 @@ export class ApiKeysClient {
             "/v0/api-keys/public-keys/agentid-sign-in/revoke-all",
         );
     }
+
+    /**
+     * List active browser credentials visible to the caller's scope. Requires `api_key_read`.
+     *
+     * @param {AgentMail.ListBrowserCredentialsRequest} request
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @example
+     *     await client.apiKeys.listBrowserCredentials()
+     */
+    public listBrowserCredentials(
+        request: AgentMail.ListBrowserCredentialsRequest = {},
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ListBrowserCredentialsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listBrowserCredentials(request, requestOptions));
+    }
+
+    private async __listBrowserCredentials(
+        request: AgentMail.ListBrowserCredentialsRequest = {},
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListBrowserCredentialsResponse>> {
+        const { limit, pageToken } = request;
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            page_token: pageToken,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                "/v0/api-keys/browser-credentials",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ListBrowserCredentialsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            throw new errors.AgentMailError({
+                statusCode: _response.error.statusCode,
+                body: _response.error.body,
+                rawResponse: _response.rawResponse,
+            });
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/api-keys/browser-credentials",
+        );
+    }
+
+    /**
+     * List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
+     *
+     * @param {AgentMail.ListBrowserCredentialEventsRequest} request
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.apiKeys.listBrowserCredentialEvents()
+     */
+    public listBrowserCredentialEvents(
+        request: AgentMail.ListBrowserCredentialEventsRequest = {},
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ListBrowserLifecycleEventsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listBrowserCredentialEvents(request, requestOptions));
+    }
+
+    private async __listBrowserCredentialEvents(
+        request: AgentMail.ListBrowserCredentialEventsRequest = {},
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListBrowserLifecycleEventsResponse>> {
+        const { limit, pageToken } = request;
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            page_token: pageToken,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                "/v0/api-keys/browser-credentials/events",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ListBrowserLifecycleEventsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/api-keys/browser-credentials/events",
+        );
+    }
+
+    /**
+     * Permanently revoke one active browser credential. Requires `api_key_delete`.
+     *
+     * @param {string} credential_id
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.apiKeys.deleteBrowserCredential("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     */
+    public deleteBrowserCredential(
+        credential_id: string,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteBrowserCredential(credential_id, requestOptions));
+    }
+
+    private async __deleteBrowserCredential(
+        credential_id: string,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/api-keys/browser-credentials/${core.url.encodePathParam(credential_id)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "DELETE",
+            "/v0/api-keys/browser-credentials/{credential_id}",
+        );
+    }
+
+    /**
+     * Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
+     *
+     * @param {string} enrollment_id
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.apiKeys.cancelBrowserEnrollment("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     */
+    public cancelBrowserEnrollment(
+        enrollment_id: string,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__cancelBrowserEnrollment(enrollment_id, requestOptions));
+    }
+
+    private async __cancelBrowserEnrollment(
+        enrollment_id: string,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/api-keys/browser-credentials/enrollments/${core.url.encodePathParam(enrollment_id)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "DELETE",
+            "/v0/api-keys/browser-credentials/enrollments/{enrollment_id}",
+        );
+    }
+
+    /**
+     * List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
+     *
+     * @param {AgentMail.ListBrowserConsentsRequest} request
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.apiKeys.listBrowserConsents({
+     *         inboxId: "inbox_id"
+     *     })
+     */
+    public listBrowserConsents(
+        request: AgentMail.ListBrowserConsentsRequest,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ListBrowserConsentsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listBrowserConsents(request, requestOptions));
+    }
+
+    private async __listBrowserConsents(
+        request: AgentMail.ListBrowserConsentsRequest,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListBrowserConsentsResponse>> {
+        const { inboxId, limit, pageToken } = request;
+        const _queryParams: Record<string, unknown> = {
+            inbox_id: inboxId,
+            limit,
+            page_token: pageToken,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                "/v0/api-keys/browser-consents",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ListBrowserConsentsResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/api-keys/browser-consents");
+    }
+
+    /**
+     * Revoke one remembered AgentID client approval. Requires `api_key_delete`.
+     *
+     * @param {string} consent_id
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.apiKeys.deleteBrowserConsent("consent_id")
+     */
+    public deleteBrowserConsent(
+        consent_id: string,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<void> {
+        return core.HttpResponsePromise.fromPromise(this.__deleteBrowserConsent(consent_id, requestOptions));
+    }
+
+    private async __deleteBrowserConsent(
+        consent_id: string,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<void>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/api-keys/browser-consents/${core.url.encodePathParam(consent_id)}`,
+            ),
+            method: "DELETE",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return { data: undefined, rawResponse: _response.rawResponse };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "DELETE",
+            "/v0/api-keys/browser-consents/{consent_id}",
+        );
+    }
 }

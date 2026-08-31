@@ -1,5 +1,5 @@
 {
-    "cliVersion": "4.63.0",
+    "cliVersion": "5.44.8",
     "generatorName": "fernapi/fern-typescript-node-sdk",
     "generatorVersion": "3.60.0",
     "generatorConfig": {
@@ -16,6 +16,15 @@
             }
         },
         "packageJson": {
+            "devDependencies": {
+                "vite": "^8.0.16"
+            },
+            "pnpm": {
+                "overrides": {
+                    "postcss": ">=8.5.23",
+                    "fast-uri": ">=3.1.5"
+                }
+            },
             "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
             "keywords": [
                 "email",
@@ -39,6 +48,6 @@
             }
         }
     },
-    "originGitCommit": "cb2f6270774285333944a11536f8f67a3a9877fb",
-    "sdkVersion": "0.5.20"
+    "originGitCommit": "650d0acffa7c4aa2590fb9f757641e9d7dbdbcfb",
+    "sdkVersion": "0.5.21"
 }

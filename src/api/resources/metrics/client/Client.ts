@@ -33,7 +33,7 @@ export class MetricsClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail metrics list
+     * agentmail metrics query-events
      * ```
      *
      * @param {AgentMail.QueryEventsRequest} request

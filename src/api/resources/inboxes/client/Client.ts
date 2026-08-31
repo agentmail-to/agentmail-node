@@ -10,6 +10,7 @@ import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
 import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
+import { BrowserCredentialsClient } from "../resources/browserCredentials/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { EventsClient } from "../resources/events/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
@@ -29,6 +30,7 @@ export class InboxesClient {
     protected _threads: ThreadsClient | undefined;
     protected _messages: MessagesClient | undefined;
     protected _drafts: DraftsClient | undefined;
+    protected _browserCredentials: BrowserCredentialsClient | undefined;
     protected _webhooks: WebhooksClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
@@ -49,6 +51,10 @@ export class InboxesClient {
 
     public get drafts(): DraftsClient {
         return (this._drafts ??= new DraftsClient(this._options));
+    }
+
+    public get browserCredentials(): BrowserCredentialsClient {
+        return (this._browserCredentials ??= new BrowserCredentialsClient(this._options));
     }
 
     public get webhooks(): WebhooksClient {

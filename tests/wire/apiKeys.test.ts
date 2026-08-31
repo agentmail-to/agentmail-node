@@ -895,4 +895,427 @@ describe("ApiKeysClient", () => {
             });
         }).rejects.toThrow(AgentMail.ConflictError);
     });
+
+    test("listBrowserCredentials", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            count: 1,
+            limit: 100,
+            next_page_token: "next_page_token",
+            credentials: [
+                {
+                    credential_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    public_key_fingerprint_prefix: "mandarin",
+                    organization_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    pod_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    inbox_id: "inbox_id",
+                    created_by: {
+                        kind: "bearer_api_key",
+                        api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        created_at: "2024-01-15T09:30:00Z",
+                    },
+                    created_at: "2024-01-15T09:30:00Z",
+                    expires_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    credential_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    public_key_fingerprint_prefix: "mandarin",
+                    organization_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    pod_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    inbox_id: "inbox_id",
+                    created_by: {
+                        kind: "bearer_api_key",
+                        api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        created_at: "2024-01-15T09:30:00Z",
+                    },
+                    created_at: "2024-01-15T09:30:00Z",
+                    expires_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/api-keys/browser-credentials")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.apiKeys.listBrowserCredentials();
+        expect(response).toEqual({
+            count: 1,
+            limit: 100,
+            nextPageToken: "next_page_token",
+            credentials: [
+                {
+                    credentialId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    publicKeyFingerprintPrefix: "mandarin",
+                    organizationId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    podId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    inboxId: "inbox_id",
+                    createdBy: {
+                        kind: "bearer_api_key",
+                        apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    },
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+                {
+                    credentialId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    publicKeyFingerprintPrefix: "mandarin",
+                    organizationId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    podId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    inboxId: "inbox_id",
+                    createdBy: {
+                        kind: "bearer_api_key",
+                        apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                        createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    },
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+            ],
+        });
+    });
+
+    test("listBrowserCredentialEvents (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            count: 1,
+            limit: 100,
+            next_page_token: "next_page_token",
+            events: [
+                {
+                    type: "browser_enrollment_intent_created",
+                    trace_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    event_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    occurred_at: "2024-01-15T09:30:00Z",
+                    organization_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    pod_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    actor: { type: "api_key", api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" },
+                    enrollment_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    credential_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                },
+                {
+                    type: "browser_enrollment_intent_created",
+                    trace_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    event_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    occurred_at: "2024-01-15T09:30:00Z",
+                    organization_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    pod_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    actor: { type: "api_key", api_key_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32" },
+                    enrollment_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    credential_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/api-keys/browser-credentials/events")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.apiKeys.listBrowserCredentialEvents();
+        expect(response).toEqual({
+            count: 1,
+            limit: 100,
+            nextPageToken: "next_page_token",
+            events: [
+                {
+                    type: "browser_enrollment_intent_created",
+                    traceId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    eventId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    occurredAt: new Date("2024-01-15T09:30:00.000Z"),
+                    organizationId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    podId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    actor: {
+                        type: "api_key",
+                        apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    },
+                    enrollmentId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    credentialId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                },
+                {
+                    type: "browser_enrollment_intent_created",
+                    traceId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    eventId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    occurredAt: new Date("2024-01-15T09:30:00.000Z"),
+                    organizationId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    podId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    actor: {
+                        type: "api_key",
+                        apiKeyId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    },
+                    enrollmentId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    credentialId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                },
+            ],
+        });
+    });
+
+    test("listBrowserCredentialEvents (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/api-keys/browser-credentials/events")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.listBrowserCredentialEvents();
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("deleteBrowserCredential (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server
+            .mockEndpoint()
+            .delete("/v0/api-keys/browser-credentials/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.apiKeys.deleteBrowserCredential("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        expect(response).toEqual(undefined);
+    });
+
+    test("deleteBrowserCredential (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/v0/api-keys/browser-credentials/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.deleteBrowserCredential("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("cancelBrowserEnrollment (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server
+            .mockEndpoint()
+            .delete("/v0/api-keys/browser-credentials/enrollments/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .respondWith()
+            .statusCode(200)
+            .build();
+
+        const response = await client.apiKeys.cancelBrowserEnrollment("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        expect(response).toEqual(undefined);
+    });
+
+    test("cancelBrowserEnrollment (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/v0/api-keys/browser-credentials/enrollments/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.cancelBrowserEnrollment("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("listBrowserConsents (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            count: 1,
+            limit: 100,
+            next_page_token: "next_page_token",
+            consents: [
+                {
+                    consent_id: "blackcurrant....................................",
+                    inbox_id: "inbox_id",
+                    client_type: "closed",
+                    client_id: "x",
+                    client_url: "client_url",
+                    approved_scopes: ["approved_scopes", "approved_scopes"],
+                    created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    expires_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    consent_id: "blackcurrant....................................",
+                    inbox_id: "inbox_id",
+                    client_type: "closed",
+                    client_id: "x",
+                    client_url: "client_url",
+                    approved_scopes: ["approved_scopes", "approved_scopes"],
+                    created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    expires_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/api-keys/browser-consents")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.apiKeys.listBrowserConsents({
+            inboxId: "inbox_id",
+        });
+        expect(response).toEqual({
+            count: 1,
+            limit: 100,
+            nextPageToken: "next_page_token",
+            consents: [
+                {
+                    consentId: "blackcurrant....................................",
+                    inboxId: "inbox_id",
+                    clientType: "closed",
+                    clientId: "x",
+                    clientUrl: "client_url",
+                    approvedScopes: ["approved_scopes", "approved_scopes"],
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+                {
+                    consentId: "blackcurrant....................................",
+                    inboxId: "inbox_id",
+                    clientType: "closed",
+                    clientId: "x",
+                    clientUrl: "client_url",
+                    approvedScopes: ["approved_scopes", "approved_scopes"],
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+            ],
+        });
+    });
+
+    test("listBrowserConsents (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/api-keys/browser-consents")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.listBrowserConsents({
+                inboxId: "inbox_id",
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("deleteBrowserConsent (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        server.mockEndpoint().delete("/v0/api-keys/browser-consents/consent_id").respondWith().statusCode(200).build();
+
+        const response = await client.apiKeys.deleteBrowserConsent("consent_id");
+        expect(response).toEqual(undefined);
+    });
+
+    test("deleteBrowserConsent (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/v0/api-keys/browser-consents/consent_id")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apiKeys.deleteBrowserConsent("consent_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
 });

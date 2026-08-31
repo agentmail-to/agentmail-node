@@ -26,7 +26,7 @@ export class InboxesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:inboxes list --pod-id <pod_id>
+     * agentmail pods inboxes list --pod-id <pod_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -120,7 +120,7 @@ export class InboxesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
+     * agentmail pods inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -213,7 +213,7 @@ export class InboxesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:inboxes create --pod-id <pod_id> --username myagent --domain example.com
+     * agentmail pods inboxes create --pod-id <pod_id> --username myagent --domain example.com
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -319,7 +319,7 @@ export class InboxesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
+     * agentmail pods inboxes update --pod-id <pod_id> --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -421,7 +421,7 @@ export class InboxesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
+     * agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

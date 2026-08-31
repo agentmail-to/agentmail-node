@@ -13,4 +13,6 @@ export interface VerificationRecord {
     status: AgentMail.RecordStatus;
     /** The priority of the MX record. */
     priority?: number;
+    /** Why the record is INVALID, when known. `duplicate_records` means the expected value is present but extra records coexist at the same name; `value_mismatch` means a record exists but does not match the expected value. */
+    reason?: string;
 }

@@ -2,13 +2,20 @@
 
 import type * as AgentMail from "../../../index.js";
 
+/**
+ * Provide either `content` or `url` for each attachment.
+ */
 export interface SendAttachment {
     filename?: AgentMail.AttachmentFilename;
     contentType?: AgentMail.AttachmentContentType;
     contentDisposition?: AgentMail.AttachmentContentDisposition;
     contentId?: AgentMail.AttachmentContentId;
-    /** Base64 encoded content of attachment. */
+    /** Base64 encoded content of the attachment. The entire request, including the message body and all attachments, is limited to 6 MB. */
     content?: string;
-    /** URL to the attachment. */
+    /**
+     * URL that AgentMail can download without custom authentication headers or cookies.
+     * Redirects and pre-signed URLs are supported, and the final response must be a
+     * successful 2xx response. Keep URL-backed attachments around 30 MB total per message.
+     */
     url?: string;
 }

@@ -1,5 +1,6 @@
 export * from "./apiKeys/client/requests/index.js";
 export * as apiKeys from "./apiKeys/index.js";
+export * as browserCredentials from "./browserCredentials/index.js";
 export * from "./drafts/client/requests/index.js";
 export * as drafts from "./drafts/index.js";
 export * from "./events/client/requests/index.js";

@@ -28,7 +28,7 @@ export class EventsClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:events list --inbox-id <inbox_id>
+     * agentmail inboxes events list --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

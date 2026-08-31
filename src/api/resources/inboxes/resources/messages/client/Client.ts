@@ -39,7 +39,7 @@ export class MessagesClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages list --inbox-id <inbox_id>
+     * agentmail inboxes messages list --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -297,7 +297,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages get --inbox-id <inbox_id> --message-id <message_id>
+     * agentmail inboxes messages get --inbox-id <inbox_id> --message-id <message_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -394,7 +394,7 @@ export class MessagesClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages batch-get --inbox-id <inbox_id> --message-id <id1> --message-id <id2>
+     * agentmail inboxes messages batch-get --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -502,7 +502,7 @@ export class MessagesClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages batch-update --inbox-id <inbox_id> --message-id <id1> --message-id <id2> --add-label read --remove-label unread
+     * agentmail inboxes messages batch-update --inbox-id <inbox_id> --message-ids <id1> --message-ids <id2> --add-labels read --remove-labels unread
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -603,7 +603,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
+     * agentmail inboxes messages get-attachment --inbox-id <inbox_id> --message-id <message_id> --attachment-id <attachment_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -701,7 +701,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages get-raw --inbox-id <inbox_id> --message-id <message_id>
+     * agentmail inboxes messages get-raw --inbox-id <inbox_id> --message-id <message_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -794,7 +794,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages update --inbox-id <inbox_id> --message-id <message_id> --add-label read --remove-label unread
+     * agentmail inboxes messages update --inbox-id <inbox_id> --message-id <message_id> --add-labels read --remove-labels unread
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -910,7 +910,7 @@ export class MessagesClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages delete --inbox-id <inbox_id> --message-id <message_id>
+     * agentmail inboxes messages delete --inbox-id <inbox_id> --message-id <message_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -994,7 +994,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
+     * agentmail inboxes messages send --inbox-id <inbox_id> --to recipient@example.com --subject "Hello" --text "Body"
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -1130,7 +1130,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+     * agentmail inboxes messages reply --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -1269,7 +1269,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
+     * agentmail inboxes messages reply-all --inbox-id <inbox_id> --message-id <message_id> --text "Reply text"
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -1408,7 +1408,7 @@ export class MessagesClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
+     * agentmail inboxes messages forward --inbox-id <inbox_id> --message-id <message_id> --to recipient@example.com
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

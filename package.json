@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.5.20",
+    "version": "0.5.21",
     "private": false,
     "repository": {
         "type": "git",
@@ -132,6 +132,17 @@
                 "default": "./dist/cjs/api/resources/inboxes/resources/apiKeys/exports.js"
             },
             "default": "./dist/cjs/api/resources/inboxes/resources/apiKeys/exports.js"
+        },
+        "./inboxes/browserCredentials": {
+            "import": {
+                "types": "./dist/esm/api/resources/inboxes/resources/browserCredentials/exports.d.mts",
+                "default": "./dist/esm/api/resources/inboxes/resources/browserCredentials/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inboxes/resources/browserCredentials/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inboxes/resources/browserCredentials/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inboxes/resources/browserCredentials/exports.js"
         },
         "./inboxes/drafts": {
             "import": {
@@ -394,7 +405,8 @@
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.9.3",
-        "@biomejs/biome": "2.4.9"
+        "@biomejs/biome": "2.4.9",
+        "vite": "^8.0.16"
     },
     "browser": {
         "fs": false,
@@ -408,6 +420,12 @@
         "node": ">=18.0.0"
     },
     "sideEffects": false,
+    "pnpm": {
+        "overrides": {
+            "postcss": ">=8.5.23",
+            "fast-uri": ">=3.1.5"
+        }
+    },
     "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
     "keywords": [
         "email",

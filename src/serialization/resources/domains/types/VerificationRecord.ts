@@ -15,6 +15,7 @@ export const VerificationRecord: core.serialization.ObjectSchema<
     value: core.serialization.string(),
     status: RecordStatus,
     priority: core.serialization.number().optional(),
+    reason: core.serialization.string().optional(),
 });
 
 export declare namespace VerificationRecord {
@@ -24,5 +25,6 @@ export declare namespace VerificationRecord {
         value: string;
         status: RecordStatus.Raw;
         priority?: number | null;
+        reason?: string | null;
     }
 }

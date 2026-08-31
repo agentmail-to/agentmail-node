@@ -32,7 +32,7 @@ export class ThreadsClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:threads list --inbox-id <inbox_id>
+     * agentmail inboxes threads list --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -290,7 +290,7 @@ export class ThreadsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:threads get --inbox-id <inbox_id> --thread-id <thread_id>
+     * agentmail inboxes threads get --inbox-id <inbox_id> --thread-id <thread_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -383,7 +383,7 @@ export class ThreadsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail inboxes:threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
+     * agentmail inboxes threads get-attachment --inbox-id <inbox_id> --thread-id <thread_id> --attachment-id <attachment_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
@@ -606,7 +606,7 @@ export class ThreadsClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:threads delete --inbox-id <inbox_id> --thread-id <thread_id>
+     * agentmail inboxes threads delete --inbox-id <inbox_id> --thread-id <thread_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

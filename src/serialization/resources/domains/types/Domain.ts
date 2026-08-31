@@ -19,6 +19,7 @@ export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, Age
         domainId: core.serialization.property("domain_id", DomainId),
         domain: DomainName,
         status: Status,
+        reason: core.serialization.string().optional(),
         feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled),
         subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled),
         trackingEnabled: core.serialization.property("tracking_enabled", TrackingEnabled),
@@ -34,6 +35,7 @@ export declare namespace Domain {
         domain_id: DomainId.Raw;
         domain: DomainName.Raw;
         status: Status.Raw;
+        reason?: string | null;
         feedback_enabled: FeedbackEnabled.Raw;
         subdomains_enabled: SubdomainsEnabled.Raw;
         tracking_enabled: TrackingEnabled.Raw;

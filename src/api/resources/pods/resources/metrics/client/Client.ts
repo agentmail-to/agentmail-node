@@ -33,7 +33,7 @@ export class MetricsClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail pods:metrics query --pod-id <pod_id>
+     * agentmail pods metrics query-events --pod-id <pod_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

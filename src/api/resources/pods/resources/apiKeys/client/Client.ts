@@ -26,7 +26,7 @@ export class ApiKeysClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:api-keys list --pod-id <pod_id>
+     * agentmail pods api-keys list --pod-id <pod_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -119,7 +119,7 @@ export class ApiKeysClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:api-keys create --pod-id <pod_id> --name "My Key"
+     * agentmail pods api-keys create --pod-id <pod_id> --name "My Key"
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -225,7 +225,7 @@ export class ApiKeysClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
+     * agentmail pods api-keys delete --pod-id <pod_id> --api-key-id <api_key_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

@@ -33,7 +33,7 @@ export class MetricsClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail inboxes:metrics query --inbox-id <inbox_id>
+     * agentmail inboxes metrics query-events --inbox-id <inbox_id>
      * ```
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id

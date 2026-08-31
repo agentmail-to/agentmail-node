@@ -90,12 +90,13 @@ describe("DomainsClient", () => {
             domain_id: "domain_id",
             domain: "domain",
             status: "NOT_STARTED",
+            reason: "reason",
             feedback_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
             records: [
-                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
-                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
             ],
             client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
@@ -116,6 +117,7 @@ describe("DomainsClient", () => {
             domainId: "domain_id",
             domain: "domain",
             status: "NOT_STARTED",
+            reason: "reason",
             feedbackEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
@@ -126,6 +128,7 @@ describe("DomainsClient", () => {
                     value: "value",
                     status: "MISSING",
                     priority: 1,
+                    reason: "reason",
                 },
                 {
                     type: "TXT",
@@ -133,6 +136,7 @@ describe("DomainsClient", () => {
                     value: "value",
                     status: "MISSING",
                     priority: 1,
+                    reason: "reason",
                 },
             ],
             clientId: "client_id",
@@ -177,12 +181,13 @@ describe("DomainsClient", () => {
             domain_id: "domain_id",
             domain: "domain",
             status: "NOT_STARTED",
+            reason: "reason",
             feedback_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
             records: [
-                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
-                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
             ],
             client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
@@ -206,6 +211,7 @@ describe("DomainsClient", () => {
             domainId: "domain_id",
             domain: "domain",
             status: "NOT_STARTED",
+            reason: "reason",
             feedbackEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
@@ -216,6 +222,7 @@ describe("DomainsClient", () => {
                     value: "value",
                     status: "MISSING",
                     priority: 1,
+                    reason: "reason",
                 },
                 {
                     type: "TXT",
@@ -223,6 +230,7 @@ describe("DomainsClient", () => {
                     value: "value",
                     status: "MISSING",
                     priority: 1,
+                    reason: "reason",
                 },
             ],
             clientId: "client_id",
@@ -270,12 +278,13 @@ describe("DomainsClient", () => {
             domain_id: "domain_id",
             domain: "domain",
             status: "NOT_STARTED",
+            reason: "reason",
             feedback_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
             records: [
-                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
-                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1 },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
+                { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
             ],
             client_id: "client_id",
             updated_at: "2024-01-15T09:30:00Z",
@@ -297,6 +306,7 @@ describe("DomainsClient", () => {
             domainId: "domain_id",
             domain: "domain",
             status: "NOT_STARTED",
+            reason: "reason",
             feedbackEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
@@ -307,6 +317,7 @@ describe("DomainsClient", () => {
                     value: "value",
                     status: "MISSING",
                     priority: 1,
+                    reason: "reason",
                 },
                 {
                     type: "TXT",
@@ -314,6 +325,7 @@ describe("DomainsClient", () => {
                     value: "value",
                     status: "MISSING",
                     priority: 1,
+                    reason: "reason",
                 },
             ],
             clientId: "client_id",
@@ -418,5 +430,158 @@ describe("DomainsClient", () => {
         await expect(async () => {
             return await client.domains.verify("domain_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("verify (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/domains/domain_id/verify")
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.verify("domain_id");
+        }).rejects.toThrow(AgentMail.ConflictError);
+    });
+
+    test("verify (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/domains/domain_id/verify")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.verify("domain_id");
+        }).rejects.toThrow(AgentMail.UnprocessableError);
+    });
+
+    test("getSetupLink (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            supported: true,
+            provider_name: "provider_name",
+            url: "url",
+            width: 1,
+            height: 1,
+            state: "state",
+            conflicting_provider: "conflicting_provider",
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/domains/domain_id/setup-link")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.domains.getSetupLink("domain_id");
+        expect(response).toEqual({
+            supported: true,
+            providerName: "provider_name",
+            url: "url",
+            width: 1,
+            height: 1,
+            state: "state",
+            conflictingProvider: "conflicting_provider",
+        });
+    });
+
+    test("getSetupLink (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/domains/domain_id/setup-link")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.getSetupLink("domain_id");
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("getSetupLink (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/domains/domain_id/setup-link")
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.getSetupLink("domain_id");
+        }).rejects.toThrow(AgentMail.ConflictError);
+    });
+
+    test("getSetupLink (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/domains/domain_id/setup-link")
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.getSetupLink("domain_id");
+        }).rejects.toThrow(AgentMail.UnprocessableError);
     });
 });

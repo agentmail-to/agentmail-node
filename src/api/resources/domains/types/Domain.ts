@@ -7,6 +7,8 @@ export interface Domain {
     domainId: AgentMail.DomainId;
     domain: AgentMail.DomainName;
     status: AgentMail.Status;
+    /** Why the domain is not (yet) VERIFIED, when known. `dns_records_missing` / `dns_records_invalid` point at the DNS records. The `ses_*` values mean the records look right and sending-infrastructure validation has not converged: `ses_dkim_pending` / `ses_mail_from_pending` (still checking), `ses_dkim_temporary_failure` / `ses_mail_from_temporary_failure` (a transient error the infrastructure keeps retrying on its own — usually resolves without changes), `ses_dkim_failed` / `ses_mail_from_failed` (a terminal verdict; re-verify after fixing), `ses_dkim_not_started` / `ses_mail_from_not_started` (the attribute was never configured on the identity — re-verify to push it), and `ses_not_verified_for_sending`. Absent when VERIFIED. */
+    reason?: string;
     feedbackEnabled: AgentMail.FeedbackEnabled;
     subdomainsEnabled: AgentMail.SubdomainsEnabled;
     trackingEnabled: AgentMail.TrackingEnabled;

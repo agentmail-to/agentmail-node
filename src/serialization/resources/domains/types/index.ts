@@ -5,6 +5,7 @@ export * from "./DomainId.js";
 export * from "./DomainItem.js";
 export * from "./DomainName.js";
 export * from "./FeedbackEnabled.js";
+export * from "./GetSetupLinkResponse.js";
 export * from "./ListDomainsResponse.js";
 export * from "./RecordStatus.js";
 export * from "./RecordType.js";

@@ -26,7 +26,7 @@ export class WebhooksClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:webhooks list --pod-id <pod_id>
+     * agentmail pods webhooks list --pod-id <pod_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -104,7 +104,7 @@ export class WebhooksClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
+     * agentmail pods webhooks get --pod-id <pod_id> --webhook-id <webhook_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -290,7 +290,7 @@ export class WebhooksClient {
      *
      * **CLI:**
      * ```bash
-     * agentmail pods:webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-type message.received
+     * agentmail pods webhooks create --pod-id <pod_id> --url https://example.com/webhook --event-types message.received
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -387,7 +387,7 @@ export class WebhooksClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-id <inbox_id>
+     * agentmail pods webhooks update --pod-id <pod_id> --webhook-id <webhook_id> --add-inbox-ids <inbox_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -604,7 +604,7 @@ export class WebhooksClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
+     * agentmail pods webhooks delete --pod-id <pod_id> --webhook-id <webhook_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id

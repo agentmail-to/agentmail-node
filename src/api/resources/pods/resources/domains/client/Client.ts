@@ -26,7 +26,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains list --pod-id <pod_id>
+     * agentmail pods domains list --pod-id <pod_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -120,7 +120,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains get --pod-id <pod_id> --domain-id <domain_id>
+     * agentmail pods domains get --pod-id <pod_id> --domain-id <domain_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -213,7 +213,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
+     * agentmail pods domains get-zone-file --pod-id <pod_id> --domain-id <domain_id>
      * ```
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -291,7 +291,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains create --pod-id <pod_id> --domain example.com
+     * agentmail pods domains create --pod-id <pod_id> --domain example.com
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -387,7 +387,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains update --pod-id <pod_id> --domain-id <domain_id>
+     * agentmail pods domains update --pod-id <pod_id> --domain-id <domain_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -489,7 +489,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains delete --pod-id <pod_id> --domain-id <domain_id>
+     * agentmail pods domains delete --pod-id <pod_id> --domain-id <domain_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
@@ -573,7 +573,7 @@ export class DomainsClient {
     /**
      * **CLI:**
      * ```bash
-     * agentmail pods:domains verify --pod-id <pod_id> --domain-id <domain_id>
+     * agentmail pods domains verify --pod-id <pod_id> --domain-id <domain_id>
      * ```
      *
      * @param {AgentMail.pods.PodId} pod_id
