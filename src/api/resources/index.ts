@@ -1,3 +1,6 @@
+export * from "./accounts/client/requests/index.js";
+export * as accounts from "./accounts/index.js";
+export * from "./accounts/types/index.js";
 export * as agent from "./agent/index.js";
 export * from "./agent/types/index.js";
 export * from "./apiKeys/client/requests/index.js";
@@ -30,6 +33,9 @@ export * from "./metrics/types/index.js";
 export * as organizations from "./organizations/index.js";
 export * from "./organizations/types/index.js";
 export * as pods from "./pods/index.js";
+export * from "./providers/client/requests/index.js";
+export * as providers from "./providers/index.js";
+export * from "./providers/types/index.js";
 export * from "./threads/client/requests/index.js";
 export * as threads from "./threads/index.js";
 export * from "./threads/types/index.js";
