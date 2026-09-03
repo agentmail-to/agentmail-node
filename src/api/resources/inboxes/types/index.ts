@@ -7,5 +7,6 @@ export * from "./InboxId.js";
 export * from "./ListInboxesResponse.js";
 export * from "./Metadata.js";
 export * from "./MetadataValue.js";
+export * from "./SearchInboxesResponse.js";
 export * from "./UpdateInboxRequest.js";
 export * from "./UpdateMetadata.js";

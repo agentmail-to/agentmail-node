@@ -66,6 +66,76 @@ await client.inboxes.list();
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">search</a>({ ...params }) -> AgentMail.SearchInboxesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches inboxes in the organization by address or display name, ranked
+by relevance. Each word in the query matches the start of a word in the
+address or display name, so `sup` matches `support@example.com` but
+`port` does not. An exact address match always ranks first. `limit`
+cannot exceed 100. A page can be empty and still carry a
+`next_page_token`; keep paging until the token is absent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.search({
+    q: "q"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.SearchInboxesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">get</a>(inbox_id) -> AgentMail.Inbox</code></summary>
 <dl>
 <dd>
@@ -8156,6 +8226,84 @@ await client.pods.inboxes.list("pod_id");
 <dd>
 
 **request:** `AgentMail.pods.ListInboxesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.inboxes.<a href="/src/api/resources/pods/resources/inboxes/client/Client.ts">search</a>(pod_id, { ...params }) -> AgentMail.SearchInboxesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches inboxes in the pod by address or display name, ranked by
+relevance. Each word in the query matches the start of a word in the
+address or display name, so `sup` matches `support@example.com` but
+`port` does not. An exact address match always ranks first. `limit`
+cannot exceed 100. A page can be empty and still carry a
+`next_page_token`; keep paging until the token is absent.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.inboxes.search("pod_id", {
+    q: "q"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.SearchInboxesRequest` 
     
 </dd>
 </dl>

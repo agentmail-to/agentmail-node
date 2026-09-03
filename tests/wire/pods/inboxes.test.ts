@@ -106,6 +106,136 @@ describe("InboxesClient", () => {
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
+    test("search (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            count: 1,
+            limit: 1,
+            next_page_token: "next_page_token",
+            inboxes: [
+                {
+                    pod_id: "pod_id",
+                    inbox_id: "inbox_id",
+                    email: "email",
+                    display_name: "display_name",
+                    client_id: "client_id",
+                    metadata: { metadata: "metadata" },
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+                {
+                    pod_id: "pod_id",
+                    inbox_id: "inbox_id",
+                    email: "email",
+                    display_name: "display_name",
+                    client_id: "client_id",
+                    metadata: { metadata: "metadata" },
+                    updated_at: "2024-01-15T09:30:00Z",
+                    created_at: "2024-01-15T09:30:00Z",
+                },
+            ],
+        };
+
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/inboxes/search")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.pods.inboxes.search("pod_id", {
+            q: "q",
+        });
+        expect(response).toEqual({
+            count: 1,
+            limit: 1,
+            nextPageToken: "next_page_token",
+            inboxes: [
+                {
+                    podId: "pod_id",
+                    inboxId: "inbox_id",
+                    email: "email",
+                    displayName: "display_name",
+                    clientId: "client_id",
+                    metadata: {
+                        metadata: "metadata",
+                    },
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+                {
+                    podId: "pod_id",
+                    inboxId: "inbox_id",
+                    email: "email",
+                    displayName: "display_name",
+                    clientId: "client_id",
+                    metadata: {
+                        metadata: "metadata",
+                    },
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                },
+            ],
+        });
+    });
+
+    test("search (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/inboxes/search")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.inboxes.search("pod_id", {
+                q: "q",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("search (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .get("/v0/pods/pod_id/inboxes/search")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.inboxes.search("pod_id", {
+                q: "q",
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
     test("get (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({

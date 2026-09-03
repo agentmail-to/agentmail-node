@@ -118,6 +118,121 @@ export class InboxesClient {
     }
 
     /**
+     * Searches inboxes in the pod by address or display name, ranked by
+     * relevance. Each word in the query matches the start of a word in the
+     * address or display name, so `sup` matches `support@example.com` but
+     * `port` does not. An exact address match always ranks first. `limit`
+     * cannot exceed 100. A page can be empty and still carry a
+     * `next_page_token`; keep paging until the token is absent.
+     *
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.pods.SearchInboxesRequest} request
+     * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.pods.inboxes.search("pod_id", {
+     *         q: "q"
+     *     })
+     */
+    public search(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.SearchInboxesRequest,
+        requestOptions?: InboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.inboxes.SearchInboxesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__search(pod_id, request, requestOptions));
+    }
+
+    private async __search(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.SearchInboxesRequest,
+        requestOptions?: InboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.inboxes.SearchInboxesResponse>> {
+        const { q, limit, pageToken } = request;
+        const _queryParams: Record<string, unknown> = {
+            q,
+            limit,
+            page_token: pageToken,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/inboxes/search`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.inboxes.SearchInboxesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/pods/{pod_id}/inboxes/search",
+        );
+    }
+
+    /**
      * **CLI:**
      * ```bash
      * agentmail pods inboxes get --pod-id <pod_id> --inbox-id <inbox_id>
