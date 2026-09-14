@@ -3,33 +3,12 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ApiKeyId } from "./ApiKeyId.js";
-import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
-import { CreatedAt } from "./CreatedAt.js";
-import { Name } from "./Name.js";
-import { Prefix } from "./Prefix.js";
+import { BearerApiKey } from "./BearerApiKey.js";
+import { PublicKeyCredential } from "./PublicKeyCredential.js";
 
-export const ApiKey: core.serialization.ObjectSchema<serializers.ApiKey.Raw, AgentMail.ApiKey> =
-    core.serialization.object({
-        apiKeyId: core.serialization.property("api_key_id", ApiKeyId),
-        prefix: Prefix,
-        name: Name,
-        podId: core.serialization.property("pod_id", core.serialization.string().optional()),
-        inboxId: core.serialization.property("inbox_id", core.serialization.string().optional()),
-        usedAt: core.serialization.property("used_at", core.serialization.date().optional()),
-        permissions: ApiKeyPermissions.optional(),
-        createdAt: core.serialization.property("created_at", CreatedAt),
-    });
+export const ApiKey: core.serialization.Schema<serializers.ApiKey.Raw, AgentMail.ApiKey> =
+    core.serialization.undiscriminatedUnion([BearerApiKey, PublicKeyCredential]);
 
 export declare namespace ApiKey {
-    export interface Raw {
-        api_key_id: ApiKeyId.Raw;
-        prefix: Prefix.Raw;
-        name: Name.Raw;
-        pod_id?: string | null;
-        inbox_id?: string | null;
-        used_at?: string | null;
-        permissions?: ApiKeyPermissions.Raw | null;
-        created_at: CreatedAt.Raw;
-    }
+    export type Raw = BearerApiKey.Raw | PublicKeyCredential.Raw;
 }

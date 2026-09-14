@@ -3,35 +3,55 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ApiKeyCreator } from "./ApiKeyCreator.js";
+import { ApiKeyId } from "./ApiKeyId.js";
+import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
+import { CreatedAt } from "./CreatedAt.js";
+import { ExpiresAt } from "./ExpiresAt.js";
+import { InboxScopeId } from "./InboxScopeId.js";
 import { Name } from "./Name.js";
+import { PodScopeId } from "./PodScopeId.js";
+import { PublicKeyClientId } from "./PublicKeyClientId.js";
 import { PublicKeyMaterial } from "./PublicKeyMaterial.js";
-import { PublicKeyScope } from "./PublicKeyScope.js";
+import { PublicKeyStatus } from "./PublicKeyStatus.js";
+import { UpdatedAt } from "./UpdatedAt.js";
+import { UsedAt } from "./UsedAt.js";
 
 export const PublicKeyCredential: core.serialization.ObjectSchema<
     serializers.PublicKeyCredential.Raw,
     AgentMail.PublicKeyCredential
 > = core.serialization.object({
-    apiKeyId: core.serialization.property("api_key_id", core.serialization.string()),
     type: core.serialization.stringLiteral("public_key"),
+    apiKeyId: core.serialization.property("api_key_id", ApiKeyId),
+    clientId: core.serialization.property("client_id", PublicKeyClientId.optional()),
     name: Name,
-    publicKey: core.serialization.property("public_key", PublicKeyMaterial),
-    scope: PublicKeyScope,
-    expiresAt: core.serialization.property("expires_at", core.serialization.date().optional()),
-    revokedAt: core.serialization.property("revoked_at", core.serialization.date().optional()),
-    createdAt: core.serialization.property("created_at", core.serialization.date()),
-    updatedAt: core.serialization.property("updated_at", core.serialization.date()),
+    publicKey: core.serialization.property("public_key", PublicKeyMaterial.optional()),
+    podId: core.serialization.property("pod_id", PodScopeId.optional()),
+    inboxId: core.serialization.property("inbox_id", InboxScopeId.optional()),
+    status: PublicKeyStatus.optional(),
+    usedAt: core.serialization.property("used_at", UsedAt.optional()),
+    permissions: ApiKeyPermissions,
+    createdBy: core.serialization.property("created_by", ApiKeyCreator),
+    createdAt: core.serialization.property("created_at", CreatedAt),
+    updatedAt: core.serialization.property("updated_at", UpdatedAt),
+    expiresAt: core.serialization.property("expires_at", ExpiresAt.optional()),
 });
 
 export declare namespace PublicKeyCredential {
     export interface Raw {
-        api_key_id: string;
         type: "public_key";
+        api_key_id: ApiKeyId.Raw;
+        client_id?: PublicKeyClientId.Raw | null;
         name: Name.Raw;
-        public_key: PublicKeyMaterial.Raw;
-        scope: PublicKeyScope.Raw;
-        expires_at?: string | null;
-        revoked_at?: string | null;
-        created_at: string;
-        updated_at: string;
+        public_key?: PublicKeyMaterial.Raw | null;
+        pod_id?: PodScopeId.Raw | null;
+        inbox_id?: InboxScopeId.Raw | null;
+        status?: PublicKeyStatus.Raw | null;
+        used_at?: UsedAt.Raw | null;
+        permissions: ApiKeyPermissions.Raw;
+        created_by: ApiKeyCreator.Raw;
+        created_at: CreatedAt.Raw;
+        updated_at: UpdatedAt.Raw;
+        expires_at?: ExpiresAt.Raw | null;
     }
 }

@@ -2,7 +2,8 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface CreateApiKeyRequest {
-    name?: AgentMail.Name;
-    permissions?: AgentMail.ApiKeyPermissions;
-}
+/**
+ * A body with `public_key` registers a public-key credential; any other
+ * body mints a bearer key.
+ */
+export type CreateApiKeyRequest = AgentMail.CreateBearerApiKeyRequest | AgentMail.CreatePublicKeyRequest;

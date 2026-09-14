@@ -360,4 +360,80 @@ describe("ProvidersClient", () => {
             return await client.providers.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         }).rejects.toThrow(AgentMail.ValidationError);
     });
+
+    test("connect (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            api_key_id: "api_key_id",
+            magic_url: "magic_url",
+            expires_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+        expect(response).toEqual({
+            apiKeyId: "api_key_id",
+            magicUrl: "magic_url",
+            expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("connect (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("connect (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
 });

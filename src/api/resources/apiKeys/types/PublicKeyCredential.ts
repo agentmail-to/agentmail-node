@@ -3,23 +3,26 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * An AgentID sign-in credential. `type` and `api_key_id` are server-owned;
- * use `api_key_id` as the JWS `kid`. This response never contains a bearer
- * secret or private key.
+ * An AgentID sign-in credential, scoped like a bearer key; `api_key_id` is
+ * the JWS `kid`. A sign-in key carries `status`, gains `public_key` once
+ * the client has proved it, expires 30 days after
+ * activation, and carries exactly `provider_connect` and
+ * `provider_share_owner`, snapshotted from the bearer key that created it
+ * and enforced from the key itself.
  */
 export interface PublicKeyCredential {
-    /** Server-generated credential ID. Store this value as the signing key's `kid`. */
-    apiKeyId: string;
-    /** Server-owned credential discriminator. Callers cannot select or update it. */
     type: "public_key";
-    /** Human-readable credential name. */
+    apiKeyId: AgentMail.ApiKeyId;
+    clientId?: AgentMail.PublicKeyClientId;
     name: AgentMail.Name;
-    publicKey: AgentMail.PublicKeyMaterial;
-    scope: AgentMail.PublicKeyScope;
-    /** Immutable absolute expiry. Omitted when the credential does not expire. */
-    expiresAt?: Date;
-    /** Present when organization-wide revoke-all invalidated this credential generation. */
-    revokedAt?: Date;
-    createdAt: Date;
-    updatedAt: Date;
+    publicKey?: AgentMail.PublicKeyMaterial;
+    podId?: AgentMail.PodScopeId;
+    inboxId?: AgentMail.InboxScopeId;
+    status?: AgentMail.PublicKeyStatus;
+    usedAt?: AgentMail.UsedAt;
+    permissions: AgentMail.ApiKeyPermissions;
+    createdBy: AgentMail.ApiKeyCreator;
+    createdAt: AgentMail.CreatedAt;
+    updatedAt: AgentMail.UpdatedAt;
+    expiresAt?: AgentMail.ExpiresAt;
 }

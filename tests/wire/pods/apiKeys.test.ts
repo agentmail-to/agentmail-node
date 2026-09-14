@@ -18,6 +18,7 @@ describe("ApiKeysClient", () => {
             next_page_token: "next_page_token",
             api_keys: [
                 {
+                    type: "bearer",
                     api_key_id: "api_key_id",
                     prefix: "prefix",
                     name: "name",
@@ -58,13 +59,18 @@ describe("ApiKeysClient", () => {
                         api_key_create: true,
                         api_key_update: true,
                         api_key_delete: true,
+                        provider_connect: true,
+                        provider_share_owner: true,
                         pod_read: true,
                         pod_create: true,
                         pod_delete: true,
                     },
                     created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    expires_at: "2024-01-15T09:30:00Z",
                 },
                 {
+                    type: "bearer",
                     api_key_id: "api_key_id",
                     prefix: "prefix",
                     name: "name",
@@ -105,11 +111,15 @@ describe("ApiKeysClient", () => {
                         api_key_create: true,
                         api_key_update: true,
                         api_key_delete: true,
+                        provider_connect: true,
+                        provider_share_owner: true,
                         pod_read: true,
                         pod_create: true,
                         pod_delete: true,
                     },
                     created_at: "2024-01-15T09:30:00Z",
+                    updated_at: "2024-01-15T09:30:00Z",
+                    expires_at: "2024-01-15T09:30:00Z",
                 },
             ],
         };
@@ -128,6 +138,7 @@ describe("ApiKeysClient", () => {
             nextPageToken: "next_page_token",
             apiKeys: [
                 {
+                    type: "bearer",
                     apiKeyId: "api_key_id",
                     prefix: "prefix",
                     name: "name",
@@ -168,13 +179,18 @@ describe("ApiKeysClient", () => {
                         apiKeyCreate: true,
                         apiKeyUpdate: true,
                         apiKeyDelete: true,
+                        providerConnect: true,
+                        providerShareOwner: true,
                         podRead: true,
                         podCreate: true,
                         podDelete: true,
                     },
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
+                    type: "bearer",
                     apiKeyId: "api_key_id",
                     prefix: "prefix",
                     name: "name",
@@ -215,11 +231,15 @@ describe("ApiKeysClient", () => {
                         apiKeyCreate: true,
                         apiKeyUpdate: true,
                         apiKeyDelete: true,
+                        providerConnect: true,
+                        providerShareOwner: true,
                         podRead: true,
                         podCreate: true,
                         podDelete: true,
                     },
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
+                    updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+                    expiresAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
         });
@@ -297,6 +317,8 @@ describe("ApiKeysClient", () => {
                 api_key_create: true,
                 api_key_update: true,
                 api_key_delete: true,
+                provider_connect: true,
+                provider_share_owner: true,
                 pod_read: true,
                 pod_create: true,
                 pod_delete: true,
@@ -355,6 +377,8 @@ describe("ApiKeysClient", () => {
                 apiKeyCreate: true,
                 apiKeyUpdate: true,
                 apiKeyDelete: true,
+                providerConnect: true,
+                providerShareOwner: true,
                 podRead: true,
                 podCreate: true,
                 podDelete: true,
@@ -409,6 +433,179 @@ describe("ApiKeysClient", () => {
         await expect(async () => {
             return await client.pods.apiKeys.create("pod_id", {});
         }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("update (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = {
+            type: "bearer",
+            api_key_id: "api_key_id",
+            prefix: "prefix",
+            name: "name",
+            pod_id: "pod_id",
+            inbox_id: "inbox_id",
+            used_at: "2024-01-15T09:30:00Z",
+            permissions: {
+                inbox_read: true,
+                inbox_create: true,
+                inbox_update: true,
+                inbox_delete: true,
+                message_read: true,
+                message_send: true,
+                message_update: true,
+                message_delete: true,
+                label_spam_read: true,
+                label_blocked_read: true,
+                label_unauthenticated_read: true,
+                label_trash_read: true,
+                draft_read: true,
+                draft_create: true,
+                draft_update: true,
+                draft_delete: true,
+                draft_send: true,
+                webhook_read: true,
+                webhook_create: true,
+                webhook_update: true,
+                webhook_delete: true,
+                domain_read: true,
+                domain_create: true,
+                domain_update: true,
+                domain_delete: true,
+                list_entry_read: true,
+                list_entry_create: true,
+                list_entry_delete: true,
+                metrics_read: true,
+                api_key_read: true,
+                api_key_create: true,
+                api_key_update: true,
+                api_key_delete: true,
+                provider_connect: true,
+                provider_share_owner: true,
+                pod_read: true,
+                pod_create: true,
+                pod_delete: true,
+            },
+            created_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+            expires_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/api-keys/api_key_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.pods.apiKeys.update("pod_id", "api_key_id", {});
+        expect(response).toEqual({
+            type: "bearer",
+            apiKeyId: "api_key_id",
+            prefix: "prefix",
+            name: "name",
+            podId: "pod_id",
+            inboxId: "inbox_id",
+            usedAt: new Date("2024-01-15T09:30:00.000Z"),
+            permissions: {
+                inboxRead: true,
+                inboxCreate: true,
+                inboxUpdate: true,
+                inboxDelete: true,
+                messageRead: true,
+                messageSend: true,
+                messageUpdate: true,
+                messageDelete: true,
+                labelSpamRead: true,
+                labelBlockedRead: true,
+                labelUnauthenticatedRead: true,
+                labelTrashRead: true,
+                draftRead: true,
+                draftCreate: true,
+                draftUpdate: true,
+                draftDelete: true,
+                draftSend: true,
+                webhookRead: true,
+                webhookCreate: true,
+                webhookUpdate: true,
+                webhookDelete: true,
+                domainRead: true,
+                domainCreate: true,
+                domainUpdate: true,
+                domainDelete: true,
+                listEntryRead: true,
+                listEntryCreate: true,
+                listEntryDelete: true,
+                metricsRead: true,
+                apiKeyRead: true,
+                apiKeyCreate: true,
+                apiKeyUpdate: true,
+                apiKeyDelete: true,
+                providerConnect: true,
+                providerShareOwner: true,
+                podRead: true,
+                podCreate: true,
+                podDelete: true,
+            },
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("update (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/api-keys/api_key_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.apiKeys.update("pod_id", "api_key_id", {});
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("update (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/pods/pod_id/api-keys/api_key_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.apiKeys.update("pod_id", "api_key_id", {});
+        }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
     test("delete (1)", async () => {

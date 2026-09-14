@@ -44,6 +44,8 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     apiKeyCreate: core.serialization.property("api_key_create", core.serialization.boolean().optional()),
     apiKeyUpdate: core.serialization.property("api_key_update", core.serialization.boolean().optional()),
     apiKeyDelete: core.serialization.property("api_key_delete", core.serialization.boolean().optional()),
+    providerConnect: core.serialization.property("provider_connect", core.serialization.boolean().optional()),
+    providerShareOwner: core.serialization.property("provider_share_owner", core.serialization.boolean().optional()),
     podRead: core.serialization.property("pod_read", core.serialization.boolean().optional()),
     podCreate: core.serialization.property("pod_create", core.serialization.boolean().optional()),
     podDelete: core.serialization.property("pod_delete", core.serialization.boolean().optional()),
@@ -84,6 +86,8 @@ export declare namespace ApiKeyPermissions {
         api_key_create?: boolean | null;
         api_key_update?: boolean | null;
         api_key_delete?: boolean | null;
+        provider_connect?: boolean | null;
+        provider_share_owner?: boolean | null;
         pod_read?: boolean | null;
         pod_create?: boolean | null;
         pod_delete?: boolean | null;

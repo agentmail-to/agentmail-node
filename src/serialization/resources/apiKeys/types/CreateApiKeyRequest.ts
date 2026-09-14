@@ -3,20 +3,14 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
-import { Name } from "./Name.js";
+import { CreateBearerApiKeyRequest } from "./CreateBearerApiKeyRequest.js";
+import { CreatePublicKeyRequest } from "./CreatePublicKeyRequest.js";
 
-export const CreateApiKeyRequest: core.serialization.ObjectSchema<
+export const CreateApiKeyRequest: core.serialization.Schema<
     serializers.CreateApiKeyRequest.Raw,
     AgentMail.CreateApiKeyRequest
-> = core.serialization.object({
-    name: Name.optional(),
-    permissions: ApiKeyPermissions.optional(),
-});
+> = core.serialization.undiscriminatedUnion([CreateBearerApiKeyRequest, CreatePublicKeyRequest]);
 
 export declare namespace CreateApiKeyRequest {
-    export interface Raw {
-        name?: Name.Raw | null;
-        permissions?: ApiKeyPermissions.Raw | null;
-    }
+    export type Raw = CreateBearerApiKeyRequest.Raw | CreatePublicKeyRequest.Raw;
 }

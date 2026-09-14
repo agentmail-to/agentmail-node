@@ -70,6 +70,16 @@ export interface ApiKeyPermissions {
     apiKeyUpdate?: boolean;
     /** Delete API keys. */
     apiKeyDelete?: boolean;
+    /**
+     * Sign in to providers as an inbox: connect a provider, authorize an inbox, and mint the
+     * sign-in keys. Omitted on a new bearer key means false, whatever else the key holds.
+     */
+    providerConnect?: boolean;
+    /**
+     * Share the organization owner's name and email with providers at sign-in. One permission
+     * for both values.
+     */
+    providerShareOwner?: boolean;
     /** Read pods. */
     podRead?: boolean;
     /** Create pods. */

@@ -8,10 +8,8 @@ export interface CreateApiKeyResponse {
     apiKey: string;
     prefix: AgentMail.Prefix;
     name: AgentMail.Name;
-    /** Pod ID the api key is scoped to. */
-    podId?: string;
-    /** Inbox ID the api key is scoped to. */
-    inboxId?: string;
+    podId?: AgentMail.PodScopeId;
+    inboxId?: AgentMail.InboxScopeId;
     permissions?: AgentMail.ApiKeyPermissions;
     createdAt: AgentMail.CreatedAt;
 }

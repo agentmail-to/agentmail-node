@@ -5,6 +5,9 @@ import type * as AgentMail from "../../../index.js";
 export interface ListApiKeysResponse {
     count: AgentMail.Count;
     nextPageToken?: AgentMail.PageToken;
-    /** Ordered by `created_at` descending. */
+    /**
+     * Every credential family, ordered by `created_at`. `type` restricts
+     * to one family.
+     */
     apiKeys: AgentMail.ApiKey[];
 }

@@ -3,19 +3,20 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { InboxId } from "../../inboxes/types/InboxId.js";
+import { AcceptDisclosure } from "../../apiKeys/types/AcceptDisclosure.js";
+import { ConnectInboxId } from "./ConnectInboxId.js";
 
 export const ConnectProviderBody: core.serialization.ObjectSchema<
     serializers.ConnectProviderBody.Raw,
     AgentMail.ConnectProviderBody
 > = core.serialization.object({
-    inboxId: core.serialization.property("inbox_id", InboxId.optional()),
-    authorize: core.serialization.boolean().optional(),
+    inboxId: core.serialization.property("inbox_id", ConnectInboxId.optional()),
+    acceptDisclosure: core.serialization.property("accept_disclosure", AcceptDisclosure.optional()),
 });
 
 export declare namespace ConnectProviderBody {
     export interface Raw {
-        inbox_id?: InboxId.Raw | null;
-        authorize?: boolean | null;
+        inbox_id?: ConnectInboxId.Raw | null;
+        accept_disclosure?: AcceptDisclosure.Raw | null;
     }
 }

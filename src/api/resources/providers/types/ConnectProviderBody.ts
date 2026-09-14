@@ -3,8 +3,6 @@
 import type * as AgentMail from "../../../index.js";
 
 export interface ConnectProviderBody {
-    /** Inbox to connect. Required unless the API key is scoped to an inbox. */
-    inboxId?: AgentMail.inboxes.InboxId;
-    /** Authorize the provider for this inbox, skipping the first-use disclosure page. */
-    authorize?: boolean;
+    inboxId?: AgentMail.ConnectInboxId;
+    acceptDisclosure?: AgentMail.AcceptDisclosure;
 }

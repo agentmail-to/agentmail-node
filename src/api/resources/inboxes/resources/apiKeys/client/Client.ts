@@ -141,7 +141,7 @@ export class ApiKeysClient {
         inbox_id: AgentMail.inboxes.InboxId,
         request: AgentMail.CreateApiKeyRequest,
         requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.CreateApiKeyResponse> {
+    ): core.HttpResponsePromise<AgentMail.CreateApiKeyResult> {
         return core.HttpResponsePromise.fromPromise(this.__create(inbox_id, request, requestOptions));
     }
 
@@ -149,7 +149,7 @@ export class ApiKeysClient {
         inbox_id: AgentMail.inboxes.InboxId,
         request: AgentMail.CreateApiKeyRequest,
         requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.CreateApiKeyResponse>> {
+    ): Promise<core.WithRawResponse<AgentMail.CreateApiKeyResult>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -180,7 +180,7 @@ export class ApiKeysClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.CreateApiKeyResponse.parseOrThrow(_response.body, {
+                data: serializers.CreateApiKeyResult.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -229,6 +229,120 @@ export class ApiKeysClient {
             _response.rawResponse,
             "POST",
             "/v0/inboxes/{inbox_id}/api-keys",
+        );
+    }
+
+    /**
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes api-keys update --inbox-id <inbox_id> --api-key-id <api_key_id> --name "Renamed"
+     * ```
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.ApiKeyId} api_key_id
+     * @param {AgentMail.UpdateApiKeyRequest} request
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.apiKeys.update("inbox_id", "api_key_id", {})
+     */
+    public update(
+        inbox_id: AgentMail.inboxes.InboxId,
+        api_key_id: AgentMail.ApiKeyId,
+        request: AgentMail.UpdateApiKeyRequest,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ApiKey> {
+        return core.HttpResponsePromise.fromPromise(this.__update(inbox_id, api_key_id, request, requestOptions));
+    }
+
+    private async __update(
+        inbox_id: AgentMail.inboxes.InboxId,
+        api_key_id: AgentMail.ApiKeyId,
+        request: AgentMail.UpdateApiKeyRequest,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ApiKey>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key_id, { omitUndefined: true }))}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.UpdateApiKeyRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ApiKey.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "PATCH",
+            "/v0/inboxes/{inbox_id}/api-keys/{api_key_id}",
         );
     }
 

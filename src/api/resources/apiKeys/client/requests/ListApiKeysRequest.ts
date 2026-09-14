@@ -7,6 +7,8 @@ import type * as AgentMail from "../../../../index.js";
  *     {}
  */
 export interface ListApiKeysRequest {
+    /** Restrict the list to one credential family. Omit for every family. */
+    type?: AgentMail.ApiKeyType;
     limit?: AgentMail.Limit;
     pageToken?: AgentMail.PageToken;
     ascending?: AgentMail.Ascending;

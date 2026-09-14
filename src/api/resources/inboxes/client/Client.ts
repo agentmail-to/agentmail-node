@@ -10,7 +10,6 @@ import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
 import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
-import { BrowserCredentialsClient } from "../resources/browserCredentials/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { EventsClient } from "../resources/events/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
@@ -30,7 +29,6 @@ export class InboxesClient {
     protected _threads: ThreadsClient | undefined;
     protected _messages: MessagesClient | undefined;
     protected _drafts: DraftsClient | undefined;
-    protected _browserCredentials: BrowserCredentialsClient | undefined;
     protected _webhooks: WebhooksClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
@@ -51,10 +49,6 @@ export class InboxesClient {
 
     public get drafts(): DraftsClient {
         return (this._drafts ??= new DraftsClient(this._options));
-    }
-
-    public get browserCredentials(): BrowserCredentialsClient {
-        return (this._browserCredentials ??= new BrowserCredentialsClient(this._options));
     }
 
     public get webhooks(): WebhooksClient {
@@ -615,5 +609,117 @@ export class InboxesClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/v0/inboxes/{inbox_id}");
+    }
+
+    /**
+     * Authorizes the AgentID sign-in a client is already waiting in, for the
+     * inbox in the path, and returns the pending public key it will activate. A
+     * repeat for the same token, inbox, and bearer returns the same key.
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.inboxes.AuthorizeInboxRequest} request
+     * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.inboxes.authorize("inbox_id", {
+     *         authToken: "blackcurrant.........."
+     *     })
+     */
+    public authorize(
+        inbox_id: AgentMail.inboxes.InboxId,
+        request: AgentMail.inboxes.AuthorizeInboxRequest,
+        requestOptions?: InboxesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.PublicKeyCredential> {
+        return core.HttpResponsePromise.fromPromise(this.__authorize(inbox_id, request, requestOptions));
+    }
+
+    private async __authorize(
+        inbox_id: AgentMail.inboxes.InboxId,
+        request: AgentMail.inboxes.AuthorizeInboxRequest,
+        requestOptions?: InboxesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.PublicKeyCredential>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/authorize`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.inboxes.AuthorizeInboxRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.PublicKeyCredential.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/authorize",
+        );
     }
 }

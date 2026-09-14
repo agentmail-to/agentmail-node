@@ -3,24 +3,29 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
+import { ExpiresAt } from "./ExpiresAt.js";
+import { Name } from "./Name.js";
 import { PublicJwk } from "./PublicJwk.js";
-import { PublicKeyScope } from "./PublicKeyScope.js";
+import { PublicKeyClientId } from "./PublicKeyClientId.js";
 
 export const CreatePublicKeyRequest: core.serialization.ObjectSchema<
     serializers.CreatePublicKeyRequest.Raw,
     AgentMail.CreatePublicKeyRequest
 > = core.serialization.object({
     publicKey: core.serialization.property("public_key", PublicJwk),
-    name: core.serialization.string().optional(),
-    scope: PublicKeyScope.optional(),
-    expiresAt: core.serialization.property("expires_at", core.serialization.date().optional()),
+    clientId: core.serialization.property("client_id", PublicKeyClientId.optional()),
+    name: Name.optional(),
+    permissions: ApiKeyPermissions.optional(),
+    expiresAt: core.serialization.property("expires_at", ExpiresAt.optional()),
 });
 
 export declare namespace CreatePublicKeyRequest {
     export interface Raw {
         public_key: PublicJwk.Raw;
-        name?: string | null;
-        scope?: PublicKeyScope.Raw | null;
-        expires_at?: string | null;
+        client_id?: PublicKeyClientId.Raw | null;
+        name?: Name.Raw | null;
+        permissions?: ApiKeyPermissions.Raw | null;
+        expires_at?: ExpiresAt.Raw | null;
     }
 }

@@ -6,7 +6,9 @@ import type * as serializers from "../../../index.js";
 import { ApiKeyId } from "./ApiKeyId.js";
 import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
 import { CreatedAt } from "./CreatedAt.js";
+import { InboxScopeId } from "./InboxScopeId.js";
 import { Name } from "./Name.js";
+import { PodScopeId } from "./PodScopeId.js";
 import { Prefix } from "./Prefix.js";
 
 export const CreateApiKeyResponse: core.serialization.ObjectSchema<
@@ -17,8 +19,8 @@ export const CreateApiKeyResponse: core.serialization.ObjectSchema<
     apiKey: core.serialization.property("api_key", core.serialization.string()),
     prefix: Prefix,
     name: Name,
-    podId: core.serialization.property("pod_id", core.serialization.string().optional()),
-    inboxId: core.serialization.property("inbox_id", core.serialization.string().optional()),
+    podId: core.serialization.property("pod_id", PodScopeId.optional()),
+    inboxId: core.serialization.property("inbox_id", InboxScopeId.optional()),
     permissions: ApiKeyPermissions.optional(),
     createdAt: core.serialization.property("created_at", CreatedAt),
 });
@@ -29,8 +31,8 @@ export declare namespace CreateApiKeyResponse {
         api_key: string;
         prefix: Prefix.Raw;
         name: Name.Raw;
-        pod_id?: string | null;
-        inbox_id?: string | null;
+        pod_id?: PodScopeId.Raw | null;
+        inbox_id?: InboxScopeId.Raw | null;
         permissions?: ApiKeyPermissions.Raw | null;
         created_at: CreatedAt.Raw;
     }

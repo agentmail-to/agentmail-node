@@ -432,4 +432,207 @@ describe("InboxesClient", () => {
             return await client.inboxes.delete("inbox_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
+
+    test("authorize (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { auth_token: "blackcurrant.........." };
+        const rawResponseBody = {
+            type: "public_key",
+            api_key_id: "api_key_id",
+            client_id: "client_id",
+            name: "name",
+            public_key: {
+                jwk: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+                fingerprint: "blackcurrant...............................",
+            },
+            pod_id: "pod_id",
+            inbox_id: "inbox_id",
+            status: "pending",
+            used_at: "2024-01-15T09:30:00Z",
+            permissions: {
+                inbox_read: true,
+                inbox_create: true,
+                inbox_update: true,
+                inbox_delete: true,
+                message_read: true,
+                message_send: true,
+                message_update: true,
+                message_delete: true,
+                label_spam_read: true,
+                label_blocked_read: true,
+                label_unauthenticated_read: true,
+                label_trash_read: true,
+                draft_read: true,
+                draft_create: true,
+                draft_update: true,
+                draft_delete: true,
+                draft_send: true,
+                webhook_read: true,
+                webhook_create: true,
+                webhook_update: true,
+                webhook_delete: true,
+                domain_read: true,
+                domain_create: true,
+                domain_update: true,
+                domain_delete: true,
+                list_entry_read: true,
+                list_entry_create: true,
+                list_entry_delete: true,
+                metrics_read: true,
+                api_key_read: true,
+                api_key_create: true,
+                api_key_update: true,
+                api_key_delete: true,
+                provider_connect: true,
+                provider_share_owner: true,
+                pod_read: true,
+                pod_create: true,
+                pod_delete: true,
+            },
+            created_by: { api_key_id: "api_key_id" },
+            created_at: "2024-01-15T09:30:00Z",
+            updated_at: "2024-01-15T09:30:00Z",
+            expires_at: "2024-01-15T09:30:00Z",
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/authorize")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.authorize("inbox_id", {
+            authToken: "blackcurrant..........",
+        });
+        expect(response).toEqual({
+            type: "public_key",
+            apiKeyId: "api_key_id",
+            clientId: "client_id",
+            name: "name",
+            publicKey: {
+                jwk: {
+                    kty: "EC",
+                    crv: "P-256",
+                    x: "blackcurrant...............................",
+                    y: "blackcurrant...............................",
+                },
+                fingerprint: "blackcurrant...............................",
+            },
+            podId: "pod_id",
+            inboxId: "inbox_id",
+            status: "pending",
+            usedAt: new Date("2024-01-15T09:30:00.000Z"),
+            permissions: {
+                inboxRead: true,
+                inboxCreate: true,
+                inboxUpdate: true,
+                inboxDelete: true,
+                messageRead: true,
+                messageSend: true,
+                messageUpdate: true,
+                messageDelete: true,
+                labelSpamRead: true,
+                labelBlockedRead: true,
+                labelUnauthenticatedRead: true,
+                labelTrashRead: true,
+                draftRead: true,
+                draftCreate: true,
+                draftUpdate: true,
+                draftDelete: true,
+                draftSend: true,
+                webhookRead: true,
+                webhookCreate: true,
+                webhookUpdate: true,
+                webhookDelete: true,
+                domainRead: true,
+                domainCreate: true,
+                domainUpdate: true,
+                domainDelete: true,
+                listEntryRead: true,
+                listEntryCreate: true,
+                listEntryDelete: true,
+                metricsRead: true,
+                apiKeyRead: true,
+                apiKeyCreate: true,
+                apiKeyUpdate: true,
+                apiKeyDelete: true,
+                providerConnect: true,
+                providerShareOwner: true,
+                podRead: true,
+                podCreate: true,
+                podDelete: true,
+            },
+            createdBy: {
+                apiKeyId: "api_key_id",
+            },
+            createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            updatedAt: new Date("2024-01-15T09:30:00.000Z"),
+            expiresAt: new Date("2024-01-15T09:30:00.000Z"),
+        });
+    });
+
+    test("authorize (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { auth_token: "blackcurrant.........." };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/authorize")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.authorize("inbox_id", {
+                authToken: "blackcurrant..........",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("authorize (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { auth_token: "blackcurrant.........." };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/authorize")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.authorize("inbox_id", {
+                authToken: "blackcurrant..........",
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
 });

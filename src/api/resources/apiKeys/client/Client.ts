@@ -2,7 +2,7 @@
 
 import type { BaseClientOptions, BaseRequestOptions } from "../../../../BaseClient.js";
 import { type NormalizedClientOptionsWithAuth, normalizeClientOptionsWithAuth } from "../../../../BaseClient.js";
-import { mergeHeaders, mergeOnlyDefinedHeaders } from "../../../../core/headers.js";
+import { mergeHeaders } from "../../../../core/headers.js";
 import * as core from "../../../../core/index.js";
 import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
@@ -24,6 +24,10 @@ export class ApiKeysClient {
     }
 
     /**
+     * Lists every credential, newest first. Filter one family with `type`.
+     * Page to token exhaustion: a page can be empty and still carry a
+     * `next_page_token`.
+     *
      * **CLI:**
      * ```bash
      * agentmail api-keys list
@@ -46,8 +50,15 @@ export class ApiKeysClient {
         request: AgentMail.ListApiKeysRequest = {},
         requestOptions?: ApiKeysClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListApiKeysResponse>> {
-        const { limit, pageToken, ascending } = request;
+        const { type: type_, limit, pageToken, ascending } = request;
         const _queryParams: Record<string, unknown> = {
+            type:
+                type_ != null
+                    ? serializers.ApiKeyType.jsonOrThrow(type_, {
+                          unrecognizedObjectKeys: "strip",
+                          omitUndefined: true,
+                      })
+                    : undefined,
             limit,
             page_token: pageToken,
             ascending,
@@ -99,6 +110,92 @@ export class ApiKeysClient {
     }
 
     /**
+     * Returns one credential of any family. Public keys also resolve by
+     * `client_id`. Poll a sign-in key until `status` is `active`.
+     *
+     * @param {AgentMail.ApiKeyId} api_key_id
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.apiKeys.get("api_key_id")
+     */
+    public get(
+        api_key_id: AgentMail.ApiKeyId,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ApiKey> {
+        return core.HttpResponsePromise.fromPromise(this.__get(api_key_id, requestOptions));
+    }
+
+    private async __get(
+        api_key_id: AgentMail.ApiKeyId,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ApiKey>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key_id, { omitUndefined: true }))}`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ApiKey.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/api-keys/{api_key_id}");
+    }
+
+    /**
+     * Creates a bearer key, or registers a public key when the body carries
+     * `public_key`. The route selects the scope. Bearer secrets are returned once.
+     *
      * **CLI:**
      * ```bash
      * agentmail api-keys create --name "My Key"
@@ -108,6 +205,7 @@ export class ApiKeysClient {
      * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.ConflictError}
      *
      * @example
      *     await client.apiKeys.create({})
@@ -115,14 +213,14 @@ export class ApiKeysClient {
     public create(
         request: AgentMail.CreateApiKeyRequest,
         requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.CreateApiKeyResponse> {
+    ): core.HttpResponsePromise<AgentMail.CreateApiKeyResult> {
         return core.HttpResponsePromise.fromPromise(this.__create(request, requestOptions));
     }
 
     private async __create(
         request: AgentMail.CreateApiKeyRequest,
         requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.CreateApiKeyResponse>> {
+    ): Promise<core.WithRawResponse<AgentMail.CreateApiKeyResult>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -153,7 +251,7 @@ export class ApiKeysClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.CreateApiKeyResponse.parseOrThrow(_response.body, {
+                data: serializers.CreateApiKeyResult.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -177,6 +275,17 @@ export class ApiKeysClient {
                         }),
                         _response.rawResponse,
                     );
+                case 409:
+                    throw new AgentMail.ConflictError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.AgentMailError({
                         statusCode: _response.error.statusCode,
@@ -190,6 +299,114 @@ export class ApiKeysClient {
     }
 
     /**
+     * Renames a credential or changes its permissions. Public keys also resolve
+     * by `client_id`; a sign-in key accepts only `provider_connect` and
+     * `provider_share_owner`.
+     *
+     * @param {AgentMail.ApiKeyId} api_key_id
+     * @param {AgentMail.UpdateApiKeyRequest} request
+     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     *
+     * @example
+     *     await client.apiKeys.update("api_key_id", {})
+     */
+    public update(
+        api_key_id: AgentMail.ApiKeyId,
+        request: AgentMail.UpdateApiKeyRequest,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ApiKey> {
+        return core.HttpResponsePromise.fromPromise(this.__update(api_key_id, request, requestOptions));
+    }
+
+    private async __update(
+        api_key_id: AgentMail.ApiKeyId,
+        request: AgentMail.UpdateApiKeyRequest,
+        requestOptions?: ApiKeysClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ApiKey>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/api-keys/${core.url.encodePathParam(serializers.ApiKeyId.jsonOrThrow(api_key_id, { omitUndefined: true }))}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.UpdateApiKeyRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.ApiKey.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "PATCH", "/v0/api-keys/{api_key_id}");
+    }
+
+    /**
+     * Deletes one credential of any family. A pending sign-in key is
+     * cancelled; an active one is revoked. Public keys also resolve by `client_id`.
+     *
      * **CLI:**
      * ```bash
      * agentmail api-keys delete --api-key-id <api_key_id>
@@ -263,983 +480,5 @@ export class ApiKeysClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "DELETE", "/v0/api-keys/{api_key_id}");
-    }
-
-    /**
-     * List only public-key credentials visible to the bearer caller's scope.
-     * Bearer credentials are never returned, even though both credential types
-     * share storage and pagination indexes. Requires `api_key_read`.
-     *
-     * @param {AgentMail.ListPublicKeysRequest} request
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.apiKeys.listPublicKeys()
-     */
-    public listPublicKeys(
-        request: AgentMail.ListPublicKeysRequest = {},
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListPublicKeysResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listPublicKeys(request, requestOptions));
-    }
-
-    private async __listPublicKeys(
-        request: AgentMail.ListPublicKeysRequest = {},
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListPublicKeysResponse>> {
-        const { limit, pageToken, ascending } = request;
-        const _queryParams: Record<string, unknown> = {
-            limit,
-            page_token: pageToken,
-            ascending,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                "/v0/api-keys/public-keys",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.ListPublicKeysResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.AgentMailError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/api-keys/public-keys");
-    }
-
-    /**
-     * Register a public P-256 JWK using an existing AgentMail bearer API key
-     * with `api_key_create`. Re-registering the same JWK creates a new
-     * credential ID; it does not replace or recover an earlier credential.
-     * The private key must never be sent to AgentMail.
-     *
-     * @param {AgentMail.CreatePublicKeyRequest} request
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.ValidationError}
-     * @throws {@link AgentMail.ConflictError}
-     *
-     * @example
-     *     await client.apiKeys.createPublicKey({
-     *         publicKey: {
-     *             kty: "EC",
-     *             crv: "P-256",
-     *             x: "blackcurrant...............................",
-     *             y: "blackcurrant..............................."
-     *         }
-     *     })
-     */
-    public createPublicKey(
-        request: AgentMail.CreatePublicKeyRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.PublicKeyCredential> {
-        return core.HttpResponsePromise.fromPromise(this.__createPublicKey(request, requestOptions));
-    }
-
-    private async __createPublicKey(
-        request: AgentMail.CreatePublicKeyRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.PublicKeyCredential>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                "/v0/api-keys/public-keys",
-            ),
-            method: "POST",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: serializers.CreatePublicKeyRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.PublicKeyCredential.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new AgentMail.ValidationError(
-                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new AgentMail.ConflictError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v0/api-keys/public-keys");
-    }
-
-    /**
-     * Rename the credential. All security-relevant fields are immutable.
-     * Requires `api_key_update`.
-     *
-     * @param {string} api_key_id - Public-key credential ID returned by registration.
-     * @param {AgentMail.UpdatePublicKeyNameRequest} request
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.ValidationError}
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.apiKeys.updatePublicKeyName("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-     *         name: "x"
-     *     })
-     */
-    public updatePublicKeyName(
-        api_key_id: string,
-        request: AgentMail.UpdatePublicKeyNameRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.PublicKeyCredential> {
-        return core.HttpResponsePromise.fromPromise(this.__updatePublicKeyName(api_key_id, request, requestOptions));
-    }
-
-    private async __updatePublicKeyName(
-        api_key_id: string,
-        request: AgentMail.UpdatePublicKeyNameRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.PublicKeyCredential>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                `/v0/api-keys/public-keys/${core.url.encodePathParam(api_key_id)}`,
-            ),
-            method: "PATCH",
-            headers: _headers,
-            contentType: "application/json",
-            queryParameters: requestOptions?.queryParams,
-            requestType: "json",
-            body: serializers.UpdatePublicKeyNameRequest.jsonOrThrow(request, {
-                unrecognizedObjectKeys: "strip",
-                omitUndefined: true,
-            }),
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.PublicKeyCredential.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new AgentMail.ValidationError(
-                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "PATCH",
-            "/v0/api-keys/public-keys/{api_key_id}",
-        );
-    }
-
-    /**
-     * Permanently revoke one public-key credential. This hard-deletes the
-     * credential; repeating the request returns not found. Requires
-     * `api_key_delete`.
-     *
-     * @param {string} api_key_id - Public-key credential ID returned by registration.
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.apiKeys.revokePublicKey("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-     */
-    public revokePublicKey(
-        api_key_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__revokePublicKey(api_key_id, requestOptions));
-    }
-
-    private async __revokePublicKey(
-        api_key_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                `/v0/api-keys/public-keys/${core.url.encodePathParam(api_key_id)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/v0/api-keys/public-keys/{api_key_id}",
-        );
-    }
-
-    /**
-     * Invalidate every current public-key credential in the caller's
-     * organization by advancing its AgentID key generation. The caller must be
-     * organization-scoped and either have `api_key_delete` or, for a verified
-     * self-serve agent organization, use an unrestricted unmanaged bearer
-     * credential. No request body is accepted.
-     *
-     * `Idempotency-Key` is required and must be a UUID. Reusing the same UUID
-     * returns the original permanent receipt without advancing the generation
-     * again. A new UUID performs a new generation advance.
-     *
-     * @param {AgentMail.RevokeAllAgentIdSignInKeysRequest} request
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.ValidationError}
-     * @throws {@link AgentMail.ConflictError}
-     *
-     * @example
-     *     await client.apiKeys.revokeAllAgentIdSignInKeys({
-     *         idempotencyKey: "Idempotency-Key"
-     *     })
-     */
-    public revokeAllAgentIdSignInKeys(
-        request: AgentMail.RevokeAllAgentIdSignInKeysRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.RevokeAllAgentIdSignInKeysResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__revokeAllAgentIdSignInKeys(request, requestOptions));
-    }
-
-    private async __revokeAllAgentIdSignInKeys(
-        request: AgentMail.RevokeAllAgentIdSignInKeysRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.RevokeAllAgentIdSignInKeysResponse>> {
-        const { idempotencyKey } = request;
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            mergeOnlyDefinedHeaders({ "Idempotency-Key": idempotencyKey }),
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                "/v0/api-keys/public-keys/agentid-sign-in/revoke-all",
-            ),
-            method: "POST",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.RevokeAllAgentIdSignInKeysResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 400:
-                    throw new AgentMail.ValidationError(
-                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                case 409:
-                    throw new AgentMail.ConflictError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/v0/api-keys/public-keys/agentid-sign-in/revoke-all",
-        );
-    }
-
-    /**
-     * List active browser credentials visible to the caller's scope. Requires `api_key_read`.
-     *
-     * @param {AgentMail.ListBrowserCredentialsRequest} request
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @example
-     *     await client.apiKeys.listBrowserCredentials()
-     */
-    public listBrowserCredentials(
-        request: AgentMail.ListBrowserCredentialsRequest = {},
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListBrowserCredentialsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listBrowserCredentials(request, requestOptions));
-    }
-
-    private async __listBrowserCredentials(
-        request: AgentMail.ListBrowserCredentialsRequest = {},
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListBrowserCredentialsResponse>> {
-        const { limit, pageToken } = request;
-        const _queryParams: Record<string, unknown> = {
-            limit,
-            page_token: pageToken,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                "/v0/api-keys/browser-credentials",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.ListBrowserCredentialsResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            throw new errors.AgentMailError({
-                statusCode: _response.error.statusCode,
-                body: _response.error.body,
-                rawResponse: _response.rawResponse,
-            });
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/v0/api-keys/browser-credentials",
-        );
-    }
-
-    /**
-     * List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
-     *
-     * @param {AgentMail.ListBrowserCredentialEventsRequest} request
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.apiKeys.listBrowserCredentialEvents()
-     */
-    public listBrowserCredentialEvents(
-        request: AgentMail.ListBrowserCredentialEventsRequest = {},
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListBrowserLifecycleEventsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listBrowserCredentialEvents(request, requestOptions));
-    }
-
-    private async __listBrowserCredentialEvents(
-        request: AgentMail.ListBrowserCredentialEventsRequest = {},
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListBrowserLifecycleEventsResponse>> {
-        const { limit, pageToken } = request;
-        const _queryParams: Record<string, unknown> = {
-            limit,
-            page_token: pageToken,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                "/v0/api-keys/browser-credentials/events",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.ListBrowserLifecycleEventsResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/v0/api-keys/browser-credentials/events",
-        );
-    }
-
-    /**
-     * Permanently revoke one active browser credential. Requires `api_key_delete`.
-     *
-     * @param {string} credential_id
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.apiKeys.deleteBrowserCredential("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-     */
-    public deleteBrowserCredential(
-        credential_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteBrowserCredential(credential_id, requestOptions));
-    }
-
-    private async __deleteBrowserCredential(
-        credential_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                `/v0/api-keys/browser-credentials/${core.url.encodePathParam(credential_id)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/v0/api-keys/browser-credentials/{credential_id}",
-        );
-    }
-
-    /**
-     * Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
-     *
-     * @param {string} enrollment_id
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.apiKeys.cancelBrowserEnrollment("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-     */
-    public cancelBrowserEnrollment(
-        enrollment_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__cancelBrowserEnrollment(enrollment_id, requestOptions));
-    }
-
-    private async __cancelBrowserEnrollment(
-        enrollment_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                `/v0/api-keys/browser-credentials/enrollments/${core.url.encodePathParam(enrollment_id)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/v0/api-keys/browser-credentials/enrollments/{enrollment_id}",
-        );
-    }
-
-    /**
-     * List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
-     *
-     * @param {AgentMail.ListBrowserConsentsRequest} request
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.apiKeys.listBrowserConsents({
-     *         inboxId: "inbox_id"
-     *     })
-     */
-    public listBrowserConsents(
-        request: AgentMail.ListBrowserConsentsRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListBrowserConsentsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listBrowserConsents(request, requestOptions));
-    }
-
-    private async __listBrowserConsents(
-        request: AgentMail.ListBrowserConsentsRequest,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListBrowserConsentsResponse>> {
-        const { inboxId, limit, pageToken } = request;
-        const _queryParams: Record<string, unknown> = {
-            inbox_id: inboxId,
-            limit,
-            page_token: pageToken,
-        };
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                "/v0/api-keys/browser-consents",
-            ),
-            method: "GET",
-            headers: _headers,
-            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return {
-                data: serializers.ListBrowserConsentsResponse.parseOrThrow(_response.body, {
-                    unrecognizedObjectKeys: "passthrough",
-                    allowUnrecognizedUnionMembers: true,
-                    allowUnrecognizedEnumValues: true,
-                    skipValidation: true,
-                    breadcrumbsPrefix: ["response"],
-                }),
-                rawResponse: _response.rawResponse,
-            };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/api-keys/browser-consents");
-    }
-
-    /**
-     * Revoke one remembered AgentID client approval. Requires `api_key_delete`.
-     *
-     * @param {string} consent_id
-     * @param {ApiKeysClient.RequestOptions} requestOptions - Request-specific configuration.
-     *
-     * @throws {@link AgentMail.NotFoundError}
-     *
-     * @example
-     *     await client.apiKeys.deleteBrowserConsent("consent_id")
-     */
-    public deleteBrowserConsent(
-        consent_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): core.HttpResponsePromise<void> {
-        return core.HttpResponsePromise.fromPromise(this.__deleteBrowserConsent(consent_id, requestOptions));
-    }
-
-    private async __deleteBrowserConsent(
-        consent_id: string,
-        requestOptions?: ApiKeysClient.RequestOptions,
-    ): Promise<core.WithRawResponse<void>> {
-        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
-        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
-            _authRequest.headers,
-            this._options?.headers,
-            requestOptions?.headers,
-        );
-        const _response = await core.fetcher({
-            url: core.url.join(
-                (await core.Supplier.get(this._options.baseUrl)) ??
-                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
-                        .http,
-                `/v0/api-keys/browser-consents/${core.url.encodePathParam(consent_id)}`,
-            ),
-            method: "DELETE",
-            headers: _headers,
-            queryParameters: requestOptions?.queryParams,
-            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
-            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
-            abortSignal: requestOptions?.abortSignal,
-            fetchFn: this._options?.fetch,
-            logging: this._options.logging,
-        });
-        if (_response.ok) {
-            return { data: undefined, rawResponse: _response.rawResponse };
-        }
-
-        if (_response.error.reason === "status-code") {
-            switch (_response.error.statusCode) {
-                case 404:
-                    throw new AgentMail.NotFoundError(
-                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
-                            unrecognizedObjectKeys: "passthrough",
-                            allowUnrecognizedUnionMembers: true,
-                            allowUnrecognizedEnumValues: true,
-                            skipValidation: true,
-                            breadcrumbsPrefix: ["response"],
-                        }),
-                        _response.rawResponse,
-                    );
-                default:
-                    throw new errors.AgentMailError({
-                        statusCode: _response.error.statusCode,
-                        body: _response.error.body,
-                        rawResponse: _response.rawResponse,
-                    });
-            }
-        }
-
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "DELETE",
-            "/v0/api-keys/browser-consents/{consent_id}",
-        );
     }
 }

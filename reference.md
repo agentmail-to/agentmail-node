@@ -408,6 +408,81 @@ await client.inboxes.delete("inbox_id");
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">authorize</a>(inbox_id, { ...params }) -> AgentMail.PublicKeyCredential</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Authorizes the AgentID sign-in a client is already waiting in, for the
+inbox in the path, and returns the pending public key it will activate. A
+repeat for the same token, inbox, and bearer returns the same key.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.authorize("inbox_id", {
+    authToken: "blackcurrant.........."
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.AuthorizeInboxRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `InboxesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Pods
 <details><summary><code>client.pods.<a href="/src/api/resources/pods/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListPodsResponse</code></summary>
 <dl>
@@ -1432,6 +1507,10 @@ await client.agent.verify({
 <dl>
 <dd>
 
+Lists every credential, newest first. Filter one family with `type`.
+Page to token exhaustion: a page can be empty and still carry a
+`next_page_token`.
+
 **CLI:**
 ```bash
 agentmail api-keys list
@@ -1486,7 +1565,7 @@ await client.apiKeys.list();
 </dl>
 </details>
 
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">create</a>({ ...params }) -> AgentMail.CreateApiKeyResponse</code></summary>
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">get</a>(api_key_id) -> AgentMail.ApiKey</code></summary>
 <dl>
 <dd>
 
@@ -1497,6 +1576,73 @@ await client.apiKeys.list();
 
 <dl>
 <dd>
+
+Returns one credential of any family. Public keys also resolve by
+`client_id`. Poll a sign-in key until `status` is `active`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.get("api_key_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**api_key_id:** `AgentMail.ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">create</a>({ ...params }) -> AgentMail.CreateApiKeyResult</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a bearer key, or registers a public key when the body carries
+`public_key`. The route selects the scope. Bearer secrets are returned once.
 
 **CLI:**
 ```bash
@@ -1552,6 +1698,79 @@ await client.apiKeys.create({});
 </dl>
 </details>
 
+<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">update</a>(api_key_id, { ...params }) -> AgentMail.ApiKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Renames a credential or changes its permissions. Public keys also resolve
+by `client_id`; a sign-in key accepts only `provider_connect` and
+`provider_share_owner`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apiKeys.update("api_key_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**api_key_id:** `AgentMail.ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">delete</a>(api_key_id) -> void</code></summary>
 <dl>
 <dd>
@@ -1563,6 +1782,9 @@ await client.apiKeys.create({});
 
 <dl>
 <dd>
+
+Deletes one credential of any family. A pending sign-in key is
+cancelled; an active one is revoked. Public keys also resolve by `client_id`.
 
 **CLI:**
 ```bash
@@ -1599,736 +1821,6 @@ await client.apiKeys.delete("api_key_id");
 <dd>
 
 **api_key_id:** `AgentMail.ApiKeyId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">listPublicKeys</a>({ ...params }) -> AgentMail.ListPublicKeysResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List only public-key credentials visible to the bearer caller's scope.
-Bearer credentials are never returned, even though both credential types
-share storage and pagination indexes. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.listPublicKeys();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ListPublicKeysRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">createPublicKey</a>({ ...params }) -> AgentMail.PublicKeyCredential</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Register a public P-256 JWK using an existing AgentMail bearer API key
-with `api_key_create`. Re-registering the same JWK creates a new
-credential ID; it does not replace or recover an earlier credential.
-The private key must never be sent to AgentMail.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.createPublicKey({
-    publicKey: {
-        kty: "EC",
-        crv: "P-256",
-        x: "blackcurrant...............................",
-        y: "blackcurrant..............................."
-    }
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreatePublicKeyRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">updatePublicKeyName</a>(api_key_id, { ...params }) -> AgentMail.PublicKeyCredential</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Rename the credential. All security-relevant fields are immutable.
-Requires `api_key_update`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.updatePublicKeyName("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {
-    name: "x"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**api_key_id:** `string` — Public-key credential ID returned by registration.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.UpdatePublicKeyNameRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">revokePublicKey</a>(api_key_id) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Permanently revoke one public-key credential. This hard-deletes the
-credential; repeating the request returns not found. Requires
-`api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.revokePublicKey("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**api_key_id:** `string` — Public-key credential ID returned by registration.
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">revokeAllAgentIdSignInKeys</a>({ ...params }) -> AgentMail.RevokeAllAgentIdSignInKeysResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Invalidate every current public-key credential in the caller's
-organization by advancing its AgentID key generation. The caller must be
-organization-scoped and either have `api_key_delete` or, for a verified
-self-serve agent organization, use an unrestricted unmanaged bearer
-credential. No request body is accepted.
-
-`Idempotency-Key` is required and must be a UUID. Reusing the same UUID
-returns the original permanent receipt without advancing the generation
-again. A new UUID performs a new generation advance.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.revokeAllAgentIdSignInKeys({
-    idempotencyKey: "Idempotency-Key"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.RevokeAllAgentIdSignInKeysRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">listBrowserCredentials</a>({ ...params }) -> AgentMail.ListBrowserCredentialsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List active browser credentials visible to the caller's scope. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.listBrowserCredentials();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ListBrowserCredentialsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">listBrowserCredentialEvents</a>({ ...params }) -> AgentMail.ListBrowserLifecycleEventsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List owner-facing browser credential and consent lifecycle events. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.listBrowserCredentialEvents();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ListBrowserCredentialEventsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">deleteBrowserCredential</a>(credential_id) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Permanently revoke one active browser credential. Requires `api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.deleteBrowserCredential("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**credential_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">cancelBrowserEnrollment</a>(enrollment_id) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Cancel one pending, unexpired browser enrollment intent. Requires `api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.cancelBrowserEnrollment("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**enrollment_id:** `string` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">listBrowserConsents</a>({ ...params }) -> AgentMail.ListBrowserConsentsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-List remembered AgentID client approvals for one live inbox. Requires `api_key_read`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.listBrowserConsents({
-    inboxId: "inbox_id"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ListBrowserConsentsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.apiKeys.<a href="/src/api/resources/apiKeys/client/Client.ts">deleteBrowserConsent</a>(consent_id) -> void</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Revoke one remembered AgentID client approval. Requires `api_key_delete`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.apiKeys.deleteBrowserConsent("consent_id");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**consent_id:** `string` 
     
 </dd>
 </dl>
@@ -3227,7 +2719,7 @@ await client.inboxes.apiKeys.list("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.apiKeys.<a href="/src/api/resources/inboxes/resources/apiKeys/client/Client.ts">create</a>(inbox_id, { ...params }) -> AgentMail.CreateApiKeyResponse</code></summary>
+<details><summary><code>client.inboxes.apiKeys.<a href="/src/api/resources/inboxes/resources/apiKeys/client/Client.ts">create</a>(inbox_id, { ...params }) -> AgentMail.CreateApiKeyResult</code></summary>
 <dl>
 <dd>
 
@@ -3282,6 +2774,88 @@ await client.inboxes.apiKeys.create("inbox_id", {});
 <dd>
 
 **request:** `AgentMail.CreateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.apiKeys.<a href="/src/api/resources/inboxes/resources/apiKeys/client/Client.ts">update</a>(inbox_id, api_key_id, { ...params }) -> AgentMail.ApiKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail inboxes api-keys update --inbox-id <inbox_id> --api-key-id <api_key_id> --name "Renamed"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.apiKeys.update("inbox_id", "api_key_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key_id:** `AgentMail.ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateApiKeyRequest` 
     
 </dd>
 </dl>
@@ -3364,104 +2938,6 @@ await client.inboxes.apiKeys.delete("inbox_id", "api_key_id");
 <dd>
 
 **requestOptions:** `ApiKeysClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Inboxes BrowserCredentials
-<details><summary><code>client.inboxes.browserCredentials.<a href="/src/api/resources/inboxes/resources/browserCredentials/client/Client.ts">createEnrollment</a>(inbox_id, { ...params }) -> AgentMail.BrowserEnrollmentAccepted</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Attach a browser enrollment intent to the inbox. Requires
-`api_key_create`. Before submitting `transaction_jti`, independently
-verify that the browser page's final origin is exactly
-`https://auth.agentid.com`.
-
-This endpoint is available to every organization using US production.
-It is not available in EU production.
-
-Select `inbox_id` from trusted AgentMail configuration. An AgentID
-`login_hint` is not authoritative for selecting the inbox; when the
-transaction includes one, it must match the path inbox.
-
-**AgentMail API keys are sent only to `https://api.agentmail.to`; AgentID never requests them.**
-
-A new intent returns `202`; an idempotent retry for the same pending
-transaction, inbox, and bearer key returns `200` with the same receipt.
-An intent lasts at most five minutes. An activated credential lasts at
-most 30 days and cannot outlive its authorizing bearer API key.
-
-Creation is limited to 20 intents per bearer API key per hour, 100 per
-organization per hour, and five live unused intents per bearer API key.
-Browser activation is separately limited to 20 activations per
-authorizing bearer API key per UTC day. Either kind of limit can return
-`429`; honor the `Retry-After` header. Cancelling an enrollment releases
-its live-intent slot but does not reset the daily activation counter.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.inboxes.browserCredentials.createEnrollment("inbox_id", {
-    transactionJti: "blackcurrant.........."
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**inbox_id:** `AgentMail.InboxId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.CreateBrowserEnrollmentRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `BrowserCredentialsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -7344,6 +6820,88 @@ await client.pods.apiKeys.create("pod_id", {});
 </dl>
 </details>
 
+<details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">update</a>(pod_id, api_key_id, { ...params }) -> AgentMail.ApiKey</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**CLI:**
+```bash
+agentmail pods api-keys update --pod-id <pod_id> --api-key-id <api_key_id> --name "Renamed"
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.apiKeys.update("pod_id", "api_key_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**api_key_id:** `AgentMail.ApiKeyId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateApiKeyRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.apiKeys.<a href="/src/api/resources/pods/resources/apiKeys/client/Client.ts">delete</a>(pod_id, api_key_id) -> void</code></summary>
 <dl>
 <dd>
@@ -10416,7 +9974,7 @@ await client.providers.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
 </dl>
 </details>
 
-<details><summary><code>client.providers.<a href="/src/api/resources/providers/client/Client.ts">connect</a>(provider_id, { ...params }) -> AgentMail.ConnectProviderAccepted</code></summary>
+<details><summary><code>client.providers.<a href="/src/api/resources/providers/client/Client.ts">connect</a>(provider_id, { ...params }) -> AgentMail.ConnectAccepted</code></summary>
 <dl>
 <dd>
 
@@ -10428,9 +9986,10 @@ await client.providers.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
 <dl>
 <dd>
 
-Starts signing an inbox in to a provider. Returns a `magic_url` valid
-for five minutes; open it in the browser that will hold the sign-in.
-Requires `api_key_create` and an `Idempotency-Key` header.
+Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
+valid for five minutes, to open in the client that will hold the sign-in;
+the client enrolls as the inbox and continues to the provider. Poll
+[Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
 </dd>
 </dl>
 </dd>
@@ -10477,7 +10036,7 @@ await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined
 <dl>
 <dd>
 
-**requestOptions:** `ProvidersClient.IdempotentRequestOptions` 
+**requestOptions:** `ProvidersClient.RequestOptions` 
     
 </dd>
 </dl>

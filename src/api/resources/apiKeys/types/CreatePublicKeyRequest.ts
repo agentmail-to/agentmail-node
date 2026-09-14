@@ -3,22 +3,17 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Register only a public P-256 JWK. Credential type, `api_key_id`, sign-in
- * eligibility, permissions, and generation are server-owned and are not
- * request properties.
+ * Registers a public P-256 JWK at the route's scope. `type` and
+ * `api_key_id` are server-owned. `name` defaults to
+ * `AgentID key {first eight fingerprint characters}`; `permissions`
+ * defaults to the registering key's, and only grants it holds may be
+ * true; `expires_at` defaults to the registering key's expiry and is
+ * independent of that key afterward.
  */
 export interface CreatePublicKeyRequest {
     publicKey: AgentMail.PublicJwk;
-    /** Defaults to `AgentID key {first eight fingerprint characters}`. */
-    name?: string;
-    /**
-     * Omit to inherit the registering bearer key's exact scope. An explicit
-     * scope must be the caller's scope or a live descendant.
-     */
-    scope?: AgentMail.PublicKeyScope;
-    /**
-     * Future absolute expiry. Omit to inherit the registering bearer key's
-     * expiry. A child credential cannot outlive its creator.
-     */
-    expiresAt?: Date;
+    clientId?: AgentMail.PublicKeyClientId;
+    name?: AgentMail.Name;
+    permissions?: AgentMail.ApiKeyPermissions;
+    expiresAt?: AgentMail.ExpiresAt;
 }
