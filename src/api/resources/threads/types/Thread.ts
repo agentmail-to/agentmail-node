@@ -19,6 +19,12 @@ export interface Thread {
     size: AgentMail.ThreadSize;
     updatedAt: AgentMail.ThreadUpdatedAt;
     createdAt: AgentMail.ThreadCreatedAt;
-    /** Messages in thread. Ordered by `timestamp` ascending. */
+    /** Number of messages in this response page. */
+    count: AgentMail.Count;
+    /** Maximum number of messages requested for this page. */
+    limit?: AgentMail.Limit;
+    /** Token for the next, older page of messages. Omitted when this page completes the thread. */
+    nextPageToken?: AgentMail.PageToken;
+    /** Messages in this page, ordered by `timestamp` ascending. The first page contains the newest messages; follow `next_page_token` to retrieve older pages. */
     messages: AgentMail.Message[];
 }

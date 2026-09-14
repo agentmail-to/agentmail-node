@@ -5808,7 +5808,7 @@ await client.inboxes.threads.search("inbox_id", {
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">get</a>(inbox_id, thread_id) -> AgentMail.Thread</code></summary>
+<details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">get</a>(inbox_id, thread_id, { ...params }) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -5863,6 +5863,14 @@ await client.inboxes.threads.get("inbox_id", "thread_id");
 <dd>
 
 **thread_id:** `AgentMail.ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.GetInboxThreadRequest` 
     
 </dd>
 </dl>
@@ -9304,7 +9312,7 @@ await client.pods.threads.search("pod_id", {
 </dl>
 </details>
 
-<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">get</a>(pod_id, thread_id) -> AgentMail.Thread</code></summary>
+<details><summary><code>client.pods.threads.<a href="/src/api/resources/pods/resources/threads/client/Client.ts">get</a>(pod_id, thread_id, { ...params }) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -9359,6 +9367,14 @@ await client.pods.threads.get("pod_id", "thread_id");
 <dd>
 
 **thread_id:** `AgentMail.ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.GetPodThreadRequest` 
     
 </dd>
 </dl>
@@ -10615,7 +10631,7 @@ await client.threads.search({
 </dl>
 </details>
 
-<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(thread_id) -> AgentMail.Thread</code></summary>
+<details><summary><code>client.threads.<a href="/src/api/resources/threads/client/Client.ts">get</a>(thread_id, { ...params }) -> AgentMail.Thread</code></summary>
 <dl>
 <dd>
 
@@ -10662,6 +10678,14 @@ await client.threads.get("thread_id");
 <dd>
 
 **thread_id:** `AgentMail.ThreadId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.GetThreadRequest` 
     
 </dd>
 </dl>

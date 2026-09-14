@@ -3,6 +3,9 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { Count } from "../../../types/Count.js";
+import { Limit } from "../../../types/Limit.js";
+import { PageToken } from "../../../types/PageToken.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
 import { Message } from "../../messages/types/Message.js";
 import { ThreadAttachments } from "./ThreadAttachments.js";
@@ -39,6 +42,9 @@ export const Thread: core.serialization.ObjectSchema<serializers.Thread.Raw, Age
         size: ThreadSize,
         updatedAt: core.serialization.property("updated_at", ThreadUpdatedAt),
         createdAt: core.serialization.property("created_at", ThreadCreatedAt),
+        count: Count,
+        limit: Limit.optional(),
+        nextPageToken: core.serialization.property("next_page_token", PageToken.optional()),
         messages: core.serialization.list(Message),
     });
 
@@ -60,6 +66,9 @@ export declare namespace Thread {
         size: ThreadSize.Raw;
         updated_at: ThreadUpdatedAt.Raw;
         created_at: ThreadCreatedAt.Raw;
+        count: Count.Raw;
+        limit?: Limit.Raw | null;
+        next_page_token?: PageToken.Raw | null;
         messages: Message.Raw[];
     }
 }

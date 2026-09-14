@@ -464,6 +464,9 @@ describe("ThreadsClient", () => {
             size: 1,
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
+            count: 1,
+            limit: 1,
+            next_page_token: "next_page_token",
             messages: [
                 {
                     inbox_id: "inbox_id",
@@ -595,6 +598,9 @@ describe("ThreadsClient", () => {
             size: 1,
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            count: 1,
+            limit: 1,
+            nextPageToken: "next_page_token",
             messages: [
                 {
                     inboxId: "inbox_id",

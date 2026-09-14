@@ -280,6 +280,7 @@ export class ThreadsClient {
      * ```
      *
      * @param {AgentMail.ThreadId} thread_id
+     * @param {AgentMail.GetThreadRequest} request
      * @param {ThreadsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
@@ -289,15 +290,22 @@ export class ThreadsClient {
      */
     public get(
         thread_id: AgentMail.ThreadId,
+        request: AgentMail.GetThreadRequest = {},
         requestOptions?: ThreadsClient.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.Thread> {
-        return core.HttpResponsePromise.fromPromise(this.__get(thread_id, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__get(thread_id, request, requestOptions));
     }
 
     private async __get(
         thread_id: AgentMail.ThreadId,
+        request: AgentMail.GetThreadRequest = {},
         requestOptions?: ThreadsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.Thread>> {
+        const { limit, pageToken } = request;
+        const _queryParams: Record<string, unknown> = {
+            limit,
+            page_token: pageToken,
+        };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -313,7 +321,7 @@ export class ThreadsClient {
             ),
             method: "GET",
             headers: _headers,
-            queryParameters: requestOptions?.queryParams,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
             timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
             maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
             abortSignal: requestOptions?.abortSignal,
