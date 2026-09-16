@@ -4,6 +4,14 @@ import type * as AgentMail from "../../../index.js";
 
 export interface CreateDomainRequest {
     domain: AgentMail.DomainName;
+    /**
+     * Allow registration when the domain already has Google Workspace MX records.
+     * Defaults to false; registration otherwise returns 422 when a conflicting
+     * provider is detected.
+     * This flag does not configure DNS or inbound routing. For shared Google
+     * Workspace domains, follow the [Google Workspace guide](/google-workspace).
+     */
+    allowConflictingProvider?: boolean;
     feedbackEnabled?: AgentMail.FeedbackEnabled;
     subdomainsEnabled?: AgentMail.SubdomainsEnabled;
     trackingEnabled?: AgentMail.TrackingEnabled;

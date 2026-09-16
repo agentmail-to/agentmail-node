@@ -14,4 +14,6 @@ export interface Provider {
     logoUrl?: string;
     termsUrl?: string;
     privacyUrl?: string;
+    /** Maximum number of accounts your organization may sign up at this provider. Omitted when the provider sets no limit. 0 means the provider has paused new sign-ups; existing accounts keep signing in. */
+    ownerSignupLimit?: number;
 }

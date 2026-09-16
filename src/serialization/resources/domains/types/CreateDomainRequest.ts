@@ -13,6 +13,10 @@ export const CreateDomainRequest: core.serialization.ObjectSchema<
     AgentMail.CreateDomainRequest
 > = core.serialization.object({
     domain: DomainName,
+    allowConflictingProvider: core.serialization.property(
+        "allow_conflicting_provider",
+        core.serialization.boolean().optional(),
+    ),
     feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled.optional()),
     subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled.optional()),
     trackingEnabled: core.serialization.property("tracking_enabled", TrackingEnabled.optional()),
@@ -21,6 +25,7 @@ export const CreateDomainRequest: core.serialization.ObjectSchema<
 export declare namespace CreateDomainRequest {
     export interface Raw {
         domain: DomainName.Raw;
+        allow_conflicting_provider?: boolean | null;
         feedback_enabled?: FeedbackEnabled.Raw | null;
         subdomains_enabled?: SubdomainsEnabled.Raw | null;
         tracking_enabled?: TrackingEnabled.Raw | null;

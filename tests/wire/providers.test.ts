@@ -26,6 +26,7 @@ describe("ProvidersClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    owner_signup_limit: 1,
                 },
                 {
                     provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -35,6 +36,7 @@ describe("ProvidersClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    owner_signup_limit: 1,
                 },
             ],
         };
@@ -55,6 +57,7 @@ describe("ProvidersClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    ownerSignupLimit: 1,
                 },
                 {
                     providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -64,6 +67,7 @@ describe("ProvidersClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    ownerSignupLimit: 1,
                 },
             ],
         });
@@ -106,6 +110,7 @@ describe("ProvidersClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    owner_signup_limit: 1,
                 },
                 {
                     provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -115,6 +120,7 @@ describe("ProvidersClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    owner_signup_limit: 1,
                 },
             ],
         };
@@ -142,6 +148,7 @@ describe("ProvidersClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    ownerSignupLimit: 1,
                 },
                 {
                     providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -151,6 +158,7 @@ describe("ProvidersClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    ownerSignupLimit: 1,
                 },
             ],
         });
@@ -197,6 +205,7 @@ describe("ProvidersClient", () => {
             logo_url: "logo_url",
             terms_url: "terms_url",
             privacy_url: "privacy_url",
+            owner_signup_limit: 1,
         };
 
         server
@@ -216,6 +225,7 @@ describe("ProvidersClient", () => {
             logoUrl: "logo_url",
             termsUrl: "terms_url",
             privacyUrl: "privacy_url",
+            ownerSignupLimit: 1,
         });
     });
 
@@ -259,6 +269,7 @@ describe("ProvidersClient", () => {
                 logo_url: "logo_url",
                 terms_url: "terms_url",
                 privacy_url: "privacy_url",
+                owner_signup_limit: 1,
             },
             count: 1,
             limit: 1,
@@ -307,6 +318,7 @@ describe("ProvidersClient", () => {
                 logoUrl: "logo_url",
                 termsUrl: "terms_url",
                 privacyUrl: "privacy_url",
+                ownerSignupLimit: 1,
             },
             count: 1,
             limit: 1,

@@ -14,6 +14,7 @@ export const Provider: core.serialization.ObjectSchema<serializers.Provider.Raw,
         logoUrl: core.serialization.property("logo_url", core.serialization.string().optional()),
         termsUrl: core.serialization.property("terms_url", core.serialization.string().optional()),
         privacyUrl: core.serialization.property("privacy_url", core.serialization.string().optional()),
+        ownerSignupLimit: core.serialization.property("owner_signup_limit", core.serialization.number().optional()),
     });
 
 export declare namespace Provider {
@@ -25,5 +26,6 @@ export declare namespace Provider {
         logo_url?: string | null;
         terms_url?: string | null;
         privacy_url?: string | null;
+        owner_signup_limit?: number | null;
     }
 }

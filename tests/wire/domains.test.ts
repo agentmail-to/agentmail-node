@@ -265,6 +265,32 @@ describe("DomainsClient", () => {
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
+    test("create (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { domain: "domain" };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/domains")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(422)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.domains.create({
+                domain: "domain",
+            });
+        }).rejects.toThrow(AgentMail.UnprocessableError);
+    });
+
     test("update (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({

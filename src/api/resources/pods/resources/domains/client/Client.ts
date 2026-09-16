@@ -299,6 +299,7 @@ export class DomainsClient {
      * @param {DomainsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.UnprocessableError}
      *
      * @example
      *     await client.pods.domains.create("pod_id", {
@@ -364,6 +365,17 @@ export class DomainsClient {
                 case 400:
                     throw new AgentMail.ValidationError(
                         serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 422:
+                    throw new AgentMail.UnprocessableError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,
