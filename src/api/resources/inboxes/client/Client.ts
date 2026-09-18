@@ -613,8 +613,9 @@ export class InboxesClient {
 
     /**
      * Authorizes the AgentID sign-in a client is already waiting in, for the
-     * inbox in the path, and returns the pending public key it will activate. A
-     * repeat for the same token, inbox, and bearer returns the same key.
+     * inbox in the path, and returns the ID of the pending public key it will
+     * activate. Read the key with Get API Key. A repeat for the same token,
+     * inbox, and bearer returns the same key ID.
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.AuthorizeInboxRequest} request
@@ -632,7 +633,7 @@ export class InboxesClient {
         inbox_id: AgentMail.inboxes.InboxId,
         request: AgentMail.inboxes.AuthorizeInboxRequest,
         requestOptions?: InboxesClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.PublicKeyCredential> {
+    ): core.HttpResponsePromise<AgentMail.inboxes.AuthorizeInboxResponse> {
         return core.HttpResponsePromise.fromPromise(this.__authorize(inbox_id, request, requestOptions));
     }
 
@@ -640,7 +641,7 @@ export class InboxesClient {
         inbox_id: AgentMail.inboxes.InboxId,
         request: AgentMail.inboxes.AuthorizeInboxRequest,
         requestOptions?: InboxesClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.PublicKeyCredential>> {
+    ): Promise<core.WithRawResponse<AgentMail.inboxes.AuthorizeInboxResponse>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -671,7 +672,7 @@ export class InboxesClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.PublicKeyCredential.parseOrThrow(_response.body, {
+                data: serializers.inboxes.AuthorizeInboxResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,

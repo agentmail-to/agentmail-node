@@ -408,7 +408,7 @@ await client.inboxes.delete("inbox_id");
 </dl>
 </details>
 
-<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">authorize</a>(inbox_id, { ...params }) -> AgentMail.PublicKeyCredential</code></summary>
+<details><summary><code>client.inboxes.<a href="/src/api/resources/inboxes/client/Client.ts">authorize</a>(inbox_id, { ...params }) -> AgentMail.AuthorizeInboxResponse</code></summary>
 <dl>
 <dd>
 
@@ -421,8 +421,9 @@ await client.inboxes.delete("inbox_id");
 <dd>
 
 Authorizes the AgentID sign-in a client is already waiting in, for the
-inbox in the path, and returns the pending public key it will activate. A
-repeat for the same token, inbox, and bearer returns the same key.
+inbox in the path, and returns the ID of the pending public key it will
+activate. Read the key with Get API Key. A repeat for the same token,
+inbox, and bearer returns the same key ID.
 </dd>
 </dl>
 </dd>

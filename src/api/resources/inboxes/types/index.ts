@@ -1,4 +1,5 @@
 export * from "./AuthorizeInboxRequest.js";
+export * from "./AuthorizeInboxResponse.js";
 export * from "./ClientId.js";
 export * from "./CreateInboxRequest.js";
 export * from "./DisplayName.js";
