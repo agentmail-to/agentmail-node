@@ -9,6 +9,7 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
+import { AccountsClient } from "../resources/accounts/client/Client.js";
 import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
 import { DomainsClient } from "../resources/domains/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
@@ -34,6 +35,7 @@ export class PodsClient {
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
+    protected _accounts: AccountsClient | undefined;
 
     constructor(options: PodsClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -69,6 +71,10 @@ export class PodsClient {
 
     public get apiKeys(): ApiKeysClient {
         return (this._apiKeys ??= new ApiKeysClient(this._options));
+    }
+
+    public get accounts(): AccountsClient {
+        return (this._accounts ??= new AccountsClient(this._options));
     }
 
     /**

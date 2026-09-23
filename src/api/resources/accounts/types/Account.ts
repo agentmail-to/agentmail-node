@@ -19,4 +19,8 @@ export interface Account {
     lastSignedInAt: Date;
     /** Number of sign-ins at provider. */
     signInCount: number;
+    /** Present only while the account is disabled. Absent means the inbox may sign in. */
+    status?: AgentMail.AccountStatus;
+    /** Time at which the account was disabled. Present only while `status` is `disabled`. */
+    disabledAt?: Date;
 }

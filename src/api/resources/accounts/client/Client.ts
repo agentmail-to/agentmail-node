@@ -24,7 +24,9 @@ export class AccountsClient {
     }
 
     /**
-     * Lists accounts across all providers.
+     * Lists accounts across all providers, scoped to the API key: an
+     * organization key sees every account, a pod key its pod's, an inbox key
+     * its inbox's. Requires `inbox_read`.
      *
      * @param {AgentMail.ListAccountsRequest} request
      * @param {AccountsClient.RequestOptions} requestOptions - Request-specific configuration.
@@ -112,6 +114,9 @@ export class AccountsClient {
     }
 
     /**
+     * Returns one account by ID. An account outside the key's scope is a 404.
+     * Requires `inbox_read`.
+     *
      * @param {AgentMail.AccountId} account_id
      * @param {AccountsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -189,5 +194,141 @@ export class AccountsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/accounts/{account_id}");
+    }
+
+    /**
+     * Updates one account. Set `status` to `disabled` to stop the inbox from
+     * signing in at the provider again, or to `enabled` to re-enable it.
+     * Idempotent: disabling an already disabled account keeps its original
+     * `disabled_at`, and enabling an enabled account is a no-op.
+     *
+     * Find the `account_id` with List Accounts. An account exists only after an
+     * inbox's first sign-in at a provider, so it cannot be disabled in advance.
+     * A disable applies to that inbox at that provider whichever sign-in key is
+     * used: the provider's next authorization ends in `access_denied`, and a code
+     * issued earlier is refused with `invalid_grant`. Access tokens already
+     * issued stay valid until they expire, and the provider's own session is
+     * unaffected.
+     *
+     * Requires `account_update`, which sign-in keys (`type: public_key`) cannot
+     * hold, so call this with a bearer API key. An account outside the key's
+     * scope is a 404. A 409 means the account changed during the write; read it
+     * again and retry.
+     *
+     * @param {AgentMail.AccountId} account_id
+     * @param {AgentMail.UpdateAccountRequest} request
+     * @param {AccountsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ConflictError}
+     *
+     * @example
+     *     await client.accounts.update("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {})
+     */
+    public update(
+        account_id: AgentMail.AccountId,
+        request: AgentMail.UpdateAccountRequest,
+        requestOptions?: AccountsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.Account> {
+        return core.HttpResponsePromise.fromPromise(this.__update(account_id, request, requestOptions));
+    }
+
+    private async __update(
+        account_id: AgentMail.AccountId,
+        request: AgentMail.UpdateAccountRequest,
+        requestOptions?: AccountsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.Account>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/accounts/${core.url.encodePathParam(serializers.AccountId.jsonOrThrow(account_id, { omitUndefined: true }))}/update`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.UpdateAccountRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.Account.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "PATCH",
+            "/v0/accounts/{account_id}/update",
+        );
     }
 }

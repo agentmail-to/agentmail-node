@@ -3,5 +3,9 @@
 import type * as AgentMail from "../../../index.js";
 
 export interface CreateWebhookRequest extends AgentMail.webhooks.CreatePodWebhookRequest {
+    /**
+     * Pods for which to send events. Maximum 10 per webhook. The webhook receives an event that matches
+     * any listed pod or inbox, so a listed pod already covers every inbox in it.
+     */
     podIds?: AgentMail.PodIds;
 }

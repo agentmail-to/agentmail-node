@@ -7,6 +7,7 @@ import { OrganizationId } from "../../../types/OrganizationId.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
 import { PodId } from "../../pods/types/PodId.js";
 import { AccountId } from "./AccountId.js";
+import { AccountStatus } from "./AccountStatus.js";
 import { ProviderId } from "./ProviderId.js";
 
 export const Account: core.serialization.ObjectSchema<serializers.Account.Raw, AgentMail.Account> =
@@ -20,6 +21,8 @@ export const Account: core.serialization.ObjectSchema<serializers.Account.Raw, A
         firstSignedInAt: core.serialization.property("first_signed_in_at", core.serialization.date()),
         lastSignedInAt: core.serialization.property("last_signed_in_at", core.serialization.date()),
         signInCount: core.serialization.property("sign_in_count", core.serialization.number()),
+        status: AccountStatus.optional(),
+        disabledAt: core.serialization.property("disabled_at", core.serialization.date().optional()),
     });
 
 export declare namespace Account {
@@ -33,5 +36,7 @@ export declare namespace Account {
         first_signed_in_at: string;
         last_signed_in_at: string;
         sign_in_count: number;
+        status?: AccountStatus.Raw | null;
+        disabled_at?: string | null;
     }
 }

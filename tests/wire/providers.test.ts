@@ -285,6 +285,8 @@ describe("ProvidersClient", () => {
                     first_signed_in_at: "2024-01-15T09:30:00Z",
                     last_signed_in_at: "2024-01-15T09:30:00Z",
                     sign_in_count: 1,
+                    status: "disabled",
+                    disabled_at: "2024-01-15T09:30:00Z",
                 },
                 {
                     account_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -296,6 +298,8 @@ describe("ProvidersClient", () => {
                     first_signed_in_at: "2024-01-15T09:30:00Z",
                     last_signed_in_at: "2024-01-15T09:30:00Z",
                     sign_in_count: 1,
+                    status: "disabled",
+                    disabled_at: "2024-01-15T09:30:00Z",
                 },
             ],
         };
@@ -334,6 +338,8 @@ describe("ProvidersClient", () => {
                     firstSignedInAt: new Date("2024-01-15T09:30:00.000Z"),
                     lastSignedInAt: new Date("2024-01-15T09:30:00.000Z"),
                     signInCount: 1,
+                    status: "disabled",
+                    disabledAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
                 {
                     accountId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
@@ -345,6 +351,8 @@ describe("ProvidersClient", () => {
                     firstSignedInAt: new Date("2024-01-15T09:30:00.000Z"),
                     lastSignedInAt: new Date("2024-01-15T09:30:00.000Z"),
                     signInCount: 1,
+                    status: "disabled",
+                    disabledAt: new Date("2024-01-15T09:30:00.000Z"),
                 },
             ],
         });

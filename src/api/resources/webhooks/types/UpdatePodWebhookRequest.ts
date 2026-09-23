@@ -7,7 +7,11 @@ import type * as AgentMail from "../../../index.js";
  * its `event_types`, but not the pod scope itself.
  */
 export interface UpdatePodWebhookRequest extends AgentMail.webhooks.UpdateInboxWebhookRequest {
-    /** Inbox IDs to subscribe to the webhook. */
+    /**
+     * Inbox IDs to subscribe to the webhook. This only adds to what the webhook receives: on a webhook
+     * that covers its whole pod, it changes nothing. To receive only specific inboxes, create a webhook
+     * with `inbox_ids` instead.
+     */
     addInboxIds?: AgentMail.InboxIds;
     /** Inbox IDs to unsubscribe from the webhook. */
     removeInboxIds?: AgentMail.InboxIds;

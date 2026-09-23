@@ -80,6 +80,11 @@ export interface ApiKeyPermissions {
      * for both values.
      */
     providerShareOwner?: boolean;
+    /**
+     * Update accounts: disable or re-enable an inbox's sign-in at a provider. Reading accounts
+     * needs only `inbox_read`.
+     */
+    accountUpdate?: boolean;
     /** Read pods. */
     podRead?: boolean;
     /** Create pods. */
