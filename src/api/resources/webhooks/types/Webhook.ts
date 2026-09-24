@@ -8,6 +8,17 @@ export interface Webhook {
     eventTypes?: AgentMail.EventTypes;
     podIds?: AgentMail.PodIds;
     inboxIds?: AgentMail.InboxIds;
+    /**
+     * ID of the pod the webhook belongs to: the pod it was created in, or the pod of the inbox it
+     * belongs to. Absent for an organization webhook and on some inbox webhooks. This is not the
+     * list of pods it receives events for; see `pod_ids`.
+     */
+    podId?: string;
+    /**
+     * ID of the inbox the webhook belongs to, if it was created for an inbox. This is not the list
+     * of inboxes it receives events for; see `inbox_ids`.
+     */
+    inboxId?: string;
     /** Secret for webhook signature verification. */
     secret: string;
     /** Webhook is enabled. */

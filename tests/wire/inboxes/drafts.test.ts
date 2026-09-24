@@ -331,6 +331,7 @@ describe("DraftsClient", () => {
             content_disposition: "inline",
             content_id: "content_id",
             download_url: "download_url",
+            text_url: "text_url",
             expires_at: "2024-01-15T09:30:00Z",
         };
 
@@ -351,6 +352,7 @@ describe("DraftsClient", () => {
             contentDisposition: "inline",
             contentId: "content_id",
             downloadUrl: "download_url",
+            textUrl: "text_url",
             expiresAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });

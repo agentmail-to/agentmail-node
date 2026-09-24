@@ -9,8 +9,10 @@ export interface AttachmentResponse {
     contentType?: AgentMail.AttachmentContentType;
     contentDisposition?: AgentMail.AttachmentContentDisposition;
     contentId?: AgentMail.AttachmentContentId;
-    /** URL to download the attachment. */
+    /** Signed HTTPS CDN URL to download the attachment bytes. Retrieve a fresh URL when needed rather than storing it permanently. */
     downloadUrl: string;
-    /** Time at which the download URL expires. */
+    /** Signed HTTPS CDN URL to download extracted plain text, when available. Omitted when no extracted text is available. Expires at the same time as download_url. */
+    textUrl?: string;
+    /** Time at which download_url and text_url (when present) expire. Retrieve the attachment again to obtain fresh URLs. */
     expiresAt: Date;
 }

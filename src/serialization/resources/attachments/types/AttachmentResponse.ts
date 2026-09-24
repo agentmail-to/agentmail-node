@@ -21,6 +21,7 @@ export const AttachmentResponse: core.serialization.ObjectSchema<
     contentDisposition: core.serialization.property("content_disposition", AttachmentContentDisposition.optional()),
     contentId: core.serialization.property("content_id", AttachmentContentId.optional()),
     downloadUrl: core.serialization.property("download_url", core.serialization.string()),
+    textUrl: core.serialization.property("text_url", core.serialization.string().optional()),
     expiresAt: core.serialization.property("expires_at", core.serialization.date()),
 });
 
@@ -33,6 +34,7 @@ export declare namespace AttachmentResponse {
         content_disposition?: AttachmentContentDisposition.Raw | null;
         content_id?: AttachmentContentId.Raw | null;
         download_url: string;
+        text_url?: string | null;
         expires_at: string;
     }
 }

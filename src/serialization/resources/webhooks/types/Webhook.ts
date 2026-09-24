@@ -17,6 +17,8 @@ export const Webhook: core.serialization.ObjectSchema<serializers.webhooks.Webho
         eventTypes: core.serialization.property("event_types", EventTypes.optional()),
         podIds: core.serialization.property("pod_ids", PodIds.optional()),
         inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
+        podId: core.serialization.property("pod_id", core.serialization.string().optional()),
+        inboxId: core.serialization.property("inbox_id", core.serialization.string().optional()),
         secret: core.serialization.string(),
         enabled: core.serialization.boolean(),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
@@ -31,6 +33,8 @@ export declare namespace Webhook {
         event_types?: EventTypes.Raw | null;
         pod_ids?: PodIds.Raw | null;
         inbox_ids?: InboxIds.Raw | null;
+        pod_id?: string | null;
+        inbox_id?: string | null;
         secret: string;
         enabled: boolean;
         updated_at: string;
