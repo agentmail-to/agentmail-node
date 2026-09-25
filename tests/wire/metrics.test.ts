@@ -102,4 +102,55 @@ describe("MetricsClient", () => {
             return await client.metrics.queryUsage();
         }).rejects.toThrow(AgentMail.ValidationError);
     });
+
+    test("queryRates (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = {
+            bounce: [
+                { timestamp: "2024-01-15T09:30:00Z", rate: 1.1, sent: 1 },
+                { timestamp: "2024-01-15T09:30:00Z", rate: 1.1, sent: 1 },
+            ],
+        };
+
+        server.mockEndpoint().get("/v0/metrics/rates").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+
+        const response = await client.metrics.queryRates();
+        expect(response).toEqual({
+            bounce: [
+                {
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    rate: 1.1,
+                    sent: 1,
+                },
+                {
+                    timestamp: new Date("2024-01-15T09:30:00.000Z"),
+                    rate: 1.1,
+                    sent: 1,
+                },
+            ],
+        });
+    });
+
+    test("queryRates (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server.mockEndpoint().get("/v0/metrics/rates").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
+
+        await expect(async () => {
+            return await client.metrics.queryRates();
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
 });

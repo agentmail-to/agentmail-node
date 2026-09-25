@@ -5377,6 +5377,91 @@ await client.inboxes.metrics.queryUsage("inbox_id");
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.metrics.<a href="/src/api/resources/inboxes/resources/metrics/client/Client.ts">queryRates</a>(inbox_id, { ...params }) -> AgentMail.QueryRatesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolling bounce and complaint rates for the inbox. At each `period`
+grid point, the bounced (or complained) messages over the preceding
+`window` divided by the messages sent over the same window, with the
+send count alongside. Account moderation evaluates the organization-wide
+rate, so use the organization endpoint to see the number it acts on;
+the inbox view shows which inboxes contribute. Defaults to the rolling
+24-hour rate sampled hourly over the last day; `start` must be within
+the last 90 days, `window` must be a whole multiple of `period`, and
+the range plus window divided by `period` must not exceed 1000
+buckets.
+
+**CLI:**
+```bash
+agentmail inboxes metrics query-rates --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.metrics.queryRates("inbox_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.QueryRatesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetricsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Threads
 <details><summary><code>client.inboxes.threads.<a href="/src/api/resources/inboxes/resources/threads/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListThreadsResponse</code></summary>
 <dl>
@@ -6840,6 +6925,84 @@ await client.metrics.queryUsage();
 <dd>
 
 **request:** `AgentMail.QueryUsageRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetricsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.metrics.<a href="/src/api/resources/metrics/client/Client.ts">queryRates</a>({ ...params }) -> AgentMail.QueryRatesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolling bounce and complaint rates for the organization. At each
+`period` grid point, the bounced (or complained) messages over the
+preceding `window` divided by the messages sent over the same window,
+with the send count alongside so you can see the volume behind
+it. This is the number AgentMail's account moderation acts on: a
+warning at a 5% bounce rate and suspension at 10%, evaluated over a
+rolling 24 hours once at least 1,000 messages were sent in that
+window. Defaults to the rolling 24-hour rate sampled hourly over the
+last day; `start` must be within the last 90 days, `window` must be a
+whole multiple of `period`, and the range plus window divided by
+`period` must not exceed 1000 buckets.
+
+**CLI:**
+```bash
+agentmail metrics query-rates
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.metrics.queryRates();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.QueryRatesRequest` 
     
 </dd>
 </dl>
@@ -9088,6 +9251,91 @@ await client.pods.metrics.queryUsage("pod_id");
 <dd>
 
 **request:** `AgentMail.pods.QueryUsageRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MetricsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.metrics.<a href="/src/api/resources/pods/resources/metrics/client/Client.ts">queryRates</a>(pod_id, { ...params }) -> AgentMail.QueryRatesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Rolling bounce and complaint rates for the pod. At each `period` grid
+point, the bounced (or complained) messages over the preceding
+`window` divided by the messages sent over the same window, with the
+send count alongside. Account moderation evaluates the organization-wide
+rate, so use the organization endpoint to see the number it acts on;
+the pod view shows which pods contribute. Defaults to the rolling
+24-hour rate sampled hourly over the last day; `start` must be within
+the last 90 days, `window` must be a whole multiple of `period`, and
+the range plus window divided by `period` must not exceed 1000
+buckets.
+
+**CLI:**
+```bash
+agentmail pods metrics query-rates --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.metrics.queryRates("pod_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.pods.QueryRatesRequest` 
     
 </dd>
 </dl>

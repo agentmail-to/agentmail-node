@@ -3,8 +3,17 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Update an inbox-scoped webhook. It is fixed to its inbox, so only `event_types` can change.
+ * Update an inbox-scoped webhook. It is fixed to its inbox, so only `event_types` and `enabled` can
+ * change.
  */
 export interface UpdateInboxWebhookRequest {
     eventTypes?: AgentMail.webhooks.UpdateWebhookEventTypes;
+    /**
+     * Set to true to re-enable a webhook that was disabled after repeated failed deliveries, or false
+     * to disable it. Events that occurred while the webhook was disabled are not redelivered.
+     * Re-enabling a webhook subscribed to `message.received.spam`, `message.received.blocked`, or
+     * `message.received.unauthenticated` (or to every event type, with no filter) requires the
+     * matching label permissions on the API key.
+     */
+    enabled?: boolean;
 }

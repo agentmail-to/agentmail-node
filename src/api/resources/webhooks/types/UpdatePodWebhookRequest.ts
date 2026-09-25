@@ -3,8 +3,8 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Update a pod-scoped webhook. You can adjust which inboxes within the pod it listens to and replace
- * its `event_types`, but not the pod scope itself.
+ * Update a pod-scoped webhook. You can adjust which inboxes within the pod it listens to, replace
+ * its `event_types`, and set `enabled`, but not change the pod scope itself.
  */
 export interface UpdatePodWebhookRequest extends AgentMail.webhooks.UpdateInboxWebhookRequest {
     /**

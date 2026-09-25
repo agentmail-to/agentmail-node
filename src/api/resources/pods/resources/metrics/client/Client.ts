@@ -264,4 +264,132 @@ export class MetricsClient {
             "/v0/pods/{pod_id}/metrics/usage",
         );
     }
+
+    /**
+     * Rolling bounce and complaint rates for the pod. At each `period` grid
+     * point, the bounced (or complained) messages over the preceding
+     * `window` divided by the messages sent over the same window, with the
+     * send count alongside. Account moderation evaluates the organization-wide
+     * rate, so use the organization endpoint to see the number it acts on;
+     * the pod view shows which pods contribute. Defaults to the rolling
+     * 24-hour rate sampled hourly over the last day; `start` must be within
+     * the last 90 days, `window` must be a whole multiple of `period`, and
+     * the range plus window divided by `period` must not exceed 1000
+     * buckets.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail pods metrics query-rates --pod-id <pod_id>
+     * ```
+     *
+     * @param {AgentMail.pods.PodId} pod_id
+     * @param {AgentMail.pods.QueryRatesRequest} request
+     * @param {MetricsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     *
+     * @example
+     *     await client.pods.metrics.queryRates("pod_id")
+     */
+    public queryRates(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.QueryRatesRequest = {},
+        requestOptions?: MetricsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.QueryRatesResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__queryRates(pod_id, request, requestOptions));
+    }
+
+    private async __queryRates(
+        pod_id: AgentMail.pods.PodId,
+        request: AgentMail.pods.QueryRatesRequest = {},
+        requestOptions?: MetricsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.QueryRatesResponse>> {
+        const { rateTypes, start, end, period, window, limit, descending } = request;
+        const _queryParams: Record<string, unknown> = {
+            rate_types:
+                rateTypes != null
+                    ? toJson(
+                          serializers.RateTypes.jsonOrThrow(rateTypes, {
+                              unrecognizedObjectKeys: "strip",
+                              omitUndefined: true,
+                          }),
+                      )
+                    : undefined,
+            start:
+                start != null
+                    ? serializers.Start.jsonOrThrow(start, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+            end:
+                end != null
+                    ? serializers.End.jsonOrThrow(end, { unrecognizedObjectKeys: "strip", omitUndefined: true })
+                    : undefined,
+            period,
+            window,
+            limit,
+            descending,
+        };
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/pods/${core.url.encodePathParam(serializers.pods.PodId.jsonOrThrow(pod_id, { omitUndefined: true }))}/metrics/rates`,
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: { ..._queryParams, ...requestOptions?.queryParams },
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.QueryRatesResponse.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "GET",
+            "/v0/pods/{pod_id}/metrics/rates",
+        );
+    }
 }

@@ -10,10 +10,12 @@ export const UpdateInboxWebhookRequest: core.serialization.ObjectSchema<
     AgentMail.webhooks.UpdateInboxWebhookRequest
 > = core.serialization.object({
     eventTypes: core.serialization.property("event_types", UpdateWebhookEventTypes.optional()),
+    enabled: core.serialization.boolean().optional(),
 });
 
 export declare namespace UpdateInboxWebhookRequest {
     export interface Raw {
         event_types?: UpdateWebhookEventTypes.Raw | null;
+        enabled?: boolean | null;
     }
 }
