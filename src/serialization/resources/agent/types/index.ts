@@ -1,3 +1,5 @@
+export * from "./AgentAttachHumanRequest.js";
+export * from "./AgentAttachHumanResponse.js";
 export * from "./AgentSignupRequest.js";
 export * from "./AgentSignupResponse.js";
 export * from "./AgentVerifyRequest.js";

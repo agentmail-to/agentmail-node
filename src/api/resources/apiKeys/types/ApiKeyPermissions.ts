@@ -89,6 +89,8 @@ export interface ApiKeyPermissions {
     podRead?: boolean;
     /** Create pods. */
     podCreate?: boolean;
+    /** Update pods. */
+    podUpdate?: boolean;
     /** Delete pods. */
     podDelete?: boolean;
 }

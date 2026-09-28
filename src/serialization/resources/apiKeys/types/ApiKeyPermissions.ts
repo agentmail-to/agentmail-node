@@ -49,6 +49,7 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     accountUpdate: core.serialization.property("account_update", core.serialization.boolean().optional()),
     podRead: core.serialization.property("pod_read", core.serialization.boolean().optional()),
     podCreate: core.serialization.property("pod_create", core.serialization.boolean().optional()),
+    podUpdate: core.serialization.property("pod_update", core.serialization.boolean().optional()),
     podDelete: core.serialization.property("pod_delete", core.serialization.boolean().optional()),
 });
 
@@ -92,6 +93,7 @@ export declare namespace ApiKeyPermissions {
         account_update?: boolean | null;
         pod_read?: boolean | null;
         pod_create?: boolean | null;
+        pod_update?: boolean | null;
         pod_delete?: boolean | null;
     }
 }

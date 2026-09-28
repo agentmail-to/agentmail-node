@@ -12,7 +12,7 @@ describe("AgentClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { human_email: "human_email", username: "username" };
+        const rawRequestBody = { username: "username" };
         const rawResponseBody = { organization_id: "organization_id", inbox_id: "inbox_id", api_key: "api_key" };
 
         server
@@ -25,7 +25,6 @@ describe("AgentClient", () => {
             .build();
 
         const response = await client.agent.signUp({
-            humanEmail: "human_email",
             username: "username",
         });
         expect(response).toEqual({
@@ -42,7 +41,7 @@ describe("AgentClient", () => {
             apiKey: "test",
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
-        const rawRequestBody = { human_email: "human_email", username: "username" };
+        const rawRequestBody = { username: "username" };
         const rawResponseBody = { name: "name", errors: { key: "value" } };
 
         server
@@ -56,10 +55,89 @@ describe("AgentClient", () => {
 
         await expect(async () => {
             return await client.agent.signUp({
-                humanEmail: "human_email",
                 username: "username",
             });
         }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("attachHuman (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { human_email: "human_email" };
+        const rawResponseBody = { human_email: "human_email", instructions: "instructions" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/agent/human")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.agent.attachHuman({
+            humanEmail: "human_email",
+        });
+        expect(response).toEqual({
+            humanEmail: "human_email",
+            instructions: "instructions",
+        });
+    });
+
+    test("attachHuman (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { human_email: "human_email" };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/agent/human")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.agent.attachHuman({
+                humanEmail: "human_email",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("attachHuman (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { human_email: "human_email" };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/agent/human")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.agent.attachHuman({
+                humanEmail: "human_email",
+            });
+        }).rejects.toThrow(AgentMail.ConflictError);
     });
 
     test("verify", async () => {

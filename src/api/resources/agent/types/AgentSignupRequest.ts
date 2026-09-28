@@ -4,8 +4,11 @@
  * Request body to sign up an agent.
  */
 export interface AgentSignupRequest {
-    /** Email address of the human who owns the agent. A 6-digit OTP will be sent to this address. */
-    humanEmail: string;
+    /**
+     * Email address of the human who owns the agent. A 6-digit OTP will be sent to this address.
+     * Omit it to get a receive-only inbox: it can receive email but cannot send until a human is attached with the attach human endpoint.
+     */
+    humanEmail?: string;
     /** Username for the auto-created inbox (e.g. "my-agent" creates my-agent@agentmail.to). */
     username: string;
     /**

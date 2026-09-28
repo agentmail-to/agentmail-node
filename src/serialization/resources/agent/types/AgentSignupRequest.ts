@@ -8,7 +8,7 @@ export const AgentSignupRequest: core.serialization.ObjectSchema<
     serializers.AgentSignupRequest.Raw,
     AgentMail.AgentSignupRequest
 > = core.serialization.object({
-    humanEmail: core.serialization.property("human_email", core.serialization.string()),
+    humanEmail: core.serialization.property("human_email", core.serialization.string().optional()),
     username: core.serialization.string(),
     source: core.serialization.string().optional(),
     referrer: core.serialization.string().optional(),
@@ -16,7 +16,7 @@ export const AgentSignupRequest: core.serialization.ObjectSchema<
 
 export declare namespace AgentSignupRequest {
     export interface Raw {
-        human_email: string;
+        human_email?: string | null;
         username: string;
         source?: string | null;
         referrer?: string | null;
