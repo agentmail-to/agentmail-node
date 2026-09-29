@@ -6,6 +6,7 @@ import type * as serializers from "../../../index.js";
 import { ApiKeyId } from "./ApiKeyId.js";
 import { ApiKeyPermissions } from "./ApiKeyPermissions.js";
 import { CreatedAt } from "./CreatedAt.js";
+import { ExpiresAt } from "./ExpiresAt.js";
 import { InboxScopeId } from "./InboxScopeId.js";
 import { Name } from "./Name.js";
 import { PodScopeId } from "./PodScopeId.js";
@@ -23,6 +24,7 @@ export const CreateApiKeyResponse: core.serialization.ObjectSchema<
     inboxId: core.serialization.property("inbox_id", InboxScopeId.optional()),
     permissions: ApiKeyPermissions.optional(),
     createdAt: core.serialization.property("created_at", CreatedAt),
+    expiresAt: core.serialization.property("expires_at", ExpiresAt.optional()),
 });
 
 export declare namespace CreateApiKeyResponse {
@@ -35,5 +37,6 @@ export declare namespace CreateApiKeyResponse {
         inbox_id?: InboxScopeId.Raw | null;
         permissions?: ApiKeyPermissions.Raw | null;
         created_at: CreatedAt.Raw;
+        expires_at?: ExpiresAt.Raw | null;
     }
 }

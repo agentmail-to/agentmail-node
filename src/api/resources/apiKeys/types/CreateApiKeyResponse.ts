@@ -12,4 +12,5 @@ export interface CreateApiKeyResponse {
     inboxId?: AgentMail.InboxScopeId;
     permissions?: AgentMail.ApiKeyPermissions;
     createdAt: AgentMail.CreatedAt;
+    expiresAt?: AgentMail.ExpiresAt;
 }

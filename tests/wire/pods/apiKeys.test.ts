@@ -334,6 +334,7 @@ describe("ApiKeysClient", () => {
                 pod_delete: true,
             },
             created_at: "2024-01-15T09:30:00Z",
+            expires_at: "2024-01-15T09:30:00Z",
         };
 
         server
@@ -396,6 +397,7 @@ describe("ApiKeysClient", () => {
                 podDelete: true,
             },
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
+            expiresAt: new Date("2024-01-15T09:30:00.000Z"),
         });
     });
 

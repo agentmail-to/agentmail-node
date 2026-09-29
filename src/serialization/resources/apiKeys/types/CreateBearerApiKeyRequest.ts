@@ -4,12 +4,19 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ApiKeyMutableFields } from "./ApiKeyMutableFields.js";
+import { ExpiresAt } from "./ExpiresAt.js";
 
 export const CreateBearerApiKeyRequest: core.serialization.ObjectSchema<
     serializers.CreateBearerApiKeyRequest.Raw,
     AgentMail.CreateBearerApiKeyRequest
-> = core.serialization.object({}).extend(ApiKeyMutableFields);
+> = core.serialization
+    .object({
+        expiresAt: core.serialization.property("expires_at", ExpiresAt.optional()),
+    })
+    .extend(ApiKeyMutableFields);
 
 export declare namespace CreateBearerApiKeyRequest {
-    export interface Raw extends ApiKeyMutableFields.Raw {}
+    export interface Raw extends ApiKeyMutableFields.Raw {
+        expires_at?: ExpiresAt.Raw | null;
+    }
 }

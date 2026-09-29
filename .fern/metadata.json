@@ -44,10 +44,10 @@
             "license": "MIT",
             "author": "AgentMail <support@agentmail.cc>",
             "scripts": {
-                "build": "npm run build:cjs && npm run build:esm && node -e \"const https=require('https'),fs=require('fs');const download=(f)=>new Promise((res,rej)=>https.get('https://docs.agentmail.to/'+f,r=>r.pipe(fs.createWriteStream('dist/'+f)).on('finish',res).on('error',rej)));Promise.all(['llms.txt','llms-full.txt'].map(download)).catch(e=>{console.error(e);process.exit(1)});\""
+                "build": "npm run build:cjs && npm run build:esm && node -e \"const https=require('https'),fs=require('fs');const download=(f)=>new Promise((res,rej)=>https.get('https://docs.agentmail.to/'+f,r=>r.statusCode===200?r.pipe(fs.createWriteStream('dist/'+f)).on('finish',res).on('error',rej):rej(new Error(f+': HTTP '+r.statusCode))).on('error',rej));Promise.all(['llms.txt'].map(download)).catch(e=>{console.error(e);process.exit(1)});\""
             }
         }
     },
-    "originGitCommit": "345be9599ad8e1fcdec3ded56e2d75bf50e83ebe",
-    "sdkVersion": "0.5.31"
+    "originGitCommit": "a5b7be2ffb559a784df2415c228ced275ecfa320",
+    "sdkVersion": "0.5.32"
 }

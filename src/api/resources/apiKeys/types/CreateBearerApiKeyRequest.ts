@@ -2,4 +2,13 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface CreateBearerApiKeyRequest extends AgentMail.ApiKeyMutableFields {}
+/**
+ * `expires_at` must be in the future and is immutable once the key exists.
+ * Omitted, the new key inherits the authenticating key's expiry, and never
+ * expires only when that key never does. A key cannot create one that
+ * outlives it: an `expires_at` later than the authenticating key's own
+ * returns `403`.
+ */
+export interface CreateBearerApiKeyRequest extends AgentMail.ApiKeyMutableFields {
+    expiresAt?: AgentMail.ExpiresAt;
+}
