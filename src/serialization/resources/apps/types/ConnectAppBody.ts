@@ -6,15 +6,13 @@ import type * as serializers from "../../../index.js";
 import { AcceptDisclosure } from "../../apiKeys/types/AcceptDisclosure.js";
 import { ConnectInboxId } from "./ConnectInboxId.js";
 
-export const ConnectProviderBody: core.serialization.ObjectSchema<
-    serializers.ConnectProviderBody.Raw,
-    AgentMail.ConnectProviderBody
-> = core.serialization.object({
-    inboxId: core.serialization.property("inbox_id", ConnectInboxId.optional()),
-    acceptDisclosure: core.serialization.property("accept_disclosure", AcceptDisclosure.optional()),
-});
+export const ConnectAppBody: core.serialization.ObjectSchema<serializers.ConnectAppBody.Raw, AgentMail.ConnectAppBody> =
+    core.serialization.object({
+        inboxId: core.serialization.property("inbox_id", ConnectInboxId.optional()),
+        acceptDisclosure: core.serialization.property("accept_disclosure", AcceptDisclosure.optional()),
+    });
 
-export declare namespace ConnectProviderBody {
+export declare namespace ConnectAppBody {
     export interface Raw {
         inbox_id?: ConnectInboxId.Raw | null;
         accept_disclosure?: AcceptDisclosure.Raw | null;

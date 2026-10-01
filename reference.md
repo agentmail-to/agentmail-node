@@ -423,7 +423,8 @@ await client.inboxes.delete("inbox_id");
 Authorizes the AgentID sign-in a client is already waiting in, for the
 inbox in the path, and returns the ID of the pending public key it will
 activate. Read the key with Get API Key. A repeat for the same token,
-inbox, and bearer returns the same key ID.
+inbox, and bearer returns the same key ID. A `403` `AppSignupLimitError`
+means the app accepts no more sign-ups from your organization.
 </dd>
 </dl>
 </dd>
@@ -1243,7 +1244,7 @@ await client.webhooks.delete("webhook_id");
 <dl>
 <dd>
 
-Lists accounts across all providers, scoped to the API key: an
+Lists accounts across all apps, scoped to the API key: an
 organization key sees every account, a pod key its pod's, an inbox key
 its inbox's. Requires `inbox_read`.
 </dd>
@@ -1373,16 +1374,16 @@ await client.accounts.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
 <dd>
 
 Updates one account. Set `status` to `disabled` to stop the inbox from
-signing in at the provider again, or to `enabled` to re-enable it.
+signing in at the app again, or to `enabled` to re-enable it.
 Idempotent: disabling an already disabled account keeps its original
 `disabled_at`, and enabling an enabled account is a no-op.
 
 Find the `account_id` with List Accounts. An account exists only after an
-inbox's first sign-in at a provider, so it cannot be disabled in advance.
-A disable applies to that inbox at that provider whichever sign-in key is
-used: the provider's next authorization ends in `access_denied`, and a code
+inbox's first sign-in at an app, so it cannot be disabled in advance.
+A disable applies to that inbox at that app whichever sign-in key is
+used: the app's next authorization ends in `access_denied`, and a code
 issued earlier is refused with `invalid_grant`. Access tokens already
-issued stay valid until they expire, and the provider's own session is
+issued stay valid until they expire, and the app's own session is
 unaffected.
 
 Requires `account_update`, which sign-in keys (`type: public_key`) cannot
@@ -2013,6 +2014,348 @@ await client.apiKeys.delete("api_key_id");
 <dd>
 
 **requestOptions:** `ApiKeysClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Apps
+<details><summary><code>client.apps.<a href="/src/api/resources/apps/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListAppsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists apps, most popular first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apps.list();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ListAppsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AppsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="/src/api/resources/apps/client/Client.ts">search</a>({ ...params }) -> AgentMail.SearchAppsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Searches apps by name prefix.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apps.search({
+    q: "q"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.SearchAppsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AppsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="/src/api/resources/apps/client/Client.ts">get</a>(app_id) -> AgentMail.App</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets one app by ID. An app in the catalog returns its full entry.
+A registered app that the catalog does not list returns its ID and
+name only, without `updated_at`, so anyone holding its ID can still look
+it up. List Apps and Search Apps show catalog entries only.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apps.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**app_id:** `AgentMail.AppId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AppsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="/src/api/resources/apps/client/Client.ts">listAccounts</a>(app_id, { ...params }) -> AgentMail.ListAppAccountsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists accounts at one app, most recent sign-in first.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apps.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**app_id:** `AgentMail.AppId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ListAppAccountsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AppsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.apps.<a href="/src/api/resources/apps/client/Client.ts">connect</a>(app_id, { ...params }) -> AgentMail.ConnectAccepted</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts signing an inbox in to an app. Returns a single-use `magic_url`,
+valid for five minutes, to open in the client that will hold the sign-in;
+the client enrolls as the inbox and continues to the app.
+A `404` names the missing resource: `App` or `Inbox`.
+A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+your organization; sign in with an inbox that already has an account there.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**app_id:** `AgentMail.AppId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ConnectAppBody` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `AppsClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -2841,7 +3184,7 @@ await client.drafts.getAttachment("draft_id", "attachment_id");
 <dl>
 <dd>
 
-Lists accounts held by the inbox, across all providers. Requires `inbox_read`.
+Lists accounts held by the inbox, across all apps. Requires `inbox_read`.
 </dd>
 </dl>
 </dd>
@@ -7175,7 +7518,7 @@ await client.organizations.get();
 <dl>
 <dd>
 
-Lists accounts held by inboxes in the pod, across all providers. Requires `inbox_read`.
+Lists accounts held by inboxes in the pod, across all apps. Requires `inbox_read`.
 </dd>
 </dl>
 </dd>
@@ -10434,329 +10777,6 @@ await client.pods.webhooks.delete("pod_id", "webhook_id");
 <dd>
 
 **requestOptions:** `WebhooksClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-## Providers
-<details><summary><code>client.providers.<a href="/src/api/resources/providers/client/Client.ts">list</a>({ ...params }) -> AgentMail.ListProvidersResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists providers, most popular first.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.providers.list();
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ListProvidersRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ProvidersClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="/src/api/resources/providers/client/Client.ts">search</a>({ ...params }) -> AgentMail.SearchProvidersResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Searches providers by name prefix.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.providers.search({
-    q: "q"
-});
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.SearchProvidersRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ProvidersClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="/src/api/resources/providers/client/Client.ts">get</a>(provider_id) -> AgentMail.Provider</code></summary>
-<dl>
-<dd>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.providers.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider_id:** `AgentMail.ProviderId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ProvidersClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="/src/api/resources/providers/client/Client.ts">listAccounts</a>(provider_id, { ...params }) -> AgentMail.ListProviderAccountsResponse</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Lists accounts at one provider, most recent sign-in first.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.providers.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider_id:** `AgentMail.ProviderId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ListProviderAccountsRequest` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ProvidersClient.RequestOptions` 
-    
-</dd>
-</dl>
-</dd>
-</dl>
-
-
-</dd>
-</dl>
-</details>
-
-<details><summary><code>client.providers.<a href="/src/api/resources/providers/client/Client.ts">connect</a>(provider_id, { ...params }) -> AgentMail.ConnectAccepted</code></summary>
-<dl>
-<dd>
-
-#### 📝 Description
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
-valid for five minutes, to open in the client that will hold the sign-in;
-the client enrolls as the inbox and continues to the provider. Poll
-[Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### 🔌 Usage
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-```typescript
-await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
-
-```
-</dd>
-</dl>
-</dd>
-</dl>
-
-#### ⚙️ Parameters
-
-<dl>
-<dd>
-
-<dl>
-<dd>
-
-**provider_id:** `AgentMail.ProviderId` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**request:** `AgentMail.ConnectProviderBody` 
-    
-</dd>
-</dl>
-
-<dl>
-<dd>
-
-**requestOptions:** `ProvidersClient.RequestOptions` 
     
 </dd>
 </dl>

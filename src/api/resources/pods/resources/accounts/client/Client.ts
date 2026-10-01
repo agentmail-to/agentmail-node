@@ -24,7 +24,7 @@ export class AccountsClient {
     }
 
     /**
-     * Lists accounts held by inboxes in the pod, across all providers. Requires `inbox_read`.
+     * Lists accounts held by inboxes in the pod, across all apps. Requires `inbox_read`.
      *
      * @param {AgentMail.pods.PodId} pod_id
      * @param {AgentMail.pods.ListAccountsRequest} request

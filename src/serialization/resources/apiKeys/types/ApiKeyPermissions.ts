@@ -13,6 +13,7 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     inboxUpdate: core.serialization.property("inbox_update", core.serialization.boolean().optional()),
     inboxDelete: core.serialization.property("inbox_delete", core.serialization.boolean().optional()),
     messageRead: core.serialization.property("message_read", core.serialization.boolean().optional()),
+    messageReply: core.serialization.property("message_reply", core.serialization.boolean().optional()),
     messageSend: core.serialization.property("message_send", core.serialization.boolean().optional()),
     messageUpdate: core.serialization.property("message_update", core.serialization.boolean().optional()),
     messageDelete: core.serialization.property("message_delete", core.serialization.boolean().optional()),
@@ -60,6 +61,7 @@ export declare namespace ApiKeyPermissions {
         inbox_update?: boolean | null;
         inbox_delete?: boolean | null;
         message_read?: boolean | null;
+        message_reply?: boolean | null;
         message_send?: boolean | null;
         message_update?: boolean | null;
         message_delete?: boolean | null;

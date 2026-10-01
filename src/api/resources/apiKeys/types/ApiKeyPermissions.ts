@@ -14,6 +14,8 @@ export interface ApiKeyPermissions {
     inboxDelete?: boolean;
     /** Read messages. Also required to read threads. */
     messageRead?: boolean;
+    /** Reply and reply-all when the request is signed with a registered public key. Bearer keys reply with `message_send`. */
+    messageReply?: boolean;
     /** Send messages. */
     messageSend?: boolean;
     /** Update message labels. Also required to update threads. */

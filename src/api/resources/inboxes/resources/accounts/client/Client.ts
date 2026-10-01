@@ -24,7 +24,7 @@ export class AccountsClient {
     }
 
     /**
-     * Lists accounts held by the inbox, across all providers. Requires `inbox_read`.
+     * Lists accounts held by the inbox, across all apps. Requires `inbox_read`.
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.ListAccountsRequest} request

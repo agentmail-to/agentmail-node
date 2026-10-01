@@ -3,21 +3,21 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * One inbox signed in at one provider.
+ * One inbox signed in at one app.
  */
 export interface Account {
     accountId: AgentMail.AccountId;
-    providerId: AgentMail.ProviderId;
-    /** Display name of provider. */
-    providerName?: string;
+    appId: AgentMail.AppId;
+    /** Display name of app. */
+    appName?: string;
     inboxId: AgentMail.inboxes.InboxId;
     podId: AgentMail.pods.PodId;
     organizationId: AgentMail.OrganizationId;
-    /** Time of first sign-in at provider. */
+    /** Time of first sign-in at app. */
     firstSignedInAt: Date;
-    /** Time of most recent sign-in at provider. */
+    /** Time of most recent sign-in at app. */
     lastSignedInAt: Date;
-    /** Number of sign-ins at provider. */
+    /** Number of sign-ins at app. */
     signInCount: number;
     /** Present only while the account is disabled. Absent means the inbox may sign in. */
     status?: AgentMail.AccountStatus;

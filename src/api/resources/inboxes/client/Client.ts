@@ -621,7 +621,8 @@ export class InboxesClient {
      * Authorizes the AgentID sign-in a client is already waiting in, for the
      * inbox in the path, and returns the ID of the pending public key it will
      * activate. Read the key with Get API Key. A repeat for the same token,
-     * inbox, and bearer returns the same key ID.
+     * inbox, and bearer returns the same key ID. A `403` `AppSignupLimitError`
+     * means the app accepts no more sign-ups from your organization.
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.AuthorizeInboxRequest} request
@@ -629,6 +630,7 @@ export class InboxesClient {
      *
      * @throws {@link AgentMail.ValidationError}
      * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.AppSignupLimitError}
      *
      * @example
      *     await client.inboxes.authorize("inbox_id", {
@@ -704,6 +706,17 @@ export class InboxesClient {
                     );
                 case 404:
                     throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 403:
+                    throw new AgentMail.AppSignupLimitError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,

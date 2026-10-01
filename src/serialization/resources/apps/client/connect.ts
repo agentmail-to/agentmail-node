@@ -3,13 +3,13 @@
 import type * as AgentMail from "../../../../api/index.js";
 import type * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { ConnectProviderBody } from "../types/ConnectProviderBody.js";
+import { ConnectAppBody } from "../types/ConnectAppBody.js";
 
 export const Request: core.serialization.Schema<
-    serializers.providers.connect.Request.Raw,
-    AgentMail.ConnectProviderBody | undefined
-> = ConnectProviderBody.optional();
+    serializers.apps.connect.Request.Raw,
+    AgentMail.ConnectAppBody | undefined
+> = ConnectAppBody.optional();
 
 export declare namespace Request {
-    export type Raw = ConnectProviderBody.Raw | null | undefined;
+    export type Raw = ConnectAppBody.Raw | null | undefined;
 }

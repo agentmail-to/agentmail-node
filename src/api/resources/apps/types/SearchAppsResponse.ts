@@ -2,8 +2,8 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface SearchProvidersResponse {
+export interface SearchAppsResponse {
     count: AgentMail.Count;
     limit: AgentMail.Limit;
-    providers: AgentMail.Provider[];
+    apps: AgentMail.App[];
 }

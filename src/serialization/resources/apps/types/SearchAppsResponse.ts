@@ -5,21 +5,21 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Count } from "../../../types/Count.js";
 import { Limit } from "../../../types/Limit.js";
-import { Provider } from "./Provider.js";
+import { App } from "./App.js";
 
-export const SearchProvidersResponse: core.serialization.ObjectSchema<
-    serializers.SearchProvidersResponse.Raw,
-    AgentMail.SearchProvidersResponse
+export const SearchAppsResponse: core.serialization.ObjectSchema<
+    serializers.SearchAppsResponse.Raw,
+    AgentMail.SearchAppsResponse
 > = core.serialization.object({
     count: Count,
     limit: Limit,
-    providers: core.serialization.list(Provider),
+    apps: core.serialization.list(App),
 });
 
-export declare namespace SearchProvidersResponse {
+export declare namespace SearchAppsResponse {
     export interface Raw {
         count: Count.Raw;
         limit: Limit.Raw;
-        providers: Provider.Raw[];
+        apps: App.Raw[];
     }
 }

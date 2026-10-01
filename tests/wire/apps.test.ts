@@ -4,7 +4,7 @@ import * as AgentMail from "../../src/api/index";
 import { AgentMailClient } from "../../src/Client";
 import { mockServerPool } from "../mock-server/MockServerPool";
 
-describe("ProvidersClient", () => {
+describe("AppsClient", () => {
     test("list (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({
@@ -17,9 +17,9 @@ describe("ProvidersClient", () => {
             count: 1,
             limit: 1,
             next_page_token: "next_page_token",
-            providers: [
+            apps: [
                 {
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -29,7 +29,7 @@ describe("ProvidersClient", () => {
                     owner_signup_limit: 1,
                 },
                 {
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -41,16 +41,16 @@ describe("ProvidersClient", () => {
             ],
         };
 
-        server.mockEndpoint().get("/v0/providers").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/v0/apps").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.providers.list();
+        const response = await client.apps.list();
         expect(response).toEqual({
             count: 1,
             limit: 1,
             nextPageToken: "next_page_token",
-            providers: [
+            apps: [
                 {
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -60,7 +60,7 @@ describe("ProvidersClient", () => {
                     ownerSignupLimit: 1,
                 },
                 {
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -83,10 +83,10 @@ describe("ProvidersClient", () => {
 
         const rawResponseBody = { name: "name", errors: { key: "value" } };
 
-        server.mockEndpoint().get("/v0/providers").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
+        server.mockEndpoint().get("/v0/apps").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
-            return await client.providers.list();
+            return await client.apps.list();
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
@@ -101,9 +101,9 @@ describe("ProvidersClient", () => {
         const rawResponseBody = {
             count: 1,
             limit: 1,
-            providers: [
+            apps: [
                 {
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -113,7 +113,7 @@ describe("ProvidersClient", () => {
                     owner_signup_limit: 1,
                 },
                 {
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -125,23 +125,17 @@ describe("ProvidersClient", () => {
             ],
         };
 
-        server
-            .mockEndpoint()
-            .get("/v0/providers/search")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/v0/apps/search").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.providers.search({
+        const response = await client.apps.search({
             q: "q",
         });
         expect(response).toEqual({
             count: 1,
             limit: 1,
-            providers: [
+            apps: [
                 {
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -151,7 +145,7 @@ describe("ProvidersClient", () => {
                     ownerSignupLimit: 1,
                 },
                 {
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -174,16 +168,10 @@ describe("ProvidersClient", () => {
 
         const rawResponseBody = { name: "name", errors: { key: "value" } };
 
-        server
-            .mockEndpoint()
-            .get("/v0/providers/search")
-            .respondWith()
-            .statusCode(400)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/v0/apps/search").respondWith().statusCode(400).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
-            return await client.providers.search({
+            return await client.apps.search({
                 q: "q",
             });
         }).rejects.toThrow(AgentMail.ValidationError);
@@ -198,7 +186,7 @@ describe("ProvidersClient", () => {
         });
 
         const rawResponseBody = {
-            provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             name: "name",
             updated_at: "2024-01-15T09:30:00Z",
             description: "description",
@@ -210,15 +198,15 @@ describe("ProvidersClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.providers.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        const response = await client.apps.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         expect(response).toEqual({
-            providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
             name: "name",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             description: "description",
@@ -241,14 +229,14 @@ describe("ProvidersClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.providers.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+            return await client.apps.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
@@ -261,8 +249,8 @@ describe("ProvidersClient", () => {
         });
 
         const rawResponseBody = {
-            provider: {
-                provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            app: {
+                app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 name: "name",
                 updated_at: "2024-01-15T09:30:00Z",
                 description: "description",
@@ -277,8 +265,8 @@ describe("ProvidersClient", () => {
             accounts: [
                 {
                     account_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_name: "provider_name",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_name: "app_name",
                     inbox_id: "inbox_id",
                     pod_id: "pod_id",
                     organization_id: "organization_id",
@@ -290,8 +278,8 @@ describe("ProvidersClient", () => {
                 },
                 {
                     account_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_name: "provider_name",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_name: "app_name",
                     inbox_id: "inbox_id",
                     pod_id: "pod_id",
                     organization_id: "organization_id",
@@ -306,16 +294,16 @@ describe("ProvidersClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/accounts")
+            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/accounts")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.providers.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        const response = await client.apps.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         expect(response).toEqual({
-            provider: {
-                providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            app: {
+                appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
                 name: "name",
                 updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                 description: "description",
@@ -330,8 +318,8 @@ describe("ProvidersClient", () => {
             accounts: [
                 {
                     accountId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerName: "provider_name",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appName: "app_name",
                     inboxId: "inbox_id",
                     podId: "pod_id",
                     organizationId: "organization_id",
@@ -343,8 +331,8 @@ describe("ProvidersClient", () => {
                 },
                 {
                     accountId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerName: "provider_name",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appName: "app_name",
                     inboxId: "inbox_id",
                     podId: "pod_id",
                     organizationId: "organization_id",
@@ -370,14 +358,14 @@ describe("ProvidersClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/accounts")
+            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/accounts")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.providers.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+            return await client.apps.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
@@ -397,13 +385,13 @@ describe("ProvidersClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+        const response = await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
         expect(response).toEqual({
             apiKeyId: "api_key_id",
             magicUrl: "magic_url",
@@ -423,14 +411,14 @@ describe("ProvidersClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+            return await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
@@ -446,14 +434,37 @@ describe("ProvidersClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/providers/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+            return await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
         }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("connect (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+        }).rejects.toThrow(AgentMail.AppSignupLimitError);
     });
 });

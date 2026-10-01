@@ -3,6 +3,7 @@
 import { AccountsClient } from "./api/resources/accounts/client/Client.js";
 import { AgentClient } from "./api/resources/agent/client/Client.js";
 import { ApiKeysClient } from "./api/resources/apiKeys/client/Client.js";
+import { AppsClient } from "./api/resources/apps/client/Client.js";
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { DomainsClient } from "./api/resources/domains/client/Client.js";
 import { DraftsClient } from "./api/resources/drafts/client/Client.js";
@@ -11,7 +12,6 @@ import { ListsClient } from "./api/resources/lists/client/Client.js";
 import { MetricsClient } from "./api/resources/metrics/client/Client.js";
 import { OrganizationsClient } from "./api/resources/organizations/client/Client.js";
 import { PodsClient } from "./api/resources/pods/client/Client.js";
-import { ProvidersClient } from "./api/resources/providers/client/Client.js";
 import { ThreadsClient } from "./api/resources/threads/client/Client.js";
 import { WebhooksClient } from "./api/resources/webhooks/client/Client.js";
 import { WebsocketsClient } from "./api/resources/websockets/client/Client.js";
@@ -34,13 +34,13 @@ export class AgentMailClient {
     protected _accounts: AccountsClient | undefined;
     protected _agent: AgentClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
+    protected _apps: AppsClient | undefined;
     protected _auth: AuthClient | undefined;
     protected _domains: DomainsClient | undefined;
     protected _drafts: DraftsClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
     protected _organizations: OrganizationsClient | undefined;
-    protected _providers: ProvidersClient | undefined;
     protected _threads: ThreadsClient | undefined;
     protected _websockets: WebsocketsClient | undefined;
 
@@ -72,6 +72,10 @@ export class AgentMailClient {
         return (this._apiKeys ??= new ApiKeysClient(this._options));
     }
 
+    public get apps(): AppsClient {
+        return (this._apps ??= new AppsClient(this._options));
+    }
+
     public get auth(): AuthClient {
         return (this._auth ??= new AuthClient(this._options));
     }
@@ -94,10 +98,6 @@ export class AgentMailClient {
 
     public get organizations(): OrganizationsClient {
         return (this._organizations ??= new OrganizationsClient(this._options));
-    }
-
-    public get providers(): ProvidersClient {
-        return (this._providers ??= new ProvidersClient(this._options));
     }
 
     public get threads(): ThreadsClient {

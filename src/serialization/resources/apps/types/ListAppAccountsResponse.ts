@@ -6,23 +6,26 @@ import type * as serializers from "../../../index.js";
 import { Count } from "../../../types/Count.js";
 import { Limit } from "../../../types/Limit.js";
 import { PageToken } from "../../../types/PageToken.js";
-import { Provider } from "./Provider.js";
+import { Account } from "../../accounts/types/Account.js";
+import { App } from "./App.js";
 
-export const ListProvidersResponse: core.serialization.ObjectSchema<
-    serializers.ListProvidersResponse.Raw,
-    AgentMail.ListProvidersResponse
+export const ListAppAccountsResponse: core.serialization.ObjectSchema<
+    serializers.ListAppAccountsResponse.Raw,
+    AgentMail.ListAppAccountsResponse
 > = core.serialization.object({
+    app: App.optional(),
     count: Count,
     limit: Limit,
     nextPageToken: core.serialization.property("next_page_token", PageToken.optional()),
-    providers: core.serialization.list(Provider),
+    accounts: core.serialization.list(Account),
 });
 
-export declare namespace ListProvidersResponse {
+export declare namespace ListAppAccountsResponse {
     export interface Raw {
+        app?: App.Raw | null;
         count: Count.Raw;
         limit: Limit.Raw;
         next_page_token?: PageToken.Raw | null;
-        providers: Provider.Raw[];
+        accounts: Account.Raw[];
     }
 }

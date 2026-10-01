@@ -4,9 +4,8 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const ProviderId: core.serialization.Schema<serializers.ProviderId.Raw, AgentMail.ProviderId> =
-    core.serialization.string();
+export const AppId: core.serialization.Schema<serializers.AppId.Raw, AgentMail.AppId> = core.serialization.string();
 
-export declare namespace ProviderId {
+export declare namespace AppId {
     export type Raw = string;
 }

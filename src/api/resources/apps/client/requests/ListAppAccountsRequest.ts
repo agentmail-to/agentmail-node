@@ -6,7 +6,7 @@ import type * as AgentMail from "../../../../index.js";
  * @example
  *     {}
  */
-export interface ListProvidersRequest {
+export interface ListAppAccountsRequest {
     limit?: AgentMail.Limit;
     pageToken?: AgentMail.PageToken;
 }

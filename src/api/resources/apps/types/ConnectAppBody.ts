@@ -2,7 +2,7 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface ConnectProviderBody {
+export interface ConnectAppBody {
     inboxId?: AgentMail.ConnectInboxId;
     acceptDisclosure?: AgentMail.AcceptDisclosure;
 }

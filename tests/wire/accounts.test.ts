@@ -20,8 +20,8 @@ describe("AccountsClient", () => {
             accounts: [
                 {
                     account_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_name: "provider_name",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_name: "app_name",
                     inbox_id: "inbox_id",
                     pod_id: "pod_id",
                     organization_id: "organization_id",
@@ -33,8 +33,8 @@ describe("AccountsClient", () => {
                 },
                 {
                     account_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    provider_name: "provider_name",
+                    app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    app_name: "app_name",
                     inbox_id: "inbox_id",
                     pod_id: "pod_id",
                     organization_id: "organization_id",
@@ -57,8 +57,8 @@ describe("AccountsClient", () => {
             accounts: [
                 {
                     accountId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerName: "provider_name",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appName: "app_name",
                     inboxId: "inbox_id",
                     podId: "pod_id",
                     organizationId: "organization_id",
@@ -70,8 +70,8 @@ describe("AccountsClient", () => {
                 },
                 {
                     accountId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-                    providerName: "provider_name",
+                    appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    appName: "app_name",
                     inboxId: "inbox_id",
                     podId: "pod_id",
                     organizationId: "organization_id",
@@ -112,8 +112,8 @@ describe("AccountsClient", () => {
 
         const rawResponseBody = {
             account_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            provider_name: "provider_name",
+            app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            app_name: "app_name",
             inbox_id: "inbox_id",
             pod_id: "pod_id",
             organization_id: "organization_id",
@@ -135,8 +135,8 @@ describe("AccountsClient", () => {
         const response = await client.accounts.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
         expect(response).toEqual({
             accountId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            providerName: "provider_name",
+            appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            appName: "app_name",
             inboxId: "inbox_id",
             podId: "pod_id",
             organizationId: "organization_id",
@@ -181,8 +181,8 @@ describe("AccountsClient", () => {
         const rawRequestBody = {};
         const rawResponseBody = {
             account_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            provider_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            provider_name: "provider_name",
+            app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            app_name: "app_name",
             inbox_id: "inbox_id",
             pod_id: "pod_id",
             organization_id: "organization_id",
@@ -205,8 +205,8 @@ describe("AccountsClient", () => {
         const response = await client.accounts.update("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", {});
         expect(response).toEqual({
             accountId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            providerId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
-            providerName: "provider_name",
+            appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            appName: "app_name",
             inboxId: "inbox_id",
             podId: "pod_id",
             organizationId: "organization_id",

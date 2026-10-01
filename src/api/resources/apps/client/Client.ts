@@ -10,41 +10,41 @@ import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
 
-export declare namespace ProvidersClient {
+export declare namespace AppsClient {
     export type Options = BaseClientOptions;
 
     export interface RequestOptions extends BaseRequestOptions {}
 }
 
-export class ProvidersClient {
-    protected readonly _options: NormalizedClientOptionsWithAuth<ProvidersClient.Options>;
+export class AppsClient {
+    protected readonly _options: NormalizedClientOptionsWithAuth<AppsClient.Options>;
 
-    constructor(options: ProvidersClient.Options = {}) {
+    constructor(options: AppsClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
     }
 
     /**
-     * Lists providers, most popular first.
+     * Lists apps, most popular first.
      *
-     * @param {AgentMail.ListProvidersRequest} request
-     * @param {ProvidersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.ListAppsRequest} request
+     * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.providers.list()
+     *     await client.apps.list()
      */
     public list(
-        request: AgentMail.ListProvidersRequest = {},
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListProvidersResponse> {
+        request: AgentMail.ListAppsRequest = {},
+        requestOptions?: AppsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ListAppsResponse> {
         return core.HttpResponsePromise.fromPromise(this.__list(request, requestOptions));
     }
 
     private async __list(
-        request: AgentMail.ListProvidersRequest = {},
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListProvidersResponse>> {
+        request: AgentMail.ListAppsRequest = {},
+        requestOptions?: AppsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListAppsResponse>> {
         const { limit, pageToken } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -61,7 +61,7 @@ export class ProvidersClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                "/v0/providers",
+                "/v0/apps",
             ),
             method: "GET",
             headers: _headers,
@@ -74,7 +74,7 @@ export class ProvidersClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.ListProvidersResponse.parseOrThrow(_response.body, {
+                data: serializers.ListAppsResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -107,33 +107,33 @@ export class ProvidersClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/providers");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/apps");
     }
 
     /**
-     * Searches providers by name prefix.
+     * Searches apps by name prefix.
      *
-     * @param {AgentMail.SearchProvidersRequest} request
-     * @param {ProvidersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.SearchAppsRequest} request
+     * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.providers.search({
+     *     await client.apps.search({
      *         q: "q"
      *     })
      */
     public search(
-        request: AgentMail.SearchProvidersRequest,
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.SearchProvidersResponse> {
+        request: AgentMail.SearchAppsRequest,
+        requestOptions?: AppsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.SearchAppsResponse> {
         return core.HttpResponsePromise.fromPromise(this.__search(request, requestOptions));
     }
 
     private async __search(
-        request: AgentMail.SearchProvidersRequest,
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.SearchProvidersResponse>> {
+        request: AgentMail.SearchAppsRequest,
+        requestOptions?: AppsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.SearchAppsResponse>> {
         const { q, limit } = request;
         const _queryParams: Record<string, unknown> = {
             q,
@@ -150,7 +150,7 @@ export class ProvidersClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                "/v0/providers/search",
+                "/v0/apps/search",
             ),
             method: "GET",
             headers: _headers,
@@ -163,7 +163,7 @@ export class ProvidersClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.SearchProvidersResponse.parseOrThrow(_response.body, {
+                data: serializers.SearchAppsResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -196,29 +196,34 @@ export class ProvidersClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/providers/search");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/apps/search");
     }
 
     /**
-     * @param {AgentMail.ProviderId} provider_id
-     * @param {ProvidersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * Gets one app by ID. An app in the catalog returns its full entry.
+     * A registered app that the catalog does not list returns its ID and
+     * name only, without `updated_at`, so anyone holding its ID can still look
+     * it up. List Apps and Search Apps show catalog entries only.
+     *
+     * @param {AgentMail.AppId} app_id
+     * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.providers.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.apps.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
     public get(
-        provider_id: AgentMail.ProviderId,
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.Provider> {
-        return core.HttpResponsePromise.fromPromise(this.__get(provider_id, requestOptions));
+        app_id: AgentMail.AppId,
+        requestOptions?: AppsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.App> {
+        return core.HttpResponsePromise.fromPromise(this.__get(app_id, requestOptions));
     }
 
     private async __get(
-        provider_id: AgentMail.ProviderId,
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.Provider>> {
+        app_id: AgentMail.AppId,
+        requestOptions?: AppsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.App>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
             _authRequest.headers,
@@ -230,7 +235,7 @@ export class ProvidersClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/providers/${core.url.encodePathParam(serializers.ProviderId.jsonOrThrow(provider_id, { omitUndefined: true }))}`,
+                `/v0/apps/${core.url.encodePathParam(serializers.AppId.jsonOrThrow(app_id, { omitUndefined: true }))}`,
             ),
             method: "GET",
             headers: _headers,
@@ -243,7 +248,7 @@ export class ProvidersClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.Provider.parseOrThrow(_response.body, {
+                data: serializers.App.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -276,34 +281,34 @@ export class ProvidersClient {
             }
         }
 
-        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/providers/{provider_id}");
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/apps/{app_id}");
     }
 
     /**
-     * Lists accounts at one provider, most recent sign-in first.
+     * Lists accounts at one app, most recent sign-in first.
      *
-     * @param {AgentMail.ProviderId} provider_id
-     * @param {AgentMail.ListProviderAccountsRequest} request
-     * @param {ProvidersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.AppId} app_id
+     * @param {AgentMail.ListAppAccountsRequest} request
+     * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.providers.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.apps.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
      */
     public listAccounts(
-        provider_id: AgentMail.ProviderId,
-        request: AgentMail.ListProviderAccountsRequest = {},
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.ListProviderAccountsResponse> {
-        return core.HttpResponsePromise.fromPromise(this.__listAccounts(provider_id, request, requestOptions));
+        app_id: AgentMail.AppId,
+        request: AgentMail.ListAppAccountsRequest = {},
+        requestOptions?: AppsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.ListAppAccountsResponse> {
+        return core.HttpResponsePromise.fromPromise(this.__listAccounts(app_id, request, requestOptions));
     }
 
     private async __listAccounts(
-        provider_id: AgentMail.ProviderId,
-        request: AgentMail.ListProviderAccountsRequest = {},
-        requestOptions?: ProvidersClient.RequestOptions,
-    ): Promise<core.WithRawResponse<AgentMail.ListProviderAccountsResponse>> {
+        app_id: AgentMail.AppId,
+        request: AgentMail.ListAppAccountsRequest = {},
+        requestOptions?: AppsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.ListAppAccountsResponse>> {
         const { limit, pageToken } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
@@ -320,7 +325,7 @@ export class ProvidersClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/providers/${core.url.encodePathParam(serializers.ProviderId.jsonOrThrow(provider_id, { omitUndefined: true }))}/accounts`,
+                `/v0/apps/${core.url.encodePathParam(serializers.AppId.jsonOrThrow(app_id, { omitUndefined: true }))}/accounts`,
             ),
             method: "GET",
             headers: _headers,
@@ -333,7 +338,7 @@ export class ProvidersClient {
         });
         if (_response.ok) {
             return {
-                data: serializers.ListProviderAccountsResponse.parseOrThrow(_response.body, {
+                data: serializers.ListAppAccountsResponse.parseOrThrow(_response.body, {
                     unrecognizedObjectKeys: "passthrough",
                     allowUnrecognizedUnionMembers: true,
                     allowUnrecognizedEnumValues: true,
@@ -366,42 +371,40 @@ export class ProvidersClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "GET",
-            "/v0/providers/{provider_id}/accounts",
-        );
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/apps/{app_id}/accounts");
     }
 
     /**
-     * Starts signing an inbox in to a provider. Returns a single-use `magic_url`,
+     * Starts signing an inbox in to an app. Returns a single-use `magic_url`,
      * valid for five minutes, to open in the client that will hold the sign-in;
-     * the client enrolls as the inbox and continues to the provider. Poll
-     * [Get API Key](/api-reference/api-keys/get) with `api_key_id` for `status`.
+     * the client enrolls as the inbox and continues to the app.
+     * A `404` names the missing resource: `App` or `Inbox`.
+     * A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
+     * your organization; sign in with an inbox that already has an account there.
      *
-     * @param {AgentMail.ProviderId} provider_id
-     * @param {AgentMail.ConnectProviderBody} request
-     * @param {ProvidersClient.RequestOptions} requestOptions - Request-specific configuration.
+     * @param {AgentMail.AppId} app_id
+     * @param {AgentMail.ConnectAppBody} request
+     * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.AppSignupLimitError}
      *
      * @example
-     *     await client.providers.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined)
+     *     await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined)
      */
     public connect(
-        provider_id: AgentMail.ProviderId,
-        request?: AgentMail.ConnectProviderBody,
-        requestOptions?: ProvidersClient.RequestOptions,
+        app_id: AgentMail.AppId,
+        request?: AgentMail.ConnectAppBody,
+        requestOptions?: AppsClient.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.ConnectAccepted> {
-        return core.HttpResponsePromise.fromPromise(this.__connect(provider_id, request, requestOptions));
+        return core.HttpResponsePromise.fromPromise(this.__connect(app_id, request, requestOptions));
     }
 
     private async __connect(
-        provider_id: AgentMail.ProviderId,
-        request?: AgentMail.ConnectProviderBody,
-        requestOptions?: ProvidersClient.RequestOptions,
+        app_id: AgentMail.AppId,
+        request?: AgentMail.ConnectAppBody,
+        requestOptions?: AppsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ConnectAccepted>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
@@ -414,14 +417,14 @@ export class ProvidersClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/providers/${core.url.encodePathParam(serializers.ProviderId.jsonOrThrow(provider_id, { omitUndefined: true }))}/connect`,
+                `/v0/apps/${core.url.encodePathParam(serializers.AppId.jsonOrThrow(app_id, { omitUndefined: true }))}/connect`,
             ),
             method: "POST",
             headers: _headers,
             contentType: "application/json",
             queryParameters: requestOptions?.queryParams,
             requestType: "json",
-            body: serializers.providers.connect.Request.jsonOrThrow(request, {
+            body: serializers.apps.connect.Request.jsonOrThrow(request, {
                 unrecognizedObjectKeys: "strip",
                 omitUndefined: true,
             }),
@@ -468,6 +471,17 @@ export class ProvidersClient {
                         }),
                         _response.rawResponse,
                     );
+                case 403:
+                    throw new AgentMail.AppSignupLimitError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
                 default:
                     throw new errors.AgentMailError({
                         statusCode: _response.error.statusCode,
@@ -477,11 +491,6 @@ export class ProvidersClient {
             }
         }
 
-        return handleNonStatusCodeError(
-            _response.error,
-            _response.rawResponse,
-            "POST",
-            "/v0/providers/{provider_id}/connect",
-        );
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v0/apps/{app_id}/connect");
     }
 }

@@ -2,9 +2,10 @@
 
 import type * as AgentMail from "../../../index.js";
 
-export interface ListProvidersResponse {
+export interface ListAppAccountsResponse {
+    app?: AgentMail.App;
     count: AgentMail.Count;
     limit: AgentMail.Limit;
     nextPageToken?: AgentMail.PageToken;
-    providers: AgentMail.Provider[];
+    accounts: AgentMail.Account[];
 }

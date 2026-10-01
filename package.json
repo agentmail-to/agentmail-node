@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.5.32",
+    "version": "0.5.33",
     "private": false,
     "repository": {
         "type": "git",
@@ -99,6 +99,17 @@
                 "default": "./dist/cjs/api/resources/apiKeys/exports.js"
             },
             "default": "./dist/cjs/api/resources/apiKeys/exports.js"
+        },
+        "./apps": {
+            "import": {
+                "types": "./dist/esm/api/resources/apps/exports.d.mts",
+                "default": "./dist/esm/api/resources/apps/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/apps/exports.d.ts",
+                "default": "./dist/cjs/api/resources/apps/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/apps/exports.js"
         },
         "./auth": {
             "import": {
@@ -364,17 +375,6 @@
             },
             "default": "./dist/cjs/api/resources/pods/resources/webhooks/exports.js"
         },
-        "./providers": {
-            "import": {
-                "types": "./dist/esm/api/resources/providers/exports.d.mts",
-                "default": "./dist/esm/api/resources/providers/exports.mjs"
-            },
-            "require": {
-                "types": "./dist/cjs/api/resources/providers/exports.d.ts",
-                "default": "./dist/cjs/api/resources/providers/exports.js"
-            },
-            "default": "./dist/cjs/api/resources/providers/exports.js"
-        },
         "./threads": {
             "import": {
                 "types": "./dist/esm/api/resources/threads/exports.d.mts",
@@ -455,7 +455,6 @@
     "sideEffects": false,
     "pnpm": {
         "overrides": {
-            "browserslist@<=4.28.6": "4.28.7",
             "postcss": ">=8.5.23",
             "fast-uri": ">=3.1.5"
         }

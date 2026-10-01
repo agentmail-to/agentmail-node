@@ -2,7 +2,7 @@
 
 /**
  * Status to set. `disabled` stops the inbox from signing in at the
- * provider; `enabled` re-enables it. An enabled account reads back with no
+ * app; `enabled` re-enables it. An enabled account reads back with no
  * `status`.
  */
 export const UpdateAccountStatus = {

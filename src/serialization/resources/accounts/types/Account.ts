@@ -4,17 +4,17 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { OrganizationId } from "../../../types/OrganizationId.js";
+import { AppId } from "../../apps/types/AppId.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
 import { PodId } from "../../pods/types/PodId.js";
 import { AccountId } from "./AccountId.js";
 import { AccountStatus } from "./AccountStatus.js";
-import { ProviderId } from "./ProviderId.js";
 
 export const Account: core.serialization.ObjectSchema<serializers.Account.Raw, AgentMail.Account> =
     core.serialization.object({
         accountId: core.serialization.property("account_id", AccountId),
-        providerId: core.serialization.property("provider_id", ProviderId),
-        providerName: core.serialization.property("provider_name", core.serialization.string().optional()),
+        appId: core.serialization.property("app_id", AppId),
+        appName: core.serialization.property("app_name", core.serialization.string().optional()),
         inboxId: core.serialization.property("inbox_id", InboxId),
         podId: core.serialization.property("pod_id", PodId),
         organizationId: core.serialization.property("organization_id", OrganizationId),
@@ -28,8 +28,8 @@ export const Account: core.serialization.ObjectSchema<serializers.Account.Raw, A
 export declare namespace Account {
     export interface Raw {
         account_id: AccountId.Raw;
-        provider_id: ProviderId.Raw;
-        provider_name?: string | null;
+        app_id: AppId.Raw;
+        app_name?: string | null;
         inbox_id: InboxId.Raw;
         pod_id: PodId.Raw;
         organization_id: OrganizationId.Raw;

@@ -4,12 +4,9 @@ import type * as AgentMail from "../../../../index.js";
 
 /**
  * @example
- *     {
- *         q: "q"
- *     }
+ *     {}
  */
-export interface SearchProvidersRequest {
-    /** Name prefix to search for. */
-    q: string;
+export interface ListAppsRequest {
     limit?: AgentMail.Limit;
+    pageToken?: AgentMail.PageToken;
 }

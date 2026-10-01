@@ -515,4 +515,30 @@ describe("InboxesClient", () => {
             });
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
+
+    test("authorize (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { auth_token: "blackcurrant.........." };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/authorize")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(403)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.authorize("inbox_id", {
+                authToken: "blackcurrant..........",
+            });
+        }).rejects.toThrow(AgentMail.AppSignupLimitError);
+    });
 });
