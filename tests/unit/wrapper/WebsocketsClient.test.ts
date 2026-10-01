@@ -1,13 +1,22 @@
-import { AgentMailClient } from "../../../src/wrapper/Client";
 import { WebsocketsClient as FernWebsocketsClient } from "../../../src/api/resources/websockets/client/Client";
-import type { WebsocketsSocket } from "../../../src/api/resources/websockets/client/Socket";
-import * as x402Helpers from "../../../src/wrapper/x402";
+import { WebsocketsSocket } from "../../../src/api/resources/websockets/client/Socket";
+import { ReconnectingWebSocket } from "../../../src/core/websocket/ws";
+import { SDK_VERSION } from "../../../src/version";
+import { AgentMailClient } from "../../../src/wrapper/Client";
 import * as mppHelpers from "../../../src/wrapper/mppx";
+import * as x402Helpers from "../../../src/wrapper/x402";
+
+const sdkHeaders = { "X-Fern-SDK-Name": "agentmail", "X-Fern-SDK-Version": SDK_VERSION };
 
 function mockConnect() {
-    return vi
-        .spyOn(FernWebsocketsClient.prototype, "connect")
-        .mockResolvedValue({ waitForOpen: vi.fn().mockResolvedValue(undefined) } as unknown as WebsocketsSocket);
+    return vi.spyOn(FernWebsocketsClient.prototype, "connect").mockImplementation(async () => {
+        // startClosed: a real socket that never dials, so auto-reconnect has something to attach to.
+        const socket = new WebsocketsSocket({
+            socket: new ReconnectingWebSocket({ url: "ws://127.0.0.1", options: { startClosed: true } }),
+        });
+        vi.spyOn(socket, "waitForOpen").mockResolvedValue(socket.socket);
+        return socket;
+    });
 }
 
 describe("WebsocketsClient wrapper", () => {
@@ -31,20 +40,32 @@ describe("WebsocketsClient wrapper", () => {
         it("should auto-populate apiKey from client options", async () => {
             const client = new AgentMailClient({ apiKey: "am_us_test123" });
             await client.websockets.connect();
-            expect(connectSpy).toHaveBeenCalledWith({ apiKey: "am_us_test123" });
+            expect(connectSpy).toHaveBeenCalledWith({
+                apiKey: "am_us_test123",
+                reconnectAttempts: 30,
+                headers: sdkHeaders,
+            });
         });
 
         it("should auto-populate apiKey from env var", async () => {
             process.env.AGENTMAIL_API_KEY = "am_eu_from_env";
             const client = new AgentMailClient({});
             await client.websockets.connect();
-            expect(connectSpy).toHaveBeenCalledWith({ apiKey: "am_eu_from_env" });
+            expect(connectSpy).toHaveBeenCalledWith({
+                apiKey: "am_eu_from_env",
+                reconnectAttempts: 30,
+                headers: sdkHeaders,
+            });
         });
 
         it("should prefer explicit apiKey in connect args", async () => {
             const client = new AgentMailClient({ apiKey: "am_us_test123" });
             await client.websockets.connect({ apiKey: "override_key" });
-            expect(connectSpy).toHaveBeenCalledWith({ apiKey: "override_key" });
+            expect(connectSpy).toHaveBeenCalledWith({
+                apiKey: "override_key",
+                reconnectAttempts: 30,
+                headers: sdkHeaders,
+            });
         });
 
         it("should forward other connect args alongside auto-populated apiKey", async () => {
@@ -54,7 +75,30 @@ describe("WebsocketsClient wrapper", () => {
                 debug: true,
                 reconnectAttempts: 5,
                 apiKey: "am_us_test123",
+                headers: sdkHeaders,
             });
+        });
+
+        it("should not forward wrapper-only options", async () => {
+            const client = new AgentMailClient({ apiKey: "am_us_test123" });
+            await client.websockets.connect({ waitForOpen: false, autoReconnect: false });
+            expect(connectSpy).toHaveBeenCalledWith({
+                apiKey: "am_us_test123",
+                reconnectAttempts: 30,
+                headers: sdkHeaders,
+            });
+        });
+    });
+
+    describe("SDK headers", () => {
+        it("should let user headers override the SDK headers", async () => {
+            const client = new AgentMailClient({ apiKey: "am_us_test123" });
+            await client.websockets.connect({ headers: { "X-Fern-SDK-Version": "custom", "X-Extra": "1" } });
+            expect(connectSpy).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    headers: { "X-Fern-SDK-Name": "agentmail", "X-Fern-SDK-Version": "custom", "X-Extra": "1" },
+                }),
+            );
         });
     });
 
@@ -72,6 +116,7 @@ describe("WebsocketsClient wrapper", () => {
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
                     queryParams: expect.objectContaining(mockCredentials),
+                    headers: sdkHeaders,
                 }),
             );
 
@@ -115,6 +160,7 @@ describe("WebsocketsClient wrapper", () => {
             expect(connectSpy).toHaveBeenCalledWith(
                 expect.objectContaining({
                     queryParams: expect.objectContaining(mockCredentials),
+                    headers: sdkHeaders,
                 }),
             );
 
