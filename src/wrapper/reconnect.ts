@@ -57,8 +57,9 @@ export function enableAutoReconnect(socket: WebsocketsSocket, options: AutoRecon
     const closeSocket = rws.close.bind(rws);
     const reconnectSocket = rws.reconnect.bind(rws);
 
-    // Keyed by canonical JSON. Re-sending a message moves it to the end, so a replay applies
-    // subscriptions in the order they were last sent (the server keeps the last event_types per id).
+    // Keyed by canonical JSON, in the order last sent. The server keeps one subscription per target and
+    // the last filter sent for it, so a new message takes its targets out of every earlier one: a
+    // replay can never put back a filter the caller has since changed.
     const subscriptions = new Map<string, AgentMail.Subscribe>();
     // Keys already sent on the current connection, e.g. by the user's own open handler.
     const sentOnConnection = new Set<string>();
@@ -171,10 +172,41 @@ export function enableAutoReconnect(socket: WebsocketsSocket, options: AutoRecon
 
     socket.sendSubscribe = (message: AgentMail.Subscribe): void => {
         sendSubscribe(message);
-        const key = subscriptionKey(message);
-        subscriptions.delete(key);
-        subscriptions.set(key, JSON.parse(JSON.stringify(message)));
+        const recorded = JSON.parse(JSON.stringify(message)) as AgentMail.Subscribe;
+        const covered = new Set(targetsOf(recorded));
+        const kept = [...subscriptions].flatMap(([key, cached]): Array<[string, AgentMail.Subscribe]> => {
+            const remaining = withoutTargets(cached, covered);
+            if (remaining === undefined) return [];
+            return [[remaining === cached ? key : subscriptionKey(remaining), remaining]];
+        });
+        const key = subscriptionKey(recorded);
+        subscriptions.clear();
+        for (const [keptKey, keptMessage] of kept) if (keptKey !== key) subscriptions.set(keptKey, keptMessage);
+        subscriptions.set(key, recorded);
         sentOnConnection.add(key);
+    };
+}
+
+// What a subscribe message sets on the server: one subscription per inbox and per pod it names, or the
+// credential's own scope when it names neither. That default resolves server-side to an inbox, pod or
+// organization the SDK cannot see, so it is tracked as its own target.
+function targetsOf(message: AgentMail.Subscribe): string[] {
+    if (message.inboxIds === undefined && message.podIds === undefined) return ["default"];
+    return [...(message.inboxIds ?? []).map((id) => `inbox:${id}`), ...(message.podIds ?? []).map((id) => `pod:${id}`)];
+}
+
+// `message` without the covered targets; undefined once none of its targets is left.
+function withoutTargets(message: AgentMail.Subscribe, covered: Set<string>): AgentMail.Subscribe | undefined {
+    const targets = targetsOf(message);
+    if (!targets.some((target) => covered.has(target))) return message;
+    if (targets.every((target) => covered.has(target))) return undefined;
+    const { inboxIds, podIds, ...rest } = message;
+    const keptInboxIds = inboxIds?.filter((id) => !covered.has(`inbox:${id}`));
+    const keptPodIds = podIds?.filter((id) => !covered.has(`pod:${id}`));
+    return {
+        ...rest,
+        ...(keptInboxIds?.length ? { inboxIds: keptInboxIds } : {}),
+        ...(keptPodIds?.length ? { podIds: keptPodIds } : {}),
     };
 }
 

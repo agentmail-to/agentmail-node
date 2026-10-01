@@ -284,6 +284,68 @@ describe("WebsocketsClient auto-reconnect", () => {
             await sleep(100);
             expect(server.connections[1].received).toEqual([inboxWire]);
         });
+
+        it("keeps a filter the open handler changes on reconnect instead of replaying the older one", async () => {
+            const server = await startServer();
+            const socket = await connect(server, { waitForOpen: false });
+            let opens = 0;
+            socket.on("open", () => {
+                opens++;
+                socket.sendSubscribe({
+                    type: "subscribe",
+                    inboxIds: ["inbox_1"],
+                    eventTypes: [opens === 1 ? "message.received" : "message.sent"],
+                });
+            });
+            await vi.waitFor(() => expect(server.connections[0]?.received).toHaveLength(1));
+
+            server.connections[0].socket.close(1000);
+
+            await vi.waitFor(() => expect(server.connections[1]?.received).toHaveLength(1));
+            await sleep(100);
+            expect(server.connections[1].received).toEqual([
+                { type: "subscribe", inbox_ids: ["inbox_1"], event_types: ["message.sent"] },
+            ]);
+        });
+
+        it("replays the targets the open handler did not re-send, with their latest filters", async () => {
+            const server = await startServer();
+            const socket = await connect(server);
+            socket.sendSubscribe({
+                type: "subscribe",
+                inboxIds: ["inbox_1", "inbox_2"],
+                eventTypes: ["message.received"],
+            });
+            await vi.waitFor(() => expect(server.connections[0].received).toHaveLength(1));
+            socket.on("open", () =>
+                socket.sendSubscribe({ type: "subscribe", inboxIds: ["inbox_1"], eventTypes: ["message.sent"] }),
+            );
+
+            server.connections[0].socket.close(1000);
+
+            await vi.waitFor(() => expect(server.connections[1]?.received).toHaveLength(2));
+            await sleep(100);
+            expect(server.connections[1].received).toEqual([
+                { type: "subscribe", inbox_ids: ["inbox_1"], event_types: ["message.sent"] },
+                { type: "subscribe", inbox_ids: ["inbox_2"], event_types: ["message.received"] },
+            ]);
+        });
+
+        it("replays only the latest filter sent for a target", async () => {
+            const server = await startServer();
+            const socket = await connect(server);
+            socket.sendSubscribe({ type: "subscribe", inboxIds: ["inbox_1"], eventTypes: ["message.received"] });
+            socket.sendSubscribe({ type: "subscribe", inboxIds: ["inbox_1"], eventTypes: ["message.sent"] });
+            await vi.waitFor(() => expect(server.connections[0].received).toHaveLength(2));
+
+            server.connections[0].socket.close(1000);
+
+            await vi.waitFor(() => expect(server.connections[1]?.received).toHaveLength(1));
+            await sleep(100);
+            expect(server.connections[1].received).toEqual([
+                { type: "subscribe", inbox_ids: ["inbox_1"], event_types: ["message.sent"] },
+            ]);
+        });
     });
 
     describe("stopping", () => {
