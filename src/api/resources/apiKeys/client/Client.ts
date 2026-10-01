@@ -300,8 +300,8 @@ export class ApiKeysClient {
 
     /**
      * Renames a credential or changes its permissions. Public keys also resolve
-     * by `client_id`; a sign-in key accepts only `provider_connect` and
-     * `provider_share_owner`.
+     * by `client_id`; a sign-in key accepts only `app_connect` and
+     * `app_share_owner`.
      *
      * @param {AgentMail.ApiKeyId} api_key_id
      * @param {AgentMail.UpdateApiKeyRequest} request

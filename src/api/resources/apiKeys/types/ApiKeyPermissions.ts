@@ -73,17 +73,17 @@ export interface ApiKeyPermissions {
     /** Delete API keys. */
     apiKeyDelete?: boolean;
     /**
-     * Sign in to providers as an inbox: connect a provider, authorize an inbox, and mint the
+     * Sign in to apps as an inbox: connect an app, authorize an inbox, and mint the
      * sign-in keys. Omitted on a new bearer key means false, whatever else the key holds.
      */
-    providerConnect?: boolean;
+    appConnect?: boolean;
     /**
-     * Share the organization owner's name and email with providers at sign-in. One permission
+     * Share the organization owner's name and email with apps at sign-in. One permission
      * for both values.
      */
-    providerShareOwner?: boolean;
+    appShareOwner?: boolean;
     /**
-     * Update accounts: disable or re-enable an inbox's sign-in at a provider. Reading accounts
+     * Update accounts: disable or re-enable an inbox's sign-in at an app. Reading accounts
      * needs only `inbox_read`.
      */
     accountUpdate?: boolean;

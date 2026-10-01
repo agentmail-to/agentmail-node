@@ -2,7 +2,7 @@
 
 /**
  * Accept the app's disclosure on the agent's behalf, skipping the
- * first-use disclosure page. Requires `provider_share_owner` when owner
+ * first-use disclosure page. Requires `app_share_owner` when owner
  * scopes are involved.
  */
 export type AcceptDisclosure = boolean;
