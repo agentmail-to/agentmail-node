@@ -45,10 +45,17 @@ export class AppsClient {
         request: AgentMail.ListAppsRequest = {},
         requestOptions?: AppsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListAppsResponse>> {
-        const { limit, pageToken } = request;
+        const { limit, pageToken, category } = request;
         const _queryParams: Record<string, unknown> = {
             limit,
             page_token: pageToken,
+            category:
+                category != null
+                    ? serializers.AppCategory.jsonOrThrow(category, {
+                          unrecognizedObjectKeys: "strip",
+                          omitUndefined: true,
+                      })
+                    : undefined,
         };
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
         const _headers: core.Fetcher.Args["headers"] = mergeHeaders(

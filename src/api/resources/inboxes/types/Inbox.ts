@@ -8,6 +8,12 @@ export interface Inbox {
     email: AgentMail.inboxes.Email;
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;
+    /**
+     * `paused` when the inbox is paused. Omitted when the inbox is active.
+     * Treat any value other than `paused` as an inbox that sends and
+     * receives normally.
+     */
+    status?: AgentMail.inboxes.InboxStatus;
     /** Custom metadata attached to the inbox. */
     metadata?: AgentMail.inboxes.Metadata;
     /** Time at which inbox was last updated. */

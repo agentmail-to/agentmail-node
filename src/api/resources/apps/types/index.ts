@@ -1,4 +1,5 @@
 export * from "./App.js";
+export * from "./AppCategory.js";
 export * from "./AppId.js";
 export * from "./ConnectAccepted.js";
 export * from "./ConnectAppBody.js";

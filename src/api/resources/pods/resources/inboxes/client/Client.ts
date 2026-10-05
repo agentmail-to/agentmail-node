@@ -443,6 +443,7 @@ export class InboxesClient {
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ConflictError}
      *
      * @example
      *     await client.pods.inboxes.update("pod_id", "inbox_id", {})
@@ -507,6 +508,17 @@ export class InboxesClient {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,

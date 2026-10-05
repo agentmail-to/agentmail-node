@@ -26,6 +26,7 @@ describe("AppsClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    categories: ["ai", "ai"],
                     owner_signup_limit: 1,
                 },
                 {
@@ -36,6 +37,7 @@ describe("AppsClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    categories: ["ai", "ai"],
                     owner_signup_limit: 1,
                 },
             ],
@@ -57,6 +59,7 @@ describe("AppsClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    categories: ["ai", "ai"],
                     ownerSignupLimit: 1,
                 },
                 {
@@ -67,6 +70,7 @@ describe("AppsClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    categories: ["ai", "ai"],
                     ownerSignupLimit: 1,
                 },
             ],
@@ -110,6 +114,7 @@ describe("AppsClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    categories: ["ai", "ai"],
                     owner_signup_limit: 1,
                 },
                 {
@@ -120,6 +125,7 @@ describe("AppsClient", () => {
                     logo_url: "logo_url",
                     terms_url: "terms_url",
                     privacy_url: "privacy_url",
+                    categories: ["ai", "ai"],
                     owner_signup_limit: 1,
                 },
             ],
@@ -142,6 +148,7 @@ describe("AppsClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    categories: ["ai", "ai"],
                     ownerSignupLimit: 1,
                 },
                 {
@@ -152,6 +159,7 @@ describe("AppsClient", () => {
                     logoUrl: "logo_url",
                     termsUrl: "terms_url",
                     privacyUrl: "privacy_url",
+                    categories: ["ai", "ai"],
                     ownerSignupLimit: 1,
                 },
             ],
@@ -193,6 +201,7 @@ describe("AppsClient", () => {
             logo_url: "logo_url",
             terms_url: "terms_url",
             privacy_url: "privacy_url",
+            categories: ["ai", "ai"],
             owner_signup_limit: 1,
         };
 
@@ -213,6 +222,7 @@ describe("AppsClient", () => {
             logoUrl: "logo_url",
             termsUrl: "terms_url",
             privacyUrl: "privacy_url",
+            categories: ["ai", "ai"],
             ownerSignupLimit: 1,
         });
     });
@@ -257,6 +267,7 @@ describe("AppsClient", () => {
                 logo_url: "logo_url",
                 terms_url: "terms_url",
                 privacy_url: "privacy_url",
+                categories: ["ai", "ai"],
                 owner_signup_limit: 1,
             },
             count: 1,
@@ -310,6 +321,7 @@ describe("AppsClient", () => {
                 logoUrl: "logo_url",
                 termsUrl: "terms_url",
                 privacyUrl: "privacy_url",
+                categories: ["ai", "ai"],
                 ownerSignupLimit: 1,
             },
             count: 1,

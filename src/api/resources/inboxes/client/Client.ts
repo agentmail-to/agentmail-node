@@ -441,12 +441,16 @@ export class InboxesClient {
      * agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
      * ```
      *
+     * To pause an inbox, set `status` to `paused`; set it back to `active` to
+     * resume. See [Pausing an inbox](/inboxes#pausing-an-inbox).
+     *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.UpdateInboxRequest} request
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.ConflictError}
      *
      * @example
      *     await client.inboxes.update("inbox_id", {})
@@ -521,6 +525,17 @@ export class InboxesClient {
                 case 400:
                     throw new AgentMail.ValidationError(
                         serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
                             allowUnrecognizedEnumValues: true,

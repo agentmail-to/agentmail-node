@@ -24,6 +24,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
+                    status: "active",
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -34,6 +35,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
+                    status: "active",
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -55,6 +57,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
+                    status: "active",
                     metadata: {
                         metadata: "metadata",
                     },
@@ -67,6 +70,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
+                    status: "active",
                     metadata: {
                         metadata: "metadata",
                     },
@@ -96,6 +100,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
+                    status: "active",
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -106,6 +111,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     display_name: "display_name",
                     client_id: "client_id",
+                    status: "active",
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -129,6 +135,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
+                    status: "active",
                     metadata: {
                         metadata: "metadata",
                     },
@@ -141,6 +148,7 @@ describe("InboxesClient", () => {
                     email: "email",
                     displayName: "display_name",
                     clientId: "client_id",
+                    status: "active",
                     metadata: {
                         metadata: "metadata",
                     },
@@ -184,6 +192,7 @@ describe("InboxesClient", () => {
             email: "email",
             display_name: "display_name",
             client_id: "client_id",
+            status: "active",
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -204,6 +213,7 @@ describe("InboxesClient", () => {
             email: "email",
             displayName: "display_name",
             clientId: "client_id",
+            status: "active",
             metadata: {
                 metadata: "metadata",
             },
@@ -249,6 +259,7 @@ describe("InboxesClient", () => {
             email: "email",
             display_name: "display_name",
             client_id: "client_id",
+            status: "active",
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -263,6 +274,7 @@ describe("InboxesClient", () => {
             email: "email",
             displayName: "display_name",
             clientId: "client_id",
+            status: "active",
             metadata: {
                 metadata: "metadata",
             },
@@ -319,6 +331,7 @@ describe("InboxesClient", () => {
             email: "email",
             display_name: "display_name",
             client_id: "client_id",
+            status: "active",
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -340,6 +353,7 @@ describe("InboxesClient", () => {
             email: "email",
             displayName: "display_name",
             clientId: "client_id",
+            status: "active",
             metadata: {
                 metadata: "metadata",
             },
@@ -394,6 +408,30 @@ describe("InboxesClient", () => {
         await expect(async () => {
             return await client.inboxes.update("inbox_id", {});
         }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("update (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = {};
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .patch("/v0/inboxes/inbox_id")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.update("inbox_id", {});
+        }).rejects.toThrow(AgentMail.ConflictError);
     });
 
     test("delete (1)", async () => {

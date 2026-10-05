@@ -14,6 +14,8 @@ export interface App {
     logoUrl?: string;
     termsUrl?: string;
     privacyUrl?: string;
+    /** Kinds of app, up to 3. Omitted when the app sets none. */
+    categories?: AgentMail.AppCategory[];
     /** Maximum number of accounts your organization may sign up at this app. Omitted when the app sets no limit. 0 means the app has paused new sign-ups; existing accounts keep signing in. */
     ownerSignupLimit?: number;
 }

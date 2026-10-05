@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AppCategory } from "./AppCategory.js";
 import { AppId } from "./AppId.js";
 
 export const App: core.serialization.ObjectSchema<serializers.App.Raw, AgentMail.App> = core.serialization.object({
@@ -13,6 +14,7 @@ export const App: core.serialization.ObjectSchema<serializers.App.Raw, AgentMail
     logoUrl: core.serialization.property("logo_url", core.serialization.string().optional()),
     termsUrl: core.serialization.property("terms_url", core.serialization.string().optional()),
     privacyUrl: core.serialization.property("privacy_url", core.serialization.string().optional()),
+    categories: core.serialization.list(AppCategory).optional(),
     ownerSignupLimit: core.serialization.property("owner_signup_limit", core.serialization.number().optional()),
 });
 
@@ -25,6 +27,7 @@ export declare namespace App {
         logo_url?: string | null;
         terms_url?: string | null;
         privacy_url?: string | null;
+        categories?: AppCategory.Raw[] | null;
         owner_signup_limit?: number | null;
     }
 }

@@ -5,12 +5,18 @@ import type * as AgentMail from "../../../index.js";
 export interface UpdateInboxRequest {
     displayName?: AgentMail.inboxes.DisplayName;
     /**
+     * `paused` stops the inbox sending and receiving mail; `active` resumes
+     * it. Mail that arrived while the inbox was paused is not delivered on
+     * resume.
+     */
+    status?: AgentMail.inboxes.InboxStatus;
+    /**
      * Metadata to merge into the inbox's existing metadata. Keys you include
      * are added or overwritten; keys you omit are left unchanged. To remove a
      * single key, send it with a null value. To clear all metadata, send
      * `metadata` as null. Sending an empty object is rejected; use null to
-     * clear. Each update must include at least one of `display_name` or
-     * `metadata`.
+     * clear. Each update must include at least one of `display_name`,
+     * `status`, or `metadata`.
      */
     metadata?: AgentMail.inboxes.UpdateMetadata | null;
 }

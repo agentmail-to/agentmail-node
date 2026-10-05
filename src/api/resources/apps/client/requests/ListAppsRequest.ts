@@ -9,4 +9,6 @@ import type * as AgentMail from "../../../../index.js";
 export interface ListAppsRequest {
     limit?: AgentMail.Limit;
     pageToken?: AgentMail.PageToken;
+    /** Only apps in this category. A filtered page can hold fewer than `limit` apps while more remain, so page until `next_page_token` is absent. A `page_token` works only with the `category` it was returned for. */
+    category?: AgentMail.AppCategory;
 }
