@@ -23,6 +23,7 @@ describe("DomainsClient", () => {
                     domain_id: "domain_id",
                     domain: "domain",
                     feedback_enabled: true,
+                    inbound_enabled: true,
                     subdomains_enabled: true,
                     tracking_enabled: true,
                     client_id: "client_id",
@@ -34,6 +35,7 @@ describe("DomainsClient", () => {
                     domain_id: "domain_id",
                     domain: "domain",
                     feedback_enabled: true,
+                    inbound_enabled: true,
                     subdomains_enabled: true,
                     tracking_enabled: true,
                     client_id: "client_id",
@@ -56,6 +58,7 @@ describe("DomainsClient", () => {
                     domainId: "domain_id",
                     domain: "domain",
                     feedbackEnabled: true,
+                    inboundEnabled: true,
                     subdomainsEnabled: true,
                     trackingEnabled: true,
                     clientId: "client_id",
@@ -67,6 +70,7 @@ describe("DomainsClient", () => {
                     domainId: "domain_id",
                     domain: "domain",
                     feedbackEnabled: true,
+                    inboundEnabled: true,
                     subdomainsEnabled: true,
                     trackingEnabled: true,
                     clientId: "client_id",
@@ -92,6 +96,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             reason: "reason",
             feedback_enabled: true,
+            inbound_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
             records: [
@@ -119,6 +124,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             reason: "reason",
             feedbackEnabled: true,
+            inboundEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
             records: [
@@ -183,6 +189,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             reason: "reason",
             feedback_enabled: true,
+            inbound_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
             records: [
@@ -213,6 +220,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             reason: "reason",
             feedbackEnabled: true,
+            inboundEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
             records: [
@@ -306,6 +314,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             reason: "reason",
             feedback_enabled: true,
+            inbound_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
             records: [
@@ -334,6 +343,7 @@ describe("DomainsClient", () => {
             status: "NOT_STARTED",
             reason: "reason",
             feedbackEnabled: true,
+            inboundEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
             records: [

@@ -3,14 +3,16 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Provide at least one of `feedback_enabled`, `subdomains_enabled`, or
- * `tracking_enabled`. Omitted
- * fields are left unchanged; an empty body is rejected. Enabling
+ * Provide at least one of `feedback_enabled`, `inbound_enabled`,
+ * `subdomains_enabled`, or `tracking_enabled`. Omitted fields are left
+ * unchanged; an empty body is rejected. Enabling `inbound_enabled` or
  * `subdomains_enabled` on a verified domain returns it to `PENDING` until the
- * newly-required wildcard MX record (`*.<domain>`) is published and verified.
+ * newly required MX record (the apex MX, or the wildcard `*.<domain>`) is
+ * published and verified.
  */
 export interface UpdateDomainRequest {
     feedbackEnabled?: AgentMail.FeedbackEnabled;
+    inboundEnabled?: AgentMail.InboundEnabled;
     subdomainsEnabled?: AgentMail.SubdomainsEnabled;
     trackingEnabled?: AgentMail.TrackingEnabled;
 }

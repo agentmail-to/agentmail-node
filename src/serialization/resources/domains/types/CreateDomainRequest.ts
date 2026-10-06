@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { DomainName } from "./DomainName.js";
 import { FeedbackEnabled } from "./FeedbackEnabled.js";
+import { InboundEnabled } from "./InboundEnabled.js";
 import { SubdomainsEnabled } from "./SubdomainsEnabled.js";
 import { TrackingEnabled } from "./TrackingEnabled.js";
 
@@ -18,6 +19,7 @@ export const CreateDomainRequest: core.serialization.ObjectSchema<
         core.serialization.boolean().optional(),
     ),
     feedbackEnabled: core.serialization.property("feedback_enabled", FeedbackEnabled.optional()),
+    inboundEnabled: core.serialization.property("inbound_enabled", InboundEnabled.optional()),
     subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled.optional()),
     trackingEnabled: core.serialization.property("tracking_enabled", TrackingEnabled.optional()),
 });
@@ -27,6 +29,7 @@ export declare namespace CreateDomainRequest {
         domain: DomainName.Raw;
         allow_conflicting_provider?: boolean | null;
         feedback_enabled?: FeedbackEnabled.Raw | null;
+        inbound_enabled?: InboundEnabled.Raw | null;
         subdomains_enabled?: SubdomainsEnabled.Raw | null;
         tracking_enabled?: TrackingEnabled.Raw | null;
     }

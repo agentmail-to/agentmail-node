@@ -7,6 +7,8 @@ export interface DomainItem {
     domainId: AgentMail.DomainId;
     domain: AgentMail.DomainName;
     feedbackEnabled: AgentMail.FeedbackEnabled;
+    /** Absent on domains created before this field existed; those receive email. */
+    inboundEnabled?: AgentMail.InboundEnabled;
     subdomainsEnabled: AgentMail.SubdomainsEnabled;
     trackingEnabled: AgentMail.TrackingEnabled;
     clientId?: AgentMail.ClientId;

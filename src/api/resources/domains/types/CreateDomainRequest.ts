@@ -10,9 +10,11 @@ export interface CreateDomainRequest {
      * provider is detected.
      * This flag does not configure DNS or inbound routing. For shared Google
      * Workspace domains, follow the [Google Workspace guide](/google-workspace).
+     * Only checked when `inbound_enabled` is true; a send-only domain skips the check.
      */
     allowConflictingProvider?: boolean;
     feedbackEnabled?: AgentMail.FeedbackEnabled;
+    inboundEnabled?: AgentMail.InboundEnabled;
     subdomainsEnabled?: AgentMail.SubdomainsEnabled;
     trackingEnabled?: AgentMail.TrackingEnabled;
 }
