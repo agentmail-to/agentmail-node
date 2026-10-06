@@ -20,6 +20,7 @@ describe("AppsClient", () => {
             apps: [
                 {
                     app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -31,6 +32,7 @@ describe("AppsClient", () => {
                 },
                 {
                     app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -53,6 +55,7 @@ describe("AppsClient", () => {
             apps: [
                 {
                     appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -64,6 +67,7 @@ describe("AppsClient", () => {
                 },
                 {
                     appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -108,6 +112,7 @@ describe("AppsClient", () => {
             apps: [
                 {
                     app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -119,6 +124,7 @@ describe("AppsClient", () => {
                 },
                 {
                     app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updated_at: "2024-01-15T09:30:00Z",
                     description: "description",
@@ -142,6 +148,7 @@ describe("AppsClient", () => {
             apps: [
                 {
                     appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -153,6 +160,7 @@ describe("AppsClient", () => {
                 },
                 {
                     appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                    slug: "slug",
                     name: "name",
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     description: "description",
@@ -195,6 +203,7 @@ describe("AppsClient", () => {
 
         const rawResponseBody = {
             app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            slug: "slug",
             name: "name",
             updated_at: "2024-01-15T09:30:00Z",
             description: "description",
@@ -205,17 +214,12 @@ describe("AppsClient", () => {
             owner_signup_limit: 1,
         };
 
-        server
-            .mockEndpoint()
-            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-            .respondWith()
-            .statusCode(200)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/v0/apps/app_id").respondWith().statusCode(200).jsonBody(rawResponseBody).build();
 
-        const response = await client.apps.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        const response = await client.apps.get("app_id");
         expect(response).toEqual({
             appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+            slug: "slug",
             name: "name",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             description: "description",
@@ -237,16 +241,10 @@ describe("AppsClient", () => {
 
         const rawResponseBody = { name: "name", message: "message" };
 
-        server
-            .mockEndpoint()
-            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
-            .respondWith()
-            .statusCode(404)
-            .jsonBody(rawResponseBody)
-            .build();
+        server.mockEndpoint().get("/v0/apps/app_id").respondWith().statusCode(404).jsonBody(rawResponseBody).build();
 
         await expect(async () => {
-            return await client.apps.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+            return await client.apps.get("app_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
@@ -261,6 +259,7 @@ describe("AppsClient", () => {
         const rawResponseBody = {
             app: {
                 app_id: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                slug: "slug",
                 name: "name",
                 updated_at: "2024-01-15T09:30:00Z",
                 description: "description",
@@ -305,16 +304,17 @@ describe("AppsClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/accounts")
+            .get("/v0/apps/app_id/accounts")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.apps.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+        const response = await client.apps.listAccounts("app_id");
         expect(response).toEqual({
             app: {
                 appId: "d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32",
+                slug: "slug",
                 name: "name",
                 updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                 description: "description",
@@ -370,14 +370,14 @@ describe("AppsClient", () => {
 
         server
             .mockEndpoint()
-            .get("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/accounts")
+            .get("/v0/apps/app_id/accounts")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.apps.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32");
+            return await client.apps.listAccounts("app_id");
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
@@ -397,13 +397,13 @@ describe("AppsClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .post("/v0/apps/app_id/connect")
             .respondWith()
             .statusCode(200)
             .jsonBody(rawResponseBody)
             .build();
 
-        const response = await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+        const response = await client.apps.connect("app_id", undefined);
         expect(response).toEqual({
             apiKeyId: "api_key_id",
             magicUrl: "magic_url",
@@ -423,14 +423,14 @@ describe("AppsClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .post("/v0/apps/app_id/connect")
             .respondWith()
             .statusCode(400)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+            return await client.apps.connect("app_id", undefined);
         }).rejects.toThrow(AgentMail.ValidationError);
     });
 
@@ -446,14 +446,14 @@ describe("AppsClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .post("/v0/apps/app_id/connect")
             .respondWith()
             .statusCode(404)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+            return await client.apps.connect("app_id", undefined);
         }).rejects.toThrow(AgentMail.NotFoundError);
     });
 
@@ -469,14 +469,14 @@ describe("AppsClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/apps/d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32/connect")
+            .post("/v0/apps/app_id/connect")
             .respondWith()
             .statusCode(403)
             .jsonBody(rawResponseBody)
             .build();
 
         await expect(async () => {
-            return await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined);
+            return await client.apps.connect("app_id", undefined);
         }).rejects.toThrow(AgentMail.AppSignupLimitError);
     });
 });

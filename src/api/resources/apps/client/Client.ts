@@ -207,28 +207,26 @@ export class AppsClient {
     }
 
     /**
-     * Gets one app by ID. An app in the catalog returns its full entry.
+     * Gets one app by ID or slug. A catalog app returns its full entry.
      * A registered app that the catalog does not list returns its ID and
      * name only, without `updated_at`, so anyone holding its ID can still look
-     * it up. List Apps and Search Apps show catalog entries only.
+     * it up; a slug finds catalog apps only. List Apps and Search Apps show
+     * catalog entries only.
      *
-     * @param {AgentMail.AppId} app_id
+     * @param {string} app_id - ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
      * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
      *
      * @example
-     *     await client.apps.get("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.apps.get("app_id")
      */
-    public get(
-        app_id: AgentMail.AppId,
-        requestOptions?: AppsClient.RequestOptions,
-    ): core.HttpResponsePromise<AgentMail.App> {
+    public get(app_id: string, requestOptions?: AppsClient.RequestOptions): core.HttpResponsePromise<AgentMail.App> {
         return core.HttpResponsePromise.fromPromise(this.__get(app_id, requestOptions));
     }
 
     private async __get(
-        app_id: AgentMail.AppId,
+        app_id: string,
         requestOptions?: AppsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.App>> {
         const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
@@ -242,7 +240,7 @@ export class AppsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/apps/${core.url.encodePathParam(serializers.AppId.jsonOrThrow(app_id, { omitUndefined: true }))}`,
+                `/v0/apps/${core.url.encodePathParam(app_id)}`,
             ),
             method: "GET",
             headers: _headers,
@@ -294,17 +292,17 @@ export class AppsClient {
     /**
      * Lists accounts at one app, most recent sign-in first.
      *
-     * @param {AgentMail.AppId} app_id
+     * @param {string} app_id - ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
      * @param {AgentMail.ListAppAccountsRequest} request
      * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.ValidationError}
      *
      * @example
-     *     await client.apps.listAccounts("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32")
+     *     await client.apps.listAccounts("app_id")
      */
     public listAccounts(
-        app_id: AgentMail.AppId,
+        app_id: string,
         request: AgentMail.ListAppAccountsRequest = {},
         requestOptions?: AppsClient.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.ListAppAccountsResponse> {
@@ -312,7 +310,7 @@ export class AppsClient {
     }
 
     private async __listAccounts(
-        app_id: AgentMail.AppId,
+        app_id: string,
         request: AgentMail.ListAppAccountsRequest = {},
         requestOptions?: AppsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ListAppAccountsResponse>> {
@@ -332,7 +330,7 @@ export class AppsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/apps/${core.url.encodePathParam(serializers.AppId.jsonOrThrow(app_id, { omitUndefined: true }))}/accounts`,
+                `/v0/apps/${core.url.encodePathParam(app_id)}/accounts`,
             ),
             method: "GET",
             headers: _headers,
@@ -385,11 +383,13 @@ export class AppsClient {
      * Starts signing an inbox in to an app. Returns a single-use `magic_url`,
      * valid for five minutes, to open in the client that will hold the sign-in;
      * the client enrolls as the inbox and continues to the app.
+     * An app in the catalog can be named by its `slug`, as in
+     * `POST /v0/apps/firecrawl/connect`.
      * A `404` names the missing resource: `App` or `Inbox`.
      * A `403` `AppSignupLimitError` means the app accepts no more sign-ups from
      * your organization; sign in with an inbox that already has an account there.
      *
-     * @param {AgentMail.AppId} app_id
+     * @param {string} app_id - ID of app, or the `slug` of an app in the catalog. A slug ignores case, spaces and punctuation.
      * @param {AgentMail.ConnectAppBody} request
      * @param {AppsClient.RequestOptions} requestOptions - Request-specific configuration.
      *
@@ -398,10 +398,10 @@ export class AppsClient {
      * @throws {@link AgentMail.AppSignupLimitError}
      *
      * @example
-     *     await client.apps.connect("d5e9c84f-c2b2-4bf4-b4b0-7ffd7a9ffc32", undefined)
+     *     await client.apps.connect("app_id", undefined)
      */
     public connect(
-        app_id: AgentMail.AppId,
+        app_id: string,
         request?: AgentMail.ConnectAppBody,
         requestOptions?: AppsClient.RequestOptions,
     ): core.HttpResponsePromise<AgentMail.ConnectAccepted> {
@@ -409,7 +409,7 @@ export class AppsClient {
     }
 
     private async __connect(
-        app_id: AgentMail.AppId,
+        app_id: string,
         request?: AgentMail.ConnectAppBody,
         requestOptions?: AppsClient.RequestOptions,
     ): Promise<core.WithRawResponse<AgentMail.ConnectAccepted>> {
@@ -424,7 +424,7 @@ export class AppsClient {
                 (await core.Supplier.get(this._options.baseUrl)) ??
                     ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
                         .http,
-                `/v0/apps/${core.url.encodePathParam(serializers.AppId.jsonOrThrow(app_id, { omitUndefined: true }))}/connect`,
+                `/v0/apps/${core.url.encodePathParam(app_id)}/connect`,
             ),
             method: "POST",
             headers: _headers,

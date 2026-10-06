@@ -7,6 +7,8 @@ import type * as AgentMail from "../../../index.js";
  */
 export interface App {
     appId: AgentMail.AppId;
+    /** Short name accepted in place of `app_id` by Get App, List App Accounts and Connect App. Set by AgentMail on apps in the catalog; renaming the app does not change it. Store `app_id`, the app's permanent ID. */
+    slug?: string;
     name?: string;
     /** Time at which app was last updated. */
     updatedAt?: Date;

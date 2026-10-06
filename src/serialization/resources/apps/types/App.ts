@@ -8,6 +8,7 @@ import { AppId } from "./AppId.js";
 
 export const App: core.serialization.ObjectSchema<serializers.App.Raw, AgentMail.App> = core.serialization.object({
     appId: core.serialization.property("app_id", AppId),
+    slug: core.serialization.string().optional(),
     name: core.serialization.string().optional(),
     updatedAt: core.serialization.property("updated_at", core.serialization.date().optional()),
     description: core.serialization.string().optional(),
@@ -21,6 +22,7 @@ export const App: core.serialization.ObjectSchema<serializers.App.Raw, AgentMail
 export declare namespace App {
     export interface Raw {
         app_id: AppId.Raw;
+        slug?: string | null;
         name?: string | null;
         updated_at?: string | null;
         description?: string | null;
