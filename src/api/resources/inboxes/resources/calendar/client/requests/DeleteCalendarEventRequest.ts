@@ -5,14 +5,12 @@ import type * as AgentMail from "../../../../../../index.js";
 /**
  * @example
  *     {
- *         ifMatch: "\"rv-1\"",
  *         idempotencyKey: "delete-intro-acme",
  *         sendInvites: true
  *     }
  *
  * @example
  *     {
- *         ifMatch: "\"occ-0-0-0-none-none\"",
  *         mode: "single"
  *     }
  */

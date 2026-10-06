@@ -5,7 +5,6 @@ import type * as AgentMail from "../../../../../../index.js";
 /**
  * @example
  *     {
- *         ifMatch: "\"rv-0\"",
  *         status: "accepted",
  *         comment: "See you there."
  *     }

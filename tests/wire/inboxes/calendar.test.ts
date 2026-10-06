@@ -129,14 +129,14 @@ describe("CalendarClient", () => {
 
         server
             .mockEndpoint()
-            .patch("/v0/inboxes/scheduler%40agentmail.to/calendar").header("If-Match", ""rv-0"")
-                    .jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .patch("/v0/inboxes/scheduler%40agentmail.to/calendar")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.inboxes.calendar.update("scheduler@agentmail.to", {
-            ifMatch: '"rv-0"',
             timezone: "America/New_York",
         });
         expect(response).toEqual({
@@ -1468,17 +1468,17 @@ describe("CalendarClient", () => {
 
         server
             .mockEndpoint()
-            .patch("/v0/inboxes/scheduler%40agentmail.to/calendar/events/3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36").header("If-Match", ""rv-0"")
-                    .jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .patch("/v0/inboxes/scheduler%40agentmail.to/calendar/events/3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.inboxes.calendar.updateEvent(
             "scheduler@agentmail.to",
             "3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36",
             {
-                ifMatch: '"rv-0"',
                 start: "2026-10-15T15:00:00",
                 end: "2026-10-15T15:30:00",
                 sendInvites: true,
@@ -1567,17 +1567,19 @@ describe("CalendarClient", () => {
 
         server
             .mockEndpoint()
-            .patch("/v0/inboxes/scheduler%40agentmail.to/calendar/events/7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000").header("If-Match", ""occ-0-0-0-none-none"")
-                    .jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .patch(
+                "/v0/inboxes/scheduler%40agentmail.to/calendar/events/7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000",
+            )
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.inboxes.calendar.updateEvent(
             "scheduler@agentmail.to",
             "7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000",
             {
-                ifMatch: '"occ-0-0-0-none-none"',
                 mode: "single",
                 start: "2026-10-07T10:00:00",
                 end: "2026-10-07T10:15:00",
@@ -1820,17 +1822,17 @@ describe("CalendarClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/v0/inboxes/scheduler%40agentmail.to/calendar/events/3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36").header("If-Match", ""rv-1"")
-                    .header("Idempotency-Key", "delete-intro-acme")
-                    .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .delete("/v0/inboxes/scheduler%40agentmail.to/calendar/events/3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36")
+            .header("Idempotency-Key", "delete-intro-acme")
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.inboxes.calendar.deleteEvent(
             "scheduler@agentmail.to",
             "3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36",
             {
-                ifMatch: '"rv-1"',
                 idempotencyKey: "delete-intro-acme",
                 sendInvites: true,
             },
@@ -1882,16 +1884,18 @@ describe("CalendarClient", () => {
 
         server
             .mockEndpoint()
-            .delete("/v0/inboxes/scheduler%40agentmail.to/calendar/events/7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000").header("If-Match", ""occ-0-0-0-none-none"")
-                    .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .delete(
+                "/v0/inboxes/scheduler%40agentmail.to/calendar/events/7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000",
+            )
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.inboxes.calendar.deleteEvent(
             "scheduler@agentmail.to",
             "7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000",
             {
-                ifMatch: '"occ-0-0-0-none-none"',
                 mode: "single",
             },
         );
@@ -2425,17 +2429,17 @@ describe("CalendarClient", () => {
 
         server
             .mockEndpoint()
-            .post("/v0/inboxes/scheduler%40agentmail.to/calendar/events/a1d5c7e9-2b4f-4c6a-9e8d-3f7b1c5a9d20/respond").header("If-Match", ""rv-0"")
-                    .jsonBody(rawRequestBody)
-                .respondWith()
-            .statusCode(200).jsonBody(rawResponseBody)
-                .build();
+            .post("/v0/inboxes/scheduler%40agentmail.to/calendar/events/a1d5c7e9-2b4f-4c6a-9e8d-3f7b1c5a9d20/respond")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
 
         const response = await client.inboxes.calendar.respondToEvent(
             "scheduler@agentmail.to",
             "a1d5c7e9-2b4f-4c6a-9e8d-3f7b1c5a9d20",
             {
-                ifMatch: '"rv-0"',
                 status: "accepted",
                 comment: "See you there.",
             },

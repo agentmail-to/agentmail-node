@@ -179,7 +179,6 @@ export class CalendarClient {
      *
      * @example
      *     await client.inboxes.calendar.update("scheduler@agentmail.to", {
-     *         ifMatch: "\"rv-0\"",
      *         timezone: "America/New_York"
      *     })
      */
@@ -1026,7 +1025,6 @@ export class CalendarClient {
      *
      * @example
      *     await client.inboxes.calendar.updateEvent("scheduler@agentmail.to", "3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36", {
-     *         ifMatch: "\"rv-0\"",
      *         start: "2026-10-15T15:00:00",
      *         end: "2026-10-15T15:30:00",
      *         sendInvites: true
@@ -1034,7 +1032,6 @@ export class CalendarClient {
      *
      * @example
      *     await client.inboxes.calendar.updateEvent("scheduler@agentmail.to", "7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000", {
-     *         ifMatch: "\"occ-0-0-0-none-none\"",
      *         mode: "single",
      *         start: "2026-10-07T10:00:00",
      *         end: "2026-10-07T10:15:00"
@@ -1256,14 +1253,12 @@ export class CalendarClient {
      *
      * @example
      *     await client.inboxes.calendar.deleteEvent("scheduler@agentmail.to", "3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36", {
-     *         ifMatch: "\"rv-1\"",
      *         idempotencyKey: "delete-intro-acme",
      *         sendInvites: true
      *     })
      *
      * @example
      *     await client.inboxes.calendar.deleteEvent("scheduler@agentmail.to", "7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47_t20261007T090000", {
-     *         ifMatch: "\"occ-0-0-0-none-none\"",
      *         mode: "single"
      *     })
      */
@@ -1633,7 +1628,6 @@ export class CalendarClient {
      *
      * @example
      *     await client.inboxes.calendar.respondToEvent("scheduler@agentmail.to", "a1d5c7e9-2b4f-4c6a-9e8d-3f7b1c5a9d20", {
-     *         ifMatch: "\"rv-0\"",
      *         status: "accepted",
      *         comment: "See you there."
      *     })

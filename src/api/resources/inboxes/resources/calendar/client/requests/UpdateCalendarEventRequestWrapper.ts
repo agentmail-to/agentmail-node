@@ -5,7 +5,6 @@ import type * as AgentMail from "../../../../../../index.js";
 /**
  * @example
  *     {
- *         ifMatch: "\"rv-0\"",
  *         start: "2026-10-15T15:00:00",
  *         end: "2026-10-15T15:30:00",
  *         sendInvites: true
@@ -13,7 +12,6 @@ import type * as AgentMail from "../../../../../../index.js";
  *
  * @example
  *     {
- *         ifMatch: "\"occ-0-0-0-none-none\"",
  *         mode: "single",
  *         start: "2026-10-07T10:00:00",
  *         end: "2026-10-07T10:15:00"
