@@ -52,6 +52,12 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     podCreate: core.serialization.property("pod_create", core.serialization.boolean().optional()),
     podUpdate: core.serialization.property("pod_update", core.serialization.boolean().optional()),
     podDelete: core.serialization.property("pod_delete", core.serialization.boolean().optional()),
+    calendarRead: core.serialization.property("calendar_read", core.serialization.boolean().optional()),
+    calendarUpdate: core.serialization.property("calendar_update", core.serialization.boolean().optional()),
+    calendarEventRead: core.serialization.property("calendar_event_read", core.serialization.boolean().optional()),
+    calendarEventCreate: core.serialization.property("calendar_event_create", core.serialization.boolean().optional()),
+    calendarEventUpdate: core.serialization.property("calendar_event_update", core.serialization.boolean().optional()),
+    calendarEventDelete: core.serialization.property("calendar_event_delete", core.serialization.boolean().optional()),
 });
 
 export declare namespace ApiKeyPermissions {
@@ -97,5 +103,11 @@ export declare namespace ApiKeyPermissions {
         pod_create?: boolean | null;
         pod_update?: boolean | null;
         pod_delete?: boolean | null;
+        calendar_read?: boolean | null;
+        calendar_update?: boolean | null;
+        calendar_event_read?: boolean | null;
+        calendar_event_create?: boolean | null;
+        calendar_event_update?: boolean | null;
+        calendar_event_delete?: boolean | null;
     }
 }

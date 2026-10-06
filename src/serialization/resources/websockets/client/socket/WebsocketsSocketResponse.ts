@@ -3,6 +3,12 @@
 import type * as AgentMail from "../../../../../api/index.js";
 import * as core from "../../../../../core/index.js";
 import type * as serializers from "../../../../index.js";
+import { CalendarEventCreatedEvent } from "../../../events/types/CalendarEventCreatedEvent.js";
+import { CalendarEventDeletedEvent } from "../../../events/types/CalendarEventDeletedEvent.js";
+import { CalendarEventEndingEvent } from "../../../events/types/CalendarEventEndingEvent.js";
+import { CalendarEventRespondedEvent } from "../../../events/types/CalendarEventRespondedEvent.js";
+import { CalendarEventStartingEvent } from "../../../events/types/CalendarEventStartingEvent.js";
+import { CalendarEventUpdatedEvent } from "../../../events/types/CalendarEventUpdatedEvent.js";
 import { DomainVerifiedEvent } from "../../../events/types/DomainVerifiedEvent.js";
 import { MessageBouncedEvent } from "../../../events/types/MessageBouncedEvent.js";
 import { MessageComplainedEvent } from "../../../events/types/MessageComplainedEvent.js";
@@ -25,6 +31,12 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     | AgentMail.MessageRejectedEvent
     | AgentMail.MessageOpenedEvent
     | AgentMail.DomainVerifiedEvent
+    | AgentMail.CalendarEventCreatedEvent
+    | AgentMail.CalendarEventUpdatedEvent
+    | AgentMail.CalendarEventDeletedEvent
+    | AgentMail.CalendarEventRespondedEvent
+    | AgentMail.CalendarEventStartingEvent
+    | AgentMail.CalendarEventEndingEvent
     | AgentMail.Error_
 > = core.serialization.undiscriminatedUnion([
     Subscribed,
@@ -36,6 +48,12 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     MessageRejectedEvent,
     MessageOpenedEvent,
     DomainVerifiedEvent,
+    CalendarEventCreatedEvent,
+    CalendarEventUpdatedEvent,
+    CalendarEventDeletedEvent,
+    CalendarEventRespondedEvent,
+    CalendarEventStartingEvent,
+    CalendarEventEndingEvent,
     Error_,
 ]);
 
@@ -50,5 +68,11 @@ export declare namespace WebsocketsSocketResponse {
         | MessageRejectedEvent.Raw
         | MessageOpenedEvent.Raw
         | DomainVerifiedEvent.Raw
+        | CalendarEventCreatedEvent.Raw
+        | CalendarEventUpdatedEvent.Raw
+        | CalendarEventDeletedEvent.Raw
+        | CalendarEventRespondedEvent.Raw
+        | CalendarEventStartingEvent.Raw
+        | CalendarEventEndingEvent.Raw
         | Error_.Raw;
 }

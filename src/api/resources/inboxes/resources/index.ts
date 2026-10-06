@@ -2,6 +2,8 @@ export * from "./accounts/client/requests/index.js";
 export * as accounts from "./accounts/index.js";
 export * from "./apiKeys/client/requests/index.js";
 export * as apiKeys from "./apiKeys/index.js";
+export * from "./calendar/client/requests/index.js";
+export * as calendar from "./calendar/index.js";
 export * from "./drafts/client/requests/index.js";
 export * as drafts from "./drafts/index.js";
 export * from "./events/client/requests/index.js";

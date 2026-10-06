@@ -17,6 +17,12 @@ export const EventType: core.serialization.Schema<serializers.EventType.Raw, Age
         "message.rejected",
         "message.opened",
         "domain.verified",
+        "calendar.event.created",
+        "calendar.event.updated",
+        "calendar.event.deleted",
+        "calendar.event.responded",
+        "calendar.event.starting",
+        "calendar.event.ending",
     ]);
 
 export declare namespace EventType {
@@ -31,5 +37,11 @@ export declare namespace EventType {
         | "message.complained"
         | "message.rejected"
         | "message.opened"
-        | "domain.verified";
+        | "domain.verified"
+        | "calendar.event.created"
+        | "calendar.event.updated"
+        | "calendar.event.deleted"
+        | "calendar.event.responded"
+        | "calendar.event.starting"
+        | "calendar.event.ending";
 }

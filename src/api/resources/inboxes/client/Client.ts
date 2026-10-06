@@ -11,6 +11,7 @@ import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
 import { AccountsClient } from "../resources/accounts/client/Client.js";
 import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
+import { CalendarClient } from "../resources/calendar/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { EventsClient } from "../resources/events/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
@@ -36,6 +37,7 @@ export class InboxesClient {
     protected _events: EventsClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
     protected _accounts: AccountsClient | undefined;
+    protected _calendar: CalendarClient | undefined;
 
     constructor(options: InboxesClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -75,6 +77,10 @@ export class InboxesClient {
 
     public get accounts(): AccountsClient {
         return (this._accounts ??= new AccountsClient(this._options));
+    }
+
+    public get calendar(): CalendarClient {
+        return (this._calendar ??= new CalendarClient(this._options));
     }
 
     /**

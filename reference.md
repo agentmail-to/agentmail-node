@@ -3626,6 +3626,937 @@ await client.inboxes.apiKeys.delete("inbox_id", "api_key_id");
 </dl>
 </details>
 
+## Inboxes Calendar
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">get</a>(inbox_id, { ...params }) -> AgentMail.Calendar</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets the inbox's calendar. Every inbox has one calendar, so this works before any event is
+created. Its `etag` (also the `ETag` response header) is the value to send in `If-Match` to
+make an update conditional.
+
+Requires the `calendar_read` permission. Calendar is in private beta: organizations without
+access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.get("scheduler@agentmail.to");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.GetCalendarRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">update</a>(inbox_id, { ...params }) -> AgentMail.Calendar</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates the calendar's default time zone. Existing events keep their own `timezone`; only
+events created later without a `timezone` use the new default.
+
+Requires the `calendar_update` permission. To make the update conditional, send the
+calendar's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
+update applies to the calendar as it is.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.update("scheduler@agentmail.to", {
+    ifMatch: "\"rv-0\"",
+    timezone: "America/New_York"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.UpdateCalendarRequestWrapper` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">listEvents</a>(inbox_id, { ...params }) -> AgentMail.ListCalendarEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the events stored on the calendar: one item per one-off or recurring event, plus one
+item for each edited date of a recurring event (as that dated event, with
+`is_exception: true`). Ordered by most recently updated, and cancelled events are included.
+Use it to sync or manage what you created. To see what is on the calendar in a time window,
+use Get Agenda.
+
+The list is always read in the region that serves the request, so it can trail a change made
+moments earlier by a few seconds. Requires the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.listEvents("scheduler@agentmail.to", {
+    limit: 50
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.ListCalendarEventsRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">getAgenda</a>(inbox_id, { ...params }) -> AgentMail.ListCalendarEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists every date on the calendar in a time window, ordered by start time: one-off events,
+and recurring events expanded into their individual dates, with cancelled dates left out.
+Use it to answer "what is on the calendar".
+
+The window defaults to now through 90 days from now and can be at most 366 days. Items omit
+`description`, `metadata` and `attendees`; get an event by ID for the full object. Dates of
+recurring events appear only up to about 90 days from now; use List Event Instances for a
+recurring event's later dates. While a recurring event's dates are being regenerated after a
+schedule change, which takes a few seconds, the agenda can briefly leave out some of them;
+dates that have already started or ended stay as they ran.
+
+The agenda is read in the region that serves the request, so it can trail a change made
+moments earlier by a few seconds. Pass `consistency=primary` to read your own change right
+away. Requires the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.getAgenda("scheduler@agentmail.to", {
+    after: new Date("2026-10-07T00:00:00.000Z"),
+    before: new Date("2026-10-16T00:00:00.000Z"),
+    limit: 3
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.GetCalendarAgendaRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">createEvent</a>(inbox_id, { ...params }) -> AgentMail.CalendarEventMutationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Creates a one-off or recurring event on the inbox's calendar. Times are wall-clock values in
+`timezone` (the calendar's default time zone if omitted); the response also gives each
+boundary as a UTC instant in `start_at` and `end_at`.
+
+`calendar.event.created` is sent once the event is stored, then `calendar.event.starting`
+and `calendar.event.ending` as each date begins and ends. With `send_invites: true` the
+inbox also emails an invitation to every attendee.
+
+Pass `client_id` to make retries safe: repeating the request with the same `client_id` and
+body returns the original event with status `200` instead of `201`, for as long as the event
+exists.
+
+With `send_invites: true`, each attendee counts as one send against the organization, pod
+and inbox send limits, charged before the event is stored. An over-limit request returns
+`429` `rate_limit_exceeded` and creates nothing. A replay of an earlier create is not
+charged again.
+
+The event's `etag` is the value to send in `If-Match` to make a later update or delete
+conditional. Requires the `calendar_event_create` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.createEvent("scheduler@agentmail.to", {
+    clientId: "intro-acme-2026-10-15",
+    title: "Intro call with Acme",
+    description: "Walk Jane through the onboarding plan.",
+    location: "https://meet.example.com/acme-intro",
+    metadata: {
+        "crm_deal_id": "D-1042"
+    },
+    start: "2026-10-15T14:00:00",
+    end: "2026-10-15T14:30:00",
+    timezone: "America/New_York",
+    attendees: [{
+            email: "jane@acme.com",
+            name: "Jane Doe"
+        }],
+    sendInvites: true
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateCalendarEventRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">getEvent</a>(inbox_id, event_id, { ...params }) -> AgentMail.CalendarEvent</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets an event by its UUID, or one date of a recurring event by its dated ID
+(`<uuid>_<slot>`). A dated ID returns the date as it currently stands, including any edit
+to it, with `kind: instance`.
+
+The response's `etag` (also the `ETag` header) is the value to send in `If-Match` to make an
+update, delete or response to this event or date conditional. Treat it as opaque.
+
+Reads can trail a change made moments earlier by a few seconds; pass `consistency=primary`
+to read the latest state of an event or a date. A date that has already started or ended
+reads back as it ran, even if a later change to the series no longer produces it. Requires
+the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.getEvent("scheduler@agentmail.to", "3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `AgentMail.CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.GetCalendarEventRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">updateEvent</a>(inbox_id, event_id, { ...params }) -> AgentMail.CalendarEventMutationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Updates an event. Send only the fields to change. To make the update conditional, send the
+event's current `etag` in `If-Match`: a stale value returns `412`. Without `If-Match` the
+update applies to the event as it is; a change that lands while it runs returns `409`
+`race_condition`, so retry. Send `If-Match` when replacing `attendees`, so you don't
+overwrite a response that arrived in the meantime.
+
+- **One-off or series UUID:** changes the event itself. For a series, the change applies to
+  every date that has not been edited individually.
+- **Dated ID (`<uuid>_<slot>`):** changes one date (`mode=single`, the default) or that date
+  and every later date (`mode=future`). `all_day`, `timezone` and `recurrence` cannot be sent
+  for a dated ID.
+
+Once a date has started, its start can no longer change (409 `event_already_started`), but
+its end and status can; for a one-off or series UUID, send the unchanged `start` with the new
+`end`. Once it has ended, only `title`, `description`, `location`,
+`metadata` and `attendees` can change. During the few seconds a date is starting, schedule
+changes return 409 `event_starting`; retry shortly.
+
+Sends `calendar.event.updated`. With `send_invites: true` the organizer inbox also emails the
+updated invitation to every attendee. Requires the `calendar_event_update` permission.
+
+Emailing attendees counts one send per attendee against the organization, pod and inbox
+send limits, charged before the change is saved; an over-limit request returns `429`
+`rate_limit_exceeded` and changes nothing.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.updateEvent("scheduler@agentmail.to", "3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36", {
+    ifMatch: "\"rv-0\"",
+    start: "2026-10-15T15:00:00",
+    end: "2026-10-15T15:30:00",
+    sendInvites: true
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `AgentMail.CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.UpdateCalendarEventRequestWrapper` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">deleteEvent</a>(inbox_id, event_id, { ...params }) -> AgentMail.DeleteCalendarEventResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes an event, or cancels dates of a recurring event.
+
+- **One-off or series UUID:** deletes the event and every date of it. The event disappears
+  from reads immediately and is removed in the background; the response is `202` with a
+  `deletion_id`. A retry returns the same `deletion_id` while removal runs (send the same
+  `Idempotency-Key`, or none and the same `send_invites`); once it has finished, the event
+  no longer exists and a retry returns `404`. No `calendar.event.starting` or
+  `calendar.event.ending` webhook is sent for the event after the delete is accepted.
+- **Dated ID (`<uuid>_<slot>`):** cancels that date (`mode=single`, the default) or that date
+  and every later date (`mode=future`). Returns `202` with the cancelled date. A `mode=future`
+  delete from the first date deletes the whole series and returns a `deletion_id` instead.
+  A date that is already running still gets its `calendar.event.ending`.
+
+Deleting a one-off or series event sends `calendar.event.deleted`. Cancelling dates sends
+`calendar.event.updated` with the cancelled date. With `send_invites=true` the organizer
+inbox also emails a cancellation to every attendee. Requires the `calendar_event_delete`
+permission. To make the delete conditional, send the current `etag` in `If-Match`.
+
+Emailing cancellations counts one send per attendee against the organization, pod and inbox
+send limits, charged before the delete; an over-limit request returns `429`
+`rate_limit_exceeded` and deletes nothing.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.deleteEvent("scheduler@agentmail.to", "3f8a2c1e-6b4d-4e9f-a7c2-5d1b8e0f9a36", {
+    ifMatch: "\"rv-1\"",
+    idempotencyKey: "delete-intro-acme",
+    sendInvites: true
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `AgentMail.CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.DeleteCalendarEventRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">listEventInstances</a>(inbox_id, event_id, { ...params }) -> AgentMail.ListCalendarEventsResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the dates of one recurring event in a time window, in start order, with each date's
+edits applied. Dates are computed from the rule, so this works for any window up to 366
+days, including dates far in the future. Cancelled dates are left out.
+
+The window defaults to now through 90 days from now. Items omit `description`, `metadata`
+and `attendees`; get a date by its ID for the full object. Like other reads, the list can
+trail a change made moments earlier by a few seconds; pass `consistency=primary` to read
+your own change right away. Requires the `calendar_event_read` permission.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.listEventInstances("scheduler@agentmail.to", "7c4e9b2a-1f3d-4a8e-b6c5-2e9d0f1a8b47", {
+    after: new Date("2026-10-05T00:00:00.000Z"),
+    before: new Date("2026-10-10T00:00:00.000Z")
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `string` — UUID of the recurring event.
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.ListCalendarEventInstancesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.calendar.<a href="/src/api/resources/inboxes/resources/calendar/client/Client.ts">respondToEvent</a>(inbox_id, event_id, { ...params }) -> AgentMail.CalendarEventMutationResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Accepts, declines or tentatively accepts an invitation the inbox received by email. Pass the
+event's UUID to respond for every date, or a dated ID to respond for one date only.
+
+Only works on `email` events where the inbox is an attendee; anything else returns 409
+`calendar_response_invalid`. Updates the inbox's attendee entry and sends
+`calendar.event.responded`. With `send_reply` (default `true`) the inbox emails the response
+to the organizer.
+
+Requires the `calendar_event_update` permission. To make the response conditional, send the
+current `etag` in `If-Match`.
+
+A reply email counts as one send against the organization, pod and inbox send limits,
+charged before the response is saved; an over-limit request returns `429`
+`rate_limit_exceeded` and changes nothing.
+
+Calendar is in private beta: organizations without access receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.calendar.respondToEvent("scheduler@agentmail.to", "a1d5c7e9-2b4f-4c6a-9e8d-3f7b1c5a9d20", {
+    ifMatch: "\"rv-0\"",
+    status: "accepted",
+    comment: "See you there."
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**event_id:** `AgentMail.CalendarEventId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.RespondCalendarEventRequestWrapper` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `CalendarClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Drafts
 <details><summary><code>client.inboxes.drafts.<a href="/src/api/resources/inboxes/resources/drafts/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListDraftsResponse</code></summary>
 <dl>

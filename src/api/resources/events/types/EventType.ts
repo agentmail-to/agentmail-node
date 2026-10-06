@@ -12,5 +12,11 @@ export const EventType = {
     MessageRejected: "message.rejected",
     MessageOpened: "message.opened",
     DomainVerified: "domain.verified",
+    CalendarEventCreated: "calendar.event.created",
+    CalendarEventUpdated: "calendar.event.updated",
+    CalendarEventDeleted: "calendar.event.deleted",
+    CalendarEventResponded: "calendar.event.responded",
+    CalendarEventStarting: "calendar.event.starting",
+    CalendarEventEnding: "calendar.event.ending",
 } as const;
 export type EventType = (typeof EventType)[keyof typeof EventType];

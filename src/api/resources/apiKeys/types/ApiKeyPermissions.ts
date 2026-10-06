@@ -95,4 +95,16 @@ export interface ApiKeyPermissions {
     podUpdate?: boolean;
     /** Delete pods. */
     podDelete?: boolean;
+    /** Read inbox calendar settings. */
+    calendarRead?: boolean;
+    /** Update inbox calendar settings. */
+    calendarUpdate?: boolean;
+    /** Read calendar events, and receive `calendar.event.*` webhook and WebSocket events. */
+    calendarEventRead?: boolean;
+    /** Create calendar events. */
+    calendarEventCreate?: boolean;
+    /** Update calendar events and respond to invitations. */
+    calendarEventUpdate?: boolean;
+    /** Delete calendar events. */
+    calendarEventDelete?: boolean;
 }
