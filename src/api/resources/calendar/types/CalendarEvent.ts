@@ -46,6 +46,13 @@ export interface CalendarEvent {
     attendees?: AgentMail.Attendee[];
     /** Number of attendees. */
     attendeeCount: number;
+    /**
+     * The inbox's own response: the `status` of its entry in `attendees`. Present only on events
+     * the inbox can respond to: `email` events with an `organizer_email` and an
+     * `origin_message_id` that list the inbox as an attendee. Included on agenda and instance list
+     * items, which omit `attendees`. `needs_action` means the invitation is waiting for a reply.
+     */
+    responseStatus?: AgentMail.AttendeeStatus;
     /** iCalendar UID of the event. Invitations about this event carry the same UID. */
     uid: string;
     /**

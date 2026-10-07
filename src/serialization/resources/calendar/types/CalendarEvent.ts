@@ -4,6 +4,7 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { Attendee } from "./Attendee.js";
+import { AttendeeStatus } from "./AttendeeStatus.js";
 import { CalendarEventId } from "./CalendarEventId.js";
 import { CalendarEventKind } from "./CalendarEventKind.js";
 import { CalendarEventSource } from "./CalendarEventSource.js";
@@ -38,6 +39,7 @@ export const CalendarEvent: core.serialization.ObjectSchema<serializers.Calendar
         recurrence: Recurrence.optional(),
         attendees: core.serialization.list(Attendee).optional(),
         attendeeCount: core.serialization.property("attendee_count", core.serialization.number()),
+        responseStatus: core.serialization.property("response_status", AttendeeStatus.optional()),
         uid: core.serialization.string(),
         sequence: core.serialization.number(),
         source: CalendarEventSource,
@@ -73,6 +75,7 @@ export declare namespace CalendarEvent {
         recurrence?: Recurrence.Raw | null;
         attendees?: Attendee.Raw[] | null;
         attendee_count: number;
+        response_status?: AttendeeStatus.Raw | null;
         uid: string;
         sequence: number;
         source: CalendarEventSource.Raw;
