@@ -9,6 +9,7 @@ export * from "./ListMessagesResponse.js";
 export * from "./Message.js";
 export * from "./MessageAttachments.js";
 export * from "./MessageBcc.js";
+export * from "./MessageCalendarEventId.js";
 export * from "./MessageCc.js";
 export * from "./MessageCreatedAt.js";
 export * from "./MessageFrom.js";

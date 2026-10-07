@@ -16,6 +16,7 @@ export interface MessageItem {
     preview?: AgentMail.MessagePreview;
     attachments?: AgentMail.MessageAttachments;
     inReplyTo?: AgentMail.MessageInReplyTo;
+    calendarEventId?: AgentMail.MessageCalendarEventId;
     references?: AgentMail.MessageReferences;
     headers?: AgentMail.MessageHeaders;
     size: AgentMail.MessageSize;

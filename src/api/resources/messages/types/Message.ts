@@ -24,6 +24,7 @@ export interface Message {
     extractedHtml?: string;
     attachments?: AgentMail.MessageAttachments;
     inReplyTo?: AgentMail.MessageInReplyTo;
+    calendarEventId?: AgentMail.MessageCalendarEventId;
     references?: AgentMail.MessageReferences;
     headers?: AgentMail.MessageHeaders;
     size: AgentMail.MessageSize;

@@ -504,6 +504,7 @@ describe("ThreadsClient", () => {
                         },
                     ],
                     in_reply_to: "in_reply_to",
+                    calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
                     size: 1,
@@ -546,6 +547,7 @@ describe("ThreadsClient", () => {
                         },
                     ],
                     in_reply_to: "in_reply_to",
+                    calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
                     size: 1,
@@ -638,6 +640,7 @@ describe("ThreadsClient", () => {
                         },
                     ],
                     inReplyTo: "in_reply_to",
+                    calendarEventId: "calendar_event_id",
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",
@@ -682,6 +685,7 @@ describe("ThreadsClient", () => {
                         },
                     ],
                     inReplyTo: "in_reply_to",
+                    calendarEventId: "calendar_event_id",
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",

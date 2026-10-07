@@ -7,6 +7,7 @@ import { InboxId } from "../../inboxes/types/InboxId.js";
 import { ThreadId } from "../../threads/types/ThreadId.js";
 import { MessageAttachments } from "./MessageAttachments.js";
 import { MessageBcc } from "./MessageBcc.js";
+import { MessageCalendarEventId } from "./MessageCalendarEventId.js";
 import { MessageCc } from "./MessageCc.js";
 import { MessageCreatedAt } from "./MessageCreatedAt.js";
 import { MessageFrom } from "./MessageFrom.js";
@@ -47,6 +48,7 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         extractedHtml: core.serialization.property("extracted_html", core.serialization.string().optional()),
         attachments: MessageAttachments.optional(),
         inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
+        calendarEventId: core.serialization.property("calendar_event_id", MessageCalendarEventId.optional()),
         references: MessageReferences.optional(),
         headers: MessageHeaders.optional(),
         size: MessageSize,
@@ -74,6 +76,7 @@ export declare namespace Message {
         extracted_html?: string | null;
         attachments?: MessageAttachments.Raw | null;
         in_reply_to?: MessageInReplyTo.Raw | null;
+        calendar_event_id?: MessageCalendarEventId.Raw | null;
         references?: MessageReferences.Raw | null;
         headers?: MessageHeaders.Raw | null;
         size: MessageSize.Raw;
