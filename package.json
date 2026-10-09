@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.5.42",
+    "version": "0.5.43",
     "private": false,
     "repository": {
         "type": "git",
@@ -254,6 +254,17 @@
             },
             "default": "./dist/cjs/api/resources/inboxes/resources/webhooks/exports.js"
         },
+        "./inboxes/webhooks/polling": {
+            "import": {
+                "types": "./dist/esm/api/resources/inboxes/resources/webhooks/resources/polling/exports.d.mts",
+                "default": "./dist/esm/api/resources/inboxes/resources/webhooks/resources/polling/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inboxes/resources/webhooks/resources/polling/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inboxes/resources/webhooks/resources/polling/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inboxes/resources/webhooks/resources/polling/exports.js"
+        },
         "./lists": {
             "import": {
                 "types": "./dist/esm/api/resources/lists/exports.d.mts",
@@ -386,6 +397,17 @@
             },
             "default": "./dist/cjs/api/resources/pods/resources/webhooks/exports.js"
         },
+        "./pods/webhooks/polling": {
+            "import": {
+                "types": "./dist/esm/api/resources/pods/resources/webhooks/resources/polling/exports.d.mts",
+                "default": "./dist/esm/api/resources/pods/resources/webhooks/resources/polling/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/pods/resources/webhooks/resources/polling/exports.d.ts",
+                "default": "./dist/cjs/api/resources/pods/resources/webhooks/resources/polling/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/pods/resources/webhooks/resources/polling/exports.js"
+        },
         "./threads": {
             "import": {
                 "types": "./dist/esm/api/resources/threads/exports.d.mts",
@@ -396,6 +418,17 @@
                 "default": "./dist/cjs/api/resources/threads/exports.js"
             },
             "default": "./dist/cjs/api/resources/threads/exports.js"
+        },
+        "./webhooks/polling": {
+            "import": {
+                "types": "./dist/esm/api/resources/webhooks/resources/polling/exports.d.mts",
+                "default": "./dist/esm/api/resources/webhooks/resources/polling/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/webhooks/resources/polling/exports.d.ts",
+                "default": "./dist/cjs/api/resources/webhooks/resources/polling/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/webhooks/resources/polling/exports.js"
         },
         "./websockets": {
             "import": {

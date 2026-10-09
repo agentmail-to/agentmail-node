@@ -9,6 +9,7 @@ import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCode
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
 import * as AgentMail from "../../../index.js";
+import { PollingClient } from "../resources/polling/client/Client.js";
 
 export declare namespace WebhooksClient {
     export type Options = BaseClientOptions;
@@ -18,9 +19,14 @@ export declare namespace WebhooksClient {
 
 export class WebhooksClient {
     protected readonly _options: NormalizedClientOptionsWithAuth<WebhooksClient.Options>;
+    protected _polling: PollingClient | undefined;
 
     constructor(options: WebhooksClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
+    }
+
+    public get polling(): PollingClient {
+        return (this._polling ??= new PollingClient(this._options));
     }
 
     /**

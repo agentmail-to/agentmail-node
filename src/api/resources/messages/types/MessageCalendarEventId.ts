@@ -5,6 +5,6 @@
  * invitation, update, cancellation or attendee reply changed the inbox's calendar, a few seconds
  * after the email arrives. For an email about one date of a recurring event, it is that date's
  * event ID. Absent on other emails, and on invitations that were not imported. Calendar is in
- * private beta.
+ * AgentMail Labs.
  */
 export type MessageCalendarEventId = string;

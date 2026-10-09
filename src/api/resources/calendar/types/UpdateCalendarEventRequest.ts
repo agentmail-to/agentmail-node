@@ -27,7 +27,8 @@ export interface UpdateCalendarEventRequest {
     durationMode?: AgentMail.DurationMode;
     /**
      * Replaces the recurrence. Set to `null` to turn a series into a one-off event (only when no
-     * date of it has been edited). Not accepted for dated event IDs.
+     * date of it has been edited). Not accepted for dated event IDs. A series ended with a
+     * `mode=future` delete stays ended: the new rule keeps its `truncate_before`.
      */
     recurrence?: AgentMail.RecurrenceInput | null;
     /** Replaces the attendee list. */
