@@ -500,7 +500,8 @@
     "pnpm": {
         "overrides": {
             "postcss": ">=8.5.23",
-            "fast-uri": ">=3.1.5"
+            "fast-uri": ">=3.1.5",
+            "browserslist": ">=4.28.7"
         }
     },
     "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
