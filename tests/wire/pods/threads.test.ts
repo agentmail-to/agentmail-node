@@ -537,6 +537,11 @@ describe("ThreadsClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    agent_armor: {
+                        status: "pending",
+                        started_at: "2024-01-15T09:30:00Z",
+                        deadline_at: "2024-01-15T09:30:00Z",
+                    },
                     size: 1,
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -580,6 +585,11 @@ describe("ThreadsClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    agent_armor: {
+                        status: "pending",
+                        started_at: "2024-01-15T09:30:00Z",
+                        deadline_at: "2024-01-15T09:30:00Z",
+                    },
                     size: 1,
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -675,6 +685,11 @@ describe("ThreadsClient", () => {
                     headers: {
                         headers: "headers",
                     },
+                    agentArmor: {
+                        status: "pending",
+                        startedAt: new Date("2024-01-15T09:30:00.000Z"),
+                        deadlineAt: new Date("2024-01-15T09:30:00.000Z"),
+                    },
                     size: 1,
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),
                     createdAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -719,6 +734,11 @@ describe("ThreadsClient", () => {
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",
+                    },
+                    agentArmor: {
+                        status: "pending",
+                        startedAt: new Date("2024-01-15T09:30:00.000Z"),
+                        deadlineAt: new Date("2024-01-15T09:30:00.000Z"),
                     },
                     size: 1,
                     updatedAt: new Date("2024-01-15T09:30:00.000Z"),

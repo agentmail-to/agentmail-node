@@ -16,6 +16,7 @@ import { MessageDeliveredEvent } from "../../../events/types/MessageDeliveredEve
 import { MessageOpenedEvent } from "../../../events/types/MessageOpenedEvent.js";
 import { MessageReceivedEvent } from "../../../events/types/MessageReceivedEvent.js";
 import { MessageRejectedEvent } from "../../../events/types/MessageRejectedEvent.js";
+import { MessageSecurityCompletedEvent } from "../../../events/types/MessageSecurityCompletedEvent.js";
 import { MessageSentEvent } from "../../../events/types/MessageSentEvent.js";
 import { Error_ } from "../../types/Error_.js";
 import { Subscribed } from "../../types/Subscribed.js";
@@ -24,6 +25,7 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     serializers.WebsocketsSocketResponse.Raw,
     | AgentMail.Subscribed
     | AgentMail.MessageReceivedEvent
+    | AgentMail.MessageSecurityCompletedEvent
     | AgentMail.MessageSentEvent
     | AgentMail.MessageDeliveredEvent
     | AgentMail.MessageBouncedEvent
@@ -41,6 +43,7 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
 > = core.serialization.undiscriminatedUnion([
     Subscribed,
     MessageReceivedEvent,
+    MessageSecurityCompletedEvent,
     MessageSentEvent,
     MessageDeliveredEvent,
     MessageBouncedEvent,
@@ -61,6 +64,7 @@ export declare namespace WebsocketsSocketResponse {
     export type Raw =
         | Subscribed.Raw
         | MessageReceivedEvent.Raw
+        | MessageSecurityCompletedEvent.Raw
         | MessageSentEvent.Raw
         | MessageDeliveredEvent.Raw
         | MessageBouncedEvent.Raw

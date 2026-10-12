@@ -10,6 +10,7 @@ export const EventType: core.serialization.Schema<serializers.EventType.Raw, Age
         "message.received.spam",
         "message.received.blocked",
         "message.received.unauthenticated",
+        "message.security.completed",
         "message.sent",
         "message.delivered",
         "message.bounced",
@@ -31,6 +32,7 @@ export declare namespace EventType {
         | "message.received.spam"
         | "message.received.blocked"
         | "message.received.unauthenticated"
+        | "message.security.completed"
         | "message.sent"
         | "message.delivered"
         | "message.bounced"

@@ -20,6 +20,8 @@ export * from "./MessageOpenedEvent.js";
 export * from "./MessageReceivedEvent.js";
 export * from "./MessageReceivedEventType.js";
 export * from "./MessageRejectedEvent.js";
+export * from "./MessageSecurity.js";
+export * from "./MessageSecurityCompletedEvent.js";
 export * from "./MessageSentEvent.js";
 export * from "./Open.js";
 export * from "./PodIds.js";

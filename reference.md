@@ -5789,6 +5789,88 @@ await client.inboxes.messages.get("inbox_id", "message_id");
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">createAgentArmorFeedback</a>(inbox_id, message_id, { ...params }) -> AgentMail.AgentArmorFeedback</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Tell us whether Agent Armor's verdict on a message was right. The message needs a completed result. A message
+accepts up to 20 pieces of feedback. Requires permission to read the message.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.createAgentArmorFeedback("inbox_id", "message_id", {
+    feedback: "correct_review"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `AgentMail.MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.CreateAgentArmorFeedbackRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">batchGet</a>(inbox_id, { ...params }) -> AgentMail.BatchGetMessagesResponse</code></summary>
 <dl>
 <dd>

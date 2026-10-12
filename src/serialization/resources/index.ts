@@ -2,6 +2,8 @@ export * as accounts from "./accounts/index.js";
 export * from "./accounts/types/index.js";
 export * as agent from "./agent/index.js";
 export * from "./agent/types/index.js";
+export * as agentArmor from "./agentArmor/index.js";
+export * from "./agentArmor/types/index.js";
 export * as apiKeys from "./apiKeys/index.js";
 export * from "./apiKeys/types/index.js";
 export * as apps from "./apps/index.js";

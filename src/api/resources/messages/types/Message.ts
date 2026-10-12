@@ -27,6 +27,7 @@ export interface Message {
     calendarEventId?: AgentMail.MessageCalendarEventId;
     references?: AgentMail.MessageReferences;
     headers?: AgentMail.MessageHeaders;
+    agentArmor?: AgentMail.AgentArmorResult;
     size: AgentMail.MessageSize;
     updatedAt: AgentMail.MessageUpdatedAt;
     createdAt: AgentMail.MessageCreatedAt;

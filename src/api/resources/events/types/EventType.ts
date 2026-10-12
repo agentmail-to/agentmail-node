@@ -5,6 +5,7 @@ export const EventType = {
     MessageReceivedSpam: "message.received.spam",
     MessageReceivedBlocked: "message.received.blocked",
     MessageReceivedUnauthenticated: "message.received.unauthenticated",
+    MessageSecurityCompleted: "message.security.completed",
     MessageSent: "message.sent",
     MessageDelivered: "message.delivered",
     MessageBounced: "message.bounced",

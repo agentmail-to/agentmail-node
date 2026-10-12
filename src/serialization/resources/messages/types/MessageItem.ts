@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AgentArmorResult } from "../../agentArmor/types/AgentArmorResult.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
 import { ThreadId } from "../../threads/types/ThreadId.js";
 import { MessageAttachments } from "./MessageAttachments.js";
@@ -41,6 +42,7 @@ export const MessageItem: core.serialization.ObjectSchema<serializers.MessageIte
         calendarEventId: core.serialization.property("calendar_event_id", MessageCalendarEventId.optional()),
         references: MessageReferences.optional(),
         headers: MessageHeaders.optional(),
+        agentArmor: core.serialization.property("agent_armor", AgentArmorResult.optional()),
         size: MessageSize,
         updatedAt: core.serialization.property("updated_at", MessageUpdatedAt),
         createdAt: core.serialization.property("created_at", MessageCreatedAt),
@@ -64,6 +66,7 @@ export declare namespace MessageItem {
         calendar_event_id?: MessageCalendarEventId.Raw | null;
         references?: MessageReferences.Raw | null;
         headers?: MessageHeaders.Raw | null;
+        agent_armor?: AgentArmorResult.Raw | null;
         size: MessageSize.Raw;
         updated_at: MessageUpdatedAt.Raw;
         created_at: MessageCreatedAt.Raw;

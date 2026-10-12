@@ -388,6 +388,136 @@ export class MessagesClient {
     }
 
     /**
+     * @beta This endpoint is in pre-release and may change.
+     *
+     * Tell us whether Agent Armor's verdict on a message was right. The message needs a completed result. A message
+     * accepts up to 20 pieces of feedback. Requires permission to read the message.
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.MessageId} message_id
+     * @param {AgentMail.CreateAgentArmorFeedbackRequest} request
+     * @param {MessagesClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ConflictError}
+     *
+     * @example
+     *     await client.inboxes.messages.createAgentArmorFeedback("inbox_id", "message_id", {
+     *         feedback: "correct_review"
+     *     })
+     */
+    public createAgentArmorFeedback(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateAgentArmorFeedbackRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.AgentArmorFeedback> {
+        return core.HttpResponsePromise.fromPromise(
+            this.__createAgentArmorFeedback(inbox_id, message_id, request, requestOptions),
+        );
+    }
+
+    private async __createAgentArmorFeedback(
+        inbox_id: AgentMail.inboxes.InboxId,
+        message_id: AgentMail.MessageId,
+        request: AgentMail.CreateAgentArmorFeedbackRequest,
+        requestOptions?: MessagesClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.AgentArmorFeedback>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/messages/${core.url.encodePathParam(serializers.MessageId.jsonOrThrow(message_id, { omitUndefined: true }))}/agent-armor/feedback`,
+            ),
+            method: "POST",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.CreateAgentArmorFeedbackRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.AgentArmorFeedback.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "POST",
+            "/v0/inboxes/{inbox_id}/messages/{message_id}/agent-armor/feedback",
+        );
+    }
+
+    /**
      * Fetch metadata for up to 500 messages in one request. Missing or
      * restricted IDs are silently omitted; compare `count` against `limit`
      * to detect misses.
