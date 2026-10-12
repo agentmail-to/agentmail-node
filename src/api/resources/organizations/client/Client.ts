@@ -8,7 +8,7 @@ import * as environments from "../../../../environments.js";
 import { handleNonStatusCodeError } from "../../../../errors/handleNonStatusCodeError.js";
 import * as errors from "../../../../errors/index.js";
 import * as serializers from "../../../../serialization/index.js";
-import type * as AgentMail from "../../../index.js";
+import * as AgentMail from "../../../index.js";
 
 export declare namespace OrganizationsClient {
     export type Options = BaseClientOptions;
@@ -87,5 +87,201 @@ export class OrganizationsClient {
         }
 
         return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/organizations");
+    }
+
+    /**
+     * Returns whether the organization is in [AgentMail Labs](https://docs.agentmail.to/calendar), which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail organizations get-labs
+     * ```
+     *
+     * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.OrganizationForbiddenError}
+     *
+     * @example
+     *     await client.organizations.getLabs()
+     */
+    public getLabs(
+        requestOptions?: OrganizationsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.OrganizationLabs> {
+        return core.HttpResponsePromise.fromPromise(this.__getLabs(requestOptions));
+    }
+
+    private async __getLabs(
+        requestOptions?: OrganizationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.OrganizationLabs>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                "/v0/organizations/labs",
+            ),
+            method: "GET",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.OrganizationLabs.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 403:
+                    throw new AgentMail.OrganizationForbiddenError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "GET", "/v0/organizations/labs");
+    }
+
+    /**
+     * Joins AgentMail Labs for the whole organization, which turns on every feature in Labs for every inbox. Joining again has no effect. There is no leave on the API; an organization admin can leave in the console under [Settings, then Labs](https://console.agentmail.to/dashboard/settings/labs).
+     *
+     * Join only when your organization has decided to. Get Labs reads the same for an organization that never joined and one whose admin left Labs on purpose, so don't join just because `enabled` is `false`.
+     *
+     * Requires an organization-scoped API key with no permissions restriction, and a verified organization. API keys see the change within five minutes. Where Labs isn't offered (`available` is `false` on Get Labs), joining returns `403`.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail organizations join-labs
+     * ```
+     *
+     * @param {OrganizationsClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.OrganizationForbiddenError}
+     * @throws {@link AgentMail.ValidationError}
+     * @throws {@link AgentMail.ConflictError}
+     *
+     * @example
+     *     await client.organizations.joinLabs()
+     */
+    public joinLabs(
+        requestOptions?: OrganizationsClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.OrganizationLabs> {
+        return core.HttpResponsePromise.fromPromise(this.__joinLabs(requestOptions));
+    }
+
+    private async __joinLabs(
+        requestOptions?: OrganizationsClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.OrganizationLabs>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                "/v0/organizations/labs",
+            ),
+            method: "POST",
+            headers: _headers,
+            queryParameters: requestOptions?.queryParams,
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.OrganizationLabs.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 403:
+                    throw new AgentMail.OrganizationForbiddenError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(_response.error, _response.rawResponse, "POST", "/v0/organizations/labs");
     }
 }
