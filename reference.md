@@ -5195,6 +5195,413 @@ await client.inboxes.events.list("inbox_id");
 </dl>
 </details>
 
+## Inboxes Files
+<details><summary><code>client.inboxes.files.<a href="/src/api/resources/inboxes/resources/files/client/Client.ts">create</a>(inbox_id, { ...params }) -> AgentMail.CreateFileResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Starts an upload: creates a pending file at `path` and returns an `upload` to `PUT` its bytes to. The bytes go
+straight to storage, not through the API. Then call Complete File to make the file `ready`.
+
+Retry-safe: sending the identical request again (same `path`, `size`, `sha256`, `content_type` and
+`expires_at`) returns the existing file with `200` instead of `201`: a pending one with a fresh `upload`, or
+a `ready` one without. If its bytes were uploaded but the upload was never completed, it is completed then. A
+different request at a path whose file is still pending and has no bytes replaces that file; at any other
+taken path it returns `409`.
+
+The file counts against the organization's Drive quota from creation, pending or not: 1 GiB and 10,000 files
+by default. A file that doesn't fit returns `403` with code `limit_exceeded`. Deleting a file frees its
+space within seconds. Expired files count until a create needs their space: a create that doesn't fit first
+gives back what expired files hold, a batch at a time, so retry a refusal while many expired files remain.
+
+Requires the `file_create` permission, which an unverified organization's keys don't have at any scope until
+it completes agent verification. A key without `file_read` can still create files, but gets the plain `409` at
+any taken path, even for an identical request at a file it didn't create.
+
+Agent Drive is in AgentMail Labs, available in US production (`api.agentmail.to`) but not yet in EU
+production (`api.agentmail.eu`). Organizations that have not joined Labs receive a `403`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.files.create("reports@agentmail.to", {
+    path: "reports/q3.pdf",
+    size: 48213,
+    sha256: "n4bQgYhMfWWaL+qgxVrQFaO/TxsrC4Is0V1sFbDwCgg=",
+    contentType: "application/pdf"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.CreateFileRequestWrapper` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.files.<a href="/src/api/resources/inboxes/resources/files/client/Client.ts">complete</a>(inbox_id, file_id) -> AgentMail.File_</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Makes a pending file `ready` once its bytes are uploaded, and returns it, with its `download_url` if the key
+has `file_read`. Calling it on a file that is already `ready` returns the file.
+
+Returns `409` if the bytes haven't been uploaded yet, or if what was uploaded doesn't match the file's `size`
+and `sha256`. Returns `404` for a file that has expired or was deleted, including a pending file not
+completed within a day of its creation.
+
+Requires the `file_create` permission. Only a key with `file_read`, or the key that created the file, can
+complete it; any other key gets `404`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.files.complete("reports@agentmail.to", "6f1c2f4e-8d3b-4a5e-9c7d-1b2a3c4d5e6f");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `AgentMail.FileId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.files.<a href="/src/api/resources/inboxes/resources/files/client/Client.ts">get</a>(inbox_id, file_id) -> AgentMail.File_</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Gets a file. A `ready` file comes with a fresh `download_url`, valid for up to an hour.
+
+A get reads the region that serves the request, so for about a second after a delete it can still return
+the deleted file. A file that has expired returns `404` at once.
+
+Requires the `file_read` permission.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.files.get("reports@agentmail.to", "6f1c2f4e-8d3b-4a5e-9c7d-1b2a3c4d5e6f");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `AgentMail.FileId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.files.<a href="/src/api/resources/inboxes/resources/files/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListFilesResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Lists the inbox's files in path order, pending ones included, optionally only those whose path starts with
+`path_prefix`. A prefix matches characters, not whole segments: `reports/q` matches `reports/q3.pdf`. Items
+carry no download URL; get a file for one.
+
+The list is read in the region that serves the request, so a file created or deleted a moment ago may not
+show yet. Expired files never show.
+
+Requires the `file_read` permission.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.files.list("reports@agentmail.to", {
+    pathPrefix: "reports/"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.inboxes.ListFilesRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.files.<a href="/src/api/resources/inboxes/resources/files/client/Client.ts">delete</a>(inbox_id, file_id) -> void</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Deletes a file, pending or `ready`, and frees its path at once. Its bytes are deleted, and its space given
+back to the organization's quota, within seconds. A download URL signed before the delete keeps working
+until it expires, at most an hour. Deleting a file that is already gone returns `404`.
+
+Requires the `file_delete` permission. Only a key with `file_read`, or the key that created the file, can
+delete it; any other key gets `404`.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.files.delete("reports@agentmail.to", "6f1c2f4e-8d3b-4a5e-9c7d-1b2a3c4d5e6f");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**file_id:** `AgentMail.FileId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `FilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Lists
 <details><summary><code>client.inboxes.lists.<a href="/src/api/resources/inboxes/resources/lists/client/Client.ts">list</a>(inbox_id, direction, type, { ...params }) -> AgentMail.PodListListEntriesResponse</code></summary>
 <dl>
@@ -5852,6 +6259,94 @@ await client.inboxes.messages.createAgentArmorFeedback("inbox_id", "message_id",
 <dd>
 
 **request:** `AgentMail.CreateAgentArmorFeedbackRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `MessagesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.messages.<a href="/src/api/resources/inboxes/resources/messages/client/Client.ts">releaseAgentArmorMessage</a>(inbox_id, message_id, { ...params }) -> AgentMail.ReleaseAgentArmorMessageResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Release a message Agent Armor held for review in hold mode: your agents are sent its `message.received`
+event, `message.security.override` is sent too, in either order, and its `agent-armor-held` label is removed.
+Only a message whose verdict is `review` and that is still held can be released; anything else answers `409`.
+Repeating a release with the same reason and the same API key returns the first release; any other repeat
+answers `409`.
+
+Requires the opt-in `agent_armor_release` permission and permission to read the message. An organization
+admin can also release from the console.
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.messages.releaseAgentArmorMessage("inbox_id", "message_id", {
+    reason: "reason"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**message_id:** `AgentMail.MessageId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ReleaseAgentArmorMessageRequest` 
     
 </dd>
 </dl>

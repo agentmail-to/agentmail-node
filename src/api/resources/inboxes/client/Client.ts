@@ -14,6 +14,7 @@ import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
 import { CalendarClient } from "../resources/calendar/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { EventsClient } from "../resources/events/client/Client.js";
+import { FilesClient } from "../resources/files/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
 import { MessagesClient } from "../resources/messages/client/Client.js";
 import { MetricsClient } from "../resources/metrics/client/Client.js";
@@ -38,6 +39,7 @@ export class InboxesClient {
     protected _apiKeys: ApiKeysClient | undefined;
     protected _accounts: AccountsClient | undefined;
     protected _calendar: CalendarClient | undefined;
+    protected _files: FilesClient | undefined;
 
     constructor(options: InboxesClient.Options = {}) {
         this._options = normalizeClientOptionsWithAuth(options);
@@ -81,6 +83,10 @@ export class InboxesClient {
 
     public get calendar(): CalendarClient {
         return (this._calendar ??= new CalendarClient(this._options));
+    }
+
+    public get files(): FilesClient {
+        return (this._files ??= new FilesClient(this._options));
     }
 
     /**

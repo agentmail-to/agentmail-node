@@ -3,9 +3,10 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Agent Armor reached a verdict on a received message. Sent only for `complete` results: an `unavailable` result
- * sends no event. Sent once per message and inbox; `event_id` is stable, so use it to deduplicate. Not sent for
- * messages labeled `spam`, `blocked`, `unauthenticated`, or `trash`: read those through the API.
+ * Agent Armor reached a verdict on a received message. Sent only in monitor mode, and only for `complete` results:
+ * an `unavailable` result sends no event. Sent once per message and inbox; `event_id` is stable, so use it to
+ * deduplicate. Not sent for messages labeled `spam`, `blocked`, `unauthenticated`, or `trash`: read those through
+ * the API.
  */
 export interface MessageSecurityCompletedEvent {
     type: "event";

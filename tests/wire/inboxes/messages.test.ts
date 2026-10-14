@@ -783,6 +783,128 @@ describe("MessagesClient", () => {
         }).rejects.toThrow(AgentMail.ConflictError);
     });
 
+    test("releaseAgentArmorMessage (1)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { reason: "reason" };
+        const rawResponseBody = {
+            manual_override: {
+                override_id: "override_id",
+                actor: { kind: "api_key", api_key_id: "api_key_id" },
+                reason: "reason",
+                original_verdict: "review",
+                released_at: "2024-01-15T09:30:00Z",
+            },
+        };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/agent-armor/release")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(200)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        const response = await client.inboxes.messages.releaseAgentArmorMessage("inbox_id", "message_id", {
+            reason: "reason",
+        });
+        expect(response).toEqual({
+            manualOverride: {
+                overrideId: "override_id",
+                actor: {
+                    kind: "api_key",
+                    apiKeyId: "api_key_id",
+                },
+                reason: "reason",
+                originalVerdict: "review",
+                releasedAt: new Date("2024-01-15T09:30:00.000Z"),
+            },
+        });
+    });
+
+    test("releaseAgentArmorMessage (2)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { reason: "reason" };
+        const rawResponseBody = { name: "name", errors: { key: "value" } };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/agent-armor/release")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(400)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.releaseAgentArmorMessage("inbox_id", "message_id", {
+                reason: "reason",
+            });
+        }).rejects.toThrow(AgentMail.ValidationError);
+    });
+
+    test("releaseAgentArmorMessage (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { reason: "reason" };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/agent-armor/release")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(404)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.releaseAgentArmorMessage("inbox_id", "message_id", {
+                reason: "reason",
+            });
+        }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("releaseAgentArmorMessage (4)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+        const rawRequestBody = { reason: "reason" };
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .post("/v0/inboxes/inbox_id/messages/message_id/agent-armor/release")
+            .jsonBody(rawRequestBody)
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.messages.releaseAgentArmorMessage("inbox_id", "message_id", {
+                reason: "reason",
+            });
+        }).rejects.toThrow(AgentMail.ConflictError);
+    });
+
     test("batchGet (1)", async () => {
         const server = mockServerPool.createServer();
         const client = new AgentMailClient({

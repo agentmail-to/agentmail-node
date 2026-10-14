@@ -10,4 +10,6 @@ export interface AgentArmorCompleteResult {
     model: string;
     /** When the scan finished. */
     completedAt: Date;
+    /** Present on a `review` held in hold mode that someone released. */
+    manualOverride?: AgentMail.AgentArmorManualOverride;
 }

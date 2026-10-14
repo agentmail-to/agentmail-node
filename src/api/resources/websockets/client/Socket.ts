@@ -15,6 +15,8 @@ export declare namespace WebsocketsSocket {
         | AgentMail.Subscribed
         | AgentMail.MessageReceivedEvent
         | AgentMail.MessageSecurityCompletedEvent
+        | AgentMail.MessageSecurityReviewEvent
+        | AgentMail.MessageSecurityOverrideEvent
         | AgentMail.MessageSentEvent
         | AgentMail.MessageDeliveredEvent
         | AgentMail.MessageBouncedEvent

@@ -22,6 +22,11 @@ export interface ApiKeyPermissions {
     messageUpdate?: boolean;
     /** Delete messages. Also required to delete threads. */
     messageDelete?: boolean;
+    /**
+     * Release mail Agent Armor holds for review. Opt-in: no key has it unless it was granted explicitly, even one
+     * without a `permissions` object. See [Permissions](/permissions#agent-armor).
+     */
+    agentArmorRelease?: boolean;
     /** Access messages labeled spam. */
     labelSpamRead?: boolean;
     /** Access messages labeled blocked. */
@@ -107,4 +112,12 @@ export interface ApiKeyPermissions {
     calendarEventUpdate?: boolean;
     /** Delete calendar events. */
     calendarEventDelete?: boolean;
+    /** List and get Agent Drive files, with their download URLs. */
+    fileRead?: boolean;
+    /** Upload Agent Drive files (Create File and Complete File). */
+    fileCreate?: boolean;
+    /** Update Agent Drive files. Reserved; no endpoint uses it yet. */
+    fileUpdate?: boolean;
+    /** Delete Agent Drive files. */
+    fileDelete?: boolean;
 }

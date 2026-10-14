@@ -3,7 +3,7 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * The result in a `message.security.completed` event, which is always `complete`.
+ * The result in a `message.security.completed` or `message.security.review` event, which is always `complete`.
  */
 export interface AgentArmorCompletedEventResult extends AgentMail.AgentArmorCompleteResult {
     status: "complete";

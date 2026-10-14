@@ -17,6 +17,7 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     messageSend: core.serialization.property("message_send", core.serialization.boolean().optional()),
     messageUpdate: core.serialization.property("message_update", core.serialization.boolean().optional()),
     messageDelete: core.serialization.property("message_delete", core.serialization.boolean().optional()),
+    agentArmorRelease: core.serialization.property("agent_armor_release", core.serialization.boolean().optional()),
     labelSpamRead: core.serialization.property("label_spam_read", core.serialization.boolean().optional()),
     labelBlockedRead: core.serialization.property("label_blocked_read", core.serialization.boolean().optional()),
     labelUnauthenticatedRead: core.serialization.property(
@@ -58,6 +59,10 @@ export const ApiKeyPermissions: core.serialization.ObjectSchema<
     calendarEventCreate: core.serialization.property("calendar_event_create", core.serialization.boolean().optional()),
     calendarEventUpdate: core.serialization.property("calendar_event_update", core.serialization.boolean().optional()),
     calendarEventDelete: core.serialization.property("calendar_event_delete", core.serialization.boolean().optional()),
+    fileRead: core.serialization.property("file_read", core.serialization.boolean().optional()),
+    fileCreate: core.serialization.property("file_create", core.serialization.boolean().optional()),
+    fileUpdate: core.serialization.property("file_update", core.serialization.boolean().optional()),
+    fileDelete: core.serialization.property("file_delete", core.serialization.boolean().optional()),
 });
 
 export declare namespace ApiKeyPermissions {
@@ -71,6 +76,7 @@ export declare namespace ApiKeyPermissions {
         message_send?: boolean | null;
         message_update?: boolean | null;
         message_delete?: boolean | null;
+        agent_armor_release?: boolean | null;
         label_spam_read?: boolean | null;
         label_blocked_read?: boolean | null;
         label_unauthenticated_read?: boolean | null;
@@ -109,5 +115,9 @@ export declare namespace ApiKeyPermissions {
         calendar_event_create?: boolean | null;
         calendar_event_update?: boolean | null;
         calendar_event_delete?: boolean | null;
+        file_read?: boolean | null;
+        file_create?: boolean | null;
+        file_update?: boolean | null;
+        file_delete?: boolean | null;
     }
 }

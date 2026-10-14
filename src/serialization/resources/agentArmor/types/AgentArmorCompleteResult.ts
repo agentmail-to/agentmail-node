@@ -3,6 +3,7 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { AgentArmorManualOverride } from "./AgentArmorManualOverride.js";
 import { AgentArmorVerdict } from "./AgentArmorVerdict.js";
 
 export const AgentArmorCompleteResult: core.serialization.ObjectSchema<
@@ -13,6 +14,7 @@ export const AgentArmorCompleteResult: core.serialization.ObjectSchema<
     reason: core.serialization.string(),
     model: core.serialization.string(),
     completedAt: core.serialization.property("completed_at", core.serialization.date()),
+    manualOverride: core.serialization.property("manual_override", AgentArmorManualOverride.optional()),
 });
 
 export declare namespace AgentArmorCompleteResult {
@@ -21,5 +23,6 @@ export declare namespace AgentArmorCompleteResult {
         reason: string;
         model: string;
         completed_at: string;
+        manual_override?: AgentArmorManualOverride.Raw | null;
     }
 }

@@ -17,6 +17,8 @@ import { MessageOpenedEvent } from "../../../events/types/MessageOpenedEvent.js"
 import { MessageReceivedEvent } from "../../../events/types/MessageReceivedEvent.js";
 import { MessageRejectedEvent } from "../../../events/types/MessageRejectedEvent.js";
 import { MessageSecurityCompletedEvent } from "../../../events/types/MessageSecurityCompletedEvent.js";
+import { MessageSecurityOverrideEvent } from "../../../events/types/MessageSecurityOverrideEvent.js";
+import { MessageSecurityReviewEvent } from "../../../events/types/MessageSecurityReviewEvent.js";
 import { MessageSentEvent } from "../../../events/types/MessageSentEvent.js";
 import { Error_ } from "../../types/Error_.js";
 import { Subscribed } from "../../types/Subscribed.js";
@@ -26,6 +28,8 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     | AgentMail.Subscribed
     | AgentMail.MessageReceivedEvent
     | AgentMail.MessageSecurityCompletedEvent
+    | AgentMail.MessageSecurityReviewEvent
+    | AgentMail.MessageSecurityOverrideEvent
     | AgentMail.MessageSentEvent
     | AgentMail.MessageDeliveredEvent
     | AgentMail.MessageBouncedEvent
@@ -44,6 +48,8 @@ export const WebsocketsSocketResponse: core.serialization.Schema<
     Subscribed,
     MessageReceivedEvent,
     MessageSecurityCompletedEvent,
+    MessageSecurityReviewEvent,
+    MessageSecurityOverrideEvent,
     MessageSentEvent,
     MessageDeliveredEvent,
     MessageBouncedEvent,
@@ -65,6 +71,8 @@ export declare namespace WebsocketsSocketResponse {
         | Subscribed.Raw
         | MessageReceivedEvent.Raw
         | MessageSecurityCompletedEvent.Raw
+        | MessageSecurityReviewEvent.Raw
+        | MessageSecurityOverrideEvent.Raw
         | MessageSentEvent.Raw
         | MessageDeliveredEvent.Raw
         | MessageBouncedEvent.Raw

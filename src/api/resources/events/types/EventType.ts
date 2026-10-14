@@ -6,6 +6,8 @@ export const EventType = {
     MessageReceivedBlocked: "message.received.blocked",
     MessageReceivedUnauthenticated: "message.received.unauthenticated",
     MessageSecurityCompleted: "message.security.completed",
+    MessageSecurityReview: "message.security.review",
+    MessageSecurityOverride: "message.security.override",
     MessageSent: "message.sent",
     MessageDelivered: "message.delivered",
     MessageBounced: "message.bounced",
