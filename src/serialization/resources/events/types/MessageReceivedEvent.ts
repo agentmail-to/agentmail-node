@@ -3,10 +3,10 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
-import { Message } from "../../messages/types/Message.js";
 import { ThreadItem } from "../../threads/types/ThreadItem.js";
 import { EventId } from "./EventId.js";
 import { MessageReceivedEventType } from "./MessageReceivedEventType.js";
+import { ReceivedMessage } from "./ReceivedMessage.js";
 
 export const MessageReceivedEvent: core.serialization.ObjectSchema<
     serializers.MessageReceivedEvent.Raw,
@@ -15,7 +15,7 @@ export const MessageReceivedEvent: core.serialization.ObjectSchema<
     type: core.serialization.stringLiteral("event"),
     eventType: core.serialization.property("event_type", MessageReceivedEventType),
     eventId: core.serialization.property("event_id", EventId),
-    message: Message,
+    message: ReceivedMessage,
     thread: ThreadItem,
 });
 
@@ -24,7 +24,7 @@ export declare namespace MessageReceivedEvent {
         type: "event";
         event_type: MessageReceivedEventType.Raw;
         event_id: EventId.Raw;
-        message: Message.Raw;
+        message: ReceivedMessage.Raw;
         thread: ThreadItem.Raw;
     }
 }

@@ -4,7 +4,8 @@
  * The calendar event this email's invitation was applied to: set when the email's calendar
  * invitation, update, cancellation or attendee reply changed the inbox's calendar, a few seconds
  * after the email arrives. For an email about one date of a recurring event, it is that date's
- * event ID. Absent on other emails, and on invitations that were not imported. Calendar is in
- * AgentMail Labs.
+ * event ID. Absent on other emails, and on invitations that were not imported. The
+ * `message.received` event for an email with a calendar attachment waits until this is set, at
+ * most 20 seconds, so it usually arrives with it. Calendar is available in US production.
  */
 export type MessageCalendarEventId = string;

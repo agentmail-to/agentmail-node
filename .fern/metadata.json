@@ -22,7 +22,8 @@
             "pnpm": {
                 "overrides": {
                     "postcss": ">=8.5.23",
-                    "fast-uri": ">=3.1.5"
+                    "fast-uri": ">=3.1.5",
+                    "browserslist": ">=4.28.7"
                 }
             },
             "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
@@ -48,6 +49,6 @@
             }
         }
     },
-    "originGitCommit": "add93856840d1dd8a8e18d94a44c25f76f64e3a5",
-    "sdkVersion": "0.5.46"
+    "originGitCommit": "1c7e453755fcbccf22265cc83b2c96d3912605d1",
+    "sdkVersion": "0.5.47"
 }

@@ -3,8 +3,9 @@
 import type * as AgentMail from "../../../index.js";
 
 /**
- * Full list of event types this webhook should receive. At least one type is required. Send every type you
- * want in this array (not incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
+ * Full list of event types this webhook should receive. Required: omitting it or sending an empty array
+ * returns a `400`, and there is no "all events" default. Send every type you want in this array (not
+ * incremental). See [Webhooks overview](https://docs.agentmail.to/webhooks-overview)
  * for spam, blocked, and unauthenticated events and required permissions.
  */
 export type CreateWebhookEventTypes = AgentMail.EventTypes;

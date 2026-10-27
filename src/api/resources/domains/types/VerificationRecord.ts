@@ -3,7 +3,7 @@
 import type * as AgentMail from "../../../index.js";
 
 export interface VerificationRecord {
-    /** The type of the DNS record. */
+    /** The type of the DNS record. A `CAA` record is listed only when open tracking is on and the domain's CAA records restrict which certificate authorities may issue for it: add it next to the existing CAA records, not in place of them. */
     type: AgentMail.RecordType;
     /** The name or host of the record. */
     name: string;

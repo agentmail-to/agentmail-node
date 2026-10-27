@@ -5,8 +5,8 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
 export const RecordType: core.serialization.Schema<serializers.RecordType.Raw, AgentMail.RecordType> =
-    core.serialization.enum_(["TXT", "CNAME", "MX"]);
+    core.serialization.enum_(["TXT", "CNAME", "MX", "CAA"]);
 
 export declare namespace RecordType {
-    export type Raw = "TXT" | "CNAME" | "MX";
+    export type Raw = "TXT" | "CNAME" | "MX" | "CAA";
 }

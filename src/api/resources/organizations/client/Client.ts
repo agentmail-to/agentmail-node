@@ -90,7 +90,7 @@ export class OrganizationsClient {
     }
 
     /**
-     * Returns whether the organization is in [AgentMail Labs](https://docs.agentmail.to/calendar), which turns on features that are still in preview, such as calendar. Requires an organization-scoped API key.
+     * Returns whether the organization is in AgentMail Labs, which turns on features that are still in preview, such as [Agent Armor](https://docs.agentmail.to/agent-armor). Requires an organization-scoped API key.
      *
      * **CLI:**
      * ```bash

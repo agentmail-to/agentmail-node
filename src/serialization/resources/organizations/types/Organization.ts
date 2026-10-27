@@ -20,6 +20,8 @@ export const Organization: core.serialization.ObjectSchema<serializers.Organizat
         ),
         authenticationId: core.serialization.property("authentication_id", core.serialization.string().optional()),
         authenticationType: core.serialization.property("authentication_type", core.serialization.string().optional()),
+        suspendedAt: core.serialization.property("suspended_at", core.serialization.date().optional()),
+        suspendedReason: core.serialization.property("suspended_reason", core.serialization.string().optional()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
     });
@@ -36,6 +38,8 @@ export declare namespace Organization {
         billing_subscription_id?: string | null;
         authentication_id?: string | null;
         authentication_type?: string | null;
+        suspended_at?: string | null;
+        suspended_reason?: string | null;
         updated_at: string;
         created_at: string;
     }

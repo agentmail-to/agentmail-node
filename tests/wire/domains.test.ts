@@ -99,6 +99,8 @@ describe("DomainsClient", () => {
             inbound_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
+            tracking_status: "NOT_STARTED",
+            tracking_reason: "tracking_reason",
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
@@ -127,6 +129,8 @@ describe("DomainsClient", () => {
             inboundEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
+            trackingStatus: "NOT_STARTED",
+            trackingReason: "tracking_reason",
             records: [
                 {
                     type: "TXT",
@@ -192,6 +196,8 @@ describe("DomainsClient", () => {
             inbound_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
+            tracking_status: "NOT_STARTED",
+            tracking_reason: "tracking_reason",
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
@@ -223,6 +229,8 @@ describe("DomainsClient", () => {
             inboundEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
+            trackingStatus: "NOT_STARTED",
+            trackingReason: "tracking_reason",
             records: [
                 {
                     type: "TXT",
@@ -317,6 +325,8 @@ describe("DomainsClient", () => {
             inbound_enabled: true,
             subdomains_enabled: true,
             tracking_enabled: true,
+            tracking_status: "NOT_STARTED",
+            tracking_reason: "tracking_reason",
             records: [
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
                 { type: "TXT", name: "name", value: "value", status: "MISSING", priority: 1, reason: "reason" },
@@ -346,6 +356,8 @@ describe("DomainsClient", () => {
             inboundEnabled: true,
             subdomainsEnabled: true,
             trackingEnabled: true,
+            trackingStatus: "NOT_STARTED",
+            trackingReason: "tracking_reason",
             records: [
                 {
                     type: "TXT",

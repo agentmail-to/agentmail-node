@@ -112,12 +112,12 @@ export interface ApiKeyPermissions {
     calendarEventUpdate?: boolean;
     /** Delete calendar events. */
     calendarEventDelete?: boolean;
-    /** List and get Agent Drive files, with their download URLs. */
+    /** Reserved; not released yet. */
     fileRead?: boolean;
-    /** Upload Agent Drive files (Create File and Complete File). */
+    /** Reserved; not released yet. */
     fileCreate?: boolean;
-    /** Update Agent Drive files. Reserved; no endpoint uses it yet. */
+    /** Reserved; not released yet. */
     fileUpdate?: boolean;
-    /** Delete Agent Drive files. */
+    /** Reserved; not released yet. */
     fileDelete?: boolean;
 }

@@ -24,6 +24,8 @@ describe("OrganizationsClient", () => {
             billing_subscription_id: "billing_subscription_id",
             authentication_id: "authentication_id",
             authentication_type: "authentication_type",
+            suspended_at: "2024-01-15T09:30:00Z",
+            suspended_reason: "suspended_reason",
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
         };
@@ -42,6 +44,8 @@ describe("OrganizationsClient", () => {
             billingSubscriptionId: "billing_subscription_id",
             authenticationId: "authentication_id",
             authenticationType: "authentication_type",
+            suspendedAt: new Date("2024-01-15T09:30:00.000Z"),
+            suspendedReason: "suspended_reason",
             updatedAt: new Date("2024-01-15T09:30:00.000Z"),
             createdAt: new Date("2024-01-15T09:30:00.000Z"),
         });
