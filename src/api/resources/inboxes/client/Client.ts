@@ -454,7 +454,8 @@ export class InboxesClient {
      * ```
      *
      * To pause an inbox, set `status` to `paused`; set it back to `active` to
-     * resume. See [Pausing an inbox](/inboxes#pausing-an-inbox).
+     * resume. To pause it later, set `pause_at`. See
+     * [Pausing an inbox](/inboxes#pausing-an-inbox).
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.UpdateInboxRequest} request

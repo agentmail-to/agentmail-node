@@ -11,12 +11,18 @@ export interface UpdateInboxRequest {
      */
     status?: AgentMail.inboxes.InboxStatus;
     /**
+     * Schedule a pause, or move one already scheduled. Send null to cancel
+     * it. Only an organization- or pod-scoped API key can change it; an
+     * inbox-scoped key gets `403`.
+     */
+    pauseAt?: AgentMail.inboxes.PauseAt | null;
+    /**
      * Metadata to merge into the inbox's existing metadata. Keys you include
      * are added or overwritten; keys you omit are left unchanged. To remove a
      * single key, send it with a null value. To clear all metadata, send
      * `metadata` as null. Sending an empty object is rejected; use null to
      * clear. Each update must include at least one of `display_name`,
-     * `status`, or `metadata`.
+     * `status`, `pause_at`, or `metadata`.
      */
     metadata?: AgentMail.inboxes.UpdateMetadata | null;
 }

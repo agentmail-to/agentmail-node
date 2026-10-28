@@ -14,6 +14,11 @@ export interface Inbox {
      * receives normally.
      */
     status?: AgentMail.inboxes.InboxStatus;
+    /**
+     * When the inbox is scheduled to pause. Omitted when no pause is
+     * scheduled, and cleared once the pause happens.
+     */
+    pauseAt?: AgentMail.inboxes.PauseAt;
     /** Custom metadata attached to the inbox. */
     metadata?: AgentMail.inboxes.Metadata;
     /** Time at which inbox was last updated. */
