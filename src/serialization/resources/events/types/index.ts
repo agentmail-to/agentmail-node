@@ -28,6 +28,7 @@ export * from "./MessageSecurityReviewEvent.js";
 export * from "./MessageSentEvent.js";
 export * from "./Open.js";
 export * from "./PodIds.js";
+export * from "./ReceivedMessage.js";
 export * from "./Recipient.js";
 export * from "./Reject.js";
 export * from "./Send.js";

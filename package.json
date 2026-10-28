@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.5.46",
+    "version": "0.5.48",
     "private": false,
     "repository": {
         "type": "git",
@@ -512,8 +512,8 @@
         "overrides": {
             "postcss": ">=8.5.23",
             "fast-uri": ">=3.1.5",
-            "baseline-browser-mapping": "2.11.12",
-            "browserslist": "4.28.7"
+            "baseline-browser-mapping": ">=2.11.12",
+            "browserslist": ">=4.28.7"
         }
     },
     "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",

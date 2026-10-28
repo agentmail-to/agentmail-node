@@ -15,6 +15,8 @@ export interface CreateInboxRequest {
     clientId?: AgentMail.inboxes.ClientId;
     /** Set `paused` to create the inbox paused. */
     status?: AgentMail.inboxes.InboxStatus;
+    /** Schedule the inbox to pause at this time, for example when a fixed term ends. */
+    pauseAt?: AgentMail.inboxes.PauseAt;
     /** Custom metadata to attach to the inbox. */
     metadata?: AgentMail.inboxes.Metadata;
 }

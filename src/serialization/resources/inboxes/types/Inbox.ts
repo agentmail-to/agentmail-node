@@ -10,6 +10,7 @@ import { Email } from "./Email.js";
 import { InboxId } from "./InboxId.js";
 import { InboxStatus } from "./InboxStatus.js";
 import { Metadata } from "./Metadata.js";
+import { PauseAt } from "./PauseAt.js";
 
 export const Inbox: core.serialization.ObjectSchema<serializers.inboxes.Inbox.Raw, AgentMail.inboxes.Inbox> =
     core.serialization.object({
@@ -19,6 +20,7 @@ export const Inbox: core.serialization.ObjectSchema<serializers.inboxes.Inbox.Ra
         displayName: core.serialization.property("display_name", DisplayName.optional()),
         clientId: core.serialization.property("client_id", ClientId.optional()),
         status: InboxStatus.optional(),
+        pauseAt: core.serialization.property("pause_at", PauseAt.optional()),
         metadata: Metadata.optional(),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
         createdAt: core.serialization.property("created_at", core.serialization.date()),
@@ -32,6 +34,7 @@ export declare namespace Inbox {
         display_name?: DisplayName.Raw | null;
         client_id?: ClientId.Raw | null;
         status?: InboxStatus.Raw | null;
+        pause_at?: PauseAt.Raw | null;
         metadata?: Metadata.Raw | null;
         updated_at: string;
         created_at: string;

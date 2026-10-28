@@ -12,6 +12,7 @@ import { InboundEnabled } from "./InboundEnabled.js";
 import { Status } from "./Status.js";
 import { SubdomainsEnabled } from "./SubdomainsEnabled.js";
 import { TrackingEnabled } from "./TrackingEnabled.js";
+import { TrackingStatus } from "./TrackingStatus.js";
 import { VerificationRecord } from "./VerificationRecord.js";
 
 export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, AgentMail.Domain> =
@@ -25,6 +26,8 @@ export const Domain: core.serialization.ObjectSchema<serializers.Domain.Raw, Age
         inboundEnabled: core.serialization.property("inbound_enabled", InboundEnabled.optional()),
         subdomainsEnabled: core.serialization.property("subdomains_enabled", SubdomainsEnabled),
         trackingEnabled: core.serialization.property("tracking_enabled", TrackingEnabled),
+        trackingStatus: core.serialization.property("tracking_status", TrackingStatus.optional()),
+        trackingReason: core.serialization.property("tracking_reason", core.serialization.string().optional()),
         records: core.serialization.list(VerificationRecord),
         clientId: core.serialization.property("client_id", ClientId.optional()),
         updatedAt: core.serialization.property("updated_at", core.serialization.date()),
@@ -42,6 +45,8 @@ export declare namespace Domain {
         inbound_enabled?: InboundEnabled.Raw | null;
         subdomains_enabled: SubdomainsEnabled.Raw;
         tracking_enabled: TrackingEnabled.Raw;
+        tracking_status?: TrackingStatus.Raw | null;
+        tracking_reason?: string | null;
         records: VerificationRecord.Raw[];
         client_id?: ClientId.Raw | null;
         updated_at: string;

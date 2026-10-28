@@ -3,7 +3,10 @@
 import type * as AgentMail from "../../../index.js";
 
 export interface UpdateWebhookRequest extends AgentMail.webhooks.UpdatePodWebhookRequest {
-    /** Pod IDs to subscribe to the webhook. */
+    /**
+     * Pod IDs to subscribe to the webhook. The webhook can list at most 10 pods and inboxes combined
+     * after the update.
+     */
     addPodIds?: AgentMail.PodIds;
     /** Pod IDs to unsubscribe from the webhook. */
     removePodIds?: AgentMail.PodIds;

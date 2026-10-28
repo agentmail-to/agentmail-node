@@ -52,6 +52,15 @@ describe("MessagesClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    authentication_results: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spf_domain: "spf_domain",
+                        dkim_domain: "dkim_domain",
+                        dmarc_domain: "dmarc_domain",
+                        arc_sealer: "arc_sealer",
+                    },
                     agent_armor: {
                         status: "pending",
                         started_at: "2024-01-15T09:30:00Z",
@@ -95,6 +104,15 @@ describe("MessagesClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    authentication_results: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spf_domain: "spf_domain",
+                        dkim_domain: "dkim_domain",
+                        dmarc_domain: "dmarc_domain",
+                        arc_sealer: "arc_sealer",
+                    },
                     agent_armor: {
                         status: "pending",
                         started_at: "2024-01-15T09:30:00Z",
@@ -157,6 +175,15 @@ describe("MessagesClient", () => {
                     headers: {
                         headers: "headers",
                     },
+                    authenticationResults: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spfDomain: "spf_domain",
+                        dkimDomain: "dkim_domain",
+                        dmarcDomain: "dmarc_domain",
+                        arcSealer: "arc_sealer",
+                    },
                     agentArmor: {
                         status: "pending",
                         startedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -201,6 +228,15 @@ describe("MessagesClient", () => {
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",
+                    },
+                    authenticationResults: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spfDomain: "spf_domain",
+                        dkimDomain: "dkim_domain",
+                        dmarcDomain: "dmarc_domain",
+                        arcSealer: "arc_sealer",
                     },
                     agentArmor: {
                         status: "pending",
@@ -291,6 +327,15 @@ describe("MessagesClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    authentication_results: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spf_domain: "spf_domain",
+                        dkim_domain: "dkim_domain",
+                        dmarc_domain: "dmarc_domain",
+                        arc_sealer: "arc_sealer",
+                    },
                     agent_armor: {
                         status: "pending",
                         started_at: "2024-01-15T09:30:00Z",
@@ -340,6 +385,15 @@ describe("MessagesClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    authentication_results: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spf_domain: "spf_domain",
+                        dkim_domain: "dkim_domain",
+                        dmarc_domain: "dmarc_domain",
+                        arc_sealer: "arc_sealer",
+                    },
                     agent_armor: {
                         status: "pending",
                         started_at: "2024-01-15T09:30:00Z",
@@ -410,6 +464,15 @@ describe("MessagesClient", () => {
                     headers: {
                         headers: "headers",
                     },
+                    authenticationResults: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spfDomain: "spf_domain",
+                        dkimDomain: "dkim_domain",
+                        dmarcDomain: "dmarc_domain",
+                        arcSealer: "arc_sealer",
+                    },
                     agentArmor: {
                         status: "pending",
                         startedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -460,6 +523,15 @@ describe("MessagesClient", () => {
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",
+                    },
+                    authenticationResults: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spfDomain: "spf_domain",
+                        dkimDomain: "dkim_domain",
+                        dmarcDomain: "dmarc_domain",
+                        arcSealer: "arc_sealer",
                     },
                     agentArmor: {
                         status: "pending",
@@ -571,6 +643,15 @@ describe("MessagesClient", () => {
             calendar_event_id: "calendar_event_id",
             references: ["references", "references"],
             headers: { headers: "headers" },
+            authentication_results: {
+                spf: "pass",
+                dkim: "pass",
+                dmarc: "pass",
+                spf_domain: "spf_domain",
+                dkim_domain: "dkim_domain",
+                dmarc_domain: "dmarc_domain",
+                arc_sealer: "arc_sealer",
+            },
             agent_armor: { status: "pending", started_at: "2024-01-15T09:30:00Z", deadline_at: "2024-01-15T09:30:00Z" },
             size: 1,
             updated_at: "2024-01-15T09:30:00Z",
@@ -626,6 +707,15 @@ describe("MessagesClient", () => {
             references: ["references", "references"],
             headers: {
                 headers: "headers",
+            },
+            authenticationResults: {
+                spf: "pass",
+                dkim: "pass",
+                dmarc: "pass",
+                spfDomain: "spf_domain",
+                dkimDomain: "dkim_domain",
+                dmarcDomain: "dmarc_domain",
+                arcSealer: "arc_sealer",
             },
             agentArmor: {
                 status: "pending",
@@ -956,6 +1046,15 @@ describe("MessagesClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    authentication_results: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spf_domain: "spf_domain",
+                        dkim_domain: "dkim_domain",
+                        dmarc_domain: "dmarc_domain",
+                        arc_sealer: "arc_sealer",
+                    },
                     agent_armor: {
                         status: "pending",
                         started_at: "2024-01-15T09:30:00Z",
@@ -1004,6 +1103,15 @@ describe("MessagesClient", () => {
                     calendar_event_id: "calendar_event_id",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
+                    authentication_results: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spf_domain: "spf_domain",
+                        dkim_domain: "dkim_domain",
+                        dmarc_domain: "dmarc_domain",
+                        arc_sealer: "arc_sealer",
+                    },
                     agent_armor: {
                         status: "pending",
                         started_at: "2024-01-15T09:30:00Z",
@@ -1073,6 +1181,15 @@ describe("MessagesClient", () => {
                     headers: {
                         headers: "headers",
                     },
+                    authenticationResults: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spfDomain: "spf_domain",
+                        dkimDomain: "dkim_domain",
+                        dmarcDomain: "dmarc_domain",
+                        arcSealer: "arc_sealer",
+                    },
                     agentArmor: {
                         status: "pending",
                         startedAt: new Date("2024-01-15T09:30:00.000Z"),
@@ -1122,6 +1239,15 @@ describe("MessagesClient", () => {
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",
+                    },
+                    authenticationResults: {
+                        spf: "pass",
+                        dkim: "pass",
+                        dmarc: "pass",
+                        spfDomain: "spf_domain",
+                        dkimDomain: "dkim_domain",
+                        dmarcDomain: "dmarc_domain",
+                        arcSealer: "arc_sealer",
                     },
                     agentArmor: {
                         status: "pending",

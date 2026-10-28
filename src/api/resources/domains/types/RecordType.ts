@@ -4,5 +4,6 @@ export const RecordType = {
     Txt: "TXT",
     Cname: "CNAME",
     Mx: "MX",
+    Caa: "CAA",
 } as const;
 export type RecordType = (typeof RecordType)[keyof typeof RecordType];

@@ -6,8 +6,8 @@ import type * as AgentMail from "../../../index.js";
  * When you send a non-empty list, it replaces the webhook's subscribed event types in full (the same
  * "set the list" behavior as create). It is not a merge or diff: include every event type you want after
  * the update. Sending a one-element array means the webhook will only receive that one type afterward.
- * Omit this field or send an empty array to leave event types unchanged. Clearing all types with an empty
- * list is not supported. Subscribing to `message.received.spam`, `message.received.blocked`, or
+ * Omit this field to leave event types unchanged. An empty array is rejected with a `400`: a webhook
+ * always has at least one event type. Subscribing to `message.received.spam`, `message.received.blocked`, or
  * `message.received.unauthenticated` requires the matching label permission on the API key.
  */
 export type UpdateWebhookEventTypes = AgentMail.EventTypes;

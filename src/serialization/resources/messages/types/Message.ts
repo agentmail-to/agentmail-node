@@ -7,6 +7,7 @@ import { AgentArmorResult } from "../../agentArmor/types/AgentArmorResult.js";
 import { InboxId } from "../../inboxes/types/InboxId.js";
 import { ThreadId } from "../../threads/types/ThreadId.js";
 import { MessageAttachments } from "./MessageAttachments.js";
+import { MessageAuthenticationResults } from "./MessageAuthenticationResults.js";
 import { MessageBcc } from "./MessageBcc.js";
 import { MessageCalendarEventId } from "./MessageCalendarEventId.js";
 import { MessageCc } from "./MessageCc.js";
@@ -52,6 +53,10 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         calendarEventId: core.serialization.property("calendar_event_id", MessageCalendarEventId.optional()),
         references: MessageReferences.optional(),
         headers: MessageHeaders.optional(),
+        authenticationResults: core.serialization.property(
+            "authentication_results",
+            MessageAuthenticationResults.optional(),
+        ),
         agentArmor: core.serialization.property("agent_armor", AgentArmorResult.optional()),
         size: MessageSize,
         updatedAt: core.serialization.property("updated_at", MessageUpdatedAt),
@@ -81,6 +86,7 @@ export declare namespace Message {
         calendar_event_id?: MessageCalendarEventId.Raw | null;
         references?: MessageReferences.Raw | null;
         headers?: MessageHeaders.Raw | null;
+        authentication_results?: MessageAuthenticationResults.Raw | null;
         agent_armor?: AgentArmorResult.Raw | null;
         size: MessageSize.Raw;
         updated_at: MessageUpdatedAt.Raw;
