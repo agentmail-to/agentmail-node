@@ -489,7 +489,7 @@
         "webpack": "^5.105.4",
         "ts-loader": "^9.5.4",
         "@types/ws": "^8.18.1",
-        "vitest": "^4.1.1",
+        "vitest": "^4.1.12",
         "msw": "2.11.2",
         "@types/node": "^18.19.70",
         "typescript": "~5.9.3",
@@ -512,6 +512,7 @@
         "overrides": {
             "postcss": ">=8.5.23",
             "fast-uri": ">=3.1.5",
+            "baseline-browser-mapping": ">=2.11.12",
             "browserslist": ">=4.28.7"
         }
     },
