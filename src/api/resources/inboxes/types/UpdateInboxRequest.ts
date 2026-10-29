@@ -16,13 +16,15 @@ export interface UpdateInboxRequest {
      * inbox-scoped key gets `403`.
      */
     pauseAt?: AgentMail.inboxes.PauseAt | null;
+    /** Set or replace the inbox's signature. Send null to remove it. */
+    signature?: AgentMail.inboxes.InboxSignature | null;
     /**
      * Metadata to merge into the inbox's existing metadata. Keys you include
      * are added or overwritten; keys you omit are left unchanged. To remove a
      * single key, send it with a null value. To clear all metadata, send
      * `metadata` as null. Sending an empty object is rejected; use null to
      * clear. Each update must include at least one of `display_name`,
-     * `status`, `pause_at`, or `metadata`.
+     * `status`, `pause_at`, `signature`, or `metadata`.
      */
     metadata?: AgentMail.inboxes.UpdateMetadata | null;
 }

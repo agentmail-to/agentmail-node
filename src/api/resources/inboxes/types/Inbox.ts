@@ -19,6 +19,8 @@ export interface Inbox {
      * scheduled, and cleared once the pause happens.
      */
     pauseAt?: AgentMail.inboxes.PauseAt;
+    /** The signature added to messages this inbox sends. Omitted when none is set. */
+    signature?: AgentMail.inboxes.InboxSignature;
     /** Custom metadata attached to the inbox. */
     metadata?: AgentMail.inboxes.Metadata;
     /** Time at which inbox was last updated. */

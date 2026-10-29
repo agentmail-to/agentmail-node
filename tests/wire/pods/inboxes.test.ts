@@ -26,6 +26,7 @@ describe("InboxesClient", () => {
                     client_id: "client_id",
                     status: "active",
                     pause_at: "2024-01-15T09:30:00Z",
+                    signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -38,6 +39,7 @@ describe("InboxesClient", () => {
                     client_id: "client_id",
                     status: "active",
                     pause_at: "2024-01-15T09:30:00Z",
+                    signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -67,6 +69,10 @@ describe("InboxesClient", () => {
                     clientId: "client_id",
                     status: "active",
                     pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    signature: {
+                        text: "text",
+                        html: "html",
+                    },
                     metadata: {
                         metadata: "metadata",
                     },
@@ -81,6 +87,10 @@ describe("InboxesClient", () => {
                     clientId: "client_id",
                     status: "active",
                     pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    signature: {
+                        text: "text",
+                        html: "html",
+                    },
                     metadata: {
                         metadata: "metadata",
                     },
@@ -135,6 +145,7 @@ describe("InboxesClient", () => {
                     client_id: "client_id",
                     status: "active",
                     pause_at: "2024-01-15T09:30:00Z",
+                    signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -147,6 +158,7 @@ describe("InboxesClient", () => {
                     client_id: "client_id",
                     status: "active",
                     pause_at: "2024-01-15T09:30:00Z",
+                    signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
                     created_at: "2024-01-15T09:30:00Z",
@@ -178,6 +190,10 @@ describe("InboxesClient", () => {
                     clientId: "client_id",
                     status: "active",
                     pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    signature: {
+                        text: "text",
+                        html: "html",
+                    },
                     metadata: {
                         metadata: "metadata",
                     },
@@ -192,6 +208,10 @@ describe("InboxesClient", () => {
                     clientId: "client_id",
                     status: "active",
                     pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    signature: {
+                        text: "text",
+                        html: "html",
+                    },
                     metadata: {
                         metadata: "metadata",
                     },
@@ -268,6 +288,7 @@ describe("InboxesClient", () => {
             client_id: "client_id",
             status: "active",
             pause_at: "2024-01-15T09:30:00Z",
+            signature: { text: "text", html: "html" },
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -290,6 +311,10 @@ describe("InboxesClient", () => {
             clientId: "client_id",
             status: "active",
             pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+            signature: {
+                text: "text",
+                html: "html",
+            },
             metadata: {
                 metadata: "metadata",
             },
@@ -337,6 +362,7 @@ describe("InboxesClient", () => {
             client_id: "client_id",
             status: "active",
             pause_at: "2024-01-15T09:30:00Z",
+            signature: { text: "text", html: "html" },
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -360,6 +386,10 @@ describe("InboxesClient", () => {
             clientId: "client_id",
             status: "active",
             pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+            signature: {
+                text: "text",
+                html: "html",
+            },
             metadata: {
                 metadata: "metadata",
             },
@@ -432,6 +462,7 @@ describe("InboxesClient", () => {
             client_id: "client_id",
             status: "active",
             pause_at: "2024-01-15T09:30:00Z",
+            signature: { text: "text", html: "html" },
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
             created_at: "2024-01-15T09:30:00Z",
@@ -455,6 +486,10 @@ describe("InboxesClient", () => {
             clientId: "client_id",
             status: "active",
             pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+            signature: {
+                text: "text",
+                html: "html",
+            },
             metadata: {
                 metadata: "metadata",
             },

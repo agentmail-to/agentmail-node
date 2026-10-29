@@ -17,6 +17,8 @@ export interface CreateInboxRequest {
     status?: AgentMail.inboxes.InboxStatus;
     /** Schedule the inbox to pause at this time, for example when a fixed term ends. */
     pauseAt?: AgentMail.inboxes.PauseAt;
+    /** Signature to add to every message the inbox sends. */
+    signature?: AgentMail.inboxes.InboxSignature;
     /** Custom metadata to attach to the inbox. */
     metadata?: AgentMail.inboxes.Metadata;
 }

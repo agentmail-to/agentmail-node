@@ -5,6 +5,7 @@ import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ClientId } from "./ClientId.js";
 import { DisplayName } from "./DisplayName.js";
+import { InboxSignature } from "./InboxSignature.js";
 import { InboxStatus } from "./InboxStatus.js";
 import { Metadata } from "./Metadata.js";
 import { PauseAt } from "./PauseAt.js";
@@ -19,6 +20,7 @@ export const CreateInboxRequest: core.serialization.ObjectSchema<
     clientId: core.serialization.property("client_id", ClientId.optional()),
     status: InboxStatus.optional(),
     pauseAt: core.serialization.property("pause_at", PauseAt.optional()),
+    signature: InboxSignature.optional(),
     metadata: Metadata.optional(),
 });
 
@@ -30,6 +32,7 @@ export declare namespace CreateInboxRequest {
         client_id?: ClientId.Raw | null;
         status?: InboxStatus.Raw | null;
         pause_at?: PauseAt.Raw | null;
+        signature?: InboxSignature.Raw | null;
         metadata?: Metadata.Raw | null;
     }
 }

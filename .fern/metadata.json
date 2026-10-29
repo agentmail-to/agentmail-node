@@ -17,13 +17,15 @@
         },
         "packageJson": {
             "devDependencies": {
-                "vite": "^8.0.16"
+                "vite": "^8.0.16",
+                "vitest": "^4.1.12"
             },
             "pnpm": {
                 "overrides": {
                     "postcss": ">=8.5.23",
                     "fast-uri": ">=3.1.5",
-                    "browserslist": ">=4.28.7"
+                    "browserslist": ">=4.28.7",
+                    "baseline-browser-mapping": ">=2.11.12"
                 }
             },
             "description": "The email inbox API for AI agents. Send, receive, reply, and manage threaded email conversations programmatically.",
@@ -49,6 +51,6 @@
             }
         }
     },
-    "originGitCommit": "43621a12702474cf7103325ac96eed1865213546",
-    "sdkVersion": "0.5.48"
+    "originGitCommit": "f3403536316171f00f5c526e1174c2490c32316d",
+    "sdkVersion": "0.5.49"
 }
