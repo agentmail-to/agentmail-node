@@ -478,7 +478,7 @@
         "ws": "^8.20.0"
     },
     "peerDependencies": {
-        "@x402/fetch": "^2"
+        "@x402/fetch": "^2.29.0"
     },
     "peerDependenciesMeta": {
         "@x402/fetch": {
