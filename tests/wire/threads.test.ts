@@ -505,6 +505,8 @@ describe("ThreadsClient", () => {
                     ],
                     in_reply_to: "in_reply_to",
                     calendar_event_id: "calendar_event_id",
+                    track_opens: true,
+                    opened_at: "2024-01-15T09:30:00Z",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
                     authentication_results: {
@@ -562,6 +564,8 @@ describe("ThreadsClient", () => {
                     ],
                     in_reply_to: "in_reply_to",
                     calendar_event_id: "calendar_event_id",
+                    track_opens: true,
+                    opened_at: "2024-01-15T09:30:00Z",
                     references: ["references", "references"],
                     headers: { headers: "headers" },
                     authentication_results: {
@@ -669,6 +673,8 @@ describe("ThreadsClient", () => {
                     ],
                     inReplyTo: "in_reply_to",
                     calendarEventId: "calendar_event_id",
+                    trackOpens: true,
+                    openedAt: new Date("2024-01-15T09:30:00.000Z"),
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",
@@ -728,6 +734,8 @@ describe("ThreadsClient", () => {
                     ],
                     inReplyTo: "in_reply_to",
                     calendarEventId: "calendar_event_id",
+                    trackOpens: true,
+                    openedAt: new Date("2024-01-15T09:30:00.000Z"),
                     references: ["references", "references"],
                     headers: {
                         headers: "headers",

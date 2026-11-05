@@ -18,6 +18,7 @@ import { MessageHtml } from "./MessageHtml.js";
 import { MessageId } from "./MessageId.js";
 import { MessageInReplyTo } from "./MessageInReplyTo.js";
 import { MessageLabels } from "./MessageLabels.js";
+import { MessageOpenedAt } from "./MessageOpenedAt.js";
 import { MessagePreview } from "./MessagePreview.js";
 import { MessageReferences } from "./MessageReferences.js";
 import { MessageSize } from "./MessageSize.js";
@@ -25,6 +26,7 @@ import { MessageSubject } from "./MessageSubject.js";
 import { MessageText } from "./MessageText.js";
 import { MessageTimestamp } from "./MessageTimestamp.js";
 import { MessageTo } from "./MessageTo.js";
+import { MessageTrackOpens } from "./MessageTrackOpens.js";
 import { MessageUpdatedAt } from "./MessageUpdatedAt.js";
 
 export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, AgentMail.Message> =
@@ -51,6 +53,8 @@ export const Message: core.serialization.ObjectSchema<serializers.Message.Raw, A
         attachments: MessageAttachments.optional(),
         inReplyTo: core.serialization.property("in_reply_to", MessageInReplyTo.optional()),
         calendarEventId: core.serialization.property("calendar_event_id", MessageCalendarEventId.optional()),
+        trackOpens: core.serialization.property("track_opens", MessageTrackOpens.optional()),
+        openedAt: core.serialization.property("opened_at", MessageOpenedAt.optional()),
         references: MessageReferences.optional(),
         headers: MessageHeaders.optional(),
         authenticationResults: core.serialization.property(
@@ -84,6 +88,8 @@ export declare namespace Message {
         attachments?: MessageAttachments.Raw | null;
         in_reply_to?: MessageInReplyTo.Raw | null;
         calendar_event_id?: MessageCalendarEventId.Raw | null;
+        track_opens?: MessageTrackOpens.Raw | null;
+        opened_at?: MessageOpenedAt.Raw | null;
         references?: MessageReferences.Raw | null;
         headers?: MessageHeaders.Raw | null;
         authentication_results?: MessageAuthenticationResults.Raw | null;

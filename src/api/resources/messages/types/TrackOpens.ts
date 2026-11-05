@@ -2,8 +2,9 @@
 
 /**
  * Track when this message is first opened. Requires a custom domain with tracking enabled and
- * an HTML body. Opens surface as the `opened` label on the message and as a `message.opened`
- * event. One pixel is injected per message, not per recipient, so a message with several
- * recipients fires once when any of them opens it, and the event does not identify which one.
+ * an HTML body. Opens surface as the `opened` label and `opened_at` on the message and as a
+ * `message.opened` event. One pixel is injected per message, not per recipient, so a message
+ * with several recipients fires once when any of them opens it, and the event does not identify
+ * which one.
  */
 export type TrackOpens = boolean;

@@ -358,6 +358,8 @@ await client.inboxes.update("inbox_id", {});
 <dl>
 <dd>
 
+Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
 **CLI:**
 ```bash
 agentmail inboxes delete --inbox-id <inbox_id>
@@ -376,7 +378,7 @@ agentmail inboxes delete --inbox-id <inbox_id>
 <dd>
 
 ```typescript
-await client.inboxes.delete("inbox_id");
+await client.inboxes.delete("my-agent@agentmail.to");
 
 ```
 </dd>
@@ -3180,6 +3182,350 @@ await client.drafts.getAttachment("draft_id", "attachment_id");
 </dl>
 </details>
 
+## Forwarding
+<details><summary><code>client.forwarding.<a href="/src/api/resources/forwarding/client/Client.ts">get</a>() -> AgentMail.Forwarding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the forwarding the organization sets. Pods and inboxes that set no forwarding of their own
+use this list. Needs an organization-scoped API key.
+
+**CLI:**
+```bash
+agentmail forwarding get
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.forwarding.get();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.forwarding.<a href="/src/api/resources/forwarding/client/Client.ts">update</a>({ ...params }) -> AgentMail.UpdateForwardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set the addresses the organization forwards to. The list replaces the current one. An address
+that is not verified is saved but receives nothing until it is verified. Needs an
+organization-scoped API key in an organization that has completed agent verification.
+
+**CLI:**
+```bash
+agentmail forwarding update --destinations ops@example.com --destinations archive@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.forwarding.update({
+    destinations: ["destinations", "destinations"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateForwardingRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.forwarding.<a href="/src/api/resources/forwarding/client/Client.ts">delete</a>() -> AgentMail.Forwarding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove the organization's forwarding, so its inboxes stop forwarding unless their pod or the
+inbox sets its own. Verified addresses stay verified, so adding one again needs no new code.
+Returns `not_found` when the organization sets no forwarding.
+
+**CLI:**
+```bash
+agentmail forwarding delete
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.forwarding.delete();
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.forwarding.<a href="/src/api/resources/forwarding/client/Client.ts">startVerification</a>({ ...params }) -> AgentMail.ForwardingVerificationStarted</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Email a confirmation code to an address, so it can receive forwarded mail once confirmed.
+Verification belongs to the organization: once verified, the address can be used at the
+organization, any pod and any inbox. Starting again replaces any code already sent to the
+address. Needs an organization- or pod-scoped API key in an organization that has completed
+agent verification.
+
+**CLI:**
+```bash
+agentmail forwarding start-verification --destination ops@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.forwarding.startVerification({
+    destination: "destination"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.StartForwardingVerificationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.forwarding.<a href="/src/api/resources/forwarding/client/Client.ts">confirmVerification</a>({ ...params }) -> AgentMail.ForwardingVerificationConfirmed</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Submit the code emailed by Start Verification to verify the address. A code allows 10 wrong
+attempts, then stops working even with the right code, and Start Verification sends a new one.
+Needs an organization- or pod-scoped API key in an organization that has completed agent
+verification.
+
+**CLI:**
+```bash
+agentmail forwarding confirm-verification --destination ops@example.com --code 7KQ2M-XW9PD
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.forwarding.confirmVerification({
+    destination: "destination",
+    code: "code"
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.ConfirmForwardingVerificationRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 ## Inboxes Accounts
 <details><summary><code>client.inboxes.accounts.<a href="/src/api/resources/inboxes/resources/accounts/client/Client.ts">list</a>(inbox_id, { ...params }) -> AgentMail.ListAccountsResponse</code></summary>
 <dl>
@@ -5593,6 +5939,226 @@ await client.inboxes.files.delete("reports@agentmail.to", "6f1c2f4e-8d3b-4a5e-9c
 <dd>
 
 **requestOptions:** `FilesClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Inboxes Forwarding
+<details><summary><code>client.inboxes.forwarding.<a href="/src/api/resources/inboxes/resources/forwarding/client/Client.ts">get</a>(inbox_id) -> AgentMail.Forwarding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the forwarding this inbox sets. When the inbox sets nothing, `destinations` is `null` and
+the inbox uses its pod's forwarding, or the organization's when the pod sets none.
+
+**CLI:**
+```bash
+agentmail inboxes forwarding get --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.forwarding.get("inbox_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.forwarding.<a href="/src/api/resources/inboxes/resources/forwarding/client/Client.ts">update</a>(inbox_id, { ...params }) -> AgentMail.UpdateForwardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set the addresses this inbox forwards to. The list replaces the inbox's current one and any pod
+or organization list for this inbox; lists are never combined. Send an empty list to stop this
+inbox forwarding even when its pod or the organization forwards. An address that is not
+verified is saved but receives nothing until it is verified.
+
+**CLI:**
+```bash
+agentmail inboxes forwarding update --inbox-id <inbox_id> --destinations ops@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.forwarding.update("inbox_id", {
+    destinations: ["destinations", "destinations"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateForwardingRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.inboxes.forwarding.<a href="/src/api/resources/inboxes/resources/forwarding/client/Client.ts">delete</a>(inbox_id) -> AgentMail.Forwarding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove this inbox's own forwarding, so the inbox uses its pod's or the organization's forwarding
+again. Verified addresses stay verified. Returns `not_found` when the inbox sets no forwarding.
+
+**CLI:**
+```bash
+agentmail inboxes forwarding delete --inbox-id <inbox_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.forwarding.delete("inbox_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
     
 </dd>
 </dl>
@@ -10654,6 +11220,227 @@ await client.pods.drafts.getAttachment("pod_id", "draft_id", "attachment_id");
 <dd>
 
 **requestOptions:** `DraftsClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+## Pods Forwarding
+<details><summary><code>client.pods.forwarding.<a href="/src/api/resources/pods/resources/forwarding/client/Client.ts">get</a>(pod_id) -> AgentMail.Forwarding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Get the forwarding this pod sets. Its inboxes that set no forwarding of their own use this
+list. When the pod sets nothing, `destinations` is `null` and the pod uses the organization's
+forwarding.
+
+**CLI:**
+```bash
+agentmail pods forwarding get --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.forwarding.get("pod_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.forwarding.<a href="/src/api/resources/pods/resources/forwarding/client/Client.ts">update</a>(pod_id, { ...params }) -> AgentMail.UpdateForwardingResponse</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Set the addresses this pod forwards to. The list replaces the pod's current one and the
+organization's list for this pod; lists are never combined. Send an empty list to stop
+forwarding in this pod even when the organization forwards. An address that is not verified is
+saved but receives nothing until it is verified.
+
+**CLI:**
+```bash
+agentmail pods forwarding update --pod-id <pod_id> --destinations ops@example.com
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.forwarding.update("pod_id", {
+    destinations: ["destinations", "destinations"]
+});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdateForwardingRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.pods.forwarding.<a href="/src/api/resources/pods/resources/forwarding/client/Client.ts">delete</a>(pod_id) -> AgentMail.Forwarding</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Remove this pod's own forwarding, so the pod uses the organization's forwarding again. Verified
+addresses stay verified. Returns `not_found` when the pod sets no forwarding.
+
+**CLI:**
+```bash
+agentmail pods forwarding delete --pod-id <pod_id>
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.forwarding.delete("pod_id");
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `ForwardingClient.RequestOptions` 
     
 </dd>
 </dl>

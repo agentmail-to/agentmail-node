@@ -491,9 +491,9 @@ describe("InboxesClient", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
 
-        server.mockEndpoint().delete("/v0/inboxes/inbox_id").respondWith().statusCode(200).build();
+        server.mockEndpoint().delete("/v0/inboxes/my-agent%40agentmail.to").respondWith().statusCode(200).build();
 
-        const response = await client.inboxes.delete("inbox_id");
+        const response = await client.inboxes.delete("my-agent@agentmail.to");
         expect(response).toEqual(undefined);
     });
 
@@ -518,6 +518,29 @@ describe("InboxesClient", () => {
         await expect(async () => {
             return await client.inboxes.delete("inbox_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/v0/inboxes/inbox_id")
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.inboxes.delete("inbox_id");
+        }).rejects.toThrow(AgentMail.ConflictError);
     });
 
     test("authorize (1)", async () => {

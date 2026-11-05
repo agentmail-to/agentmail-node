@@ -17,6 +17,8 @@ export interface MessageItem {
     attachments?: AgentMail.MessageAttachments;
     inReplyTo?: AgentMail.MessageInReplyTo;
     calendarEventId?: AgentMail.MessageCalendarEventId;
+    trackOpens?: AgentMail.MessageTrackOpens;
+    openedAt?: AgentMail.MessageOpenedAt;
     references?: AgentMail.MessageReferences;
     headers?: AgentMail.MessageHeaders;
     authenticationResults?: AgentMail.MessageAuthenticationResults;

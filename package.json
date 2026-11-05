@@ -1,6 +1,6 @@
 {
     "name": "agentmail",
-    "version": "0.5.50",
+    "version": "0.5.51",
     "private": false,
     "repository": {
         "type": "git",
@@ -144,6 +144,17 @@
             },
             "default": "./dist/cjs/api/resources/drafts/exports.js"
         },
+        "./forwarding": {
+            "import": {
+                "types": "./dist/esm/api/resources/forwarding/exports.d.mts",
+                "default": "./dist/esm/api/resources/forwarding/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/forwarding/exports.d.ts",
+                "default": "./dist/cjs/api/resources/forwarding/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/forwarding/exports.js"
+        },
         "./inboxes/accounts": {
             "import": {
                 "types": "./dist/esm/api/resources/inboxes/resources/accounts/exports.d.mts",
@@ -209,6 +220,17 @@
                 "default": "./dist/cjs/api/resources/inboxes/resources/files/exports.js"
             },
             "default": "./dist/cjs/api/resources/inboxes/resources/files/exports.js"
+        },
+        "./inboxes/forwarding": {
+            "import": {
+                "types": "./dist/esm/api/resources/inboxes/resources/forwarding/exports.d.mts",
+                "default": "./dist/esm/api/resources/inboxes/resources/forwarding/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/inboxes/resources/forwarding/exports.d.ts",
+                "default": "./dist/cjs/api/resources/inboxes/resources/forwarding/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/inboxes/resources/forwarding/exports.js"
         },
         "./inboxes/lists": {
             "import": {
@@ -352,6 +374,17 @@
                 "default": "./dist/cjs/api/resources/pods/resources/drafts/exports.js"
             },
             "default": "./dist/cjs/api/resources/pods/resources/drafts/exports.js"
+        },
+        "./pods/forwarding": {
+            "import": {
+                "types": "./dist/esm/api/resources/pods/resources/forwarding/exports.d.mts",
+                "default": "./dist/esm/api/resources/pods/resources/forwarding/exports.mjs"
+            },
+            "require": {
+                "types": "./dist/cjs/api/resources/pods/resources/forwarding/exports.d.ts",
+                "default": "./dist/cjs/api/resources/pods/resources/forwarding/exports.js"
+            },
+            "default": "./dist/cjs/api/resources/pods/resources/forwarding/exports.js"
         },
         "./pods/inboxes": {
             "import": {

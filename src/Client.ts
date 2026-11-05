@@ -7,6 +7,7 @@ import { AppsClient } from "./api/resources/apps/client/Client.js";
 import { AuthClient } from "./api/resources/auth/client/Client.js";
 import { DomainsClient } from "./api/resources/domains/client/Client.js";
 import { DraftsClient } from "./api/resources/drafts/client/Client.js";
+import { ForwardingClient } from "./api/resources/forwarding/client/Client.js";
 import { InboxesClient } from "./api/resources/inboxes/client/Client.js";
 import { ListsClient } from "./api/resources/lists/client/Client.js";
 import { MetricsClient } from "./api/resources/metrics/client/Client.js";
@@ -38,6 +39,7 @@ export class AgentMailClient {
     protected _auth: AuthClient | undefined;
     protected _domains: DomainsClient | undefined;
     protected _drafts: DraftsClient | undefined;
+    protected _forwarding: ForwardingClient | undefined;
     protected _lists: ListsClient | undefined;
     protected _metrics: MetricsClient | undefined;
     protected _organizations: OrganizationsClient | undefined;
@@ -86,6 +88,10 @@ export class AgentMailClient {
 
     public get drafts(): DraftsClient {
         return (this._drafts ??= new DraftsClient(this._options));
+    }
+
+    public get forwarding(): ForwardingClient {
+        return (this._forwarding ??= new ForwardingClient(this._options));
     }
 
     public get lists(): ListsClient {

@@ -10,6 +10,7 @@ export * from "./events/client/requests/index.js";
 export * as events from "./events/index.js";
 export * from "./files/client/requests/index.js";
 export * as files from "./files/index.js";
+export * as forwarding from "./forwarding/index.js";
 export * from "./lists/client/requests/index.js";
 export * as lists from "./lists/index.js";
 export * from "./messages/client/requests/index.js";

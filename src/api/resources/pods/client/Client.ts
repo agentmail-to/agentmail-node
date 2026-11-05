@@ -13,6 +13,7 @@ import { AccountsClient } from "../resources/accounts/client/Client.js";
 import { ApiKeysClient } from "../resources/apiKeys/client/Client.js";
 import { DomainsClient } from "../resources/domains/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
+import { ForwardingClient } from "../resources/forwarding/client/Client.js";
 import { InboxesClient } from "../resources/inboxes/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
 import { MetricsClient } from "../resources/metrics/client/Client.js";
@@ -33,6 +34,7 @@ export class PodsClient {
     protected _webhooks: WebhooksClient | undefined;
     protected _domains: DomainsClient | undefined;
     protected _lists: ListsClient | undefined;
+    protected _forwarding: ForwardingClient | undefined;
     protected _metrics: MetricsClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
     protected _accounts: AccountsClient | undefined;
@@ -63,6 +65,10 @@ export class PodsClient {
 
     public get lists(): ListsClient {
         return (this._lists ??= new ListsClient(this._options));
+    }
+
+    public get forwarding(): ForwardingClient {
+        return (this._forwarding ??= new ForwardingClient(this._options));
     }
 
     public get metrics(): MetricsClient {

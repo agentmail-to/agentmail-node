@@ -15,6 +15,7 @@ import { CalendarClient } from "../resources/calendar/client/Client.js";
 import { DraftsClient } from "../resources/drafts/client/Client.js";
 import { EventsClient } from "../resources/events/client/Client.js";
 import { FilesClient } from "../resources/files/client/Client.js";
+import { ForwardingClient } from "../resources/forwarding/client/Client.js";
 import { ListsClient } from "../resources/lists/client/Client.js";
 import { MessagesClient } from "../resources/messages/client/Client.js";
 import { MetricsClient } from "../resources/metrics/client/Client.js";
@@ -34,6 +35,7 @@ export class InboxesClient {
     protected _drafts: DraftsClient | undefined;
     protected _webhooks: WebhooksClient | undefined;
     protected _lists: ListsClient | undefined;
+    protected _forwarding: ForwardingClient | undefined;
     protected _metrics: MetricsClient | undefined;
     protected _events: EventsClient | undefined;
     protected _apiKeys: ApiKeysClient | undefined;
@@ -63,6 +65,10 @@ export class InboxesClient {
 
     public get lists(): ListsClient {
         return (this._lists ??= new ListsClient(this._options));
+    }
+
+    public get forwarding(): ForwardingClient {
+        return (this._forwarding ??= new ForwardingClient(this._options));
     }
 
     public get metrics(): MetricsClient {
@@ -570,6 +576,8 @@ export class InboxesClient {
     }
 
     /**
+     * Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+     *
      * **CLI:**
      * ```bash
      * agentmail inboxes delete --inbox-id <inbox_id>
@@ -579,9 +587,10 @@ export class InboxesClient {
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ConflictError}
      *
      * @example
-     *     await client.inboxes.delete("inbox_id")
+     *     await client.inboxes.delete("my-agent@agentmail.to")
      */
     public delete(
         inbox_id: AgentMail.inboxes.InboxId,
@@ -624,6 +633,17 @@ export class InboxesClient {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,
