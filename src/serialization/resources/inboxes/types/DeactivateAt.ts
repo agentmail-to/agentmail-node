@@ -4,9 +4,11 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 
-export const PauseAt: core.serialization.Schema<serializers.inboxes.PauseAt.Raw, AgentMail.inboxes.PauseAt> =
-    core.serialization.date();
+export const DeactivateAt: core.serialization.Schema<
+    serializers.inboxes.DeactivateAt.Raw,
+    AgentMail.inboxes.DeactivateAt
+> = core.serialization.date();
 
-export declare namespace PauseAt {
+export declare namespace DeactivateAt {
     export type Raw = string;
 }

@@ -25,7 +25,7 @@ describe("InboxesClient", () => {
                     display_name: "display_name",
                     client_id: "client_id",
                     status: "active",
-                    pause_at: "2024-01-15T09:30:00Z",
+                    deactivate_at: "2024-01-15T09:30:00Z",
                     signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
@@ -38,7 +38,7 @@ describe("InboxesClient", () => {
                     display_name: "display_name",
                     client_id: "client_id",
                     status: "active",
-                    pause_at: "2024-01-15T09:30:00Z",
+                    deactivate_at: "2024-01-15T09:30:00Z",
                     signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
@@ -68,7 +68,7 @@ describe("InboxesClient", () => {
                     displayName: "display_name",
                     clientId: "client_id",
                     status: "active",
-                    pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    deactivateAt: new Date("2024-01-15T09:30:00.000Z"),
                     signature: {
                         text: "text",
                         html: "html",
@@ -86,7 +86,7 @@ describe("InboxesClient", () => {
                     displayName: "display_name",
                     clientId: "client_id",
                     status: "active",
-                    pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    deactivateAt: new Date("2024-01-15T09:30:00.000Z"),
                     signature: {
                         text: "text",
                         html: "html",
@@ -144,7 +144,7 @@ describe("InboxesClient", () => {
                     display_name: "display_name",
                     client_id: "client_id",
                     status: "active",
-                    pause_at: "2024-01-15T09:30:00Z",
+                    deactivate_at: "2024-01-15T09:30:00Z",
                     signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
@@ -157,7 +157,7 @@ describe("InboxesClient", () => {
                     display_name: "display_name",
                     client_id: "client_id",
                     status: "active",
-                    pause_at: "2024-01-15T09:30:00Z",
+                    deactivate_at: "2024-01-15T09:30:00Z",
                     signature: { text: "text", html: "html" },
                     metadata: { metadata: "metadata" },
                     updated_at: "2024-01-15T09:30:00Z",
@@ -189,7 +189,7 @@ describe("InboxesClient", () => {
                     displayName: "display_name",
                     clientId: "client_id",
                     status: "active",
-                    pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    deactivateAt: new Date("2024-01-15T09:30:00.000Z"),
                     signature: {
                         text: "text",
                         html: "html",
@@ -207,7 +207,7 @@ describe("InboxesClient", () => {
                     displayName: "display_name",
                     clientId: "client_id",
                     status: "active",
-                    pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+                    deactivateAt: new Date("2024-01-15T09:30:00.000Z"),
                     signature: {
                         text: "text",
                         html: "html",
@@ -287,7 +287,7 @@ describe("InboxesClient", () => {
             display_name: "display_name",
             client_id: "client_id",
             status: "active",
-            pause_at: "2024-01-15T09:30:00Z",
+            deactivate_at: "2024-01-15T09:30:00Z",
             signature: { text: "text", html: "html" },
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
@@ -310,7 +310,7 @@ describe("InboxesClient", () => {
             displayName: "display_name",
             clientId: "client_id",
             status: "active",
-            pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+            deactivateAt: new Date("2024-01-15T09:30:00.000Z"),
             signature: {
                 text: "text",
                 html: "html",
@@ -361,7 +361,7 @@ describe("InboxesClient", () => {
             display_name: "display_name",
             client_id: "client_id",
             status: "active",
-            pause_at: "2024-01-15T09:30:00Z",
+            deactivate_at: "2024-01-15T09:30:00Z",
             signature: { text: "text", html: "html" },
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
@@ -385,7 +385,7 @@ describe("InboxesClient", () => {
             displayName: "display_name",
             clientId: "client_id",
             status: "active",
-            pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+            deactivateAt: new Date("2024-01-15T09:30:00.000Z"),
             signature: {
                 text: "text",
                 html: "html",
@@ -461,7 +461,7 @@ describe("InboxesClient", () => {
             display_name: "display_name",
             client_id: "client_id",
             status: "active",
-            pause_at: "2024-01-15T09:30:00Z",
+            deactivate_at: "2024-01-15T09:30:00Z",
             signature: { text: "text", html: "html" },
             metadata: { metadata: "metadata" },
             updated_at: "2024-01-15T09:30:00Z",
@@ -485,7 +485,7 @@ describe("InboxesClient", () => {
             displayName: "display_name",
             clientId: "client_id",
             status: "active",
-            pauseAt: new Date("2024-01-15T09:30:00.000Z"),
+            deactivateAt: new Date("2024-01-15T09:30:00.000Z"),
             signature: {
                 text: "text",
                 html: "html",
@@ -554,9 +554,14 @@ describe("InboxesClient", () => {
             environment: { http: server.baseUrl, websockets: server.baseUrl },
         });
 
-        server.mockEndpoint().delete("/v0/pods/pod_id/inboxes/inbox_id").respondWith().statusCode(200).build();
+        server
+            .mockEndpoint()
+            .delete("/v0/pods/my-pod/inboxes/my-agent%40agentmail.to")
+            .respondWith()
+            .statusCode(200)
+            .build();
 
-        const response = await client.pods.inboxes.delete("pod_id", "inbox_id");
+        const response = await client.pods.inboxes.delete("my-pod", "my-agent@agentmail.to");
         expect(response).toEqual(undefined);
     });
 
@@ -581,5 +586,28 @@ describe("InboxesClient", () => {
         await expect(async () => {
             return await client.pods.inboxes.delete("pod_id", "inbox_id");
         }).rejects.toThrow(AgentMail.NotFoundError);
+    });
+
+    test("delete (3)", async () => {
+        const server = mockServerPool.createServer();
+        const client = new AgentMailClient({
+            maxRetries: 0,
+            apiKey: "test",
+            environment: { http: server.baseUrl, websockets: server.baseUrl },
+        });
+
+        const rawResponseBody = { name: "name", message: "message" };
+
+        server
+            .mockEndpoint()
+            .delete("/v0/pods/pod_id/inboxes/inbox_id")
+            .respondWith()
+            .statusCode(409)
+            .jsonBody(rawResponseBody)
+            .build();
+
+        await expect(async () => {
+            return await client.pods.inboxes.delete("pod_id", "inbox_id");
+        }).rejects.toThrow(AgentMail.ConflictError);
     });
 });

@@ -285,9 +285,9 @@ await client.inboxes.create(undefined);
 agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
 ```
 
-To pause an inbox, set `status` to `paused`; set it back to `active` to
-resume. To pause it later, set `pause_at`. See
-[Pausing an inbox](/inboxes#pausing-an-inbox).
+To deactivate an inbox, set `status` to `deactivated`; set it back to
+`active` to reactivate it. To deactivate it later, set `deactivate_at`.
+See [Deactivating an inbox](/inboxes#deactivating-an-inbox).
 </dd>
 </dl>
 </dd>
@@ -11847,6 +11847,8 @@ await client.pods.inboxes.update("pod_id", "inbox_id", {});
 <dl>
 <dd>
 
+Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/pods/{pod_id}/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+
 **CLI:**
 ```bash
 agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
@@ -11865,7 +11867,7 @@ agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
 <dd>
 
 ```typescript
-await client.pods.inboxes.delete("pod_id", "inbox_id");
+await client.pods.inboxes.delete("my-pod", "my-agent@agentmail.to");
 
 ```
 </dd>

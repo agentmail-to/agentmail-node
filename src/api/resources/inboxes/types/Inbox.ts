@@ -9,16 +9,16 @@ export interface Inbox {
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;
     /**
-     * `paused` when the inbox is paused. Omitted when the inbox is active.
-     * Treat any value other than `paused` as an inbox that sends and
-     * receives normally.
+     * `deactivated` when the inbox is deactivated. Omitted when the inbox
+     * is active. Treat any value other than `deactivated` as an inbox that
+     * sends and receives normally.
      */
     status?: AgentMail.inboxes.InboxStatus;
     /**
-     * When the inbox is scheduled to pause. Omitted when no pause is
-     * scheduled, and cleared once the pause happens.
+     * When the inbox is scheduled to deactivate. Omitted when no
+     * deactivation is scheduled, and cleared once it happens.
      */
-    pauseAt?: AgentMail.inboxes.PauseAt;
+    deactivateAt?: AgentMail.inboxes.DeactivateAt;
     /** The signature added to messages this inbox sends. Omitted when none is set. */
     signature?: AgentMail.inboxes.InboxSignature;
     /** Custom metadata attached to the inbox. */

@@ -7,8 +7,8 @@ import type * as serializers from "../../../index.js";
 export const InboxStatus: core.serialization.Schema<
     serializers.inboxes.InboxStatus.Raw,
     AgentMail.inboxes.InboxStatus
-> = core.serialization.enum_(["active", "paused"]);
+> = core.serialization.enum_(["active", "deactivated"]);
 
 export declare namespace InboxStatus {
-    export type Raw = "active" | "paused";
+    export type Raw = "active" | "deactivated";
 }

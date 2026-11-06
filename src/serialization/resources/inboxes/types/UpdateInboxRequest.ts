@@ -3,10 +3,10 @@
 import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
+import { DeactivateAt } from "./DeactivateAt.js";
 import { DisplayName } from "./DisplayName.js";
 import { InboxSignature } from "./InboxSignature.js";
 import { InboxStatus } from "./InboxStatus.js";
-import { PauseAt } from "./PauseAt.js";
 import { UpdateMetadata } from "./UpdateMetadata.js";
 
 export const UpdateInboxRequest: core.serialization.ObjectSchema<
@@ -15,7 +15,7 @@ export const UpdateInboxRequest: core.serialization.ObjectSchema<
 > = core.serialization.object({
     displayName: core.serialization.property("display_name", DisplayName.optional()),
     status: InboxStatus.optional(),
-    pauseAt: core.serialization.property("pause_at", PauseAt.optionalNullable()),
+    deactivateAt: core.serialization.property("deactivate_at", DeactivateAt.optionalNullable()),
     signature: InboxSignature.optionalNullable(),
     metadata: UpdateMetadata.optionalNullable(),
 });
@@ -24,7 +24,7 @@ export declare namespace UpdateInboxRequest {
     export interface Raw {
         display_name?: DisplayName.Raw | null;
         status?: InboxStatus.Raw | null;
-        pause_at?: (PauseAt.Raw | null | undefined) | null;
+        deactivate_at?: (DeactivateAt.Raw | null | undefined) | null;
         signature?: (InboxSignature.Raw | null | undefined) | null;
         metadata?: (UpdateMetadata.Raw | null | undefined) | null;
     }

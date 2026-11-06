@@ -4,11 +4,11 @@ import type * as AgentMail from "../../../../api/index.js";
 import * as core from "../../../../core/index.js";
 import type * as serializers from "../../../index.js";
 import { ClientId } from "./ClientId.js";
+import { DeactivateAt } from "./DeactivateAt.js";
 import { DisplayName } from "./DisplayName.js";
 import { InboxSignature } from "./InboxSignature.js";
 import { InboxStatus } from "./InboxStatus.js";
 import { Metadata } from "./Metadata.js";
-import { PauseAt } from "./PauseAt.js";
 
 export const CreateInboxRequest: core.serialization.ObjectSchema<
     serializers.inboxes.CreateInboxRequest.Raw,
@@ -19,7 +19,7 @@ export const CreateInboxRequest: core.serialization.ObjectSchema<
     displayName: core.serialization.property("display_name", DisplayName.optional()),
     clientId: core.serialization.property("client_id", ClientId.optional()),
     status: InboxStatus.optional(),
-    pauseAt: core.serialization.property("pause_at", PauseAt.optional()),
+    deactivateAt: core.serialization.property("deactivate_at", DeactivateAt.optional()),
     signature: InboxSignature.optional(),
     metadata: Metadata.optional(),
 });
@@ -31,7 +31,7 @@ export declare namespace CreateInboxRequest {
         display_name?: DisplayName.Raw | null;
         client_id?: ClientId.Raw | null;
         status?: InboxStatus.Raw | null;
-        pause_at?: PauseAt.Raw | null;
+        deactivate_at?: DeactivateAt.Raw | null;
         signature?: InboxSignature.Raw | null;
         metadata?: Metadata.Raw | null;
     }

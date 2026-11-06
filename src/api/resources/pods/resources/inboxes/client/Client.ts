@@ -546,6 +546,8 @@ export class InboxesClient {
     }
 
     /**
+     * Deletion is asynchronous. A `202` means it has started. While it runs, requests for this inbox return `409` `resource_deleting`. Poll `GET /v0/pods/{pod_id}/inboxes/{inbox_id}` until it returns `404`, then the address is free. If the inbox still has its own API keys, delete returns `409` `cannot_delete`: revoke those keys first.
+     *
      * **CLI:**
      * ```bash
      * agentmail pods inboxes delete --pod-id <pod_id> --inbox-id <inbox_id>
@@ -556,9 +558,10 @@ export class InboxesClient {
      * @param {InboxesClient.RequestOptions} requestOptions - Request-specific configuration.
      *
      * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ConflictError}
      *
      * @example
-     *     await client.pods.inboxes.delete("pod_id", "inbox_id")
+     *     await client.pods.inboxes.delete("my-pod", "my-agent@agentmail.to")
      */
     public delete(
         pod_id: AgentMail.pods.PodId,
@@ -603,6 +606,17 @@ export class InboxesClient {
             switch (_response.error.statusCode) {
                 case 404:
                     throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 409:
+                    throw new AgentMail.ConflictError(
                         serializers.ErrorResponse.parseOrThrow(_response.error.body, {
                             unrecognizedObjectKeys: "passthrough",
                             allowUnrecognizedUnionMembers: true,

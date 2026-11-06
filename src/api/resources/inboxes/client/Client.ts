@@ -459,9 +459,9 @@ export class InboxesClient {
      * agentmail inboxes update --inbox-id <inbox_id> --display-name "Updated Name"
      * ```
      *
-     * To pause an inbox, set `status` to `paused`; set it back to `active` to
-     * resume. To pause it later, set `pause_at`. See
-     * [Pausing an inbox](/inboxes#pausing-an-inbox).
+     * To deactivate an inbox, set `status` to `deactivated`; set it back to
+     * `active` to reactivate it. To deactivate it later, set `deactivate_at`.
+     * See [Deactivating an inbox](/inboxes#deactivating-an-inbox).
      *
      * @param {AgentMail.inboxes.InboxId} inbox_id
      * @param {AgentMail.inboxes.UpdateInboxRequest} request

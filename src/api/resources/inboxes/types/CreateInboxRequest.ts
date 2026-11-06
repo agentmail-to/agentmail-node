@@ -13,10 +13,10 @@ export interface CreateInboxRequest {
     domain?: string;
     displayName?: AgentMail.inboxes.DisplayName;
     clientId?: AgentMail.inboxes.ClientId;
-    /** Set `paused` to create the inbox paused. */
+    /** Set `deactivated` to create the inbox deactivated. */
     status?: AgentMail.inboxes.InboxStatus;
-    /** Schedule the inbox to pause at this time, for example when a fixed term ends. */
-    pauseAt?: AgentMail.inboxes.PauseAt;
+    /** Schedule the inbox to deactivate at this time, for example when a fixed term ends. */
+    deactivateAt?: AgentMail.inboxes.DeactivateAt;
     /** Signature to add to every message the inbox sends. */
     signature?: AgentMail.inboxes.InboxSignature;
     /** Custom metadata to attach to the inbox. */

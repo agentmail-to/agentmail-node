@@ -5,17 +5,17 @@ import type * as AgentMail from "../../../index.js";
 export interface UpdateInboxRequest {
     displayName?: AgentMail.inboxes.DisplayName;
     /**
-     * `paused` stops the inbox sending and receiving mail; `active` resumes
-     * it. Mail that arrived while the inbox was paused is not delivered on
-     * resume.
+     * `deactivated` stops the inbox sending and receiving mail; `active`
+     * reactivates it. Mail that arrived while the inbox was deactivated is
+     * not delivered on reactivation.
      */
     status?: AgentMail.inboxes.InboxStatus;
     /**
-     * Schedule a pause, or move one already scheduled. Send null to cancel
-     * it. Only an organization- or pod-scoped API key can change it; an
-     * inbox-scoped key gets `403`.
+     * Schedule a deactivation, or move one already scheduled. Send null to
+     * cancel it. Only an organization- or pod-scoped API key can change it;
+     * an inbox-scoped key gets `403`.
      */
-    pauseAt?: AgentMail.inboxes.PauseAt | null;
+    deactivateAt?: AgentMail.inboxes.DeactivateAt | null;
     /** Set or replace the inbox's signature. Send null to remove it. */
     signature?: AgentMail.inboxes.InboxSignature | null;
     /**
@@ -24,7 +24,7 @@ export interface UpdateInboxRequest {
      * single key, send it with a null value. To clear all metadata, send
      * `metadata` as null. Sending an empty object is rejected; use null to
      * clear. Each update must include at least one of `display_name`,
-     * `status`, `pause_at`, `signature`, or `metadata`.
+     * `status`, `deactivate_at`, `signature`, or `metadata`.
      */
     metadata?: AgentMail.inboxes.UpdateMetadata | null;
 }
