@@ -5,6 +5,6 @@
  * (`AutoConfigConsumer` in the `svix` package for TypeScript and Python): `receive` returns the events
  * queued since your last commit, `commit` marks them as processed. Returned by create only and never
  * readable afterward. Create again with the same `client_id` to get a new token; the previous one stops
- * working immediately.
+ * working immediately. Disabling the polling webhook also stops the current token.
  */
 export type PollingToken = string;

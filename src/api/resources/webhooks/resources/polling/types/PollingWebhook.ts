@@ -23,6 +23,11 @@ export interface PollingWebhook {
      * list of inboxes it receives events for; see `inbox_ids`.
      */
     inboxId?: string;
+    /**
+     * Whether the subscription hands out events. A disabled one keeps the events that arrive and has no
+     * working token until it is enabled again; see Update Polling Webhook.
+     */
+    enabled: boolean;
     /** Time at which the subscription was last updated. */
     updatedAt: Date;
     /** Time at which the subscription was created. */

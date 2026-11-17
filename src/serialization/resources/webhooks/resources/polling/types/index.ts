@@ -6,3 +6,4 @@ export * from "./ListPollingWebhooksResponse.js";
 export * from "./PollingClientId.js";
 export * from "./PollingToken.js";
 export * from "./PollingWebhook.js";
+export * from "./UpdatePollingWebhookRequest.js";

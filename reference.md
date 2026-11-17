@@ -9215,6 +9215,90 @@ await client.inboxes.webhooks.polling.create("inbox_id", {
 </dl>
 </details>
 
+<details><summary><code>client.inboxes.webhooks.polling.<a href="/src/api/resources/inboxes/resources/webhooks/resources/polling/client/Client.ts">update</a>(inbox_id, webhook_id, { ...params }) -> AgentMail.PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause or resume a polling webhook created through this inbox route.
+
+**CLI:**
+```bash
+agentmail inboxes webhooks polling update --inbox-id <inbox_id> --webhook-id <webhook_id> --enabled=false
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.inboxes.webhooks.polling.update("inbox_id", "webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**inbox_id:** `AgentMail.InboxId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdatePollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PollingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.inboxes.webhooks.polling.<a href="/src/api/resources/inboxes/resources/webhooks/resources/polling/client/Client.ts">delete</a>(inbox_id, webhook_id) -> void</code></summary>
 <dl>
 <dd>
@@ -13758,6 +13842,90 @@ await client.pods.webhooks.polling.create("pod_id", {
 </dl>
 </details>
 
+<details><summary><code>client.pods.webhooks.polling.<a href="/src/api/resources/pods/resources/webhooks/resources/polling/client/Client.ts">update</a>(pod_id, webhook_id, { ...params }) -> AgentMail.PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause or resume a polling webhook created through this pod route.
+
+**CLI:**
+```bash
+agentmail pods webhooks polling update --pod-id <pod_id> --webhook-id <webhook_id> --enabled=false
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.pods.webhooks.polling.update("pod_id", "webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**pod_id:** `AgentMail.PodId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdatePollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PollingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
 <details><summary><code>client.pods.webhooks.polling.<a href="/src/api/resources/pods/resources/webhooks/resources/polling/client/Client.ts">delete</a>(pod_id, webhook_id) -> void</code></summary>
 <dl>
 <dd>
@@ -14413,7 +14581,8 @@ await client.webhooks.polling.get("webhook_id");
 
 Creates a subscription the agent polls for events, and returns the `token` that reads it. Each
 organization, pod, and inbox holds at most 10 polling webhooks; a repeat create with the same
-`client_id` re-issues the token of the existing one instead of counting against that limit.
+`client_id` re-issues the token of the existing one instead of counting against that limit. While
+that one is disabled, the repeat create returns `409`: enable it first.
 
 **CLI:**
 ```bash
@@ -14453,6 +14622,83 @@ await client.webhooks.polling.create({
 <dd>
 
 **request:** `AgentMail.CreatePollingWebhookRequest` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**requestOptions:** `PollingClient.RequestOptions` 
+    
+</dd>
+</dl>
+</dd>
+</dl>
+
+
+</dd>
+</dl>
+</details>
+
+<details><summary><code>client.webhooks.polling.<a href="/src/api/resources/webhooks/resources/polling/client/Client.ts">update</a>(webhook_id, { ...params }) -> AgentMail.PollingWebhook</code></summary>
+<dl>
+<dd>
+
+#### 📝 Description
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+Pause or resume a polling webhook with `enabled`. Disabling stops handing out events and revokes the
+current token; the subscription, its event types and the events that arrive meanwhile are kept.
+
+**CLI:**
+```bash
+agentmail webhooks polling update --webhook-id <webhook_id> --enabled=false
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### 🔌 Usage
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+```typescript
+await client.webhooks.polling.update("webhook_id", {});
+
+```
+</dd>
+</dl>
+</dd>
+</dl>
+
+#### ⚙️ Parameters
+
+<dl>
+<dd>
+
+<dl>
+<dd>
+
+**webhook_id:** `AgentMail.WebhookId` 
+    
+</dd>
+</dl>
+
+<dl>
+<dd>
+
+**request:** `AgentMail.UpdatePollingWebhookRequest` 
     
 </dd>
 </dl>

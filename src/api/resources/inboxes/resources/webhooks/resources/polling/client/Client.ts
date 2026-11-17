@@ -337,6 +337,122 @@ export class PollingClient {
     }
 
     /**
+     * Pause or resume a polling webhook created through this inbox route.
+     *
+     * **CLI:**
+     * ```bash
+     * agentmail inboxes webhooks polling update --inbox-id <inbox_id> --webhook-id <webhook_id> --enabled=false
+     * ```
+     *
+     * @param {AgentMail.inboxes.InboxId} inbox_id
+     * @param {AgentMail.webhooks.WebhookId} webhook_id
+     * @param {AgentMail.webhooks.UpdatePollingWebhookRequest} request
+     * @param {PollingClient.RequestOptions} requestOptions - Request-specific configuration.
+     *
+     * @throws {@link AgentMail.NotFoundError}
+     * @throws {@link AgentMail.ValidationError}
+     *
+     * @example
+     *     await client.inboxes.webhooks.polling.update("inbox_id", "webhook_id", {})
+     */
+    public update(
+        inbox_id: AgentMail.inboxes.InboxId,
+        webhook_id: AgentMail.webhooks.WebhookId,
+        request: AgentMail.webhooks.UpdatePollingWebhookRequest,
+        requestOptions?: PollingClient.RequestOptions,
+    ): core.HttpResponsePromise<AgentMail.webhooks.PollingWebhook> {
+        return core.HttpResponsePromise.fromPromise(this.__update(inbox_id, webhook_id, request, requestOptions));
+    }
+
+    private async __update(
+        inbox_id: AgentMail.inboxes.InboxId,
+        webhook_id: AgentMail.webhooks.WebhookId,
+        request: AgentMail.webhooks.UpdatePollingWebhookRequest,
+        requestOptions?: PollingClient.RequestOptions,
+    ): Promise<core.WithRawResponse<AgentMail.webhooks.PollingWebhook>> {
+        const _authRequest: core.AuthRequest = await this._options.authProvider.getAuthRequest();
+        const _headers: core.Fetcher.Args["headers"] = mergeHeaders(
+            _authRequest.headers,
+            this._options?.headers,
+            requestOptions?.headers,
+        );
+        const _response = await core.fetcher({
+            url: core.url.join(
+                (await core.Supplier.get(this._options.baseUrl)) ??
+                    ((await core.Supplier.get(this._options.environment)) ?? environments.AgentMailEnvironment.Prod)
+                        .http,
+                `/v0/inboxes/${core.url.encodePathParam(serializers.inboxes.InboxId.jsonOrThrow(inbox_id, { omitUndefined: true }))}/webhooks/polling/${core.url.encodePathParam(serializers.webhooks.WebhookId.jsonOrThrow(webhook_id, { omitUndefined: true }))}`,
+            ),
+            method: "PATCH",
+            headers: _headers,
+            contentType: "application/json",
+            queryParameters: requestOptions?.queryParams,
+            requestType: "json",
+            body: serializers.webhooks.UpdatePollingWebhookRequest.jsonOrThrow(request, {
+                unrecognizedObjectKeys: "strip",
+                omitUndefined: true,
+            }),
+            timeoutMs: (requestOptions?.timeoutInSeconds ?? this._options?.timeoutInSeconds ?? 60) * 1000,
+            maxRetries: requestOptions?.maxRetries ?? this._options?.maxRetries,
+            abortSignal: requestOptions?.abortSignal,
+            fetchFn: this._options?.fetch,
+            logging: this._options.logging,
+        });
+        if (_response.ok) {
+            return {
+                data: serializers.webhooks.PollingWebhook.parseOrThrow(_response.body, {
+                    unrecognizedObjectKeys: "passthrough",
+                    allowUnrecognizedUnionMembers: true,
+                    allowUnrecognizedEnumValues: true,
+                    skipValidation: true,
+                    breadcrumbsPrefix: ["response"],
+                }),
+                rawResponse: _response.rawResponse,
+            };
+        }
+
+        if (_response.error.reason === "status-code") {
+            switch (_response.error.statusCode) {
+                case 404:
+                    throw new AgentMail.NotFoundError(
+                        serializers.ErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                case 400:
+                    throw new AgentMail.ValidationError(
+                        serializers.ValidationErrorResponse.parseOrThrow(_response.error.body, {
+                            unrecognizedObjectKeys: "passthrough",
+                            allowUnrecognizedUnionMembers: true,
+                            allowUnrecognizedEnumValues: true,
+                            skipValidation: true,
+                            breadcrumbsPrefix: ["response"],
+                        }),
+                        _response.rawResponse,
+                    );
+                default:
+                    throw new errors.AgentMailError({
+                        statusCode: _response.error.statusCode,
+                        body: _response.error.body,
+                        rawResponse: _response.rawResponse,
+                    });
+            }
+        }
+
+        return handleNonStatusCodeError(
+            _response.error,
+            _response.rawResponse,
+            "PATCH",
+            "/v0/inboxes/{inbox_id}/webhooks/polling/{webhook_id}",
+        );
+    }
+
+    /**
      * **CLI:**
      * ```bash
      * agentmail inboxes webhooks polling delete --inbox-id <inbox_id> --webhook-id <webhook_id>

@@ -20,6 +20,7 @@ export const PollingWebhook: core.serialization.ObjectSchema<
     inboxIds: core.serialization.property("inbox_ids", InboxIds.optional()),
     podId: core.serialization.property("pod_id", core.serialization.string().optional()),
     inboxId: core.serialization.property("inbox_id", core.serialization.string().optional()),
+    enabled: core.serialization.boolean(),
     updatedAt: core.serialization.property("updated_at", core.serialization.date()),
     createdAt: core.serialization.property("created_at", core.serialization.date()),
 });
@@ -33,6 +34,7 @@ export declare namespace PollingWebhook {
         inbox_ids?: InboxIds.Raw | null;
         pod_id?: string | null;
         inbox_id?: string | null;
+        enabled: boolean;
         updated_at: string;
         created_at: string;
     }
