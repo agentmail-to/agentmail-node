@@ -3,3 +3,6 @@ src/wrapper
 src/index.ts
 tests/unit/wrapper
 src/serialization/resources/inboxes/types/UpdateMetadata.ts
+
+# The automated-review workflow is hand-added; the generator would delete it as an unknown file.
+.github/workflows/ai-review.yml
